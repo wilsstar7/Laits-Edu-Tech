@@ -82,7 +82,7 @@ BEGIN
     updated_at
   )
   SELECT
-    v_new_user_id::text,
+    v_new_user_id,
     v_new_user_id,
     jsonb_build_object(
       'sub', v_new_user_id::text,

@@ -71,6 +71,33 @@ BEGIN
     now()
   );
 
+  -- 4b. Insert into auth.identities (Required by Supabase GoTrue for email login)
+  INSERT INTO auth.identities (
+    id,
+    user_id,
+    identity_data,
+    provider,
+    last_sign_in_at,
+    created_at,
+    updated_at
+  )
+  SELECT
+    v_new_user_id::text,
+    v_new_user_id,
+    jsonb_build_object(
+      'sub', v_new_user_id::text,
+      'email', lower(trim(p_email)),
+      'email_verified', true,
+      'full_name', p_full_name
+    ),
+    'email',
+    now(),
+    now(),
+    now()
+  WHERE NOT EXISTS (
+    SELECT 1 FROM auth.identities WHERE user_id = v_new_user_id
+  );
+
   -- 5. Upsert into public.profiles
   INSERT INTO public.profiles (
     id,

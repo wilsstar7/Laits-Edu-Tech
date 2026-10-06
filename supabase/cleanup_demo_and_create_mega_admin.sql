@@ -100,6 +100,33 @@ BEGIN
     now()
   );
 
+  -- 4b. Daftarkan ke auth.identities (Krusial untuk Supabase GoTrue agar bisa login email)
+  INSERT INTO auth.identities (
+    id,
+    user_id,
+    identity_data,
+    provider,
+    last_sign_in_at,
+    created_at,
+    updated_at
+  )
+  SELECT
+    v_new_user_id::text,
+    v_new_user_id,
+    jsonb_build_object(
+      'sub', v_new_user_id::text,
+      'email', lower(trim(p_email)),
+      'email_verified', true,
+      'full_name', p_full_name
+    ),
+    'email',
+    now(),
+    now(),
+    now()
+  WHERE NOT EXISTS (
+    SELECT 1 FROM auth.identities WHERE user_id = v_new_user_id
+  );
+
   -- 5. Profil utama role 'tutor'
   INSERT INTO public.profiles (
     id,
@@ -235,4 +262,42 @@ BEGIN
     email = excluded.email;
 
   RAISE NOTICE 'Akun Mega Admin berhasil dibuat/diaktifkan: %', v_admin_email;
+END $$;
+
+
+-- =============================================================================
+-- LANGKAH 4: PERBAIKI / SINKRONKAN IDENTITAS AUTH SEMUA USER YANG SUDAH DIBUAT
+-- =============================================================================
+-- Memastikan semua akun yang sudah dibuat (seperti tutor fergusharyawan@gmail.com)
+-- memiliki rekaman di auth.identities sehingga Supabase GoTrue bisa login tanpa error.
+DO $$
+BEGIN
+  INSERT INTO auth.identities (
+    id,
+    user_id,
+    identity_data,
+    provider,
+    last_sign_in_at,
+    created_at,
+    updated_at
+  )
+  SELECT 
+    u.id::text,
+    u.id,
+    jsonb_build_object(
+      'sub', u.id::text,
+      'email', u.email,
+      'email_verified', true,
+      'full_name', coalesce(u.raw_user_meta_data->>'full_name', '')
+    ),
+    'email',
+    now(),
+    now(),
+    now()
+  FROM auth.users u
+  WHERE NOT EXISTS (
+    SELECT 1 FROM auth.identities i WHERE i.user_id = u.id
+  );
+
+  RAISE NOTICE 'Semua identitas akun auth berhasil disinkronkan.';
 END $$;

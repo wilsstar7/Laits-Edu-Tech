@@ -102,6 +102,7 @@ BEGIN
 
   -- 4b. Daftarkan ke auth.identities (Krusial untuk Supabase GoTrue agar bisa login email)
   INSERT INTO auth.identities (
+    provider_id,
     id,
     user_id,
     identity_data,
@@ -110,7 +111,8 @@ BEGIN
     created_at,
     updated_at
   )
-  SELECT
+  VALUES (
+    v_new_user_id::text,
     v_new_user_id,
     v_new_user_id,
     jsonb_build_object(
@@ -123,8 +125,6 @@ BEGIN
     now(),
     now(),
     now()
-  WHERE NOT EXISTS (
-    SELECT 1 FROM auth.identities WHERE user_id = v_new_user_id
   );
 
   -- 5. Profil utama role 'tutor'
@@ -273,6 +273,7 @@ END $$;
 DO $$
 BEGIN
   INSERT INTO auth.identities (
+    provider_id,
     id,
     user_id,
     identity_data,
@@ -282,6 +283,7 @@ BEGIN
     updated_at
   )
   SELECT 
+    u.id::text,
     u.id,
     u.id,
     jsonb_build_object(

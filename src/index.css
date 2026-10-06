@@ -1,0 +1,236 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/plus-jakarta-sans";
+
+@custom-variant dark (&:is(.dark *));
+
+/* =============================================================================
+   LAITS — Design tokens
+   Brand palette (from product spec):
+     bg #F4F5FB / #EEF0F8 · primary #6C5CE7 · dark #17181C · text #1D1D24
+     muted #8A8D9A · success #45B97C · warning #F2B84B · danger #E96A6A
+   Accessibility note: #8A8D9A is used for icons / large text (`text-subtle`).
+   Body-size muted text uses a darker shade (#676A78) to meet WCAG AA 4.5:1.
+   ============================================================================= */
+
+@theme inline {
+  --font-sans: "Plus Jakarta Sans Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-sans);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-surface: var(--surface);
+  --color-subtle: var(--subtle);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-danger: var(--danger);
+  --color-danger-strong: var(--danger-strong);
+  --color-danger-soft: var(--danger-soft);
+  --color-primary-soft: var(--primary-soft);
+  --color-primary-strong: var(--primary-strong);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
+  --shadow-soft: 0 1px 2px rgba(23, 24, 28, 0.04), 0 8px 24px -12px rgba(23, 24, 28, 0.12);
+  --shadow-lift: 0 2px 4px rgba(23, 24, 28, 0.04), 0 20px 40px -16px rgba(23, 24, 28, 0.18);
+  --shadow-glow: 0 12px 32px -12px rgba(108, 92, 231, 0.55);
+
+  --animate-fade-up: fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-float: float 6s ease-in-out infinite;
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+}
+
+:root {
+  --radius: 0.875rem;
+
+  --background: #f4f5fb;
+  --surface: #eef0f8;
+  --foreground: #1d1d24;
+  --card: #ffffff;
+  --card-foreground: #1d1d24;
+  --popover: #ffffff;
+  --popover-foreground: #1d1d24;
+
+  --primary: #6c5ce7;
+  --primary-foreground: #ffffff;
+  --primary-soft: #efedfd;
+  --primary-strong: #5243d6;
+
+  --secondary: #eef0f8;
+  --secondary-foreground: #1d1d24;
+  --muted: #eef0f8;
+  --muted-foreground: #676a78;
+  --subtle: #8a8d9a;
+  --accent: #efedfd;
+  --accent-foreground: #4a3bc9;
+
+  --ink: #17181c;
+  --ink-soft: #24252b;
+
+  --success: #45b97c;
+  --success-soft: #e6f6ee;
+  --warning: #f2b84b;
+  --warning-soft: #fdf4e2;
+  --danger: #e96a6a;
+  --danger-strong: #c64848;
+  --danger-soft: #fdecec;
+  --destructive: #e96a6a;
+
+  --border: rgba(20, 20, 30, 0.06);
+  --input: rgba(20, 20, 30, 0.14);
+  --ring: #6c5ce7;
+
+  --chart-1: #6c5ce7;
+  --chart-2: #45b97c;
+  --chart-3: #f2b84b;
+  --chart-4: #e96a6a;
+  --chart-5: #8a8d9a;
+
+  --sidebar: #17181c;
+  --sidebar-foreground: #c9cad3;
+  --sidebar-primary: #6c5ce7;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: rgba(255, 255, 255, 0.06);
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: rgba(255, 255, 255, 0.07);
+  --sidebar-ring: #8f83ff;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans antialiased;
+    -webkit-tap-highlight-color: transparent;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    @apply bg-background text-foreground;
+    min-height: 100dvh;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  /* Visible keyboard focus everywhere */
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: none;
+  }
+  ::selection {
+    background: rgba(108, 92, 231, 0.18);
+  }
+}
+
+@layer components {
+  /* Soft glass surface — used for header and floating panels */
+  .glass {
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: saturate(160%) blur(16px);
+    -webkit-backdrop-filter: saturate(160%) blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+  }
+
+  /* Base premium card */
+  .surface-card {
+    @apply rounded-3xl border border-border bg-card shadow-soft;
+  }
+
+  /* Ambient app background (subtle aurora) */
+  .app-backdrop {
+    background:
+      radial-gradient(900px 480px at 100% -10%, rgba(108, 92, 231, 0.10), transparent 60%),
+      radial-gradient(700px 420px at -10% 110%, rgba(69, 185, 124, 0.07), transparent 60%),
+      var(--background);
+  }
+
+  .brand-gradient {
+    background:
+      radial-gradient(120% 140% at 100% 0%, #8f7ff7 0%, transparent 55%),
+      radial-gradient(90% 120% at 0% 100%, #4a3bc9 0%, transparent 60%),
+      #6c5ce7;
+  }
+
+  .ink-gradient {
+    background:
+      radial-gradient(80% 120% at 100% 0%, rgba(108, 92, 231, 0.35) 0%, transparent 60%),
+      #17181c;
+  }
+
+  .dot-grid {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.16) 1px, transparent 1px);
+    background-size: 18px 18px;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

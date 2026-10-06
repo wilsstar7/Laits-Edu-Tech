@@ -33,6 +33,17 @@ export interface AdminStudentAssessmentDetail {
   }
 }
 
+export interface CreateTutorPayload {
+  email: string
+  password: string
+  fullName: string
+  phone?: string
+  bio?: string
+  hourlyRate?: number
+  education?: string
+  subjectIds?: string[]
+}
+
 async function countByRole(role: UserRole): Promise<number> {
   const { count, error } = await requireSupabase()
     .from('profiles')
@@ -129,4 +140,29 @@ export const adminService = {
       },
     }
   },
+
+  /**
+   * Mega Admin: Creates a new tutor account directly via admin_create_tutor RPC.
+   */
+  async createTutor(payload: CreateTutorPayload): Promise<string> {
+    const supabase = requireSupabase()
+    const { data, error } = await supabase.rpc('admin_create_tutor', {
+      p_email: payload.email,
+      p_password: payload.password,
+      p_full_name: payload.fullName,
+      p_phone: payload.phone || undefined,
+      p_bio: payload.bio || undefined,
+      p_hourly_rate: payload.hourlyRate,
+      p_education: payload.education || undefined,
+      p_subject_ids: payload.subjectIds && payload.subjectIds.length > 0 ? payload.subjectIds : undefined,
+    })
+
+    if (error) {
+      logger.error('Failed to create tutor account:', error)
+      throw toAppError(error, 'Gagal membuat akun tutor baru.')
+    }
+
+    return data
+  },
 }
+

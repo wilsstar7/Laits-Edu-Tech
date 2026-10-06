@@ -214,7 +214,7 @@ export const engagementService = {
         code: row.code,
         name: row.name,
         description: row.description || '',
-        icon: (row as any).icon || (row as any).badge_icon || 'award',
+        icon: row.badge_icon || 'award',
         criteriaType: row.criteria_type as Achievement['criteriaType'],
         criteriaValue: Number(row.criteria_value || 1),
         status: row.status as Achievement['status'],

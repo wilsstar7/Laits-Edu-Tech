@@ -13,6 +13,7 @@ import {
   Database,
   Library,
   Megaphone,
+  UserPlus,
 } from 'lucide-react'
 import { AppShell } from '@/components/layout/AppShell'
 import { PageHeader } from '@/components/layout/PageHeader'
@@ -23,6 +24,7 @@ import {
   type AdminStudentAssessmentItem,
 } from '@/services/adminService'
 import { AdminStudentAssessmentModal } from '@/components/admin/AdminStudentAssessmentModal'
+import { AdminCreateTutorModal } from '@/components/admin/AdminCreateTutorModal'
 import { formatShortDate, formatReportDate } from '@/utils/format'
 import { env } from '@/lib/env'
 
@@ -31,6 +33,7 @@ export function AdminDashboardPage() {
   const [studentAssessments, setStudentAssessments] = useState<AdminStudentAssessmentItem[]>([])
   const [loading, setLoading] = useState(true)
   const [selectedResultId, setSelectedResultId] = useState<string | null>(null)
+  const [isCreateTutorOpen, setIsCreateTutorOpen] = useState(false)
 
   useEffect(() => {
     let cancelled = false
@@ -92,6 +95,14 @@ export function AdminDashboardPage() {
         badge="Administrator"
         action={
           <div className="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setIsCreateTutorOpen(true)}
+              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#45B97C] text-white text-xs font-bold hover:bg-[#389E68] transition-colors min-h-[44px] shadow-sm cursor-pointer"
+            >
+              <UserPlus className="w-3.5 h-3.5" />
+              <span>+ Tambah Akun Tutor</span>
+            </button>
             <Link
               to="/admin/courses"
               className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#6C5CE7] text-white text-xs font-bold hover:bg-[#5243D6] transition-colors min-h-[44px]"
@@ -313,6 +324,13 @@ export function AdminDashboardPage() {
       <AdminStudentAssessmentModal
         resultId={selectedResultId}
         onClose={() => setSelectedResultId(null)}
+      />
+
+      {/* Mega Admin Create Tutor Modal */}
+      <AdminCreateTutorModal
+        isOpen={isCreateTutorOpen}
+        onClose={() => setIsCreateTutorOpen(false)}
+        onSuccess={handleRefresh}
       />
     </AppShell>
   )

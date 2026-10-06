@@ -1,7 +1,7 @@
 # LAITS EDU TECH — LMS & LEARNING ANALYTICS PLATFORM
 
-> **Status:** `PHASE 7 COMPLETE — PRODUCTION READY`  
-> Production Hardening, Security Hardening, Database Integrity & Invariant Triggers, Performance & Code-Splitting, Observability & Health Probes, Automated QA (119 Vitest Tests Pass), and Deployment Readiness.
+> **Status:** `PHASE 8 COMPLETE — ADVANCED LEARNING & ENGAGEMENT`  
+> Learning Content Management (Course/Section/Lesson/Material), Anti-Cheat Quiz & Assignment Engine, Student Goals & Daily Study Streak, Achievement Badges, Public Certificate Verification, Communication Announcements, and Admin CMS.
 
 ---
 
@@ -15,6 +15,7 @@
 5. **Ulasan & Progres Pembelajaran** (*Ratings & Progress Tracking*).
 6. **Notifikasi & Laporan Bulanan Siswa** (*Real-time Notifications & Monthly Reports*).
 7. **Pengerasan Produksi & Operasional** (*Production Hardening, RLS, Error Boundaries, Observability, Health Checks*).
+8. **Pengalaman Belajar Terstruktur & Engagement** (*Course Hierarchy, Lessons, Quizzes, Assignments, Goals, Streaks, Certificates & Announcements*).
 
 ---
 
@@ -26,8 +27,8 @@
 - **Routing:** React Router v7 (Lazy loaded with `React.lazy` & code-splitting)
 - **Form & Validation:** React Hook Form + Zod v4 (Skema validasi komprehensif)
 - **Backend & BaaS:** Supabase (PostgreSQL 15+, PostgREST, GoTrue Auth, Realtime, Storage)
-- **Testing:** Vitest v5 (119 automated unit & integration tests)
-- **Security:** PostgreSQL Row Level Security (RLS) di 33 tabel, GiST Exclusion Constraints, Trigger State Machines, Redacted Logging.
+- **Testing:** Vitest v5 (141 automated unit & integration tests)
+- **Security:** PostgreSQL Row Level Security (RLS) di 52 tabel, GiST Exclusion Constraints, Trigger State Machines, Redacted Logging.
 
 ---
 
@@ -41,8 +42,10 @@
 | **Phase 4** | Learning Path, Tutor Marketplace, Jadwal Ketersediaan & Booking GiST | ✅ Selesai |
 | **Phase 5** | Sistem Pembayaran, Upload Bukti Transfer, Ulasan, Progress Belajar | ✅ Selesai |
 | **Phase 6** | Notifikasi, Laporan Bulanan Otomatis, Dashboard Admin, Audit Log | ✅ Selesai |
-| **Phase 7** | **Production Hardening, Security Audit, Observability, QA & Deployment** | ✅ Selesai |
+| **Phase 7** | Production Hardening, Security Audit, Observability, QA & Deployment | ✅ Selesai |
+| **Phase 8** | **Course Hierarchy, Quizzes, Assignments, Goals, Streaks, Certificates & Announcements** | ✅ Selesai |
 
+---
 ---
 
 ## 4. Phase 7 Hardening Highlights
@@ -73,12 +76,37 @@
 
 ---
 
-## 5. Verification & Testing
+## 5. Phase 8 Advanced Learning Highlights
+
+### 5.1 Hierarki Konten Pembelajaran
+- **Course → Section → Lesson → Material**: Struktur berjenjang yang rapi mendukung berbagai format materi (Teks, Video, PDF, Audio, Link).
+- **Akses Kontrol Publik vs Draft**: Hanya materi dengan status `PUBLISHED` yang dapat diakses oleh siswa. Admin & tutor mengelola status kursus melalui transisi terkontrol.
+
+### 5.2 Kuis & Tugas Berbasis Server-Side Security
+- **Anti-Cheat Quiz Evaluation**: Kolom `is_correct` pada tabel opsi kuis disembunyikan dari query frontend. Penilaian dilakukan secara tepercaya di PostgreSQL melalui RPC `submit_quiz_attempt`.
+- **Pengumpulan & Umpan Balik Tugas**: Siswa dapat mengunggah tugas mereka; tutor dan admin dapat memeriksa dan memberikan umpan balik serta nilai.
+
+### 5.3 Student Engagement & Gamifikasi Sehat
+- **Target Belajar (Learning Goals)**: Siswa dapat menentukan target belajar pribadi (Durasi menit, jumlah sesi, atau kursus) dan melacak kemajuannya secara visual.
+- **Study Streak**: Perhitungan hari belajar beruntun berbasis aktivitas riil kalender (penyelesaian pelajaran, kuis, atau tugas).
+- **Badge Pencapaian (Achievements)**: Penghargaan otomatis atas pencapaian milestone belajar secara idempotent.
+
+### 5.4 Sertifikat Kelulusan & Verifikasi Publik
+- **Penerbitan Otomatis Idempotent**: Saat siswa menyelesaikan 100% pelajaran pada kursus, sistem secara otomatis menerbitkan sertifikat dengan nomor unik (`CERT-XXXXXX-YYYYYY`).
+- **Verifikasi Publik Terisolasi**: Halaman publik `/certificate/:certificateNumber` memungkinkan verifikasi validitas sertifikat tanpa mengekspos data pribadi siswa.
+
+### 5.5 Sistem Komunikasi & Admin CMS
+- **Pengumuman Multi-Target**: Pengumuman dapat ditargetkan ke seluruh pengguna (`all`), siswa (`students`), atau tutor (`tutors`), dengan integrasi otomatis ke sistem notifikasi.
+- **Admin Course & Content Builder**: Halaman `/admin/courses` dan `/admin/announcements` memberikan kendali penuh bagi administrator untuk mempublikasikan materi dan siaran platform.
+
+---
+
+## 6. Verification & Testing
 
 Jalankan rangkaian pengujian dan validasi kualitas:
 
 ```bash
-# 1. Jalankan unit & integration tests (119 tests)
+# 1. Jalankan unit & integration tests (141 tests)
 npm test
 
 # 2. Jalankan static code analysis (zero lint errors)
@@ -94,17 +122,17 @@ npm run build
 Hasil verifikasi:
 * **Lint**: PASS (0 errors)
 * **Typecheck**: PASS (0 errors)
-* **Unit & Integration Tests**: PASS (15 test suites, 119 tests pass)
-* **Production Build**: PASS (Vite dist bundle berhasil dibangun)
+* **Unit & Integration Tests**: PASS (19 test suites, 141 tests pass)
+* **Production Build**: PASS (Vite dist bundle berhasil dibangun dalam <1 detik)
 
 ---
 
-## 6. Dokumentasi Lengkap
+## 7. Dokumentasi Lengkap
 
 Untuk panduan mendalam arsitektur dan operasional, silakan merujuk ke:
 - [ARCHITECTURE.md](file:///c:/Users/Lenovo/OneDrive/Desktop/Project%20Aplikasi/Laits%20Edu%20Tech/ARCHITECTURE.md) — Arsitektur sistem, diagram alir, dan subsistem.
 - [SECURITY.md](file:///c:/Users/Lenovo/OneDrive/Desktop/Project%20Aplikasi/Laits%20Edu%20Tech/SECURITY.md) — Matriks RBAC, audit RLS, isolasi rahasia, dan upload security.
-- [DATABASE.md](file:///c:/Users/Lenovo/OneDrive/Desktop/Project%20Aplikasi/Laits%20Edu%20Tech/DATABASE.md) — Skema database, trigger state machine, indeks, dan RPC.
+- [DATABASE.md](file:///c:/Users/Lenovo/OneDrive/Desktop/Project%20Aplikasi/Laits%20Edu%20Tech/DATABASE.md) — Skema database, trigger state machine, indeks, dan RPC Phase 1–8.
 - [OPERATIONS.md](file:///c:/Users/Lenovo/OneDrive/Desktop/Project%20Aplikasi/Laits%20Edu%20Tech/OPERATIONS.md) — SRE runbook, `/health` probe, strategi backup & pemulihan bencana.
 - [TESTING.md](file:///c:/Users/Lenovo/OneDrive/Desktop/Project%20Aplikasi/Laits%20Edu%20Tech/TESTING.md) — Piramida testing, cakupan test Vitest, dan manual smoke test checklist.
 - [DEPLOYMENT.md](file:///c:/Users/Lenovo/OneDrive/Desktop/Project%20Aplikasi/Laits%20Edu%20Tech/DEPLOYMENT.md) — Konfigurasi staging/production, migrasi CLI, dan rollback.

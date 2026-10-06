@@ -2126,6 +2126,19 @@ export type Database = {
         }
         Returns: Json
       }
+      admin_create_tutor: {
+        Args: {
+          p_email: string
+          p_password: string
+          p_full_name: string
+          p_phone?: string
+          p_bio?: string
+          p_hourly_rate?: number
+          p_education?: string
+          p_subject_ids?: string[]
+        }
+        Returns: string
+      }
     }
     Enums: {
       user_role: 'student' | 'tutor' | 'admin' | 'super_admin'

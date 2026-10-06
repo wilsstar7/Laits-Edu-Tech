@@ -95,10 +95,6 @@ BEGIN
     full_name = excluded.full_name,
     phone = excluded.phone;
 
-  -- 6. Upsert into public.user_roles
-  INSERT INTO public.user_roles (user_id, role)
-  VALUES (v_new_user_id, 'tutor')
-  ON CONFLICT (user_id) DO UPDATE SET role = 'tutor';
 
   -- 7. Upsert into public.tutor_profiles
   INSERT INTO public.tutor_profiles (

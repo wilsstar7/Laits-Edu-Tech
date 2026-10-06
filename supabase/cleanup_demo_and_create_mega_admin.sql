@@ -1,5 +1,5 @@
 -- =============================================================================
--- LAITS EDU TECH — CLEANUP AKUN DEMO & PEMBUATAN AKUN MEGA ADMIN
+-- LAITS EDU TECH — CLEANUP AKUN DEMO & PEMBUATAN AKUN MEGA ADMIN (WILDAN)
 -- =============================================================================
 -- Jalankan skrip ini langsung di Supabase Dashboard -> SQL Editor
 -- (https://supabase.com/dashboard/project/_/sql)
@@ -30,8 +30,7 @@ END $$;
 
 
 -- =============================================================================
--- LANGKAH 2: BUAT FUNGSI RPC admin_create_tutor
--- (Memungkinkan Mega Admin membuat akun Tutor langsung dari Dashboard Web)
+-- LANGKAH 2: BUAT FUNGSI PEMBUATAN AKUN TUTOR (admin_create_tutor)
 -- =============================================================================
 CREATE OR REPLACE FUNCTION public.admin_create_tutor(
   p_email TEXT,
@@ -125,12 +124,7 @@ BEGIN
     full_name = excluded.full_name,
     phone = excluded.phone;
 
-  -- 6. User roles table
-  INSERT INTO public.user_roles (user_id, role)
-  VALUES (v_new_user_id, 'tutor')
-  ON CONFLICT (user_id) DO UPDATE SET role = 'tutor';
-
-  -- 7. Profil tutor marketplace
+  -- 6. Profil tutor marketplace
   INSERT INTO public.tutor_profiles (
     user_id,
     bio,
@@ -162,7 +156,7 @@ BEGIN
     is_active = true
   RETURNING id INTO v_tutor_profile_id;
 
-  -- 8. Hubungkan ke mata pelajaran jika dipilih
+  -- 7. Hubungkan ke mata pelajaran jika dipilih
   IF p_subject_ids IS NOT NULL AND array_length(p_subject_ids, 1) > 0 THEN
     FOREACH v_sub_id IN ARRAY p_subject_ids
     LOOP
@@ -180,29 +174,22 @@ GRANT EXECUTE ON FUNCTION public.admin_create_tutor TO authenticated;
 
 
 -- =============================================================================
--- LANGKAH 3: BUAT AKUN MEGA ADMIN (SUPER ADMIN) BARU
--- =============================================================================
--- Ganti nilai di bawah ini dengan Email, Password, dan Nama yang Anda inginkan:
+-- LANGKAH 3: BUAT AKUN MEGA ADMIN (wildanuye22@gmail.com)
 -- =============================================================================
 DO $$
 DECLARE
-  -- >>> UBAH DATA DI BAWAH INI SESUAI KEINGINAN ANDA <<<
-  v_admin_email    TEXT := 'megaadmin@laitsedutech.com';  -- Ganti dengan email Anda
-  v_admin_password TEXT := 'MegaAdmin2026!';             -- Ganti dengan password kuat Anda
-  v_admin_name     TEXT := 'Mega Administrator';         -- Ganti dengan nama Anda
-  -- >>> -------------------------------------------- <<<
+  v_admin_email    TEXT := 'wildanuye22@gmail.com';
+  v_admin_password TEXT := 'Kakapro453@';
+  v_admin_name     TEXT := 'Mega Admin Wildan';
 
-  v_admin_id   UUID := gen_random_uuid();
+  v_admin_id   UUID;
   v_admin_hash TEXT;
 BEGIN
-  -- Cek jika akun dengan email ini sudah ada sebelumnya
   SELECT id INTO v_admin_id FROM auth.users WHERE email = lower(trim(v_admin_email));
-  
   v_admin_hash := extensions.crypt(v_admin_password, extensions.gen_salt('bf', 10));
 
   IF v_admin_id IS NULL THEN
     v_admin_id := gen_random_uuid();
-    
     INSERT INTO auth.users (
       id,
       instance_id,
@@ -230,7 +217,7 @@ BEGIN
       now()
     );
   ELSE
-    -- Jika sudah ada, update password dan konfirmasi
+    -- Jika akun sudah pernah terdaftar, perbarui password & konfirmasi email
     UPDATE auth.users
     SET encrypted_password = v_admin_hash,
         email_confirmed_at = coalesce(email_confirmed_at, now()),
@@ -247,10 +234,5 @@ BEGIN
     full_name = excluded.full_name,
     email = excluded.email;
 
-  -- Pastikan user_roles berstatus 'super_admin'
-  INSERT INTO public.user_roles (user_id, role)
-  VALUES (v_admin_id, 'super_admin')
-  ON CONFLICT (user_id) DO UPDATE SET role = 'super_admin';
-
-  RAISE NOTICE 'Akun Mega Admin berhasil dibuat: %', v_admin_email;
+  RAISE NOTICE 'Akun Mega Admin berhasil dibuat/diaktifkan: %', v_admin_email;
 END $$;

@@ -18,8 +18,8 @@ export const engagementService = {
     if (!supabase) return []
 
     try {
-      const { data: authData } = await supabase.auth.getUser()
-      const studentId = authData.user?.id
+      const authData = supabase.auth?.getUser ? await supabase.auth.getUser() : { data: { user: null } }
+      const studentId = authData?.data?.user?.id
       if (!studentId) return []
 
       const { data, error } = await supabase
@@ -35,12 +35,12 @@ export const engagementService = {
         studentId: row.student_id,
         title: row.title,
         description: row.description || '',
-        targetType: row.target_type,
+        targetType: (row.target_type || 'sessions').toLowerCase() as import('@/types/engagement').GoalTargetType,
         targetValue: Number(row.target_value || 1),
         currentValue: Number(row.current_value || 0),
-        startDate: row.start_date,
+        startDate: row.start_date || '',
         targetDate: row.target_date,
-        status: row.status,
+        status: (row.status || 'active').toLowerCase() as import('@/types/engagement').GoalStatus,
         completedAt: row.completed_at,
         createdAt: row.created_at,
         updatedAt: row.updated_at,
@@ -89,7 +89,7 @@ export const engagementService = {
         targetType: data.target_type,
         targetValue: Number(data.target_value),
         currentValue: Number(data.current_value),
-        startDate: data.start_date,
+        startDate: data.start_date || '',
         targetDate: data.target_date,
         status: data.status,
         completedAt: data.completed_at,
@@ -184,8 +184,8 @@ export const engagementService = {
     if (!supabase) return []
 
     try {
-      const { data: authData } = await supabase.auth.getUser()
-      const studentId = authData.user?.id
+      const authData = supabase.auth?.getUser ? await supabase.auth.getUser() : { data: { user: null } }
+      const studentId = authData?.data?.user?.id
 
       const { data: achievementsData, error } = await supabase
         .from('achievements')
@@ -195,7 +195,7 @@ export const engagementService = {
 
       if (error) throw error
 
-      let earnedMap = new Map<string, string>()
+      const earnedMap = new Map<string, string>()
       if (studentId) {
         const { data: studentEarned } = await supabase
           .from('student_achievements')
@@ -214,10 +214,10 @@ export const engagementService = {
         code: row.code,
         name: row.name,
         description: row.description || '',
-        icon: row.icon || 'award',
-        criteriaType: row.criteria_type,
+        icon: (row as any).icon || (row as any).badge_icon || 'award',
+        criteriaType: row.criteria_type as Achievement['criteriaType'],
         criteriaValue: Number(row.criteria_value || 1),
-        status: row.status,
+        status: row.status as Achievement['status'],
         isEarned: earnedMap.has(row.id),
         earnedAt: earnedMap.get(row.id) || null,
       }))
@@ -295,7 +295,16 @@ export const engagementService = {
       })
 
       if (error) throw error
-      const res = data as any
+      type VerificationRpcResponse = {
+        is_valid?: boolean
+        valid?: boolean
+        certificate_number?: string
+        issued_at?: string
+        course_title?: string
+        course_level?: string
+        student_name?: string
+      }
+      const res = (data as unknown) as VerificationRpcResponse | null
 
       if (!res || (!res.is_valid && !res.valid)) {
         return { isValid: false }

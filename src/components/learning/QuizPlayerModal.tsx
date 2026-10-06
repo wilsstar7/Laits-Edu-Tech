@@ -4,10 +4,7 @@ import {
   CheckCircle2,
   XCircle,
   RotateCcw,
-  AlertTriangle,
   Loader2,
-  ChevronRight,
-  Award,
 } from 'lucide-react'
 import type { Quiz, QuizSubmissionAnswer, QuizSubmissionResult } from '@/types/quiz'
 import { quizService } from '@/services/quizService'
@@ -61,8 +58,9 @@ export function QuizPlayerModal({ quiz, onClose, onSuccess }: QuizPlayerModalPro
       } else {
         toast.error(`Skor Anda ${evalResult.score}. Batas kelulusan adalah ${evalResult.passing_score}.`)
       }
-    } catch (err: any) {
-      toast.error(err.message || 'Gagal mengirim evaluasi kuis.')
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Gagal mengirim evaluasi kuis.'
+      toast.error(msg)
     } finally {
       setSubmitting(false)
     }

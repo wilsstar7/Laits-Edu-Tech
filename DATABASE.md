@@ -97,3 +97,53 @@ Migration File                              Domain
 * **`mark_notification_read(p_notification_id)`**: Atomically marks a single notification as read if owned by `auth.uid()`.
 * **`mark_all_notifications_read()`**: Atomically marks all unread notifications of `auth.uid()` as read.
 * **`submit_and_score_assessment(...)`**: Scores assessment answers server-side with dimension normalization.
+
+---
+
+## 5. Phase 8 Advanced Learning & Engagement Architecture
+
+### 5.1 Migration File
+`20261006000005_phase8_learning_engagement_growth.sql`
+
+### 5.2 Schema Hierarchy & New Tables
+Phase 8 introduces 19 interconnected tables organized under the hierarchy:
+```text
+Course -> Section -> Lesson -> Materials -> Quiz & Assignment -> Progress & Streak -> Certificates
+```
+
+1. **Content Management**:
+   - `courses`: Catalogs structured courses with status state machine (`draft`, `published`, `archived`), level, duration, and subject foreign keys.
+   - `course_objectives`: Relational learning objectives per course.
+   - `course_sections`: Ordered curriculum modules with `UNIQUE(course_id, sort_order)`.
+   - `lessons`: Multimodal lessons (`text`, `video`, `pdf`, `audio`, `link`, `mixed`) with estimated duration.
+   - `lesson_materials`: Sub-materials and downloadable resources referencing Supabase Storage or external links.
+
+2. **Enrollment & Progress Tracking**:
+   - `course_enrollments`: Tracks active student enrollments, completion timestamps, and enrollment source with idempotency (`UNIQUE(student_id, course_id)`).
+   - `lesson_progress`: Fine-grained lesson progression tracking (`not_started`, `in_progress`, `completed`).
+
+3. **Evaluation (Quiz & Assignment)**:
+   - `assignments`: Lesson assignments with deadlines and scoring rubrics.
+   - `assignment_submissions`: Student submission answers and tutor feedback grading.
+   - `quizzes`: Lesson evaluation quizzes with passing thresholds and attempt limitations.
+   - `quiz_questions`: Ordered quiz items (`single_choice`, `multiple_choice`, `true_false`).
+   - `quiz_options`: Answers where `is_correct` is concealed server-side and evaluated only in PostgreSQL.
+   - `quiz_attempts`: Audit trail of each student attempt with calculated score and pass state.
+
+4. **Student Engagement & Recognition**:
+   - `learning_goals`: Self-directed targets (`sessions`, `courses`, `lessons`, `minutes`) with dynamic completion calculation.
+   - `student_streaks`: Daily learning activity streak tracking consecutive calendar dates.
+   - `achievements`: System milestone badges.
+   - `student_achievements`: Awarded badges with idempotent constraint `UNIQUE(student_id, achievement_id)`.
+   - `certificates`: Digital completion certificates issued automatically upon 100% course completion with unique verification number.
+
+5. **Communication & Announcements**:
+   - `announcements`: Broadcast announcements with audience targeting (`all`, `students`, `tutors`, `admins`) and automatic notification dispatch.
+
+### 5.3 PostgreSQL Security Definer RPCs in Phase 8
+* **`complete_lesson(p_lesson_id)`**: Transactionally marks lesson as completed, recalculates course enrollment progress percentage, marks course completed if 100%, issues certificate if eligible, records daily streak activity, and logs audit events.
+* **`submit_quiz_attempt(p_quiz_id, p_answers)`**: Trusted server-side grading calculating raw score, checking passing threshold against `quizzes.passing_score`, and recording activity.
+* **`publish_announcement(p_announcement_id)`**: Transitions announcement from draft to published and fans out system notifications idempotently.
+* **`verify_certificate_public(p_certificate_number)`**: Public-safe RPC returning verified student display name, course title, and completion date without leaking private metadata.
+* **`record_learning_activity(p_student_id, p_activity_type, p_reference_id)`**: Updates consecutive day streak counter idempotently per calendar day.
+

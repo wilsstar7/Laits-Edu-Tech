@@ -8,12 +8,7 @@ import {
   BookOpen,
   Plus,
   Clock,
-  BarChart3,
-  CheckCircle2,
-  AlertTriangle,
-  Archive,
   Loader2,
-  Sparkles,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
@@ -77,8 +72,9 @@ export function AdminCoursesPage() {
       setNewTitle('')
       setNewDescription('')
       await loadCourses()
-    } catch (err: any) {
-      toast.error(err.message || 'Gagal membuat kursus.')
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Gagal membuat kursus.'
+      toast.error(msg)
     } finally {
       setCreating(false)
     }
@@ -89,8 +85,9 @@ export function AdminCoursesPage() {
       await courseService.setCourseStatus(courseId, newStatus)
       toast.success(`Status kursus berhasil diubah menjadi ${newStatus.toUpperCase()}.`)
       await loadCourses()
-    } catch (err: any) {
-      toast.error(err.message || 'Gagal mengubah status kursus.')
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Gagal mengubah status kursus.'
+      toast.error(msg)
     }
   }
 
@@ -106,7 +103,7 @@ export function AdminCoursesPage() {
         <div className="flex items-center gap-2">
           <select
             value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value as any)}
+            onChange={(e) => setStatusFilter(e.target.value as CourseStatus | 'all')}
             className="px-3 py-2 rounded-xl border border-border text-xs font-semibold text-[#17181C] bg-white focus:outline-hidden"
           >
             <option value="all">Semua Status</option>

@@ -9,7 +9,7 @@ export interface LearningGoal {
   targetType: GoalTargetType
   targetValue: number
   currentValue: number
-  startDate: string
+  startDate: string | null
   targetDate: string | null
   status: GoalStatus
   completedAt: string | null
@@ -30,9 +30,9 @@ export interface Achievement {
   name: string
   description: string
   icon: string
-  criteriaType: 'course_completed' | 'quiz_passed' | 'streak_days' | 'lessons_completed'
+  criteriaType: 'course_completed' | 'quiz_passed' | 'streak_days' | 'lessons_completed' | string
   criteriaValue: number
-  status: 'active' | 'inactive'
+  status: 'active' | 'archived' | 'inactive'
   isEarned?: boolean
   earnedAt?: string | null
 }

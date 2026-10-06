@@ -5,7 +5,6 @@ import { CourseCurriculum } from '@/components/learning/CourseCurriculum'
 import { courseService } from '@/services/courseService'
 import type { Course } from '@/types/course'
 import {
-  BookOpen,
   Clock,
   BarChart3,
   CheckCircle2,
@@ -57,8 +56,9 @@ export function CourseDetailPage() {
       await courseService.enrollCourse(course.id)
       toast.success('Pendaftaran kursus berhasil! Silakan mulai materi pertama.')
       await loadCourse(course.id)
-    } catch (err: any) {
-      toast.error(err.message || 'Gagal mendaftar kursus.')
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Gagal mendaftar kursus.'
+      toast.error(msg)
     } finally {
       setEnrolling(false)
     }

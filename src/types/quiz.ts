@@ -37,7 +37,7 @@ export interface QuizAttempt {
   score: number
   passed: boolean
   startedAt: string
-  submittedAt: string
+  submittedAt: string | null
 }
 
 export interface QuizSubmissionAnswer {

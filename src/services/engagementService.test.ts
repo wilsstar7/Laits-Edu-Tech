@@ -33,8 +33,15 @@ describe('engagementService (Phase 8)', () => {
     ]
 
     const mockSupabase = {
+      auth: {
+        getUser: vi.fn().mockResolvedValue({
+          data: { user: { id: 'student-123' } },
+          error: null,
+        }),
+      },
       from: vi.fn().mockReturnValue({
         select: vi.fn().mockReturnThis(),
+        eq: vi.fn().mockReturnThis(),
         order: vi.fn().mockResolvedValue({
           data: mockGoals,
           error: null,
@@ -48,8 +55,8 @@ describe('engagementService (Phase 8)', () => {
 
     const goals = await getGoals()
     expect(goals).toHaveLength(1)
-    expect(goals[0].title).toBe('Khatam Nahwu Pemula')
-    expect(goals[0].status).toBe('COMPLETED')
+    expect(goals[0]?.title).toBe('Khatam Nahwu Pemula')
+    expect(goals[0]?.status).toBe('completed')
   })
 
   it('creates a new learning goal with validated input', async () => {
@@ -96,8 +103,15 @@ describe('engagementService (Phase 8)', () => {
 
   it('fetches streak data and falls back safely if none exists', async () => {
     const mockSupabase = {
+      auth: {
+        getUser: vi.fn().mockResolvedValue({
+          data: { user: { id: 'student-123' } },
+          error: null,
+        }),
+      },
       from: vi.fn().mockReturnValue({
         select: vi.fn().mockReturnThis(),
+        eq: vi.fn().mockReturnThis(),
         maybeSingle: vi.fn().mockResolvedValue({
           data: {
             id: 'streak-1',
@@ -147,5 +161,55 @@ describe('engagementService (Phase 8)', () => {
     expect(result.isValid).toBe(true)
     expect(result.courseTitle).toBe('Dasar Nahwu & Sharaf')
     expect(result.studentName).toBe('Ahmad Santoso')
+  })
+
+  it('fetches list of platform achievements with student earned status', async () => {
+    const mockSupabase = {
+      auth: {
+        getUser: vi.fn().mockResolvedValue({
+          data: { user: { id: 'student-123' } },
+          error: null,
+        }),
+      },
+      from: vi.fn((table: string) => {
+        if (table === 'achievements') {
+          return {
+            select: vi.fn().mockReturnThis(),
+            eq: vi.fn().mockReturnThis(),
+            order: vi.fn().mockResolvedValue({
+              data: [
+                {
+                  id: 'ach-1',
+                  name: 'Langkah Pertama',
+                  description: 'Selesaikan 1 pelajaran',
+                  criteria_type: 'LESSONS_COMPLETED',
+                  criteria_value: 1,
+                  badge_icon: 'award',
+                },
+              ],
+              error: null,
+            }),
+          }
+        }
+        if (table === 'student_achievements') {
+          return {
+            select: vi.fn().mockReturnThis(),
+            eq: vi.fn().mockResolvedValue({
+              data: [{ achievement_id: 'ach-1', earned_at: '2026-10-06T10:00:00Z' }],
+              error: null,
+            }),
+          }
+        }
+        return {}
+      }),
+    }
+
+    vi.spyOn(supabaseLib, 'getSupabase').mockReturnValue(
+      mockSupabase as unknown as supabaseLib.TypedSupabaseClient
+    )
+
+    const list = await getAchievements()
+    expect(list).toHaveLength(1)
+    expect(list[0]?.isEarned).toBe(true)
   })
 })

@@ -3,11 +3,8 @@ import { useParams, Link } from 'react-router'
 import { engagementService } from '@/services/engagementService'
 import type { CertificateVerificationResult } from '@/types/engagement'
 import {
-  Award,
-  CheckCircle2,
   XCircle,
   ShieldCheck,
-  Calendar,
   Layers,
   ArrowRight,
   Loader2,

@@ -1,16 +1,20 @@
 import { useState, useEffect } from 'react'
-import { Megaphone, X, ChevronRight } from 'lucide-react'
-import type { Announcement } from '@/types/announcement'
+import { Megaphone, X } from 'lucide-react'
+import type { Announcement, AnnouncementAudience } from '@/types/announcement'
 import { announcementService } from '@/services/announcementService'
 
-export function AnnouncementBanner() {
+interface AnnouncementBannerProps {
+  audience?: AnnouncementAudience
+}
+
+export function AnnouncementBanner({ audience }: AnnouncementBannerProps = {}) {
   const [announcements, setAnnouncements] = useState<Announcement[]>([])
   const [dismissed, setDismissed] = useState(false)
 
   useEffect(() => {
     let isMounted = true
     announcementService
-      .getAnnouncements()
+      .getAnnouncements(audience)
       .then((data) => {
         if (isMounted) setAnnouncements(data)
       })
@@ -21,7 +25,7 @@ export function AnnouncementBanner() {
     return () => {
       isMounted = false
     }
-  }, [])
+  }, [audience])
 
   if (dismissed || announcements.length === 0) return null
   const latest = announcements[0]

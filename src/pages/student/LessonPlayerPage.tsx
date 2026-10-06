@@ -19,7 +19,6 @@ import {
   FileText,
   Loader2,
   Clock,
-  Sparkles,
   ExternalLink,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -70,12 +69,8 @@ export function LessonPlayerPage() {
   }
 
   useEffect(() => {
-    let isMounted = true
     if (courseId && lessonId) {
       loadData(courseId, lessonId)
-    }
-    return () => {
-      isMounted = false
     }
   }, [courseId, lessonId])
 
@@ -112,8 +107,9 @@ export function LessonPlayerPage() {
       } else if (nextLesson && courseId) {
         navigate(`/student/courses/${courseId}/lessons/${nextLesson.id}`)
       }
-    } catch (err: any) {
-      toast.error(err.message || 'Gagal menandai pelajaran selesai.')
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Gagal menandai pelajaran selesai.'
+      toast.error(msg)
     } finally {
       setCompleting(false)
     }

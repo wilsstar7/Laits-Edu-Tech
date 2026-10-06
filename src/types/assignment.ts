@@ -22,7 +22,7 @@ export interface AssignmentSubmission {
   status: SubmissionStatus
   score: number | null
   feedback: string | null
-  submittedAt: string
+  submittedAt: string | null
   gradedAt: string | null
   gradedBy: string | null
 }

@@ -5,7 +5,7 @@ import { LearningGoalCard } from '@/components/learning/LearningGoalCard'
 import { StreakCard } from '@/components/learning/StreakCard'
 import { engagementService } from '@/services/engagementService'
 import type { LearningGoal, StudentStreak, GoalTargetType } from '@/types/engagement'
-import { Target, Plus, CheckCircle2, Loader2, Sparkles } from 'lucide-react'
+import { Target, Plus, CheckCircle2, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
 
@@ -75,8 +75,9 @@ export function StudentGoalsPage() {
       setTitle('')
       setDescription('')
       await loadData()
-    } catch (err: any) {
-      toast.error(err.message || 'Gagal membuat target.')
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Gagal membuat target.'
+      toast.error(msg)
     } finally {
       setCreating(false)
     }
@@ -87,7 +88,7 @@ export function StudentGoalsPage() {
       await engagementService.updateGoalProgress(goalId, 1)
       toast.success('Progres target diperbarui!')
       await loadData()
-    } catch (err: any) {
+    } catch {
       toast.error('Gagal memperbarui progres target.')
     }
   }

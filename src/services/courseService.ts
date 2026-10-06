@@ -1,4 +1,5 @@
 import { getSupabase } from '@/lib/supabase'
+import type { Database } from '@/types/database'
 import type { Course, CourseSection, Lesson, CourseEnrollment, CourseLevel, CourseStatus } from '@/types/course'
 import { toAppError } from '@/utils/errors'
 import { logger } from '@/lib/logger'
@@ -20,8 +21,8 @@ export const courseService = {
     if (!supabase) return []
 
     try {
-      const { data: authData } = await supabase.auth.getUser()
-      const currentUserId = authData.user?.id
+      const authData = supabase.auth?.getUser ? await supabase.auth.getUser() : { data: { user: null } }
+      const currentUserId = authData?.data?.user?.id
 
       let query = supabase
         .from('courses')
@@ -42,7 +43,6 @@ export const courseService = {
           updated_at,
           subjects ( name )
         `)
-        .order('created_at', { ascending: false })
 
       if (filters?.status) {
         query = query.eq('status', filters.status)
@@ -62,10 +62,10 @@ export const courseService = {
         query = query.limit(filters.limit)
       }
 
-      const { data, error } = await query
+      const { data, error } = await query.order('created_at', { ascending: false })
       if (error) throw error
 
-      let enrollmentsMap = new Map<string, CourseEnrollment>()
+      const enrollmentsMap = new Map<string, CourseEnrollment>()
       if (currentUserId && data && data.length > 0) {
         const courseIds = data.map((c) => c.id)
         const { data: enrollments } = await supabase
@@ -100,8 +100,8 @@ export const courseService = {
           slug: row.slug,
           description: row.description,
           thumbnailUrl: row.thumbnail_url,
-          level: row.level,
-          status: row.status,
+          level: (row.level || 'beginner').toLowerCase() as CourseLevel,
+          status: (row.status || 'draft').toLowerCase() as CourseStatus,
           estimatedDurationMinutes: row.estimated_duration_minutes,
           createdBy: row.created_by,
           publishedAt: row.published_at,
@@ -125,8 +125,8 @@ export const courseService = {
     if (!supabase) return null
 
     try {
-      const { data: authData } = await supabase.auth.getUser()
-      const currentUserId = authData.user?.id
+      const authData = supabase.auth?.getUser ? await supabase.auth.getUser() : { data: { user: null } }
+      const currentUserId = authData?.data?.user?.id
 
       const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(courseIdOrSlug)
 
@@ -223,14 +223,42 @@ export const courseService = {
       }
 
       // Sort sections and lessons
-      const rawSections = (courseRow.course_sections || []) as any[]
+      type RawLessonShape = {
+        id: string
+        section_id: string
+        title: string
+        slug: string
+        description?: string
+        lesson_type: Lesson['lessonType']
+        content?: string
+        estimated_duration_minutes?: number
+        sort_order: number
+        status: Lesson['status']
+        published_at?: string
+        created_at: string
+        updated_at: string
+      }
+      type RawSectionShape = {
+        id: string
+        title: string
+        description?: string
+        sort_order: number
+        lessons?: RawLessonShape[]
+      }
+      type RawObjectiveShape = {
+        id: string
+        objective: string
+        sort_order: number
+      }
+
+      const rawSections = (courseRow.course_sections || []) as unknown as RawSectionShape[]
       rawSections.sort((a, b) => a.sort_order - b.sort_order)
 
       let totalLessons = 0
       let completedLessons = 0
 
       const sections: CourseSection[] = rawSections.map((sec) => {
-        const rawLessons = (sec.lessons || []) as any[]
+        const rawLessons = (sec.lessons || []) as RawLessonShape[]
         rawLessons.sort((a, b) => a.sort_order - b.sort_order)
 
         const lessons: Lesson[] = rawLessons.map((les) => {
@@ -248,10 +276,10 @@ export const courseService = {
             description: les.description || '',
             lessonType: les.lesson_type,
             content: les.content || '',
-            estimatedDurationMinutes: les.estimated_duration_minutes,
+            estimatedDurationMinutes: Number(les.estimated_duration_minutes || 15),
             sortOrder: les.sort_order,
             status: les.status,
-            publishedAt: les.published_at,
+            publishedAt: les.published_at || null,
             createdAt: les.created_at,
             updatedAt: les.updated_at,
             progress: prog
@@ -280,7 +308,7 @@ export const courseService = {
         }
       })
 
-      const rawObjectives = (courseRow.course_objectives || []) as any[]
+      const rawObjectives = (courseRow.course_objectives || []) as unknown as RawObjectiveShape[]
       rawObjectives.sort((a, b) => a.sort_order - b.sort_order)
       const objectives = rawObjectives.map((o) => ({
         id: o.id,
@@ -378,7 +406,7 @@ export const courseService = {
       })
 
       if (error) throw error
-      const res = data as { progress_percentage?: number; is_course_completed?: boolean }
+      const res = (data as unknown) as { progress_percentage?: number; is_course_completed?: boolean }
 
       return {
         success: true,
@@ -436,7 +464,7 @@ export const courseService = {
     if (!supabase) throw new Error('Supabase client tidak tersedia.')
 
     try {
-      const updatePayload: Record<string, unknown> = {
+      const updatePayload: Database['public']['Tables']['courses']['Update'] = {
         status,
         updated_at: new Date().toISOString(),
       }

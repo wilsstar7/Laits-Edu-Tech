@@ -9,7 +9,6 @@ import {
   Send,
   CheckCircle2,
   Clock,
-  Users,
   Loader2,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -70,8 +69,9 @@ export function AdminAnnouncementsPage() {
       setTitle('')
       setContent('')
       await loadData()
-    } catch (err: any) {
-      toast.error(err.message || 'Gagal membuat pengumuman.')
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Gagal membuat pengumuman.'
+      toast.error(msg)
     } finally {
       setCreating(false)
     }
@@ -82,8 +82,9 @@ export function AdminAnnouncementsPage() {
       await announcementService.publishAnnouncement(id)
       toast.success('Pengumuman berhasil dipublikasikan & notifikasi sistem telah dikirim!')
       await loadData()
-    } catch (err: any) {
-      toast.error(err.message || 'Gagal mempublikasikan pengumuman.')
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Gagal mempublikasikan pengumuman.'
+      toast.error(msg)
     }
   }
 

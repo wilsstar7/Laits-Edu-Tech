@@ -69,7 +69,7 @@ describe('quizService (Phase 8)', () => {
     expect(quiz).toBeDefined()
     expect(quiz?.title).toBe('Kuis Evaluasi Bab 1')
     expect(quiz?.questions).toHaveLength(1)
-    expect(quiz?.questions[0].options).toHaveLength(2)
+    expect(quiz?.questions?.[0]?.options).toHaveLength(2)
   })
 
   it('submits quiz answers through secure submit_quiz_attempt RPC', async () => {
@@ -92,7 +92,7 @@ describe('quizService (Phase 8)', () => {
     )
 
     const answers = [
-      { questionId: 'q-1', selectedOptionId: 'opt-1' },
+      { question_id: 'q-1', selected_option_id: 'opt-1' },
     ]
 
     const result = await submitQuiz('quiz-1', answers)

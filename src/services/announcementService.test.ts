@@ -45,8 +45,8 @@ describe('announcementService (Phase 8)', () => {
 
     const list = await getAnnouncements('students')
     expect(list).toHaveLength(1)
-    expect(list[0].title).toBe('Selamat Datang di Fitur Baru')
-    expect(list[0].audience).toBe('all')
+    expect(list[0]?.title).toBe('Selamat Datang di Fitur Baru')
+    expect(list[0]?.audience).toBe('all')
   })
 
   it('calls publish_announcement RPC when admin publishes an announcement', async () => {
@@ -71,5 +71,35 @@ describe('announcementService (Phase 8)', () => {
     expect(mockRpc).toHaveBeenCalledWith('publish_announcement', {
       p_announcement_id: 'ann-1',
     })
+  })
+
+  it('creates an announcement with title and content', async () => {
+    const mockSupabase = {
+      auth: {
+        getUser: vi.fn().mockResolvedValue({
+          data: { user: { id: 'admin-123' } },
+          error: null,
+        }),
+      },
+      from: vi.fn().mockReturnValue({
+        insert: vi.fn().mockReturnThis(),
+        select: vi.fn().mockReturnThis(),
+        single: vi.fn().mockResolvedValue({
+          data: { id: 'ann-new' },
+          error: null,
+        }),
+      }),
+    }
+
+    vi.spyOn(supabaseLib, 'getSupabase').mockReturnValue(
+      mockSupabase as unknown as supabaseLib.TypedSupabaseClient
+    )
+
+    const id = await createAnnouncement({
+      title: 'Pemberitahuan Baru',
+      content: 'Detail pengumuman resmi.',
+      audience: 'all',
+    })
+    expect(id).toBe('ann-new')
   })
 })

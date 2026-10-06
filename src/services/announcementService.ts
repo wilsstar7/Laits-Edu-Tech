@@ -84,7 +84,7 @@ export const announcementService = {
     if (!supabase) throw new Error('Supabase client tidak tersedia.')
 
     try {
-      const { data: authData } = await supabase.auth.getUser()
+      const authData = supabase.auth?.getUser ? await supabase.auth.getUser() : { data: { user: null } }
       const { data: inserted, error } = await supabase
         .from('announcements')
         .insert({
@@ -92,7 +92,7 @@ export const announcementService = {
           content: data.content,
           audience: data.audience,
           status: 'draft',
-          created_by: authData.user?.id || null,
+          created_by: authData?.data?.user?.id || null,
         })
         .select('id')
         .single()

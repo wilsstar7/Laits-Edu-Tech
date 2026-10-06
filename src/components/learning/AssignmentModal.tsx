@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { FileText, CheckCircle2, Clock, Upload, Loader2, Award } from 'lucide-react'
+import { FileText, CheckCircle2, Clock, Loader2, Award } from 'lucide-react'
 import type { Assignment } from '@/types/assignment'
 import { assignmentService } from '@/services/assignmentService'
 import { Button } from '@/components/ui/button'
@@ -31,8 +31,9 @@ export function AssignmentModal({ assignment, onClose, onSuccess }: AssignmentMo
       toast.success('Tugas berhasil dikumpulkan.')
       if (onSuccess) onSuccess()
       onClose()
-    } catch (err: any) {
-      toast.error(err.message || 'Gagal mengumpulkan tugas.')
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Gagal mengumpulkan tugas.'
+      toast.error(msg)
     } finally {
       setSubmitting(false)
     }

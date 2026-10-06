@@ -3,7 +3,12 @@ export type CourseStatus = 'draft' | 'published' | 'archived'
 export type LessonType = 'text' | 'video' | 'pdf' | 'audio' | 'link' | 'mixed'
 export type LessonStatus = 'draft' | 'published' | 'archived'
 export type EnrollmentStatus = 'active' | 'completed' | 'cancelled'
-export type EnrollmentSource = 'personalized_recommendation' | 'manual' | 'learning_path' | 'admin_assigned'
+export type EnrollmentSource =
+  | 'personalized_recommendation'
+  | 'personality_recommendation'
+  | 'manual'
+  | 'learning_path'
+  | 'admin_assigned'
 export type LessonProgressStatus = 'not_started' | 'in_progress' | 'completed'
 
 export interface CourseObjective {
@@ -56,7 +61,7 @@ export interface Course {
   learningPathId: string | null
   title: string
   slug: string
-  description: string
+  description: string | null
   thumbnailUrl: string | null
   level: CourseLevel
   status: CourseStatus

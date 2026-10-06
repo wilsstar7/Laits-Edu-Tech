@@ -4,7 +4,7 @@ import { PageHeader } from '@/components/layout/PageHeader'
 import { CourseCard } from '@/components/learning/CourseCard'
 import { courseService } from '@/services/courseService'
 import type { Course, CourseLevel } from '@/types/course'
-import { BookOpen, Search, Filter, Loader2, Sparkles } from 'lucide-react'
+import { BookOpen, Search, Filter, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 export function StudentCoursesPage() {
@@ -14,24 +14,17 @@ export function StudentCoursesPage() {
   const [levelFilter, setLevelFilter] = useState<CourseLevel | 'all'>('all')
   const [tab, setTab] = useState<'all' | 'enrolled'>('all')
 
-  const loadCourses = async () => {
-    setLoading(true)
-    try {
-      const data = await courseService.getCourses()
-      setCourses(data)
-    } finally {
-      setLoading(false)
-    }
-  }
-
   useEffect(() => {
     let isMounted = true
     courseService
       .getCourses()
       .then((data) => {
-        if (isMounted) setCourses(data)
+        if (isMounted) {
+          setCourses(data)
+          setLoading(false)
+        }
       })
-      .finally(() => {
+      .catch(() => {
         if (isMounted) setLoading(false)
       })
 
@@ -47,7 +40,7 @@ export function StudentCoursesPage() {
     if (search.trim()) {
       const q = search.toLowerCase()
       const matchTitle = c.title.toLowerCase().includes(q)
-      const matchDesc = c.description.toLowerCase().includes(q)
+      const matchDesc = (c.description || '').toLowerCase().includes(q)
       const matchSub = (c.subjectName || '').toLowerCase().includes(q)
       if (!matchTitle && !matchDesc && !matchSub) return false
     }
@@ -105,7 +98,7 @@ export function StudentCoursesPage() {
           <Filter className="w-3.5 h-3.5 text-[#8A8D9A]" />
           <select
             value={levelFilter}
-            onChange={(e) => setLevelFilter(e.target.value as any)}
+            onChange={(e) => setLevelFilter(e.target.value as CourseLevel | 'all')}
             className="px-3 py-2 rounded-xl border border-border/80 text-xs font-semibold text-[#17181C] bg-white focus:outline-hidden"
           >
             <option value="all">Semua Level</option>

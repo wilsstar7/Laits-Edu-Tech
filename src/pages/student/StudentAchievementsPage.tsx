@@ -12,9 +12,6 @@ import {
   ExternalLink,
   Copy,
   Loader2,
-  Sparkles,
-  Flame,
-  BookOpen,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'

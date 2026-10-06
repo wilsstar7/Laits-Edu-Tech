@@ -1,5 +1,5 @@
 import { getSupabase } from '@/lib/supabase'
-import type { Quiz, QuizAttempt, QuizSubmissionAnswer, QuizSubmissionResult } from '@/types/quiz'
+import type { Quiz, QuizQuestion, QuizAttempt, QuizSubmissionAnswer, QuizSubmissionResult } from '@/types/quiz'
 import { toAppError } from '@/utils/errors'
 import { logger } from '@/lib/logger'
 
@@ -45,11 +45,22 @@ export const quizService = {
       if (error) throw error
       if (!data) return null
 
-      const rawQuestions = (data.quiz_questions || []) as any[]
+      type RawOptionShape = { id: string; question_id: string; label: string; sort_order: number }
+      type RawQuestionShape = {
+        id: string
+        quiz_id: string
+        question: string
+        question_type: QuizQuestion['questionType']
+        points: number
+        sort_order: number
+        quiz_options?: RawOptionShape[]
+      }
+
+      const rawQuestions = (data.quiz_questions || []) as unknown as RawQuestionShape[]
       rawQuestions.sort((a, b) => a.sort_order - b.sort_order)
 
       const questions = rawQuestions.map((q) => {
-        const rawOptions = (q.quiz_options || []) as any[]
+        const rawOptions = (q.quiz_options || []) as RawOptionShape[]
         rawOptions.sort((a, b) => a.sort_order - b.sort_order)
         return {
           id: q.id,
@@ -112,7 +123,7 @@ export const quizService = {
         score: Number(row.score || 0),
         passed: Boolean(row.passed),
         startedAt: row.started_at,
-        submittedAt: row.submitted_at,
+        submittedAt: row.submitted_at || row.started_at,
       }))
     } catch (err) {
       logger.error('Failed to get student quiz attempts:', err)
@@ -131,11 +142,19 @@ export const quizService = {
     try {
       const { data, error } = await supabase.rpc('submit_quiz_attempt', {
         p_quiz_id: quizId,
-        p_answers: answers,
+        p_answers: answers as unknown as import('@/types/database').Json,
       })
 
       if (error) throw error
-      const res = data as any
+      type SubmitQuizRpcResponse = {
+        attempt_number: number
+        score: number
+        passing_score: number
+        passed: boolean
+        max_attempts: number
+        remaining_attempts: number
+      }
+      const res = data as unknown as SubmitQuizRpcResponse
 
       return {
         attempt_number: Number(res.attempt_number),

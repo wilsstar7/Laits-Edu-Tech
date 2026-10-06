@@ -99,7 +99,11 @@ export const assignmentService = {
       if (error) throw error
 
       // Record daily learning activity for streak
-      await supabase.rpc('record_learning_activity', { p_student_id: studentId })
+      await supabase.rpc('record_learning_activity', {
+        p_student_id: studentId,
+        p_activity_type: 'ASSIGNMENT_SUBMISSION',
+        p_reference_id: assignmentId,
+      })
 
       return {
         id: data.id,

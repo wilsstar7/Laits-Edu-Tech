@@ -53,8 +53,8 @@ describe('courseService (Phase 8)', () => {
 
     const courses = await getCourses()
     expect(courses).toHaveLength(1)
-    expect(courses[0].title).toBe('Bahasa Arab Dasar')
-    expect(courses[0].level).toBe('BEGINNER')
+    expect(courses[0]?.title).toBe('Bahasa Arab Dasar')
+    expect(courses[0]?.level).toBe('beginner')
   })
 
   it('enrolls student idempotently and prevents duplicate errors', async () => {
@@ -122,5 +122,36 @@ describe('courseService (Phase 8)', () => {
     })
     expect(result.isCourseCompleted).toBe(true)
     expect(result.progressPercentage).toBe(100)
+  })
+
+  it('fetches single course with curriculum sections', async () => {
+    const mockSupabase = {
+      auth: {
+        getUser: vi.fn().mockResolvedValue({
+          data: { user: { id: 'student-123' } },
+          error: null,
+        }),
+      },
+      from: vi.fn().mockReturnValue({
+        select: vi.fn().mockReturnThis(),
+        eq: vi.fn().mockReturnThis(),
+        maybeSingle: vi.fn().mockResolvedValue({
+          data: {
+            id: 'course-1',
+            title: 'Bahasa Arab Dasar',
+            course_sections: [],
+          },
+          error: null,
+        }),
+      }),
+    }
+
+    vi.spyOn(supabaseLib, 'getSupabase').mockReturnValue(
+      mockSupabase as unknown as supabaseLib.TypedSupabaseClient
+    )
+
+    const course = await getCourseById('course-1')
+    expect(course).toBeDefined()
+    expect(course?.title).toBe('Bahasa Arab Dasar')
   })
 })

@@ -3,13 +3,11 @@ import {
   FileText,
   Video,
   FileDown,
-  HelpCircle,
   CheckCircle2,
   Lock,
   PlayCircle,
-  ChevronDown,
 } from 'lucide-react'
-import type { CourseSection, Lesson } from '@/types/course'
+import type { CourseSection } from '@/types/course'
 
 interface CourseCurriculumProps {
   courseId: string

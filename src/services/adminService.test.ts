@@ -235,5 +235,51 @@ describe('Admin Service & Subject Management (Phase 6)', () => {
       expect(overview.pendingPayments).toBe(2)
       expect(overview.recentUsers).toHaveLength(1)
     })
+
+    it('isolates users to students and tutors when callerRole is admin', async () => {
+      const inMock = vi.fn().mockReturnValue({
+        order: vi.fn().mockReturnValue({
+          range: vi.fn().mockResolvedValue({
+            data: [
+              { id: 'u1', full_name: 'Student 1', email: 's1@test.com', role: 'student', phone: null, created_at: '2026-10-01', avatar_url: null },
+            ],
+            count: 1,
+            error: null,
+          }),
+        }),
+      })
+
+      const mockSupabase = {
+        from: vi.fn().mockReturnValue({
+          select: vi.fn().mockReturnValue({
+            in: inMock,
+          }),
+        }),
+      }
+
+      vi.spyOn(supabaseLib, 'requireSupabase').mockReturnValue(
+        mockSupabase as unknown as supabaseLib.TypedSupabaseClient
+      )
+
+      const result = await adminService.getUsers({ callerRole: 'admin' })
+      expect(inMock).toHaveBeenCalledWith('role', ['student', 'tutor'])
+      expect(result.users).toHaveLength(1)
+    })
+
+    it('blocks regular admin from demoting super_admin or modifying admin roles', async () => {
+      await expect(
+        adminService.updateUserRole('target-1', 'student', {
+          targetUserRole: 'super_admin',
+          callerRole: 'admin',
+        })
+      ).rejects.toThrow('Akses ditolak')
+
+      await expect(
+        adminService.updateUserRole('target-2', 'admin', {
+          targetUserRole: 'student',
+          callerRole: 'admin',
+        })
+      ).rejects.toThrow('Akses ditolak')
+    })
   })
 })

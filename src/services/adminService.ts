@@ -113,17 +113,22 @@ async function countPendingPayments(): Promise<number> {
 
 export const adminService = {
   /** Real counts from the database. RLS only returns rows to admins. */
-  async getOverview(): Promise<AdminOverview> {
+  async getOverview(callerRole?: UserRole | null): Promise<AdminOverview> {
+    const isRegularAdmin = callerRole === 'admin'
+    let recentQuery = requireSupabase()
+      .from('profiles')
+      .select('id, full_name, email, role, created_at')
+
+    if (isRegularAdmin) {
+      recentQuery = recentQuery.in('role', ['student', 'tutor'])
+    }
+
     const [totalStudents, totalTutors, activeBookings, pendingPayments, recent] = await Promise.all([
       countByRole('student'),
       countByRole('tutor'),
       countActiveBookings(),
       countPendingPayments(),
-      requireSupabase()
-        .from('profiles')
-        .select('id, full_name, email, role, created_at')
-        .order('created_at', { ascending: false })
-        .limit(6),
+      recentQuery.order('created_at', { ascending: false }).limit(6),
     ])
     if (recent.error) throw toAppError(recent.error, 'Gagal memuat pengguna terbaru.')
     return {
@@ -255,6 +260,7 @@ export const adminService = {
     search?: string
     page?: number
     pageSize?: number
+    callerRole?: UserRole | null
   }): Promise<{ users: UserListItem[]; total: number }> {
     const supabase = requireSupabase()
     const page = params?.page ?? 1
@@ -266,8 +272,19 @@ export const adminService = {
       .from('profiles')
       .select('id, full_name, email, avatar_url, role, phone, created_at', { count: 'exact' })
 
-    if (params?.role && params.role !== 'all') {
-      query = query.eq('role', params.role)
+    const isRegularAdmin = params?.callerRole === 'admin'
+
+    if (isRegularAdmin) {
+      if (params?.role === 'student' || params?.role === 'tutor') {
+        query = query.eq('role', params.role)
+      } else {
+        // Regular admin is strictly limited to viewing students and tutors
+        query = query.in('role', ['student', 'tutor'])
+      }
+    } else {
+      if (params?.role && params.role !== 'all') {
+        query = query.eq('role', params.role)
+      }
     }
 
     if (params?.search && params.search.trim()) {
@@ -285,7 +302,25 @@ export const adminService = {
     }
   },
 
-  async updateUserRole(targetUserId: string, newRole: UserRole): Promise<void> {
+  async updateUserRole(
+    targetUserId: string,
+    newRole: UserRole,
+    options?: {
+      targetUserRole?: UserRole
+      callerRole?: UserRole | null
+    }
+  ): Promise<void> {
+    if (options?.callerRole === 'admin') {
+      if (
+        options.targetUserRole === 'super_admin' ||
+        options.targetUserRole === 'admin' ||
+        newRole === 'super_admin' ||
+        newRole === 'admin'
+      ) {
+        throw new Error('Akses ditolak: Admin tidak memiliki izin untuk mengelola peran administrator atau menurunkan peran Super Admin.')
+      }
+    }
+
     const supabase = requireSupabase()
     const { error } = await supabase.rpc('admin_set_user_role', {
       target_user_id: targetUserId,

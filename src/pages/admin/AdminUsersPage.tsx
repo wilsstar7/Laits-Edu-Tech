@@ -101,6 +101,8 @@ export function AdminUsersPage() {
   const [selectedNewRole, setSelectedNewRole] = useState<UserRole>('student')
   const [updatingRole, setUpdatingRole] = useState(false)
 
+  const isSuperAdmin = currentUserRole === 'super_admin'
+
   const loadData = useCallback(async () => {
     try {
       const [countsData, usersData] = await Promise.all([
@@ -110,6 +112,7 @@ export function AdminUsersPage() {
           search: search.trim() || undefined,
           page,
           pageSize,
+          callerRole: currentUserRole,
         }),
       ])
 
@@ -123,7 +126,7 @@ export function AdminUsersPage() {
       setLoading(false)
       setRefreshing(false)
     }
-  }, [roleFilter, search, page])
+  }, [roleFilter, search, page, currentUserRole])
 
   useEffect(() => {
     loadData()
@@ -153,6 +156,10 @@ export function AdminUsersPage() {
       toast.error('Anda tidak dapat mengubah peran akun Anda sendiri.')
       return
     }
+    if (!isSuperAdmin && (user.role === 'super_admin' || user.role === 'admin')) {
+      toast.error('Akses ditolak: Anda tidak memiliki wewenang untuk mengubah peran administrator.')
+      return
+    }
     setRoleModalUser(user)
     setSelectedNewRole(user.role)
   }
@@ -164,9 +171,23 @@ export function AdminUsersPage() {
       return
     }
 
+    if (!isSuperAdmin && (roleModalUser.role === 'super_admin' || roleModalUser.role === 'admin')) {
+      toast.error('Akses ditolak: Anda tidak memiliki wewenang untuk mengubah peran administrator.')
+      setRoleModalUser(null)
+      return
+    }
+
+    if (!isSuperAdmin && (selectedNewRole === 'super_admin' || selectedNewRole === 'admin')) {
+      toast.error('Akses ditolak: Hanya Super Admin yang berhak menetapkan peran administrator.')
+      return
+    }
+
     setUpdatingRole(true)
     try {
-      await adminService.updateUserRole(roleModalUser.id, selectedNewRole)
+      await adminService.updateUserRole(roleModalUser.id, selectedNewRole, {
+        targetUserRole: roleModalUser.role,
+        callerRole: currentUserRole,
+      })
       toast.success(
         `Peran pengguna ${roleModalUser.full_name} berhasil diperbarui menjadi ${ROLE_CONFIG[selectedNewRole].label}.`
       )
@@ -181,6 +202,20 @@ export function AdminUsersPage() {
   }
 
   const totalPages = Math.ceil(total / pageSize) || 1
+
+  const roleTabs = isSuperAdmin
+    ? ([
+        { id: 'all', label: 'Semua' },
+        { id: 'student', label: 'Siswa' },
+        { id: 'tutor', label: 'Tutor' },
+        { id: 'admin', label: 'Admin' },
+        { id: 'super_admin', label: 'Super Admin' },
+      ] as const)
+    : ([
+        { id: 'all', label: 'Semua' },
+        { id: 'student', label: 'Siswa' },
+        { id: 'tutor', label: 'Tutor' },
+      ] as const)
 
   return (
     <AppShell>
@@ -213,10 +248,14 @@ export function AdminUsersPage() {
           }
         />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className={`grid grid-cols-1 sm:grid-cols-2 ${isSuperAdmin ? 'lg:grid-cols-4' : 'lg:grid-cols-3'} gap-4`}>
           <StatCard
             label="Total Pengguna"
-            value={counts ? counts.total.toLocaleString('id-ID') : '...'}
+            value={
+              counts
+                ? (isSuperAdmin ? counts.total : counts.student + counts.tutor).toLocaleString('id-ID')
+                : '...'
+            }
             icon={Users}
             iconBg="bg-blue-50 dark:bg-blue-950/40"
             iconColor="text-blue-600"
@@ -235,13 +274,15 @@ export function AdminUsersPage() {
             iconBg="bg-purple-50 dark:bg-purple-950/40"
             iconColor="text-purple-600"
           />
-          <StatCard
-            label="Administrator"
-            value={counts ? (counts.admin + counts.super_admin).toLocaleString('id-ID') : '...'}
-            icon={Shield}
-            iconBg="bg-emerald-50 dark:bg-emerald-950/40"
-            iconColor="text-emerald-600"
-          />
+          {isSuperAdmin && (
+            <StatCard
+              label="Administrator"
+              value={counts ? (counts.admin + counts.super_admin).toLocaleString('id-ID') : '...'}
+              icon={Shield}
+              iconBg="bg-emerald-50 dark:bg-emerald-950/40"
+              iconColor="text-emerald-600"
+            />
+          )}
         </div>
 
         <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-sm space-y-4">
@@ -261,15 +302,7 @@ export function AdminUsersPage() {
             </div>
 
             <div className="flex flex-wrap items-center gap-1.5 overflow-x-auto pb-1 md:pb-0">
-              {(
-                [
-                  { id: 'all', label: 'Semua' },
-                  { id: 'student', label: 'Siswa' },
-                  { id: 'tutor', label: 'Tutor' },
-                  { id: 'admin', label: 'Admin' },
-                  { id: 'super_admin', label: 'Super Admin' },
-                ] as const
-              ).map((tab) => {
+              {roleTabs.map((tab) => {
                 const isActive = roleFilter === tab.id
                 return (
                   <button
@@ -345,6 +378,10 @@ export function AdminUsersPage() {
                 ) : (
                   users.map((item) => {
                     const isSelf = item.id === currentUser?.id
+                    const isTargetAdmin = item.role === 'admin' || item.role === 'super_admin'
+                    const canChangeRole =
+                      !isSelf &&
+                      (isSuperAdmin || (!isTargetAdmin && (item.role === 'student' || item.role === 'tutor')))
                     const roleInfo = ROLE_CONFIG[item.role] || ROLE_CONFIG.student
                     const initials = (item.full_name || 'U')
                       .split(' ')
@@ -407,9 +444,15 @@ export function AdminUsersPage() {
                               variant="outline"
                               size="sm"
                               onClick={() => handleOpenRoleModal(item)}
-                              disabled={isSelf}
+                              disabled={!canChangeRole}
                               className="h-8 px-2.5 text-xs gap-1 border-slate-200 dark:border-slate-700"
-                              title={isSelf ? 'Tidak dapat mengubah peran sendiri' : 'Ubah Peran'}
+                              title={
+                                isSelf
+                                  ? 'Tidak dapat mengubah peran sendiri'
+                                  : !canChangeRole
+                                  ? 'Hanya Super Admin yang berhak mengelola peran administrator'
+                                  : 'Ubah Peran'
+                              }
                             >
                               <Shield className="w-3.5 h-3.5 text-slate-500" />
                               <span className="hidden sm:inline">Peran</span>

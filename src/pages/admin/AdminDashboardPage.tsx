@@ -43,7 +43,7 @@ export function AdminDashboardPage() {
       try {
         if (env.isSupabaseConfigured) {
           const [overview, assessments] = await Promise.all([
-            adminService.getOverview().catch(() => null),
+            adminService.getOverview(role).catch(() => null),
             adminService.getStudentAssessments().catch(() => []),
           ])
           if (!cancelled) {
@@ -69,14 +69,14 @@ export function AdminDashboardPage() {
     return () => {
       cancelled = true
     }
-  }, [])
+  }, [role])
 
   const handleRefresh = async () => {
     setLoading(true)
     try {
       if (env.isSupabaseConfigured) {
         const [overview, assessments] = await Promise.all([
-          adminService.getOverview().catch(() => null),
+          adminService.getOverview(role).catch(() => null),
           adminService.getStudentAssessments().catch(() => []),
         ])
         if (overview) setData(overview)

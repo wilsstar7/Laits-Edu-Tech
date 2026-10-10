@@ -1,9 +1,22 @@
-import { Link } from 'react-router'
+import { Link, Navigate } from 'react-router'
 import { Layers, AlertCircle } from 'lucide-react'
 import { LoginForm } from '@/components/auth/LoginForm'
+import { useAuth } from '@/hooks/useAuth'
 import { env } from '@/lib/env'
 
 export function LoginPage() {
+  const { session, role } = useAuth()
+
+  if (session && role) {
+    if (role === 'admin' || role === 'super_admin') {
+      return <Navigate to="/admin/dashboard" replace />
+    } else if (role === 'tutor') {
+      return <Navigate to="/tutor/dashboard" replace />
+    } else {
+      return <Navigate to="/student/dashboard" replace />
+    }
+  }
+
   return (
     <div className="min-h-screen bg-[#F4F5FB] flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -21,7 +34,7 @@ export function LoginPage() {
         <div className="surface-card p-6 sm:p-8 bg-white border border-border shadow-sm">
           <div className="mb-6 text-center space-y-1">
             <h1 className="text-xl font-extrabold text-[#17181C] tracking-tight">
-              Masuk ke Portal Siswa
+              Masuk ke Akun Anda
             </h1>
             <p className="text-xs text-[#676A78]">
               Gunakan email dan kata sandi akun terdaftar Anda
@@ -47,13 +60,6 @@ export function LoginPage() {
           </div>
         </div>
 
-        {/* Demo Credentials hint */}
-        <div className="mt-5 p-3.5 rounded-xl bg-white border border-border text-center text-[11px] text-[#676A78]">
-          <p className="font-bold text-[#17181C] mb-0.5">Informasi Akun Demo (Phase 1):</p>
-          <p>
-            Akun uji coba development tercantum di file <code className="font-mono text-[#6C5CE7]">supabase/seed.sql</code> dan README.
-          </p>
-        </div>
       </div>
     </div>
   )

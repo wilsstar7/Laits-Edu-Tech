@@ -15,8 +15,17 @@ export function RoleGuard({ allowedRoles, children }: RoleGuardProps) {
     return <>{children}</>
   }
 
-  // If user has a role and it's not in allowed roles, redirect to /unauthorized
+  // If user has a role and it's not in allowed roles, redirect directly to their respective role dashboard
   if (role && !allowedRoles.includes(role)) {
+    if (role === 'admin' || role === 'super_admin') {
+      return <Navigate to="/admin/dashboard" replace />
+    }
+    if (role === 'tutor') {
+      return <Navigate to="/tutor/dashboard" replace />
+    }
+    if (role === 'student') {
+      return <Navigate to="/student/dashboard" replace />
+    }
     return <Navigate to="/unauthorized" replace />
   }
 

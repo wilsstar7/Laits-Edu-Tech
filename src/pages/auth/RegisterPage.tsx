@@ -1,8 +1,20 @@
-import { Link } from 'react-router'
+import { Link, Navigate } from 'react-router'
 import { Layers } from 'lucide-react'
 import { RegisterForm } from '@/components/auth/RegisterForm'
+import { useAuth } from '@/hooks/useAuth'
 
 export function RegisterPage() {
+  const { session, role } = useAuth()
+
+  if (session && role) {
+    if (role === 'admin' || role === 'super_admin') {
+      return <Navigate to="/admin/dashboard" replace />
+    } else if (role === 'tutor') {
+      return <Navigate to="/tutor/dashboard" replace />
+    } else {
+      return <Navigate to="/student/dashboard" replace />
+    }
+  }
   return (
     <div className="min-h-screen bg-[#F4F5FB] flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-2xl">

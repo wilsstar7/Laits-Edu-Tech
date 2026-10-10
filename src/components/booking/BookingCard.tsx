@@ -20,7 +20,6 @@ interface BookingCardProps {
   booking: Booking
   perspective: 'student' | 'tutor'
   onCancel?: (booking: Booking) => void
-  onAccept?: (booking: Booking) => void
   onReject?: (booking: Booking) => void
   onComplete?: (booking: Booking) => void
   onPay?: (booking: Booking) => void
@@ -32,7 +31,6 @@ export function BookingCard({
   booking,
   perspective,
   onCancel,
-  onAccept,
   onReject,
   onComplete,
   onPay,
@@ -168,9 +166,13 @@ export function BookingCard({
 
         {/* Action Buttons */}
         <div className="flex flex-wrap items-center justify-end gap-2.5 pt-4 mt-3 border-t border-border">
-          {/* Tutor actions for pending booking */}
+          {/* Tutor actions for pending booking: only Super Admin can verify payment & confirm session */}
           {perspective === 'tutor' && booking.status === 'pending' && (
-            <>
+            <div className="flex flex-wrap items-center justify-between w-full gap-2">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-800 dark:text-amber-300 text-xs font-semibold">
+                <Clock className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
+                <span>Menunggu Verifikasi Pembayaran (Super Admin)</span>
+              </div>
               {onReject && (
                 <Button
                   type="button"
@@ -178,25 +180,13 @@ export function BookingCard({
                   size="sm"
                   disabled={isActionLoading}
                   onClick={() => onReject(booking)}
-                  className="min-h-[44px] text-danger border-danger/30 hover:bg-danger/10 hover:text-danger gap-1.5"
+                  className="min-h-[44px] text-danger border-danger/30 hover:bg-danger/10 hover:text-danger gap-1.5 ml-auto"
                 >
                   <X className="w-4 h-4" />
-                  Tolak
+                  Tolak Permintaan
                 </Button>
               )}
-              {onAccept && (
-                <Button
-                  type="button"
-                  size="sm"
-                  disabled={isActionLoading}
-                  onClick={() => onAccept(booking)}
-                  className="min-h-[44px] bg-brand-primary text-white hover:bg-brand-primary/90 gap-1.5"
-                >
-                  <Check className="w-4 h-4" />
-                  Konfirmasi Sesi
-                </Button>
-              )}
-            </>
+            </div>
           )}
 
           {/* Tutor action for confirmed booking -> mark completed */}

@@ -1,4 +1,4 @@
-import { Navigate, useLocation } from 'react-router'
+import { Navigate } from 'react-router'
 import { useAuth } from '@/hooks/useAuth'
 import { DashboardSkeleton } from '@/components/dashboard/LoadingSkeleton'
 
@@ -8,7 +8,6 @@ interface ProtectedRouteProps {
 
 export function ProtectedRoute({ children }: ProtectedRouteProps) {
   const { status, profileStatus } = useAuth()
-  const location = useLocation()
 
   if (status === 'initializing' || (status === 'authenticated' && profileStatus === 'loading')) {
     return (
@@ -19,7 +18,7 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
   }
 
   if (status === 'unauthenticated') {
-    return <Navigate to="/login" state={{ from: location.pathname }} replace />
+    return <Navigate to="/login" replace />
   }
 
   return <>{children}</>

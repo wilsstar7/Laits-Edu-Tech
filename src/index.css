@@ -51,6 +51,12 @@
   --color-primary-soft: var(--primary-soft);
   --color-primary-strong: var(--primary-strong);
 
+  --color-brand-primary: var(--primary);
+  --color-brand-primary-foreground: var(--primary-foreground);
+  --color-ink-primary: var(--ink);
+  --color-ink-secondary: var(--ink-soft);
+  --color-ink-muted: var(--muted-foreground);
+
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
@@ -107,6 +113,9 @@
   --primary-soft: #efedfd;
   --primary-strong: #5243d6;
 
+  --brand-primary: #6c5ce7;
+  --brand-primary-foreground: #ffffff;
+
   --secondary: #eef0f8;
   --secondary-foreground: #1d1d24;
   --muted: #eef0f8;
@@ -117,6 +126,9 @@
 
   --ink: #17181c;
   --ink-soft: #24252b;
+  --ink-primary: #17181c;
+  --ink-secondary: #24252b;
+  --ink-muted: #676a78;
 
   --success: #45b97c;
   --success-soft: #e6f6ee;
@@ -221,6 +233,26 @@
 
   .text-balance {
     text-wrap: balance;
+  }
+
+  /* Clean auto-hiding scrollbar utility */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(108, 92, 231, 0.25) transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: rgba(108, 92, 231, 0.2);
+    border-radius: 9999px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: rgba(108, 92, 231, 0.4);
   }
 }
 

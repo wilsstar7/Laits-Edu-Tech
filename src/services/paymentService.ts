@@ -11,6 +11,7 @@ import type {
 } from '@/types/payment'
 import { toAppError } from '@/utils/errors'
 import { logger } from '@/lib/logger'
+import { fileToBase64 } from '@/utils/imageCompression'
 
 interface RawPaymentRow {
   id: string
@@ -74,6 +75,7 @@ function formatPaymentRow(row: RawPaymentRow): Payment {
 
   let proofObj: PaymentProof | null = null
   if (latestProof) {
+    const isBase64 = latestProof.file_path.startsWith('data:')
     proofObj = {
       id: latestProof.id,
       paymentId: row.id,
@@ -87,6 +89,7 @@ function formatPaymentRow(row: RawPaymentRow): Payment {
       verifiedBy: latestProof.verified_by,
       rejectionReason: latestProof.rejection_reason,
       status: latestProof.status,
+      signedUrl: isBase64 ? latestProof.file_path : undefined,
     }
   }
 
@@ -232,17 +235,21 @@ export const paymentService = {
 
       const payment = formatPaymentRow(data as unknown as RawPaymentRow)
 
-      // If proof exists, generate temporary signed download URL for secure display
+      // If proof exists, generate temporary signed download URL for secure display (fallback for legacy storage paths)
       if (payment.proof && payment.proof.filePath) {
-        try {
-          const { data: signed } = await supabase.storage
-            .from('payment-proofs')
-            .createSignedUrl(payment.proof.filePath, 3600)
-          if (signed?.signedUrl) {
-            payment.proof.signedUrl = signed.signedUrl
+        if (payment.proof.filePath.startsWith('data:')) {
+          payment.proof.signedUrl = payment.proof.filePath
+        } else {
+          try {
+            const { data: signed } = await supabase.storage
+              .from('payment-proofs')
+              .createSignedUrl(payment.proof.filePath, 3600)
+            if (signed?.signedUrl) {
+              payment.proof.signedUrl = signed.signedUrl
+            }
+          } catch (storageErr) {
+            logger.warn('Failed to generate signed URL for proof:', storageErr)
           }
-        } catch (storageErr) {
-          logger.warn('Failed to generate signed URL for proof:', storageErr)
         }
       }
 
@@ -359,7 +366,7 @@ export const paymentService = {
   },
 
   /**
-   * Uploads payment proof file to private storage bucket `payment-proofs` and submits record via RPC.
+   * Converts payment proof to Base64 (zero storage, zero egress on Supabase) and submits record via RPC.
    */
   async uploadPaymentProof(paymentId: string, file: File): Promise<string> {
     const supabase = requireSupabase()
@@ -379,27 +386,17 @@ export const paymentService = {
       const studentId = authData.user?.id
       if (!studentId) throw new Error('Autentikasi diperlukan.')
 
-      // Path format: {student_id}/{payment_id}/{timestamp}_{filename}
-      const safeFileName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_')
-      const storagePath = `${studentId}/${paymentId}/${Date.now()}_${safeFileName}`
-
-      // 2. Upload file to Supabase private storage
-      const { error: uploadErr } = await supabase.storage
-        .from('payment-proofs')
-        .upload(storagePath, file, {
-          contentType: file.type,
-          upsert: true,
-        })
-
-      if (uploadErr) throw uploadErr
+      // 2. Convert and compress image to Base64 (canvas scale max 1200px, 0.8 quality)
+      // Eliminates Supabase private storage and egress consumption completely.
+      const { dataUrl, mimeType, size } = await fileToBase64(file)
 
       // 3. Atomically record proof and update payment status to awaiting_verification
       const { data: proofId, error: rpcErr } = await supabase.rpc('submit_payment_proof', {
         p_payment_id: paymentId,
-        p_file_path: storagePath,
+        p_file_path: dataUrl,
         p_original_file_name: file.name,
-        p_mime_type: file.type,
-        p_file_size: file.size,
+        p_mime_type: mimeType,
+        p_file_size: size,
       })
 
       if (rpcErr) throw rpcErr

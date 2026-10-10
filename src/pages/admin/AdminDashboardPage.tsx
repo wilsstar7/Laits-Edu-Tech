@@ -27,8 +27,10 @@ import { AdminStudentAssessmentModal } from '@/components/admin/AdminStudentAsse
 import { AdminCreateTutorModal } from '@/components/admin/AdminCreateTutorModal'
 import { formatShortDate, formatReportDate } from '@/utils/format'
 import { env } from '@/lib/env'
+import { useAuth } from '@/hooks/useAuth'
 
 export function AdminDashboardPage() {
+  const { role } = useAuth()
   const [data, setData] = useState<AdminOverview | null>(null)
   const [studentAssessments, setStudentAssessments] = useState<AdminStudentAssessmentItem[]>([])
   const [loading, setLoading] = useState(true)
@@ -50,13 +52,13 @@ export function AdminDashboardPage() {
           }
         } else {
           if (!cancelled) {
-            setData({ totalStudents: 0, totalTutors: 0, recentUsers: [] })
+            setData({ totalStudents: 0, totalTutors: 0, activeBookings: 0, pendingPayments: 0, recentUsers: [] })
             setStudentAssessments([])
           }
         }
       } catch {
         if (!cancelled) {
-          setData({ totalStudents: 0, totalTutors: 0, recentUsers: [] })
+          setData({ totalStudents: 0, totalTutors: 0, activeBookings: 0, pendingPayments: 0, recentUsers: [] })
           setStudentAssessments([])
         }
       } finally {
@@ -117,13 +119,15 @@ export function AdminDashboardPage() {
               <Megaphone className="w-3.5 h-3.5 text-[#6C5CE7]" />
               <span>Pengumuman</span>
             </Link>
-            <Link
-              to="/admin/payments"
-              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-border text-foreground text-xs font-bold hover:bg-[#EEF0F8] transition-colors min-h-[44px]"
-            >
-              <CreditCard className="w-3.5 h-3.5 text-[#6C5CE7]" />
-              <span>Verifikasi Pembayaran</span>
-            </Link>
+            {role === 'super_admin' && (
+              <Link
+                to="/admin/payments"
+                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-border text-foreground text-xs font-bold hover:bg-[#EEF0F8] transition-colors min-h-[44px]"
+              >
+                <CreditCard className="w-3.5 h-3.5 text-[#6C5CE7]" />
+                <span>Verifikasi Pembayaran</span>
+              </Link>
+            )}
             <Link
               to="/admin/reviews"
               className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-border text-foreground text-xs font-bold hover:bg-[#EEF0F8] transition-colors min-h-[44px]"
@@ -166,22 +170,20 @@ export function AdminDashboardPage() {
 
         <StatCard
           label="Booking Aktif"
-          value="0"
+          value={loading ? '-' : String(data?.activeBookings ?? 0)}
           description="Sesi privat berjalan"
           icon={Calendar}
           iconBg="bg-[#FDF4E2]"
           iconColor="text-[#B87A14]"
-          badge="Phase 2"
         />
 
         <StatCard
           label="Pembayaran Tertunda"
-          value="0"
+          value={loading ? '-' : String(data?.pendingPayments ?? 0)}
           description="Transaksi dalam proses"
           icon={CreditCard}
           iconBg="bg-[#EFEDFD]"
           iconColor="text-[#6C5CE7]"
-          badge="Phase 2"
         />
       </div>
 
@@ -192,7 +194,12 @@ export function AdminDashboardPage() {
             <UserCheck className="w-5 h-5 text-[#6C5CE7]" />
             <h3 className="font-bold text-base text-[#17181C]">Pengguna Terbaru Terdaftar</h3>
           </div>
-          <span className="text-xs text-muted-foreground">Kueri realtime Supabase</span>
+          <Link
+            to="/admin/users"
+            className="text-xs font-semibold text-[#6C5CE7] hover:underline"
+          >
+            Kelola Semua Pengguna &rarr;
+          </Link>
         </div>
 
         {loading ? (

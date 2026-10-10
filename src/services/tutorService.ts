@@ -27,7 +27,7 @@ export const tutorService = {
     const { filters = {}, sortBy = 'recommended', page = 1, limit = 20 } = params
 
     try {
-      // 1. Build base query with joined profile & subjects
+      // Use left join so tutors remain visible even if profile relation resolution varies by role
       let query = supabase
         .from('tutor_profiles')
         .select(`
@@ -45,7 +45,7 @@ export const tutorService = {
           is_verified,
           is_active,
           created_at,
-          profile:profiles!inner (
+          profile:profiles (
             full_name,
             email,
             avatar_url
@@ -65,7 +65,6 @@ export const tutorService = {
         `, { count: 'exact' })
         .eq('is_active', true)
 
-      // 2. Filters
       if (filters.minRating && filters.minRating > 0) {
         query = query.gte('rating', filters.minRating)
       }
@@ -78,7 +77,6 @@ export const tutorService = {
         query = query.gte('experience_years', filters.minExperienceYears)
       }
 
-      // Sorting
       switch (sortBy) {
         case 'rating_desc':
           query = query.order('rating', { ascending: false }).order('total_reviews', { ascending: false })
@@ -101,7 +99,6 @@ export const tutorService = {
           break
       }
 
-      // Pagination
       const from = (page - 1) * limit
       const to = from + limit - 1
       query = query.range(from, to)
@@ -128,7 +125,7 @@ export const tutorService = {
           full_name: string
           email: string
           avatar_url: string | null
-        }
+        } | null
         tutor_subjects: Array<{
           subject: {
             id: string
@@ -145,7 +142,6 @@ export const tutorService = {
 
       const rawRows = (data as unknown as RawTutorRow[]) || []
 
-      // 3. Transform and apply memory filter for subject / search if needed
       let formatted: TutorSummary[] = rawRows.map((r) => {
         const subjects: SubjectSummary[] = (r.tutor_subjects || [])
           .filter((ts) => ts.subject !== null)
@@ -243,7 +239,7 @@ export const tutorService = {
           is_verified,
           is_active,
           created_at,
-          profile:profiles!inner (
+          profile:profiles (
             full_name,
             email,
             avatar_url
@@ -286,7 +282,7 @@ export const tutorService = {
           full_name: string
           email: string
           avatar_url: string | null
-        }
+        } | null
         tutor_subjects: Array<{
           subject: {
             id: string

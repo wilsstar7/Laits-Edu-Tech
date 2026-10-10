@@ -38,6 +38,7 @@ const StudentPaymentsPage = lazy(() => import('@/pages/student/StudentPaymentsPa
 const PaymentDetailPage = lazy(() => import('@/pages/student/PaymentDetailPage').then((m) => ({ default: m.PaymentDetailPage })))
 const StudentSessionsPage = lazy(() => import('@/pages/student/StudentSessionsPage').then((m) => ({ default: m.StudentSessionsPage })))
 const NotificationsPage = lazy(() => import('@/pages/student/NotificationsPage').then((m) => ({ default: m.NotificationsPage })))
+const StudentMessagesPage = lazy(() => import('@/pages/student/StudentMessagesPage').then((m) => ({ default: m.StudentMessagesPage })))
 const PlaceholderPage = lazy(() => import('@/pages/student/PlaceholderPage').then((m) => ({ default: m.PlaceholderPage })))
 const CertificateVerifyPage = lazy(() => import('@/pages/CertificateVerifyPage').then((m) => ({ default: m.CertificateVerifyPage })))
 
@@ -52,6 +53,8 @@ const AdminCoursesPage = lazy(() => import('@/pages/admin/AdminCoursesPage').the
 const AdminAnnouncementsPage = lazy(() => import('@/pages/admin/AdminAnnouncementsPage').then((m) => ({ default: m.AdminAnnouncementsPage })))
 const AdminPaymentsPage = lazy(() => import('@/pages/admin/AdminPaymentsPage').then((m) => ({ default: m.AdminPaymentsPage })))
 const AdminReviewsPage = lazy(() => import('@/pages/admin/AdminReviewsPage').then((m) => ({ default: m.AdminReviewsPage })))
+const AdminUsersPage = lazy(() => import('@/pages/admin/AdminUsersPage').then((m) => ({ default: m.AdminUsersPage })))
+const AdminSubjectsPage = lazy(() => import('@/pages/admin/AdminSubjectsPage').then((m) => ({ default: m.AdminSubjectsPage })))
 
 function RouteLoader() {
   return (
@@ -81,7 +84,7 @@ export function AppRoutes() {
           path="/student/dashboard"
           element={
             <ProtectedRoute>
-              <RoleGuard allowedRoles={['student', 'admin', 'super_admin']}>
+              <RoleGuard allowedRoles={['student']}>
                 <StudentDashboardPage />
               </RoleGuard>
             </ProtectedRoute>
@@ -91,7 +94,7 @@ export function AppRoutes() {
           path="/student/courses"
           element={
             <ProtectedRoute>
-              <RoleGuard allowedRoles={['student', 'admin', 'super_admin']}>
+              <RoleGuard allowedRoles={['student']}>
                 <StudentCoursesPage />
               </RoleGuard>
             </ProtectedRoute>
@@ -101,7 +104,7 @@ export function AppRoutes() {
           path="/student/courses/:courseId"
           element={
             <ProtectedRoute>
-              <RoleGuard allowedRoles={['student', 'admin', 'super_admin']}>
+              <RoleGuard allowedRoles={['student']}>
                 <CourseDetailPage />
               </RoleGuard>
             </ProtectedRoute>
@@ -111,7 +114,7 @@ export function AppRoutes() {
           path="/student/courses/:courseId/lessons/:lessonId"
           element={
             <ProtectedRoute>
-              <RoleGuard allowedRoles={['student', 'admin', 'super_admin']}>
+              <RoleGuard allowedRoles={['student']}>
                 <LessonPlayerPage />
               </RoleGuard>
             </ProtectedRoute>
@@ -121,7 +124,7 @@ export function AppRoutes() {
           path="/student/goals"
           element={
             <ProtectedRoute>
-              <RoleGuard allowedRoles={['student', 'admin', 'super_admin']}>
+              <RoleGuard allowedRoles={['student']}>
                 <StudentGoalsPage />
               </RoleGuard>
             </ProtectedRoute>
@@ -131,7 +134,7 @@ export function AppRoutes() {
           path="/student/achievements"
           element={
             <ProtectedRoute>
-              <RoleGuard allowedRoles={['student', 'admin', 'super_admin']}>
+              <RoleGuard allowedRoles={['student']}>
                 <StudentAchievementsPage />
               </RoleGuard>
             </ProtectedRoute>
@@ -141,7 +144,7 @@ export function AppRoutes() {
           path="/student/settings"
           element={
             <ProtectedRoute>
-              <RoleGuard allowedRoles={['student', 'admin', 'super_admin']}>
+              <RoleGuard allowedRoles={['student', 'tutor', 'admin', 'super_admin']}>
                 <StudentSettingsPage />
               </RoleGuard>
             </ProtectedRoute>
@@ -151,7 +154,7 @@ export function AppRoutes() {
           path="/student/assessment"
           element={
             <ProtectedRoute>
-              <RoleGuard allowedRoles={['student', 'admin', 'super_admin']}>
+              <RoleGuard allowedRoles={['student']}>
                 <AssessmentIntroPage />
               </RoleGuard>
             </ProtectedRoute>
@@ -161,7 +164,7 @@ export function AppRoutes() {
           path="/student/assessment/:id"
           element={
             <ProtectedRoute>
-              <RoleGuard allowedRoles={['student', 'admin', 'super_admin']}>
+              <RoleGuard allowedRoles={['student']}>
                 <AssessmentQuestionPage />
               </RoleGuard>
             </ProtectedRoute>
@@ -171,7 +174,7 @@ export function AppRoutes() {
           path="/student/personality"
           element={
             <ProtectedRoute>
-              <RoleGuard allowedRoles={['student', 'admin', 'super_admin']}>
+              <RoleGuard allowedRoles={['student']}>
                 <PersonalityResultPage />
               </RoleGuard>
             </ProtectedRoute>
@@ -181,7 +184,7 @@ export function AppRoutes() {
           path="/student/personality/:resultId"
           element={
             <ProtectedRoute>
-              <RoleGuard allowedRoles={['student', 'admin', 'super_admin']}>
+              <RoleGuard allowedRoles={['student']}>
                 <PersonalityResultPage />
               </RoleGuard>
             </ProtectedRoute>
@@ -191,7 +194,7 @@ export function AppRoutes() {
           path="/student/learning"
           element={
             <ProtectedRoute>
-              <RoleGuard allowedRoles={['student', 'admin', 'super_admin']}>
+              <RoleGuard allowedRoles={['student']}>
                 <PersonalizedLearningPage />
               </RoleGuard>
             </ProtectedRoute>
@@ -201,7 +204,7 @@ export function AppRoutes() {
           path="/student/learning-paths/:slug"
           element={
             <ProtectedRoute>
-              <RoleGuard allowedRoles={['student', 'admin', 'super_admin']}>
+              <RoleGuard allowedRoles={['student']}>
                 <LearningPathDetailPage />
               </RoleGuard>
             </ProtectedRoute>
@@ -211,7 +214,7 @@ export function AppRoutes() {
           path="/student/tutors"
           element={
             <ProtectedRoute>
-              <RoleGuard allowedRoles={['student', 'admin', 'super_admin']}>
+              <RoleGuard allowedRoles={['student']}>
                 <TutorDiscoveryPage />
               </RoleGuard>
             </ProtectedRoute>
@@ -221,7 +224,7 @@ export function AppRoutes() {
           path="/student/tutors/:tutorId"
           element={
             <ProtectedRoute>
-              <RoleGuard allowedRoles={['student', 'admin', 'super_admin']}>
+              <RoleGuard allowedRoles={['student']}>
                 <TutorProfilePage />
               </RoleGuard>
             </ProtectedRoute>
@@ -231,7 +234,7 @@ export function AppRoutes() {
           path="/student/schedule"
           element={
             <ProtectedRoute>
-              <RoleGuard allowedRoles={['student', 'admin', 'super_admin']}>
+              <RoleGuard allowedRoles={['student']}>
                 <StudentSchedulePage />
               </RoleGuard>
             </ProtectedRoute>
@@ -241,7 +244,7 @@ export function AppRoutes() {
           path="/student/progress"
           element={
             <ProtectedRoute>
-              <RoleGuard allowedRoles={['student', 'admin', 'super_admin']}>
+              <RoleGuard allowedRoles={['student']}>
                 <StudentProgressPage />
               </RoleGuard>
             </ProtectedRoute>
@@ -251,7 +254,7 @@ export function AppRoutes() {
           path="/student/payments"
           element={
             <ProtectedRoute>
-              <RoleGuard allowedRoles={['student', 'admin', 'super_admin']}>
+              <RoleGuard allowedRoles={['student']}>
                 <StudentPaymentsPage />
               </RoleGuard>
             </ProtectedRoute>
@@ -261,7 +264,7 @@ export function AppRoutes() {
           path="/student/payments/:paymentId"
           element={
             <ProtectedRoute>
-              <RoleGuard allowedRoles={['student', 'admin', 'super_admin']}>
+              <RoleGuard allowedRoles={['student']}>
                 <PaymentDetailPage />
               </RoleGuard>
             </ProtectedRoute>
@@ -271,7 +274,7 @@ export function AppRoutes() {
           path="/student/sessions"
           element={
             <ProtectedRoute>
-              <RoleGuard allowedRoles={['student', 'admin', 'super_admin']}>
+              <RoleGuard allowedRoles={['student']}>
                 <StudentSessionsPage />
               </RoleGuard>
             </ProtectedRoute>
@@ -281,7 +284,7 @@ export function AppRoutes() {
           path="/student/reports"
           element={
             <ProtectedRoute>
-              <RoleGuard allowedRoles={['student', 'admin', 'super_admin']}>
+              <RoleGuard allowedRoles={['student']}>
                 <ReportHistoryPage />
               </RoleGuard>
             </ProtectedRoute>
@@ -291,7 +294,7 @@ export function AppRoutes() {
           path="/student/reports/:reportId"
           element={
             <ProtectedRoute>
-              <RoleGuard allowedRoles={['student', 'admin', 'super_admin']}>
+              <RoleGuard allowedRoles={['student']}>
                 <ReportPreviewPage />
               </RoleGuard>
             </ProtectedRoute>
@@ -301,7 +304,7 @@ export function AppRoutes() {
           path="/student/notifications"
           element={
             <ProtectedRoute>
-              <RoleGuard allowedRoles={['student', 'admin', 'super_admin']}>
+              <RoleGuard allowedRoles={['student']}>
                 <NotificationsPage />
               </RoleGuard>
             </ProtectedRoute>
@@ -311,8 +314,8 @@ export function AppRoutes() {
           path="/student/messages"
           element={
             <ProtectedRoute>
-              <RoleGuard allowedRoles={['student', 'admin', 'super_admin']}>
-                <PlaceholderPage featureKey="messages" />
+              <RoleGuard allowedRoles={['student']}>
+                <StudentMessagesPage />
               </RoleGuard>
             </ProtectedRoute>
           }
@@ -321,7 +324,7 @@ export function AppRoutes() {
           path="/student/help"
           element={
             <ProtectedRoute>
-              <RoleGuard allowedRoles={['student', 'admin', 'super_admin']}>
+              <RoleGuard allowedRoles={['student', 'tutor', 'admin', 'super_admin']}>
                 <PlaceholderPage featureKey="help" />
               </RoleGuard>
             </ProtectedRoute>
@@ -333,7 +336,7 @@ export function AppRoutes() {
           path="/tutor/dashboard"
           element={
             <ProtectedRoute>
-              <RoleGuard allowedRoles={['tutor', 'admin', 'super_admin']}>
+              <RoleGuard allowedRoles={['tutor']}>
                 <TutorDashboardPage />
               </RoleGuard>
             </ProtectedRoute>
@@ -343,7 +346,7 @@ export function AppRoutes() {
           path="/tutor/availability"
           element={
             <ProtectedRoute>
-              <RoleGuard allowedRoles={['tutor', 'admin', 'super_admin']}>
+              <RoleGuard allowedRoles={['tutor']}>
                 <TutorAvailabilityPage />
               </RoleGuard>
             </ProtectedRoute>
@@ -353,7 +356,7 @@ export function AppRoutes() {
           path="/tutor/sessions"
           element={
             <ProtectedRoute>
-              <RoleGuard allowedRoles={['tutor', 'admin', 'super_admin']}>
+              <RoleGuard allowedRoles={['tutor']}>
                 <TutorSessionsPage />
               </RoleGuard>
             </ProtectedRoute>
@@ -407,7 +410,7 @@ export function AppRoutes() {
           path="/admin/payments"
           element={
             <ProtectedRoute>
-              <RoleGuard allowedRoles={['admin', 'super_admin']}>
+              <RoleGuard allowedRoles={['super_admin']}>
                 <AdminPaymentsPage />
               </RoleGuard>
             </ProtectedRoute>
@@ -425,11 +428,23 @@ export function AppRoutes() {
         />
         <Route
           path="/admin/users"
-          element={<Navigate to="/admin/dashboard" replace />}
+          element={
+            <ProtectedRoute>
+              <RoleGuard allowedRoles={['admin', 'super_admin']}>
+                <AdminUsersPage />
+              </RoleGuard>
+            </ProtectedRoute>
+          }
         />
         <Route
           path="/admin/subjects"
-          element={<Navigate to="/admin/dashboard" replace />}
+          element={
+            <ProtectedRoute>
+              <RoleGuard allowedRoles={['admin', 'super_admin']}>
+                <AdminSubjectsPage />
+              </RoleGuard>
+            </ProtectedRoute>
+          }
         />
 
         {/* Fallback 404 */}

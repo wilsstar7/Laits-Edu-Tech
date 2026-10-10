@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useNavigate, useLocation } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
@@ -14,7 +14,6 @@ export function LoginForm() {
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
-  const location = useLocation()
 
   const {
     register,
@@ -34,34 +33,15 @@ export function LoginForm() {
       await authService.signIn(values.email, values.password)
       toast.success('Login berhasil! Selamat datang kembali.')
 
-      // Load profile to redirect to correct dashboard
+      // Always redirect directly to the role's dashboard upon login
       const { profile } = await profileService.getAccountBundle()
 
-      const rawFrom = (location.state as { from?: string })?.from
-      const isSafeInternalPath =
-        rawFrom &&
-        rawFrom.startsWith('/') &&
-        !rawFrom.startsWith('//') &&
-        !rawFrom.startsWith('/\\') &&
-        rawFrom !== '/login'
-
-      const isAllowedForRole = (path: string, userRole: string): boolean => {
-        if (path.startsWith('/admin') && userRole !== 'admin' && userRole !== 'super_admin') return false
-        if (path.startsWith('/tutor') && userRole !== 'tutor' && userRole !== 'admin' && userRole !== 'super_admin') return false
-        if (path.startsWith('/student') && userRole !== 'student' && userRole !== 'admin' && userRole !== 'super_admin') return false
-        return true
-      }
-
-      if (isSafeInternalPath && isAllowedForRole(rawFrom, profile.role)) {
-        navigate(rawFrom, { replace: true })
+      if (profile.role === 'admin' || profile.role === 'super_admin') {
+        navigate('/admin/dashboard', { replace: true })
+      } else if (profile.role === 'tutor') {
+        navigate('/tutor/dashboard', { replace: true })
       } else {
-        if (profile.role === 'admin' || profile.role === 'super_admin') {
-          navigate('/admin/dashboard', { replace: true })
-        } else if (profile.role === 'tutor') {
-          navigate('/tutor/dashboard', { replace: true })
-        } else {
-          navigate('/student/dashboard', { replace: true })
-        }
+        navigate('/student/dashboard', { replace: true })
       }
     } catch (error) {
       toast.error(getErrorMessage(error, 'Login gagal. Periksa kembali email dan password Anda.'))

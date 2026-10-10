@@ -72,7 +72,7 @@ BEGIN
   -- 3. Enkripsi password
   v_hash := extensions.crypt(p_password, extensions.gen_salt('bf', 10));
 
-  -- 4. Masukkan ke auth.users (email langsung dikonfirmasi)
+  -- 4. Masukkan ke auth.users (email langsung dikonfirmasi, kolom string wajib diisi string kosong untuk GoTrue)
   INSERT INTO auth.users (
     id,
     instance_id,
@@ -83,6 +83,15 @@ BEGIN
     raw_user_meta_data,
     role,
     aud,
+    confirmation_token,
+    recovery_token,
+    email_change_token_new,
+    email_change,
+    phone,
+    phone_change,
+    phone_change_token,
+    email_change_token_current,
+    reauthentication_token,
     created_at,
     updated_at
   )
@@ -96,6 +105,15 @@ BEGIN
     jsonb_build_object('full_name', p_full_name),
     'authenticated',
     'authenticated',
+    '',
+    '',
+    '',
+    '',
+    nullif(trim(p_phone), ''),
+    '',
+    '',
+    '',
+    '',
     now(),
     now()
   );
@@ -266,12 +284,33 @@ END $$;
 
 
 -- =============================================================================
--- LANGKAH 4: PERBAIKI / SINKRONKAN IDENTITAS AUTH SEMUA USER YANG SUDAH DIBUAT
+-- LANGKAH 4: PERBAIKI / SINKRONKAN AKUN AUTH (FERGUS HARYAWAN & USER LAINNYA)
 -- =============================================================================
--- Memastikan semua akun yang sudah dibuat (seperti tutor fergusharyawan@gmail.com)
--- memiliki rekaman di auth.identities sehingga Supabase GoTrue bisa login tanpa error.
+-- Memperbaiki kolom string NULL pada auth.users yang menyebabkan error 500 "Database error querying schema" pada GoTrue,
+-- dan memastikan rekaman auth.identities sinkron.
 DO $$
 BEGIN
+  -- 1. Bersihkan kolom token/string NULL pada auth.users (JANGAN sentuh kolom phone karena memiliki UNIQUE constraint)
+  UPDATE auth.users
+  SET 
+    confirmation_token = COALESCE(confirmation_token, ''),
+    recovery_token = COALESCE(recovery_token, ''),
+    email_change_token_new = COALESCE(email_change_token_new, ''),
+    email_change = COALESCE(email_change, ''),
+    phone_change = COALESCE(phone_change, ''),
+    phone_change_token = COALESCE(phone_change_token, ''),
+    email_change_token_current = COALESCE(email_change_token_current, ''),
+    reauthentication_token = COALESCE(reauthentication_token, '')
+  WHERE confirmation_token IS NULL
+     OR recovery_token IS NULL
+     OR email_change_token_new IS NULL
+     OR email_change IS NULL
+     OR phone_change IS NULL
+     OR phone_change_token IS NULL
+     OR email_change_token_current IS NULL
+     OR reauthentication_token IS NULL;
+
+  -- 2. Sinkronkan auth.identities
   INSERT INTO auth.identities (
     provider_id,
     id,
@@ -301,5 +340,22 @@ BEGIN
     SELECT 1 FROM auth.identities i WHERE i.user_id = u.id
   );
 
-  RAISE NOTICE 'Semua identitas akun auth berhasil disinkronkan.';
+  RAISE NOTICE 'Semua akun auth dan identitas berhasil diperbaiki dan disinkronkan.';
 END $$;
+
+
+-- =============================================================================
+-- LANGKAH 5: IZINKAN SISWA MEMBACA PROFIL TUTOR (KATALOG TUTOR PRIVAT)
+-- =============================================================================
+DROP POLICY IF EXISTS "profiles: read own or admin" ON public.profiles;
+DROP POLICY IF EXISTS "profiles: read own, admin, or tutor" ON public.profiles;
+
+CREATE POLICY "profiles: read own, admin, or tutor"
+  ON public.profiles FOR SELECT
+  TO authenticated, anon
+  USING (
+    id = (select auth.uid())
+    OR (select public.is_admin())
+    OR role = 'tutor'
+  );
+

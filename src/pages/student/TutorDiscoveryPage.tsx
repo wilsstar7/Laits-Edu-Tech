@@ -122,15 +122,12 @@ export function TutorDiscoveryPage() {
       .finally(() => setLoading(false))
   }
 
-  // 1. Calculate recommendation scores for all tutors
   const scoredTutors: ScoredTutor[] = useMemo(() => {
     return tutorRecommendationService.rankTutorsForStudent(allTutors, studentProfile)
   }, [allTutors, studentProfile])
 
-  // 2. Client-side filtering with debounced search
   const filteredTutors = useMemo(() => {
     return scoredTutors.filter((tutor) => {
-      // Search term
       if (debouncedSearch.trim()) {
         const q = debouncedSearch.toLowerCase()
         const matchName = tutor.fullName.toLowerCase().includes(q)
@@ -142,23 +139,19 @@ export function TutorDiscoveryPage() {
         }
       }
 
-      // Subject filter
       if (filters.subjectId) {
         const hasSub = tutor.subjects.some((s) => s.id === filters.subjectId)
         if (!hasSub) return false
       }
 
-      // Rating filter
       if (filters.minRating !== null && tutor.rating < filters.minRating) {
         return false
       }
 
-      // Max hourly rate
       if (filters.maxHourlyRate !== null && tutor.hourlyRate > filters.maxHourlyRate) {
         return false
       }
 
-      // Min experience
       if (
         filters.minExperienceYears !== null &&
         tutor.experienceYears < filters.minExperienceYears
@@ -170,7 +163,6 @@ export function TutorDiscoveryPage() {
     })
   }, [scoredTutors, filters, debouncedSearch])
 
-  // 3. Client-side sorting
   const sortedTutors = useMemo(() => {
     const list = [...filteredTutors]
     switch (sortOption) {
@@ -189,7 +181,6 @@ export function TutorDiscoveryPage() {
     }
   }, [filteredTutors, sortOption])
 
-  // 4. Pagination
   const totalPages = Math.ceil(sortedTutors.length / ITEMS_PER_PAGE) || 1
   const paginatedTutors = useMemo(() => {
     const start = (currentPage - 1) * ITEMS_PER_PAGE

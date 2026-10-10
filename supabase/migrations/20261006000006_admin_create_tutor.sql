@@ -43,7 +43,7 @@ BEGIN
   -- 3. Hash password using pgcrypto blowfish
   v_hash := extensions.crypt(p_password, extensions.gen_salt('bf', 10));
 
-  -- 4. Insert into auth.users (email pre-confirmed)
+  -- 4. Insert into auth.users (email pre-confirmed, with GoTrue-required non-null string columns)
   INSERT INTO auth.users (
     id,
     instance_id,
@@ -54,6 +54,15 @@ BEGIN
     raw_user_meta_data,
     role,
     aud,
+    confirmation_token,
+    recovery_token,
+    email_change_token_new,
+    email_change,
+    phone,
+    phone_change,
+    phone_change_token,
+    email_change_token_current,
+    reauthentication_token,
     created_at,
     updated_at
   )
@@ -67,6 +76,15 @@ BEGIN
     jsonb_build_object('full_name', p_full_name),
     'authenticated',
     'authenticated',
+    '',
+    '',
+    '',
+    '',
+    nullif(trim(p_phone), ''),
+    '',
+    '',
+    '',
+    '',
     now(),
     now()
   );

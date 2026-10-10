@@ -139,5 +139,13 @@ describe('Security RBAC & Permission Matrix (Phase 7)', () => {
       expect(adminRoutesAllowed.includes('admin')).toBe(true);
       expect(adminRoutesAllowed.includes('super_admin')).toBe(true);
     });
+
+    it('strictly restricts payment verification route to super_admin only', () => {
+      const paymentVerificationRoutesAllowed: UserRole[] = ['super_admin'];
+      expect(paymentVerificationRoutesAllowed.includes('super_admin')).toBe(true);
+      expect(paymentVerificationRoutesAllowed.includes('admin')).toBe(false);
+      expect(paymentVerificationRoutesAllowed.includes('tutor')).toBe(false);
+      expect(paymentVerificationRoutesAllowed.includes('student')).toBe(false);
+    });
   });
 });

@@ -43,8 +43,8 @@ export const STUDENT_NAV_ITEMS: NavItem[] = [
   { label: 'Pembayaran', href: '/student/payments', icon: CreditCard },
   { label: 'Riwayat Sesi', href: '/student/sessions', icon: Clock },
   { label: 'Laporan', href: '/student/reports', icon: FileText },
-  { label: 'Pesan', href: '/student/messages', icon: MessageSquare, badge: 'Phase 6' },
-  { label: 'Notifikasi', href: '/student/notifications', icon: Bell, badge: 'Phase 6' },
+  { label: 'Pesan', href: '/student/messages', icon: MessageSquare },
+  { label: 'Notifikasi', href: '/student/notifications', icon: Bell },
   { label: 'Pengaturan', href: '/student/settings', icon: Settings },
 ]
 
@@ -52,7 +52,6 @@ export const TUTOR_NAV_ITEMS: NavItem[] = [
   { label: 'Dashboard', href: '/tutor/dashboard', icon: LayoutDashboard },
   { label: 'Jam Ketersediaan', href: '/tutor/availability', icon: Calendar },
   { label: 'Riwayat Sesi Belajar', href: '/tutor/sessions', icon: Clock },
-  { label: 'Pengaturan Profil', href: '/student/settings', icon: Settings },
 ]
 
 export const ADMIN_NAV_ITEMS: NavItem[] = [
@@ -61,13 +60,14 @@ export const ADMIN_NAV_ITEMS: NavItem[] = [
   { label: 'Pengumuman', href: '/admin/announcements', icon: Megaphone },
   { label: 'Verifikasi Pembayaran', href: '/admin/payments', icon: CreditCard },
   { label: 'Moderasi Ulasan', href: '/admin/reviews', icon: Star },
-  { label: 'Kelola Pengguna', href: '/admin/users', icon: GraduationCap, badge: 'Phase 6' },
-  { label: 'Katalog Mata Pelajaran', href: '/admin/subjects', icon: BookOpen, badge: 'Phase 6' },
+  { label: 'Kelola Pengguna', href: '/admin/users', icon: GraduationCap },
+  { label: 'Katalog Mata Pelajaran', href: '/admin/subjects', icon: BookOpen },
   { label: 'Pengaturan Sistem', href: '/student/settings', icon: Settings },
 ]
 
 export function getNavItemsForRole(role: UserRole | null): NavItem[] {
-  if (role === 'admin' || role === 'super_admin') return ADMIN_NAV_ITEMS
+  if (role === 'super_admin') return ADMIN_NAV_ITEMS
+  if (role === 'admin') return ADMIN_NAV_ITEMS.filter((item) => item.href !== '/admin/payments')
   if (role === 'tutor') return TUTOR_NAV_ITEMS
   return STUDENT_NAV_ITEMS
 }

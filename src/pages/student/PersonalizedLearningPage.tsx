@@ -116,7 +116,7 @@ export function PersonalizedLearningPage() {
           profile?.hasResult ? (
             <Link
               to="/student/tutors"
-              className="hidden sm:inline-flex items-center px-4 py-2.5 rounded-xl bg-brand-primary text-white text-xs font-bold shadow-sm hover:bg-brand-primary/90 transition-colors gap-2"
+              className="hidden sm:inline-flex items-center px-4 py-2.5 rounded-xl bg-brand-primary text-white text-xs font-bold shadow-sm hover:bg-brand-primary/90 transition-colors gap-2 min-h-[44px]"
             >
               <span>Cari Tutor Sesuai Profil</span>
               <ArrowRight className="w-4 h-4" />
@@ -124,7 +124,7 @@ export function PersonalizedLearningPage() {
           ) : (
             <Link
               to="/student/assessment"
-              className="hidden sm:inline-flex items-center px-4 py-2.5 rounded-xl bg-brand-primary text-white text-xs font-bold shadow-sm hover:bg-brand-primary/90 transition-colors gap-2"
+              className="hidden sm:inline-flex items-center px-4 py-2.5 rounded-xl bg-brand-primary text-white text-xs font-bold shadow-sm hover:bg-brand-primary/90 transition-colors gap-2 min-h-[44px]"
             >
               <Sparkles className="w-4 h-4" />
               <span>Ambil Asesmen Kepribadian</span>

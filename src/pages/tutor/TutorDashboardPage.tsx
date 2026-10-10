@@ -122,17 +122,6 @@ export function TutorDashboardPage() {
     }
   }, [allBookings])
 
-  const handleAccept = async (booking: Booking) => {
-    try {
-      await bookingService.updateBookingStatus(booking.id, 'confirmed')
-      toast.success('Sesi bimbingan berhasil dikonfirmasi!')
-      reloadData()
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Gagal mengonfirmasi sesi.'
-      toast.error(msg)
-    }
-  }
-
   const handleComplete = async (booking: Booking) => {
     try {
       await bookingService.updateBookingStatus(booking.id, 'completed')
@@ -239,7 +228,7 @@ export function TutorDashboardPage() {
               value={stats.pendingRequestsCount.toString()}
               description={
                 stats.pendingRequestsCount > 0
-                  ? 'Perlu konfirmasi Anda segera'
+                  ? 'Menunggu verifikasi pembayaran Super Admin'
                   : 'Semua permintaan telah diproses'
               }
               icon={Clock}
@@ -266,7 +255,7 @@ export function TutorDashboardPage() {
                   Permintaan Sesi Belajar Masuk
                 </h3>
                 <p className="text-xs text-ink-muted">
-                  Konfirmasi atau tolak permintaan bimbingan belajar dari calon murid.
+                  Daftar sesi belajar dari murid. Sesi akan otomatis terkonfirmasi setelah pembayaran diverifikasi oleh Super Admin.
                 </p>
               </div>
             </div>
@@ -284,7 +273,6 @@ export function TutorDashboardPage() {
                     key={b.id}
                     booking={b}
                     perspective="tutor"
-                    onAccept={handleAccept}
                     onReject={(booking) =>
                       setActionBooking({ booking, mode: 'reject' })
                     }

@@ -2,7 +2,7 @@ import { lazy, Suspense } from 'react'
 import { Routes, Route, Navigate } from 'react-router'
 import { ProtectedRoute } from '@/components/auth/ProtectedRoute'
 import { RoleGuard } from '@/components/auth/RoleGuard'
-import { DashboardSkeleton } from '@/components/dashboard/LoadingSkeleton'
+import { PageLoader } from '@/components/ui/PageLoader'
 
 // Public & Auth Pages (Code-split)
 const LandingPage = lazy(() => import('@/pages/LandingPage').then((m) => ({ default: m.LandingPage })))
@@ -57,11 +57,7 @@ const AdminUsersPage = lazy(() => import('@/pages/admin/AdminUsersPage').then((m
 const AdminSubjectsPage = lazy(() => import('@/pages/admin/AdminSubjectsPage').then((m) => ({ default: m.AdminSubjectsPage })))
 
 function RouteLoader() {
-  return (
-    <div className="min-h-screen bg-[#F4F5FB] p-8 max-w-7xl mx-auto">
-      <DashboardSkeleton />
-    </div>
-  )
+  return <PageLoader message="Memuat halaman..." />
 }
 
 export function AppRoutes() {

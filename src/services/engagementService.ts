@@ -272,7 +272,7 @@ export const engagementService = {
             thumbnailUrl: course?.thumbnail_url,
           },
           student: {
-            fullName: profile?.full_name || 'Siswa Laits',
+            fullName: profile?.full_name || 'Siswa Persona Academy',
           },
         }
       })

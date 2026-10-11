@@ -157,7 +157,7 @@ export const tutorService = {
         return {
           id: r.id,
           userId: r.user_id,
-          fullName: r.profile?.full_name || 'Tutor Laits',
+          fullName: r.profile?.full_name || 'Tutor Persona Academy',
           email: r.profile?.email || '',
           avatarUrl: r.profile?.avatar_url || null,
           headline: r.headline,
@@ -312,7 +312,7 @@ export const tutorService = {
       return {
         id: r.id,
         userId: r.user_id,
-        fullName: r.profile?.full_name || 'Tutor Laits',
+        fullName: r.profile?.full_name || 'Tutor Persona Academy',
         email: r.profile?.email || '',
         avatarUrl: r.profile?.avatar_url || null,
         headline: r.headline,

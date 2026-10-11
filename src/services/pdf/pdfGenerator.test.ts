@@ -88,7 +88,7 @@ describe('generatePersonalityReportPdf', () => {
       generatedAt: '2026-10-06T00:00:00Z',
       isDemo: false,
       title: 'Personality & Learning Profile Report',
-      author: 'Laits Edu Tech LMS',
+      author: 'Persona Academy LMS',
       subject: 'Student Personality Profile',
       keywords: ['Personality', 'Learning Profile', 'Education', 'Assessment'],
     },
@@ -127,8 +127,8 @@ describe('generatePersonalityReportPdf', () => {
 
     expect(text).toContain('%PDF-')
     expect(text).toContain('/Title (Personality & Learning Profile Report)')
-    expect(text).toContain('/Author (Laits Edu Tech LMS)')
-    expect(text).toContain('/Creator (Laits Edu Tech PDF Engine)')
+    expect(text).toContain('/Author (Persona Academy LMS)')
+    expect(text).toContain('/Creator (Persona Academy PDF Engine)')
     expect(text).toContain('/Count 9')
   })
 })

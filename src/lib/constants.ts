@@ -34,4 +34,4 @@ export const GENDER_OPTIONS: ReadonlyArray<{ value: Gender; label: string }> = [
   { value: 'female', label: 'Perempuan' },
 ]
 
-export const APP_NAME = 'Laits Edu'
+export const APP_NAME = 'Persona Academy'

@@ -579,7 +579,7 @@ export function AdminPaymentsPage() {
 
                 <div className="text-[11px] text-muted-foreground flex justify-between px-1">
                   <span>Berkas: {activeProofPayment.proof?.originalFileName || 'bukti_transfer'}</span>
-                  <span>Tujuan: Rekening BSI PT Laits Edu Tech</span>
+                  <span>Tujuan: Rekening BSI PT Persona Academy</span>
                 </div>
               </div>
 

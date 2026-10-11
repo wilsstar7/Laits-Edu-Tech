@@ -24,7 +24,7 @@ export function RegisterPage() {
             <Layers className="w-6 h-6" />
           </div>
           <span className="font-extrabold text-2xl text-[#17181C] tracking-tight">
-            LAITS <span className="text-[#6C5CE7]">EDU</span>
+            PERSONA <span className="text-[#6C5CE7]">ACADEMY</span>
           </span>
         </Link>
 

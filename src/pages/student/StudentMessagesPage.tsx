@@ -50,7 +50,7 @@ interface ConversationItem {
   unreadCount: number
 }
 
-const STORAGE_KEY_PREFIX = 'laits_messages_'
+const STORAGE_KEY_PREFIX = 'persona_messages_'
 
 const QUICK_PROMPTS = [
   'Halo Ustadz/Guru, saya ingin bertanya ketersediaan jadwal les minggu ini.',
@@ -444,7 +444,7 @@ export function StudentMessagesPage() {
                         {activeConversation.headline ||
                           (activeConversation.subjectNames.length > 0
                             ? `Pengajar: ${activeConversation.subjectNames.join(', ')}`
-                            : 'Mitra Tutor Laits LMS')}
+                            : 'Mitra Tutor Persona Academy')}
                       </p>
                     </div>
                   </div>
@@ -471,7 +471,7 @@ export function StudentMessagesPage() {
                 <div className="flex-1 p-4 overflow-y-auto space-y-3 min-h-[350px]">
                   <div className="text-center py-2">
                     <span className="text-[11px] text-slate-400 bg-white dark:bg-slate-800 px-3 py-1 rounded-full border border-slate-100 dark:border-slate-800 shadow-2xs">
-                      Pesan dilindungi oleh pedoman komunitas Laits LMS
+                      Pesan dilindungi oleh pedoman komunitas Persona Academy
                     </span>
                   </div>
 

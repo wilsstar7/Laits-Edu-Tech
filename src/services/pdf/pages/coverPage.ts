@@ -32,7 +32,7 @@ export function renderCoverPage(doc: jsPDF, data: PersonalityReportData) {
   doc.setFont('helvetica', 'bold')
   doc.setFontSize(14)
   doc.setTextColor(...PDF_COLORS.dark)
-  doc.text('LAITS EDU TECH', marginLeft + 48, startY + 16)
+  doc.text('PERSONA ACADEMY', marginLeft + 48, startY + 16)
 
   doc.setFont('helvetica', 'normal')
   doc.setFontSize(8.5)
@@ -115,7 +115,7 @@ export function renderCoverPage(doc: jsPDF, data: PersonalityReportData) {
   doc.setFont('helvetica', 'bold')
   doc.setFontSize(12)
   doc.setTextColor(...PDF_COLORS.dark)
-  doc.text(data.student.name || 'Siswa Laits Edu Tech', col1X, metaY)
+  doc.text(data.student.name || 'Siswa Persona Academy', col1X, metaY)
 
   doc.setFontSize(11)
   doc.setTextColor(...PDF_COLORS.primary)
@@ -144,7 +144,7 @@ export function renderCoverPage(doc: jsPDF, data: PersonalityReportData) {
   doc.setFont('helvetica', 'normal')
   doc.setFontSize(7.5)
   doc.setTextColor(...PDF_COLORS.muted)
-  doc.text('Diterbitkan oleh Sistem Laits Edu Tech - Versi Laporan 1.0', marginLeft, footerNoticeY)
+  doc.text('Diterbitkan oleh Sistem Persona Academy - Versi Laporan 1.0', marginLeft, footerNoticeY)
 
   const disclaimerShort = data.metadata.isDemo
     ? 'Hasil ini merupakan hasil simulasi/demo dan tidak dimaksudkan sebagai penilaian psikologis yang tervalidasi.'

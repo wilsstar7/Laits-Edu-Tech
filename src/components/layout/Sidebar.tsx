@@ -36,7 +36,7 @@ export function Sidebar({ onNavigate, className = '' }: SidebarProps) {
         </div>
         <div className="flex flex-col">
           <span className="font-bold text-white text-base tracking-tight flex items-center gap-1.5">
-            LAITS <span className="text-[#8F7FF7] font-semibold text-xs tracking-wider uppercase">LMS</span>
+            PERSONA <span className="text-[#8F7FF7] font-semibold text-xs tracking-wider uppercase">ACADEMY</span>
           </span>
           <span className="text-[11px] text-[#8A8D9A] font-medium leading-none">Education & Analytics</span>
         </div>

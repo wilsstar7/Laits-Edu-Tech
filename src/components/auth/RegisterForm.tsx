@@ -71,7 +71,7 @@ export function RegisterForm() {
         setVerificationNeeded(values.email)
         toast.success('Pendaftaran berhasil! Silakan cek kotak masuk email Anda.')
       } else {
-        toast.success('Pendaftaran berhasil! Selamat datang di Laits Edu.')
+        toast.success('Pendaftaran berhasil! Selamat datang di Persona Academy.')
         navigate('/student/dashboard', { replace: true })
       }
     } catch (error) {

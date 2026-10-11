@@ -77,13 +77,13 @@ export function renderTutorStylePage(
   doc.setFont('helvetica', 'bold')
   doc.setFontSize(8.5)
   doc.setTextColor(...PDF_COLORS.primary)
-  doc.text('INTEGRASI SISTEM LAITS LES PRIVAT', marginLeft + 18, matchBoxY + 20)
+  doc.text('INTEGRASI SISTEM PERSONA ACADEMY LES PRIVAT', marginLeft + 18, matchBoxY + 20)
 
   doc.setFont('helvetica', 'normal')
   doc.setFontSize(8)
   doc.setTextColor(...PDF_COLORS.muted)
   const matchLines = doc.splitTextToSize(
-    'Profil ini otomatis dijadikan preferensi algoritma pencocokan saat Anda memilih tutor di platform Laits Edu Tech, sehingga sesi les privat dapat langsung berjalan secara efektif sejak pertemuan pertama.',
+    'Profil ini otomatis dijadikan preferensi algoritma pencocokan saat Anda memilih tutor di platform Persona Academy, sehingga sesi les privat dapat langsung berjalan secara efektif sejak pertemuan pertama.',
     contentWidth - 36
   )
   doc.text(matchLines, marginLeft + 18, matchBoxY + 34)

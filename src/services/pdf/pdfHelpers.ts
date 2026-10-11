@@ -11,12 +11,12 @@ export function drawPageHeader(doc: jsPDF, currentSection: string) {
   doc.setFont('helvetica', 'bold')
   doc.setFontSize(8)
   doc.setTextColor(...PDF_COLORS.primary)
-  doc.text('LAITS EDU TECH', marginLeft, marginTop - 16)
+  doc.text('PERSONA ACADEMY', marginLeft, marginTop - 16)
 
   doc.setFont('helvetica', 'normal')
   doc.setFontSize(8)
   doc.setTextColor(...PDF_COLORS.muted)
-  doc.text(`|  ${currentSection}`, marginLeft + 75, marginTop - 16)
+  doc.text(`|  ${currentSection}`, marginLeft + 80, marginTop - 16)
 
   // Right-aligned report title
   doc.setFont('helvetica', 'normal')

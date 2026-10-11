@@ -112,7 +112,7 @@ export function LandingPage() {
             </div>
             <div className="flex flex-col">
               <span className="font-extrabold text-[#17181C] text-lg tracking-tight leading-none">
-                LAITS <span className="text-[#6C5CE7]">EDU</span>
+                PERSONA <span className="text-[#6C5CE7]">ACADEMY</span>
               </span>
               <span className="text-[11px] text-[#676A78] font-semibold mt-1">
                 LMS & Les Privat Siswa
@@ -164,7 +164,7 @@ export function LandingPage() {
                   </h1>
 
                   <p className="text-base sm:text-lg text-[#676A78] leading-relaxed max-w-xl">
-                    Setiap anak menyerap pelajaran dengan ritme berbeda. Laits Edu Tech memetakan cara belajar siswa sejak awal, lalu menghubungkan Anda dengan tutor privat terverifikasi untuk bimbingan kurikulum akademik dan keagamaan.
+                    Setiap anak menyerap pelajaran dengan ritme berbeda. Persona Academy memetakan cara belajar siswa sejak awal, lalu menghubungkan Anda dengan tutor privat terverifikasi untuk bimbingan kurikulum akademik dan keagamaan.
                   </p>
                 </div>
 
@@ -572,12 +572,12 @@ export function LandingPage() {
           </div>
         </section>
 
-        {/* Section 3: Alur Bimbingan di Platform Laits Edu - M3 Step Cards */}
+        {/* Section 3: Alur Bimbingan di Platform Persona Academy - M3 Step Cards */}
         <section className="py-14 sm:py-16 bg-[#FDFBFE]">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
             <div className="max-w-2xl space-y-2">
               <h2 className="text-2xl sm:text-3xl font-extrabold text-[#17181C] tracking-tight">
-                Alur Bimbingan di Platform Laits Edu
+                Alur Bimbingan di Platform Persona Academy
               </h2>
               <p className="text-sm text-[#676A78]">
                 Langkah teratur untuk memastikan kegiatan belajar mengajar berjalan transparan bagi siswa dan orang tua.
@@ -672,11 +672,11 @@ export function LandingPage() {
             <div className="w-9 h-9 rounded-2xl bg-[#6C5CE7] flex items-center justify-center text-white shadow-xs">
               <Layers className="w-4 h-4" />
             </div>
-            <span className="font-bold text-white text-sm">LAITS EDU TECH</span>
+            <span className="font-bold text-white text-sm">PERSONA ACADEMY</span>
           </div>
 
           <p className="text-xs text-[#CAC4D0] text-center sm:text-right">
-            (c) {new Date().getFullYear()} Laits Edu Tech. Sistem Manajemen Belajar & Bimbingan Les Privat.
+            (c) {new Date().getFullYear()} Persona Academy. Sistem Manajemen Belajar & Bimbingan Les Privat.
           </p>
         </div>
       </footer>

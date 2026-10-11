@@ -43,7 +43,7 @@ export function CertificateVerifyPage() {
           </div>
           <div className="flex flex-col">
             <span className="font-bold text-[#17181C] text-base tracking-tight">
-              LAITS <span className="text-[#6C5CE7] font-semibold text-xs uppercase">LMS</span>
+              PERSONA <span className="text-[#6C5CE7] font-semibold text-xs uppercase">ACADEMY</span>
             </span>
             <span className="text-[11px] text-[#8A8D9A]">Portal Verifikasi Sertifikat</span>
           </div>
@@ -108,14 +108,14 @@ export function CertificateVerifyPage() {
                 </div>
 
                 <p className="text-[11px] text-[#8A8D9A] leading-relaxed text-center">
-                  Dokumen ini diterbitkan secara otomatis oleh sistem Laits Edu Tech setelah siswa menyelesaikan seluruh materi kurikulum dan memenuhi standar kelulusan asesmen.
+                  Dokumen ini diterbitkan secara otomatis oleh sistem Persona Academy setelah siswa menyelesaikan seluruh materi kurikulum dan memenuhi standar kelulusan asesmen.
                 </p>
               </div>
 
               <div className="pt-2 text-center">
                 <Link to="/">
                   <Button variant="outline" size="sm" className="rounded-xl text-xs gap-1.5">
-                    <span>Jelajahi Laits Edu Tech</span>
+                    <span>Jelajahi Persona Academy</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Button>
                 </Link>
@@ -130,7 +130,7 @@ export function CertificateVerifyPage() {
               <div>
                 <h2 className="text-xl font-extrabold text-[#17181C]">Sertifikat Tidak Ditemukan</h2>
                 <p className="text-xs text-[#676A78] max-w-sm mx-auto mt-1">
-                  Nomor sertifikat <strong>{certificateNumber}</strong> tidak terdaftar dalam catatan basis data resmi Laits Edu Tech.
+                  Nomor sertifikat <strong>{certificateNumber}</strong> tidak terdaftar dalam catatan basis data resmi Persona Academy.
                 </p>
               </div>
               <div className="pt-4">
@@ -147,7 +147,7 @@ export function CertificateVerifyPage() {
 
       {/* Footer */}
       <footer className="py-6 px-4 text-center text-xs text-[#8A8D9A] border-t border-border/80 bg-white">
-        &copy; {new Date().getFullYear()} Laits Edu Tech &bull; Sistem Manajemen Pembelajaran Terakreditasi
+        &copy; {new Date().getFullYear()} Persona Academy &bull; Sistem Manajemen Pembelajaran Terakreditasi
       </footer>
     </div>
   )

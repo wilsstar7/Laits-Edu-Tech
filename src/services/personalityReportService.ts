@@ -115,9 +115,9 @@ export const personalityReportService = {
         generatedAt: new Date().toISOString(),
         isDemo,
         title: 'Personality & Learning Profile Report',
-        author: 'Laits Edu Tech LMS',
+        author: 'Persona Academy LMS',
         subject: `Laporan Profil Belajar Siswa - ${studentName}`,
-        keywords: ['Personality', 'Learning Profile', 'Education', 'Assessment', 'Laits Edu Tech'],
+        keywords: ['Personality', 'Learning Profile', 'Education', 'Assessment', 'Persona Academy'],
       },
     }
   },

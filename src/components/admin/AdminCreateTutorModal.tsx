@@ -146,7 +146,7 @@ export function AdminCreateTutorModal({ isOpen, onClose, onSuccess }: AdminCreat
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="tutor@laits.edu"
+                placeholder="tutor@personaacademy.id"
                 className="w-full px-3.5 py-2.5 rounded-xl border border-border focus:outline-none focus:ring-2 focus:ring-[#6C5CE7]/30 focus:border-[#6C5CE7] transition-all bg-white"
               />
             </div>

@@ -16,9 +16,9 @@ export function AssessmentProgress({
   const percentage = Math.round(((currentIndex + 1) / Math.max(totalQuestions, 1)) * 100)
 
   return (
-    <div className="w-full bg-white border-b border-border/80 px-4 sm:px-8 py-3.5 sticky top-16 z-20 backdrop-blur-sm bg-white/95">
+    <div className="sticky top-0 z-20 w-full border-b border-border/80 bg-white/95 backdrop-blur-sm px-4 sm:px-8 pt-[calc(0.625rem+env(safe-area-inset-top))] pb-2.5 sm:py-3.5">
       <div className="max-w-3xl mx-auto space-y-2">
-        <div className="flex items-center justify-between text-xs">
+        <div className="flex items-center justify-between gap-3 text-xs">
           <div className="flex items-center gap-2">
             <span className="font-bold text-[#17181C]">
               Pertanyaan {currentIndex + 1}

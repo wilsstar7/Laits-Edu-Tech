@@ -247,7 +247,7 @@ export function AssessmentQuestionPage() {
   const isLast = currentIndex === questions.length - 1
 
   return (
-    <div className="min-h-screen pb-28">
+    <div className="min-h-dvh pb-[calc(9rem+env(safe-area-inset-bottom))] sm:pb-[calc(8rem+env(safe-area-inset-bottom))]">
       {/* Sticky Progress Header */}
       <AssessmentProgress
         currentIndex={currentIndex}
@@ -257,7 +257,7 @@ export function AssessmentQuestionPage() {
       />
 
       {/* Main Question Area */}
-      <main className="max-w-3xl mx-auto px-4 sm:px-6 pt-8 pb-12">
+      <main className="max-w-3xl mx-auto px-3 sm:px-6 pt-4 sm:pt-8">
         {currentQuestion && (
           <QuestionCard
             question={currentQuestion}

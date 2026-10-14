@@ -33,10 +33,10 @@ export function LikertScale({
             aria-checked={isSelected}
             disabled={disabled}
             onClick={() => onSelect(opt.id)}
-            className={`w-full text-left p-4 sm:p-5 rounded-2xl border transition-all flex items-start gap-3.5 min-h-[56px] group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6C5CE7] focus-visible:ring-offset-2 ${
+            className={`w-full text-left p-3.5 sm:p-5 rounded-2xl border transition-all flex items-start gap-3 sm:gap-3.5 min-h-[56px] group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6C5CE7] focus-visible:ring-offset-2 ${
               isSelected
                 ? 'border-[#6C5CE7] bg-[#6C5CE7]/8 text-[#17181C] shadow-sm ring-1 ring-[#6C5CE7]'
-                : 'border-border/80 bg-white hover:border-[#6C5CE7]/40 hover:bg-[#F9FAFD] text-[#333542]'
+                : 'border-border/80 bg-white hover:border-[#6C5CE7]/40 hover:bg-[#F9FAFD] active:bg-[#F4F5FB] text-[#333542]'
             }`}
           >
             {/* Letter Badge (A, B, C) */}
@@ -51,7 +51,7 @@ export function LikertScale({
             </div>
 
             {/* Label Text */}
-            <div className="flex-1">
+            <div className="flex-1 min-w-0 break-words">
               <span
                 className={`text-sm sm:text-base leading-relaxed ${
                   isSelected ? 'font-bold text-[#17181C]' : 'font-medium text-[#1D1D24]'

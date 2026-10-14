@@ -39,20 +39,20 @@ export function QuestionCard({
       : 'Pilihlah satu opsi yang paling menggambarkan kebiasaan atau preferensimu secara jujur.'
 
   return (
-    <div className="surface-card bg-white p-6 sm:p-8 border border-border/80 shadow-sm max-w-3xl mx-auto rounded-3xl space-y-6">
+    <div className="surface-card bg-white p-4 sm:p-8 border border-border/80 shadow-sm max-w-3xl mx-auto rounded-2xl sm:rounded-3xl space-y-4 sm:space-y-6">
       {/* Header Info */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/60 pb-4">
-        <span className="text-xs font-bold text-[#6C5CE7] uppercase tracking-wider">
+      <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-3 border-b border-border/60 pb-3 sm:pb-4">
+        <span className="text-[11px] sm:text-xs font-bold text-[#6C5CE7] uppercase tracking-wider">
           {moduleLabel}
         </span>
-        <span className="px-3 py-1 rounded-full bg-[#F4F5FB] text-[#676A78] text-xs font-mono font-semibold">
+        <span className="hidden sm:inline-block px-3 py-1 rounded-full bg-[#F4F5FB] text-[#676A78] text-xs font-mono font-semibold">
           Soal {questionNumber} dari {totalQuestions}
         </span>
       </div>
 
       {/* Question Text */}
       <div className="space-y-2">
-        <h2 className="text-lg sm:text-xl font-bold text-[#17181C] leading-relaxed">
+        <h2 className="text-lg leading-snug sm:text-xl sm:leading-relaxed font-bold text-[#17181C] break-words">
           {question.question_text}
         </h2>
         <p className="text-xs text-[#676A78]">

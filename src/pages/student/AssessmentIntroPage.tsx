@@ -98,6 +98,27 @@ export function AssessmentIntroPage() {
     }
   }
 
+  const handleAbandon = async () => {
+    if (!activeSession) return
+    const ok = window.confirm(
+      'Progres sesi ini akan dibatalkan dan tidak bisa dilanjutkan lagi. Lanjutkan?'
+    )
+    if (!ok) return
+
+    setActionLoading(true)
+    setErrorMsg(null)
+    try {
+      await assessmentSessionService.abandonSession(activeSession.id)
+      setActiveSession(null)
+      setConsentChecked(false)
+    } catch (err) {
+      console.error('Error abandoning session:', err)
+      setErrorMsg('Gagal membatalkan sesi. Silakan coba kembali.')
+    } finally {
+      setActionLoading(false)
+    }
+  }
+
   const isPackage2 = selectedPackage.code === 'PAKET_2_PERSONA_POTENTIAL'
   const currentLevelConfig = LEVEL_CONFIG[selectedLevel]
   const currentTotalQuestions = isPackage2
@@ -150,25 +171,40 @@ export function AssessmentIntroPage() {
                 Kamu memiliki progres tes yang belum selesai
               </h2>
               <p className="text-xs text-[#676A78]">
-                Lanjutkan pengerjaan mulai dari nomor terakhir yang telah tersimpan (Jenjang {activeSession.student_level || 'SMA'}).
+                Lanjutkan pengerjaan mulai dari nomor terakhir yang telah tersimpan (
+                {ASSESSMENT_PACKAGES.find((p) => p.code === activeSession.package_code)?.name ??
+                  'Persona Modality'}
+                , Jenjang {activeSession.student_level || 'SMA'}).
               </p>
             </div>
 
-            <button
-              type="button"
-              onClick={handleStart}
-              disabled={actionLoading}
-              className="px-6 py-3 rounded-2xl bg-[#6C5CE7] hover:bg-[#5243D6] text-white text-xs font-bold shadow-md shadow-[#6C5CE7]/20 transition-all flex items-center gap-2 min-h-[44px]"
-            >
-              {actionLoading ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
-              ) : (
-                <>
-                  <span>Lanjutkan Pengerjaan</span>
-                  <ArrowRight className="w-4 h-4" />
-                </>
-              )}
-            </button>
+            <div className="flex flex-wrap items-center gap-2.5">
+              <button
+                type="button"
+                onClick={handleAbandon}
+                disabled={actionLoading}
+                className="px-5 py-3 rounded-2xl border border-[#92580E]/40 text-[#92580E] hover:bg-[#92580E]/10 text-xs font-bold transition-colors flex items-center gap-2 min-h-[44px] disabled:opacity-50"
+              >
+                <RotateCcw className="w-4 h-4" />
+                <span>Batalkan &amp; Pilih Paket Lain</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={handleStart}
+                disabled={actionLoading}
+                className="px-6 py-3 rounded-2xl bg-[#6C5CE7] hover:bg-[#5243D6] text-white text-xs font-bold shadow-md shadow-[#6C5CE7]/20 transition-all flex items-center gap-2 min-h-[44px]"
+              >
+                {actionLoading ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <>
+                    <span>Lanjutkan Pengerjaan</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </>
+                )}
+              </button>
+            </div>
           </div>
         </div>
       ) : latestResult ? (

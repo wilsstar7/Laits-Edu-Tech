@@ -8,6 +8,51 @@ import { PRIMARY_ASSESSMENT_ID } from './assessmentService'
 
 const STORAGE_KEY_PREFIX = 'laits_persona_session_'
 
+/**
+ * Sesi lama dari engine berbasis database tidak punya package_code dan
+ * question_id-nya UUID, sehingga tidak cocok dengan bank soal lokal saat ini.
+ * Melanjutkan sesi seperti ini memulihkan nomor soal tanpa jawabannya.
+ */
+export function isLegacySession(session: AssessmentSession): boolean {
+  return !session.package_code
+}
+
+function patchLocalSession(sessionId: string, patch: Partial<AssessmentSession>): void {
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i)
+    if (key?.startsWith(STORAGE_KEY_PREFIX) || key === `laits_session_data_${sessionId}`) {
+      try {
+        const raw = localStorage.getItem(key)
+        if (raw) {
+          const s = JSON.parse(raw) as AssessmentSession
+          if (s.id === sessionId) {
+            localStorage.setItem(key, JSON.stringify({ ...s, ...patch }))
+          }
+        }
+      } catch {
+        // ignore
+      }
+    }
+  }
+}
+
+async function setRemoteStatus(
+  sessionId: string,
+  status: 'scored' | 'abandoned',
+  completedAt: string | null
+): Promise<void> {
+  const supabase = getSupabase()
+  if (!supabase) return
+  try {
+    await supabase
+      .from('assessment_sessions')
+      .update({ status, completed_at: completedAt, last_saved_at: new Date().toISOString() })
+      .eq('id', sessionId)
+  } catch {
+    // silent fail: local storage tetap menjadi sumber kebenaran
+  }
+}
+
 export const assessmentSessionService = {
   /**
    * Mencari sesi in_progress yang sedang berjalan untuk user ini.
@@ -21,7 +66,7 @@ export const assessmentSessionService = {
       const raw = localStorage.getItem(`${STORAGE_KEY_PREFIX}${userId}`)
       if (raw) {
         const session = JSON.parse(raw) as AssessmentSession
-        if (session.status === 'in_progress') {
+        if (session.status === 'in_progress' && !isLegacySession(session)) {
           return session
         }
       }
@@ -39,11 +84,11 @@ export const assessmentSessionService = {
           .eq('user_id', userId)
           .eq('status', 'in_progress')
           .order('started_at', { ascending: false })
-          .limit(1)
-          .maybeSingle()
 
-        if (data) {
-          return data as AssessmentSession
+        for (const row of (data ?? []) as AssessmentSession[]) {
+          if (!isLegacySession(row)) return row
+          // Sesi lama tidak bisa diselesaikan, tutup agar tidak terus muncul.
+          await setRemoteStatus(row.id, 'abandoned', null)
         }
       } catch (err) {
         console.warn('Fallback to local session, supabase fetch error:', err)
@@ -51,6 +96,14 @@ export const assessmentSessionService = {
     }
 
     return null
+  },
+
+  /**
+   * Membatalkan sesi berjalan agar siswa bisa memulai paket/jenjang lain.
+   */
+  async abandonSession(sessionId: string): Promise<void> {
+    patchLocalSession(sessionId, { status: 'abandoned' })
+    await setRemoteStatus(sessionId, 'abandoned', null)
   },
 
   /**
@@ -192,23 +245,7 @@ export const assessmentSessionService = {
    */
   async completeSession(sessionId: string): Promise<void> {
     const now = new Date().toISOString()
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i)
-      if (key?.startsWith(STORAGE_KEY_PREFIX) || key === `laits_session_data_${sessionId}`) {
-        try {
-          const raw = localStorage.getItem(key)
-          if (raw) {
-            const s = JSON.parse(raw) as AssessmentSession
-            if (s.id === sessionId) {
-              s.status = 'scored'
-              s.completed_at = now
-              localStorage.setItem(key, JSON.stringify(s))
-            }
-          }
-        } catch {
-          // ignore
-        }
-      }
-    }
+    patchLocalSession(sessionId, { status: 'scored', completed_at: now })
+    await setRemoteStatus(sessionId, 'scored', now)
   },
 }

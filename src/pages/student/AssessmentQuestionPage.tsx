@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { useParams, useNavigate } from 'react-router'
 import { Loader2, AlertCircle } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
-import { assessmentSessionService } from '@/services/assessmentSessionService'
+import { assessmentSessionService, isLegacySession } from '@/services/assessmentSessionService'
 import { assessmentService } from '@/services/assessmentService'
 import { assessmentAnswerService } from '@/services/assessmentAnswerService'
 import { assessmentScoringService } from '@/services/assessmentScoringService'
@@ -63,6 +63,15 @@ export function AssessmentQuestionPage() {
           return
         }
 
+        if (isLegacySession(session)) {
+          await assessmentSessionService.abandonSession(session.id)
+          setErrorMsg(
+            'Sesi ini berasal dari versi asesmen lama dan tidak bisa dilanjutkan. Silakan mulai sesi baru.'
+          )
+          setLoading(false)
+          return
+        }
+
         // Load questions from database filtered by student level and package
         const qList = await assessmentService.getQuestions(
           session.assessment_id,
@@ -80,9 +89,11 @@ export function AssessmentQuestionPage() {
         const savedAnswers = await assessmentAnswerService.getAnswersForSession(sessionId)
         setAnswers(savedAnswers)
 
-        // Resume to the saved index (clamped within range)
+        // Resume ke indeks tersimpan, tapi jangan melewati soal pertama yang belum terjawab
+        const firstUnanswered = qList.findIndex((q) => q.required && !savedAnswers[q.id])
+        const savedIndex = Math.max(session.current_question_index ?? 0, 0)
         const validIndex = Math.min(
-          Math.max(session.current_question_index ?? 0, 0),
+          firstUnanswered === -1 ? savedIndex : Math.min(savedIndex, firstUnanswered),
           qList.length - 1
         )
         setCurrentIndex(validIndex)

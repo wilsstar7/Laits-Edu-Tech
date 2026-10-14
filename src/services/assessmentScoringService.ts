@@ -1,13 +1,22 @@
 import { assessmentSessionService } from './assessmentSessionService'
 import { assessmentAnswerService } from './assessmentAnswerService'
 import { personalityService } from './personalityService'
-import { calculatePersonaModalityResult } from '@/utils/scoring'
-import type { AssessmentResult, DimensionResult, PersonalityType, StudentLevel } from '@/types/assessment'
+import {
+  calculatePersonaModalityResult,
+  calculatePersonaPotentialResult,
+} from '@/utils/scoring'
+import type {
+  AssessmentResult,
+  DimensionResult,
+  PersonalityType,
+  StudentLevel,
+  AssessmentPackageCode,
+} from '@/types/assessment'
 import { PRIMARY_ASSESSMENT_ID } from './assessmentService'
 
 export const assessmentScoringService = {
   /**
-   * Menghitung skor Persona Modality lengkap sesuai algoritma Soal.Md,
+   * Menghitung skor Persona Modality atau Persona Potential kumulatif sesuai algoritma,
    * menyimpan hasil kalkulasi dan mengunci sesi menjadi 'scored'.
    */
   async submitAndScore(sessionId: string): Promise<string> {
@@ -20,17 +29,133 @@ export const assessmentScoringService = {
     // 2. Ambil seluruh jawaban siswa
     const answers = await assessmentAnswerService.getAnswersForSession(sessionId)
     const studentLevel: StudentLevel = session.student_level || 'SMA'
+    const packageCode: AssessmentPackageCode =
+      session.package_code || 'PAKET_1_PERSONA_MODALITY'
 
-    // 3. Jalankan kalkulasi Persona Modality 3 Modul
+    const resultId =
+      'res-' + Math.random().toString(36).substring(2, 11) + '-' + Date.now().toString(36)
+    const now = new Date().toISOString()
+
+    if (packageCode === 'PAKET_2_PERSONA_POTENTIAL') {
+      // Jalankan kalkulasi kumulatif Paket 2 (Paket 1 + MBTI + MI)
+      const potentialResult = calculatePersonaPotentialResult(studentLevel, answers)
+      const p1 = potentialResult.paket_1_results
+      const mbti = potentialResult.paket_2_modules.PP_MBTI_02
+      const mi = potentialResult.paket_2_modules.PP_MI_03
+
+      const modalityCompat = {
+        package_code: 'PAKET_1_PERSONA_MODALITY' as const,
+        student_level: studentLevel,
+        modules: p1,
+      }
+
+      const topGatewayNames = mi.top_3_gateways
+        .map((cat) => mi.scores[cat]?.name)
+        .filter(Boolean)
+        .join(', ')
+
+      const personalityTypeCompat: PersonalityType = {
+        id: 'pt-mbti-' + mbti.personality_code.toLowerCase(),
+        assessment_id: PRIMARY_ASSESSMENT_ID,
+        name: `${mbti.nickname} (${mbti.personality_code})`,
+        code: `${mbti.personality_code}_${p1.PM_VAK_01.primary_modality}`,
+        description: `${mbti.description} Didukung modalitas sensori ${p1.PM_VAK_01.title} serta dominasi belahan otak ${p1.PM_HEM_02.title}.`,
+        strengths: [
+          `Tipe Kepribadian Kognitif: ${mbti.personality_code} (${mbti.title})`,
+          `Pintu Gerbang Kecerdasan Utama: ${topGatewayNames}`,
+          `Modalitas Sensori: ${p1.PM_VAK_01.title}`,
+          `Jam Belajar Produktif: ${p1.PM_SKB_03.clusters.chronobiology.title}`,
+        ],
+        challenges: [
+          `Toleransi Lingkungan: ${p1.PM_SKB_03.clusters.environment.title}`,
+          `Rentang Ketahanan Fokus: ${p1.PM_SKB_03.clusters.attention_span.title}`,
+          'Sesuaikan metode penyampaian materi dengan pola MBTI agar tidak terjadi bentrok emosional.',
+        ],
+        learning_style: `${mbti.personality_code} - ${p1.PM_VAK_01.title}`,
+        communication_style: mbti.tutor_sop_details[2]?.rule || 'Objektif & Berimbang',
+        motivation: mbti.nickname,
+        recommended_study_method: [
+          ...p1.PM_VAK_01.study_recommendations,
+          ...mi.ranking.slice(0, 3).map((r) => `${r.name}: ${r.gateway_strategy}`),
+        ],
+        recommended_subjects: [
+          'Eksplorasi Minat Terbuka Sesuai Top 3 Pintu Gerbang Kecerdasan',
+        ],
+        recommended_tutor_style: [
+          ...mbti.tutor_sop_details.map((d) => `${d.letter} (${d.dimension}): ${d.instruction}`),
+          p1.PM_VAK_01.tutor_sop,
+          p1.PM_HEM_02.tutor_sop,
+        ],
+      }
+
+      const dimensionsCompat: DimensionResult[] = [
+        {
+          id: 'dim-res-mbti',
+          result_id: resultId,
+          dimension_id: 'dim-mbti-02',
+          raw_score: 20,
+          normalized_score: 100,
+          percentile: null,
+          dimension: {
+            id: 'dim-mbti-02',
+            assessment_id: PRIMARY_ASSESSMENT_ID,
+            name: 'Tipologi Kepribadian (MBTI)',
+            code: 'PP-MBTI-02',
+            description: `${mbti.personality_code}: ${mbti.title}`,
+            min_score: 0,
+            max_score: 100,
+            display_order: 1,
+          },
+        },
+        {
+          id: 'dim-res-mi',
+          result_id: resultId,
+          dimension_id: 'dim-mi-03',
+          raw_score: mi.ranking.reduce((acc, curr) => acc + curr.raw, 0),
+          normalized_score: mi.ranking[0]?.percentage ?? 100,
+          percentile: null,
+          dimension: {
+            id: 'dim-mi-03',
+            assessment_id: PRIMARY_ASSESSMENT_ID,
+            name: 'Kecerdasan Majemuk (Multiple Intelligences)',
+            code: 'PP-MI-03',
+            description: `Top Gateway: ${topGatewayNames}`,
+            min_score: 0,
+            max_score: 100,
+            display_order: 2,
+          },
+        },
+      ]
+
+      const fullResult: AssessmentResult = {
+        id: resultId,
+        session_id: sessionId,
+        user_id: session.user_id,
+        assessment_id: session.assessment_id,
+        personality_type_id: personalityTypeCompat.id,
+        overall_score: 100,
+        completed_at: now,
+        created_at: now,
+        student_level: studentLevel,
+        package_code: 'PAKET_2_PERSONA_POTENTIAL',
+        modality_result: modalityCompat,
+        potential_result: potentialResult,
+        personality_type: personalityTypeCompat,
+        dimensions: dimensionsCompat,
+      }
+
+      await personalityService.saveResult(fullResult)
+      await assessmentSessionService.completeSession(sessionId)
+      return resultId
+    }
+
+    // 3. Jalankan kalkulasi Persona Modality (Paket 1)
     const modalityResult = calculatePersonaModalityResult(studentLevel, answers)
 
     // 4. Bangun kompatibilitas tipe kepribadian dan dimensi untuk dashboard & reporting
     const vak = modalityResult.modules.PM_VAK_01
     const hem = modalityResult.modules.PM_HEM_02
     const habits = modalityResult.modules.PM_SKB_03
-
-    const resultId = 'res-' + Math.random().toString(36).substring(2, 11) + '-' + Date.now().toString(36)
-    const now = new Date().toISOString()
 
     const personalityTypeCompat: PersonalityType = {
       id: 'pt-' + vak.primary_modality.toLowerCase(),

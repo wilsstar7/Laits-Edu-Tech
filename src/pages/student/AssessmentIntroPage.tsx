@@ -21,6 +21,7 @@ import {
   type StudentLevel,
   type AssessmentPackage,
 } from '@/data/personaModalityData'
+import { PACKAGE_LEVEL_CONFIG } from '@/data/personaPotentialData'
 import type { AssessmentSession, AssessmentResult } from '@/types/assessment'
 import { formatLongDate } from '@/utils/format'
 import { PRIMARY_ASSESSMENT_ID } from '@/services/assessmentService'
@@ -45,7 +46,6 @@ export function AssessmentIntroPage() {
       if (!user) return
       setLoading(true)
       setErrorMsg(null)
-
       try {
         const [session, result] = await Promise.all([
           assessmentSessionService.getActiveSession(user.id, PRIMARY_ASSESSMENT_ID),
@@ -56,6 +56,10 @@ export function AssessmentIntroPage() {
         setLatestResult(result)
         if (session?.student_level) {
           setSelectedLevel(session.student_level)
+        }
+        if (session?.package_code) {
+          const pkg = ASSESSMENT_PACKAGES.find((p) => p.code === session.package_code)
+          if (pkg) setSelectedPackage(pkg)
         }
       } catch (err) {
         console.error('Failed to load assessment session state:', err)
@@ -82,7 +86,8 @@ export function AssessmentIntroPage() {
         const session = await assessmentSessionService.startNewSession(
           user.id,
           PRIMARY_ASSESSMENT_ID,
-          selectedLevel
+          selectedLevel,
+          selectedPackage.code
         )
         navigate(`/student/assessment/${session.id}`)
       }
@@ -93,7 +98,14 @@ export function AssessmentIntroPage() {
     }
   }
 
+  const isPackage2 = selectedPackage.code === 'PAKET_2_PERSONA_POTENTIAL'
   const currentLevelConfig = LEVEL_CONFIG[selectedLevel]
+  const currentTotalQuestions = isPackage2
+    ? PACKAGE_LEVEL_CONFIG.PAKET_2_PERSONA_POTENTIAL[selectedLevel].totalQuestions
+    : currentLevelConfig.totalCount
+  const currentEstMinutes = isPackage2
+    ? PACKAGE_LEVEL_CONFIG.PAKET_2_PERSONA_POTENTIAL[selectedLevel].estimatedMinutes
+    : currentLevelConfig.estimatedMinutes
 
   if (loading) {
     return (
@@ -323,7 +335,10 @@ export function AssessmentIntroPage() {
                     {cfg.label}
                   </span>
                   <span className="text-xs font-mono font-bold px-2 py-0.5 rounded-lg bg-[#F4F5FB] text-[#17181C]">
-                    {cfg.totalCount} Soal
+                    {isPackage2
+                      ? PACKAGE_LEVEL_CONFIG.PAKET_2_PERSONA_POTENTIAL[lvl].totalQuestions
+                      : cfg.totalCount}{' '}
+                    Soal
                   </span>
                 </div>
                 <p className="text-[11px] text-[#676A78] leading-relaxed">
@@ -334,8 +349,12 @@ export function AssessmentIntroPage() {
           })}
         </div>
 
-        {/* Breakdown Module Indicator for Selected Level */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-4 rounded-2xl bg-[#F4F5FB] border border-border/60">
+        {/* Breakdown Module Indicator for Selected Level & Package */}
+        <div
+          className={`grid gap-3 p-4 rounded-2xl bg-[#F4F5FB] border border-border/60 ${
+            isPackage2 ? 'grid-cols-2 sm:grid-cols-5' : 'grid-cols-1 sm:grid-cols-3'
+          }`}
+        >
           <div className="flex items-center gap-3">
             <BookOpen className="w-4 h-4 text-[#6C5CE7] shrink-0" />
             <div>
@@ -349,9 +368,9 @@ export function AssessmentIntroPage() {
           <div className="flex items-center gap-3">
             <Layers className="w-4 h-4 text-[#6C5CE7] shrink-0" />
             <div>
-              <p className="text-[11px] text-[#676A78]">Modul 2: Hemisfer Otak</p>
+              <p className="text-[11px] text-[#676A78]">Modul 2: Hemisfer</p>
               <p className="text-xs font-bold text-[#17181C]">
-                {currentLevelConfig.hemCount} Soal Gaya Berpikir
+                {currentLevelConfig.hemCount} Soal Berpikir
               </p>
             </div>
           </div>
@@ -359,12 +378,32 @@ export function AssessmentIntroPage() {
           <div className="flex items-center gap-3">
             <Clock className="w-4 h-4 text-[#6C5CE7] shrink-0" />
             <div>
-              <p className="text-[11px] text-[#676A78]">Modul 3: Kebiasaan Belajar</p>
+              <p className="text-[11px] text-[#676A78]">Modul 3: Kebiasaan</p>
               <p className="text-xs font-bold text-[#17181C]">
                 {currentLevelConfig.skbCount} Soal Lingkungan
               </p>
             </div>
           </div>
+
+          {isPackage2 && (
+            <>
+              <div className="flex items-center gap-3">
+                <GraduationCap className="w-4 h-4 text-[#6C5CE7] shrink-0" />
+                <div>
+                  <p className="text-[11px] text-[#676A78]">Modul 4: MBTI</p>
+                  <p className="text-xs font-bold text-[#17181C]">20 Soal Kepribadian</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <CheckCircle2 className="w-4 h-4 text-[#6C5CE7] shrink-0" />
+                <div>
+                  <p className="text-[11px] text-[#676A78]">Modul 5: Gardner MI</p>
+                  <p className="text-xs font-bold text-[#17181C]">40 Soal 8 Kecerdasan</p>
+                </div>
+              </div>
+            </>
+          )}
         </div>
 
         {/* Psychological safety & instructions */}
@@ -373,7 +412,7 @@ export function AssessmentIntroPage() {
           <ul className="list-disc pl-5 space-y-1">
             <li>Tidak ada jawaban benar atau salah, pilih yang paling nyaman dan menggambarkan dirimu apa adanya.</li>
             <li>Jawaban otomatis tersimpan berkala, kamu dapat kembali ke nomor sebelumnya bila diperlukan.</li>
-            <li>Hasil asesmen digunakan untuk memetakan metode belajar personal dan pencocokan guru privat.</li>
+            <li>Hasil asesmen digunakan untuk memetakan metode belajar personal dan bimbingan privat terarah.</li>
           </ul>
         </div>
 
@@ -388,7 +427,7 @@ export function AssessmentIntroPage() {
                 className="mt-0.5 w-4 h-4 rounded border-[#BDC1D0] text-[#6C5CE7] focus:ring-[#6C5CE7]"
               />
               <span className="text-xs text-[#17181C] font-medium leading-relaxed">
-                Saya memahami bahwa asesmen ini digunakan untuk pengenalan gaya belajar personal, bukan diagnosis psikologis atau medis klinis.
+                Saya memahami bahwa asesmen ini digunakan untuk pengenalan gaya belajar personal, bukan diagnosis psikologis klinis.
               </span>
             </label>
           </div>
@@ -399,7 +438,7 @@ export function AssessmentIntroPage() {
           <div className="pt-3 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-border/60">
             <p className="text-[11px] text-[#676A78]">
               {consentChecked
-                ? `Siap mengerjakan ${currentLevelConfig.totalCount} butir soal (${currentLevelConfig.label}).`
+                ? `Siap mengerjakan ${currentTotalQuestions} butir soal (${currentLevelConfig.label} - estimasi ~${currentEstMinutes} menit).`
                 : 'Beri tanda centang pada pernyataan persetujuan untuk memulai.'}
             </p>
 
@@ -417,11 +456,11 @@ export function AssessmentIntroPage() {
               ) : latestResult ? (
                 <>
                   <RotateCcw className="w-4 h-4" />
-                  <span>Ambil Ulang Asesmen ({selectedLevel})</span>
+                  <span>Ambil Ulang ({selectedLevel} - {selectedPackage.name})</span>
                 </>
               ) : (
                 <>
-                  <span>Mulai Asesmen ({selectedLevel})</span>
+                  <span>Mulai Asesmen ({selectedLevel} - {selectedPackage.name})</span>
                   <ArrowRight className="w-4 h-4" />
                 </>
               )}

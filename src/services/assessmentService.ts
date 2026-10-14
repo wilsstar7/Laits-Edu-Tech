@@ -3,24 +3,25 @@ import type {
   AssessmentDimension,
   AssessmentQuestion,
   StudentLevel,
+  AssessmentPackageCode,
 } from '@/types/assessment'
 import {
   ASSESSMENT_PACKAGES,
-  getQuestionsForLevel,
   type AssessmentPackage,
 } from '@/data/personaModalityData'
+import { getQuestionsForPackageAndLevel } from '@/data/personaPotentialData'
 
 export const PRIMARY_ASSESSMENT_ID = '00000000-0000-0000-0000-00000000a001'
 
 export const PRIMARY_ASSESSMENT: Assessment = {
   id: PRIMARY_ASSESSMENT_ID,
-  name: 'Persona Modality: Fondasi Teknis & Cara Belajar',
+  name: 'Persona Modality & Potential',
   slug: 'persona-modality',
   description:
-    'Pemetaan komprehensif jalur sensori belajar (VAK), dominasi belahan otak berpikir, serta kebiasaan dan lingkungan belajar harian siswa.',
+    'Pemetaan komprehensif jalur sensori belajar (VAK), dominasi belahan otak berpikir, kebiasaan belajar harian, tipologi MBTI, serta kecerdasan majemuk siswa.',
   instructions:
     'Pilihlah salah satu opsi jawaban yang paling spontan dan nyaman menggambarkan kebiasaan belajarmu apa adanya.',
-  estimated_minutes: 15,
+  estimated_minutes: 25,
   is_active: true,
   version: 2,
   created_at: new Date().toISOString(),
@@ -58,18 +59,38 @@ export const MODALITY_DIMENSIONS: AssessmentDimension[] = [
     max_score: 100,
     display_order: 3,
   },
+  {
+    id: 'dim-mbti-02',
+    assessment_id: PRIMARY_ASSESSMENT_ID,
+    name: 'Tipologi Kepribadian (MBTI)',
+    code: 'PP-MBTI-02',
+    description: 'Pemrosesan energi kognitif, persepsi data, kriteria keputusan, dan orientasi belajar.',
+    min_score: 0,
+    max_score: 100,
+    display_order: 4,
+  },
+  {
+    id: 'dim-mi-03',
+    assessment_id: PRIMARY_ASSESSMENT_ID,
+    name: 'Kecerdasan Majemuk (Multiple Intelligences)',
+    code: 'PP-MI-03',
+    description: 'Pemetaan 8 klaster kecerdasan dasar Howard Gardner dan penentuan gateway belajar.',
+    min_score: 0,
+    max_score: 100,
+    display_order: 5,
+  },
 ]
 
 export const assessmentService = {
   /**
-   * Mengambil paket asesmen aktif (Paket 1: Persona Modality).
+   * Mengambil paket asesmen aktif (Paket 1 atau Paket 2).
    */
   async getActiveAssessment(): Promise<Assessment | null> {
     return PRIMARY_ASSESSMENT
   },
 
   /**
-   * Mengambil katalog 3 paket asesmen sesuai Soal.Md.
+   * Mengambil katalog 3 paket asesmen sesuai Soal.Md dan soal-paket-2.md.
    */
   getPackages(): AssessmentPackage[] {
     return ASSESSMENT_PACKAGES
@@ -83,14 +104,16 @@ export const assessmentService = {
   },
 
   /**
-   * Mengambil butir pertanyaan terfilter berdasarkan jenjang siswa:
-   * SD: 40 soal, SMP: 50 soal, SMA: 65 soal.
+   * Mengambil butir pertanyaan terfilter berdasarkan jenjang siswa dan paket:
+   * Paket 1: SD 40, SMP 50, SMA 65
+   * Paket 2: SD 100, SMP 110, SMA 125
    */
   async getQuestions(
     _assessmentId?: string,
-    level: StudentLevel = 'SMA'
+    level: StudentLevel = 'SMA',
+    packageCode: AssessmentPackageCode = 'PAKET_1_PERSONA_MODALITY'
   ): Promise<AssessmentQuestion[]> {
-    const questions = getQuestionsForLevel(level)
+    const questions = getQuestionsForPackageAndLevel(packageCode, level)
 
     return questions.map((q, idx) => ({
       id: q.id,
@@ -100,11 +123,15 @@ export const assessmentService = {
           ? 'dim-vak-01'
           : q.moduleCode === 'PM-HEM-02'
           ? 'dim-hem-02'
-          : 'dim-skb-03',
+          : q.moduleCode === 'PM-SKB-03'
+          ? 'dim-skb-03'
+          : q.moduleCode === 'PP-MBTI-02'
+          ? 'dim-mbti-02'
+          : 'dim-mi-03',
       module_code: q.moduleCode,
       cluster: q.cluster,
       question_text: q.questionText,
-      question_type: 'multiple_choice',
+      question_type: q.questionType,
       display_order: idx + 1,
       required: true,
       weight: 1,
@@ -115,7 +142,7 @@ export const assessmentService = {
         id: opt.id,
         question_id: q.id,
         label: opt.label,
-        value: opt.indicator,
+        value: 'scoreValue' in opt ? (opt as { scoreValue: number }).scoreValue : opt.indicator,
         display_order: optIdx + 1,
         indicator: opt.indicator,
       })),

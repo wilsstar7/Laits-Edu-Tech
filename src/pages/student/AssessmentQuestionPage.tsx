@@ -63,10 +63,11 @@ export function AssessmentQuestionPage() {
           return
         }
 
-        // Load questions from database filtered by student level
+        // Load questions from database filtered by student level and package
         const qList = await assessmentService.getQuestions(
           session.assessment_id,
-          session.student_level || 'SMA'
+          session.student_level || 'SMA',
+          session.package_code || 'PAKET_1_PERSONA_MODALITY'
         )
         if (qList.length === 0) {
           setErrorMsg('Belum ada butir pertanyaan yang aktif untuk asesmen ini.')

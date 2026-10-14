@@ -40,6 +40,9 @@ export function PersonalityCard() {
   }
 
   const isCompleted = !!result
+  const isPotential =
+    result?.package_code === 'PAKET_2_PERSONA_POTENTIAL' || Boolean(result?.potential_result)
+  const potential = result?.potential_result
   const modality = result?.modality_result
   const pType = result?.personality_type
 
@@ -53,9 +56,11 @@ export function PersonalityCard() {
             </div>
             <div>
               <span className="text-[10px] font-bold text-[#6C5CE7] uppercase tracking-wider block">
-                Paket 1: Persona Modality
+                {isPotential ? 'Paket 2: Persona Potential' : 'Paket 1: Persona Modality'}
               </span>
-              <h3 className="font-bold text-base text-[#17181C]">Profil Belajar Siswa</h3>
+              <h3 className="font-bold text-base text-[#17181C]">
+                {isPotential ? 'Karakter & Potensi Siswa' : 'Profil Belajar Siswa'}
+              </h3>
             </div>
           </div>
           {isCompleted ? (
@@ -73,33 +78,66 @@ export function PersonalityCard() {
         <div className="py-4 space-y-3">
           {isCompleted ? (
             <div className="space-y-2.5">
-              <div className="p-4 rounded-2xl bg-[#F4F5FB] border border-border/80 space-y-1.5">
-                <span className="text-[11px] font-bold text-[#6C5CE7] uppercase tracking-wide">
-                  Modalitas Belajar Sensori:
-                </span>
-                <p className="text-base font-extrabold text-[#17181C]">
-                  {modality?.modules.PM_VAK_01.title || pType?.name || 'Profil Belajar Ditemukan'}
-                </p>
-                <p className="text-xs text-[#676A78] leading-relaxed line-clamp-2">
-                  {modality?.modules.PM_VAK_01.summary || pType?.description}
-                </p>
-              </div>
+              {isPotential && potential ? (
+                <>
+                  <div className="p-4 rounded-2xl bg-[#F4F5FB] border border-border/80 space-y-1.5">
+                    <span className="text-[11px] font-bold text-[#6C5CE7] uppercase tracking-wide">
+                      Tipologi MBTI & Gaya Kognitif:
+                    </span>
+                    <p className="text-base font-extrabold text-[#17181C]">
+                      {potential.paket_2_modules.PP_MBTI_02.personality_code} - {potential.paket_2_modules.PP_MBTI_02.nickname}
+                    </p>
+                    <p className="text-xs text-[#676A78] leading-relaxed line-clamp-2">
+                      {potential.paket_2_modules.PP_MBTI_02.description}
+                    </p>
+                  </div>
 
-              {modality && (
-                <div className="grid grid-cols-2 gap-2 text-xs">
-                  <div className="p-2.5 rounded-xl bg-[#F9FAFD] border border-border/60">
-                    <span className="text-[10px] text-[#676A78] block">Dominasi Otak:</span>
-                    <span className="font-bold text-[#17181C] text-[11px]">
-                      {modality.modules.PM_HEM_02.title}
-                    </span>
+                  <div className="grid grid-cols-2 gap-2 text-xs">
+                    <div className="p-2.5 rounded-xl bg-[#F9FAFD] border border-border/60">
+                      <span className="text-[10px] text-[#676A78] block">Top Gateway Kecerdasan:</span>
+                      <span className="font-bold text-[#17181C] text-[11px]">
+                        {potential.paket_2_modules.PP_MI_03.ranking[0]?.name || 'Visual-Spasial'}
+                      </span>
+                    </div>
+                    <div className="p-2.5 rounded-xl bg-[#F9FAFD] border border-border/60">
+                      <span className="text-[10px] text-[#676A78] block">Modalitas Sensori:</span>
+                      <span className="font-bold text-[#17181C] text-[11px]">
+                        {potential.paket_1_results.PM_VAK_01.title}
+                      </span>
+                    </div>
                   </div>
-                  <div className="p-2.5 rounded-xl bg-[#F9FAFD] border border-border/60">
-                    <span className="text-[10px] text-[#676A78] block">Jam Biologis:</span>
-                    <span className="font-bold text-[#17181C] text-[11px]">
-                      {modality.modules.PM_SKB_03.clusters.chronobiology.title}
+                </>
+              ) : (
+                <>
+                  <div className="p-4 rounded-2xl bg-[#F4F5FB] border border-border/80 space-y-1.5">
+                    <span className="text-[11px] font-bold text-[#6C5CE7] uppercase tracking-wide">
+                      Modalitas Belajar Sensori:
                     </span>
+                    <p className="text-base font-extrabold text-[#17181C]">
+                      {modality?.modules.PM_VAK_01.title || pType?.name || 'Profil Belajar Ditemukan'}
+                    </p>
+                    <p className="text-xs text-[#676A78] leading-relaxed line-clamp-2">
+                      {modality?.modules.PM_VAK_01.summary || pType?.description}
+                    </p>
                   </div>
-                </div>
+
+                  {modality && (
+                    <div className="grid grid-cols-2 gap-2 text-xs">
+                      <div className="p-2.5 rounded-xl bg-[#F9FAFD] border border-border/60">
+                        <span className="text-[10px] text-[#676A78] block">Dominasi Otak:</span>
+                        <span className="font-bold text-[#17181C] text-[11px]">
+                          {modality.modules.PM_HEM_02.title}
+                        </span>
+                      </div>
+                      <div className="p-2.5 rounded-xl bg-[#F9FAFD] border border-border/60">
+                        <span className="text-[10px] text-[#676A78] block">Jam Biologis:</span>
+                        <span className="font-bold text-[#17181C] text-[11px]">
+                          {modality.modules.PM_SKB_03.clusters.chronobiology.title}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                </>
               )}
             </div>
           ) : (
@@ -107,10 +145,10 @@ export function PersonalityCard() {
               <Brain className="w-5 h-5 text-[#6C5CE7] shrink-0 mt-0.5" />
               <div className="space-y-1">
                 <p className="text-xs font-bold text-[#17181C]">
-                  Petakan Fondasi Teknis & Cara Belajarmu
+                  Petakan Karakter & Gaya Belajarmu
                 </p>
                 <p className="text-xs text-[#676A78] leading-relaxed">
-                  Asesmen diagnostik Persona Modality mengukur sensori VAK, dominasi belahan otak, dan 3 klaster kebiasaan belajar.
+                  Asesmen diagnostik Persona Modality & Potential memetakan cara belajar sensori VAK, dominasi kognitif MBTI, dan 8 kecerdasan majemuk.
                 </p>
               </div>
             </div>

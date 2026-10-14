@@ -10,7 +10,12 @@ export type AssessmentPackageCode =
   | 'PAKET_2_PERSONA_POTENTIAL'
   | 'PAKET_3_PERSONA_MASTERY'
 
-export type AssessmentModuleCode = 'PM-VAK-01' | 'PM-HEM-02' | 'PM-SKB-03'
+export type AssessmentModuleCode =
+  | 'PM-VAK-01'
+  | 'PM-HEM-02'
+  | 'PM-SKB-03'
+  | 'PP-MBTI-02'
+  | 'PP-MI-03'
 
 export interface AssessmentPackage {
   code: AssessmentPackageCode
@@ -91,18 +96,46 @@ export const ASSESSMENT_PACKAGES: AssessmentPackage[] = [
     code: 'PAKET_2_PERSONA_POTENTIAL',
     name: 'Persona Potential',
     subtitle: 'Eksplorasi Karakter & Kecerdasan',
-    status: 'upcoming',
-    badgeText: 'Segera Hadir (Tahap 2)',
-    targetAge: 'SD hingga SMP',
+    status: 'active',
+    badgeText: 'Aktif (Tahap 2)',
+    targetAge: 'SD, SMP, SMA',
     description:
-      'Mendalami tipologi kepribadian belajar siswa (adaptasi MBTI) dan 8 kecerdasan majemuk (Multiple Intelligences).',
+      'Mendalami tipologi kepribadian kognitif siswa (adaptasi MBTI) dan 8 kecerdasan majemuk (Multiple Intelligences) untuk memetakan bakat sejati serta mencegah bentrok emosional.',
     deliverables: [
       'Seluruh Deliverables Paket Persona Modality',
+      'Profil Tipologi Kepribadian 4 Huruf (MBTI Edukatif)',
+      'Peta 8 Kecerdasan Majemuk & Top 3 Gateway Belajar',
       'Sesi Konsultasi Edukatif Bersama Konselor (45 menit)',
-      'Peta Bakat & Pencegahan Hambatan Emosional Siswa',
     ],
     operationalRole:
-      'Produk utama untuk mengungkap potensi bakat sejati dan menyelaraskan komunikasi orang tua/guru.',
+      'Produk utama untuk mengungkap pintu gerbang belajar terkuat anak dan menyelaraskan komunikasi guru privat serta orang tua.',
+    modules: [
+      {
+        code: 'PM-VAK-01',
+        name: 'Sensory Modality (VAK)',
+        shortDesc: 'Penerimaan dan pemrosesan informasi (Visual, Auditory, Kinesthetic).',
+      },
+      {
+        code: 'PM-HEM-02',
+        name: 'Dominasi Hemisfer Otak',
+        shortDesc: 'Gaya berpikir analitis sekuensial (Kiri) vs holistik kreatif (Kanan).',
+      },
+      {
+        code: 'PM-SKB-03',
+        name: 'Screening Kebiasaan Belajar',
+        shortDesc: 'Jam biologis kognitif, toleransi lingkungan fisik, dan rentang fokus.',
+      },
+      {
+        code: 'PP-MBTI-02',
+        name: 'Tipologi Kepribadian (MBTI)',
+        shortDesc: 'Pemrosesan energi, informasi, keputusan, dan orientasi jadwal (20 soal A/B).',
+      },
+      {
+        code: 'PP-MI-03',
+        name: 'Kecerdasan Majemuk',
+        shortDesc: 'Pemetaan 8 kecerdasan dasar Gardner (40 pernyataan skala 1-4).',
+      },
+    ],
   },
   {
     code: 'PAKET_3_PERSONA_MASTERY',

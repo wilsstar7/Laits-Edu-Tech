@@ -1,5 +1,9 @@
 import { getSupabase } from '@/lib/supabase'
-import type { AssessmentSession, StudentLevel } from '@/types/assessment'
+import type {
+  AssessmentSession,
+  StudentLevel,
+  AssessmentPackageCode,
+} from '@/types/assessment'
 import { PRIMARY_ASSESSMENT_ID } from './assessmentService'
 
 const STORAGE_KEY_PREFIX = 'laits_persona_session_'
@@ -88,15 +92,17 @@ export const assessmentSessionService = {
   },
 
   /**
-   * Memulai sesi asesmen baru dengan level siswa terpilih.
+   * Memulai sesi asesmen baru dengan level siswa dan paket terpilih.
    */
   async startNewSession(
     userId: string,
     assessmentId: string = PRIMARY_ASSESSMENT_ID,
-    studentLevel: StudentLevel = 'SMA'
+    studentLevel: StudentLevel = 'SMA',
+    packageCode: AssessmentPackageCode = 'PAKET_1_PERSONA_MODALITY'
   ): Promise<AssessmentSession> {
     const now = new Date().toISOString()
-    const sessionId = 'ses-' + Math.random().toString(36).substring(2, 11) + '-' + Date.now().toString(36)
+    const sessionId =
+      'ses-' + Math.random().toString(36).substring(2, 11) + '-' + Date.now().toString(36)
 
     const newSession: AssessmentSession = {
       id: sessionId,
@@ -105,7 +111,7 @@ export const assessmentSessionService = {
       status: 'in_progress',
       current_question_index: 0,
       student_level: studentLevel,
-      package_code: 'PAKET_1_PERSONA_MODALITY',
+      package_code: packageCode,
       consent_at: now,
       started_at: now,
       last_saved_at: now,

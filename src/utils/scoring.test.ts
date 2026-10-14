@@ -4,6 +4,9 @@ import {
   calculateBrainDominanceScore,
   calculateHabitsScore,
   calculatePersonaModalityResult,
+  calculateMbtiScore,
+  calculateMultipleIntelligencesScore,
+  calculatePersonaPotentialResult,
 } from './scoring'
 import { getQuestionsForLevel, PERSONA_MODALITY_QUESTIONS } from '@/data/personaModalityData'
 
@@ -172,7 +175,7 @@ describe('Persona Modality Scoring Engine', () => {
       const sdQuestions = getQuestionsForLevel('SD')
       const answers: Record<string, string> = {}
       for (const q of sdQuestions) {
-        answers[q.id] = q.options[0].id
+        answers[q.id] = q.options[0]!.id
       }
 
       const fullResult = calculatePersonaModalityResult('SD', answers)
@@ -181,6 +184,128 @@ describe('Persona Modality Scoring Engine', () => {
       expect(fullResult.modules.PM_VAK_01.total_questions).toBe(15)
       expect(fullResult.modules.PM_HEM_02.total_questions).toBe(10)
       expect(fullResult.modules.PM_SKB_03.total_questions).toBe(15)
+    })
+  })
+
+  describe('Paket 2: Persona Potential Scoring Engine', () => {
+    it('calculates MBTI 4-letter type ENFP with majority answers', () => {
+      const answers: Record<string, string> = {
+        // EI (Soal 1-5): 4 E, 1 I -> E (80%)
+        'PP-MBTI-01': 'A',
+        'PP-MBTI-02': 'A',
+        'PP-MBTI-03': 'A',
+        'PP-MBTI-04': 'A',
+        'PP-MBTI-05': 'B',
+        // SN (Soal 6-10): 1 S, 4 N -> N (80%)
+        'PP-MBTI-06': 'A',
+        'PP-MBTI-07': 'B',
+        'PP-MBTI-08': 'B',
+        'PP-MBTI-09': 'B',
+        'PP-MBTI-10': 'B',
+        // TF (Soal 11-15): 2 T, 3 F -> F (60%)
+        'PP-MBTI-11': 'A',
+        'PP-MBTI-12': 'A',
+        'PP-MBTI-13': 'B',
+        'PP-MBTI-14': 'B',
+        'PP-MBTI-15': 'B',
+        // JP (Soal 16-20): 1 J, 4 P -> P (80%)
+        'PP-MBTI-16': 'A',
+        'PP-MBTI-17': 'B',
+        'PP-MBTI-18': 'B',
+        'PP-MBTI-19': 'B',
+        'PP-MBTI-20': 'B',
+      }
+
+      const result = calculateMbtiScore(answers)
+
+      expect(result.personality_code).toBe('ENFP')
+      expect(result.dimensions.EI.dominant).toBe('E')
+      expect(result.dimensions.EI.percentage).toBe(80)
+      expect(result.dimensions.SN.dominant).toBe('N')
+      expect(result.dimensions.SN.percentage).toBe(80)
+      expect(result.dimensions.TF.dominant).toBe('F')
+      expect(result.dimensions.TF.percentage).toBe(60)
+      expect(result.dimensions.JP.dominant).toBe('P')
+      expect(result.dimensions.JP.percentage).toBe(80)
+      expect(result.active_tutor_sops).toEqual([
+        'SOP_MBTI_E',
+        'SOP_MBTI_N',
+        'SOP_MBTI_F',
+        'SOP_MBTI_P',
+      ])
+      expect(result.tutor_sop_details.length).toBe(4)
+    })
+
+    it('calculates Multiple Intelligences scores and determines Top 3 Gateways', () => {
+      const answers: Record<string, number> = {}
+
+      // Spasial: 5x 4 = 20 (100%)
+      for (let i = 11; i <= 15; i++) {
+        answers[`PP-MI-${String(i).padStart(2, '0')}`] = 4
+      }
+      // Interpersonal: 4x 4 + 1x 3 = 19 (95%)
+      for (let i = 26; i <= 30; i++) {
+        answers[`PP-MI-${String(i).padStart(2, '0')}`] = i === 30 ? 3 : 4
+      }
+      // Musikal: 5x 3 = 15 (75%)
+      for (let i = 21; i <= 25; i++) {
+        answers[`PP-MI-${String(i).padStart(2, '0')}`] = 3
+      }
+      // Lainnya: 5x 2 = 10 (50%)
+      for (let i = 1; i <= 10; i++) {
+        answers[`PP-MI-${String(i).padStart(2, '0')}`] = 2
+      }
+      for (let i = 16; i <= 20; i++) {
+        answers[`PP-MI-${String(i).padStart(2, '0')}`] = 2
+      }
+      for (let i = 31; i <= 40; i++) {
+        answers[`PP-MI-${String(i).padStart(2, '0')}`] = 2
+      }
+
+      const result = calculateMultipleIntelligencesScore(answers)
+
+      expect(result.scores.MI_SPASIAL.raw).toBe(20)
+      expect(result.scores.MI_SPASIAL.percentage).toBe(100)
+      expect(result.scores.MI_INTERPERSONAL.raw).toBe(19)
+      expect(result.scores.MI_INTERPERSONAL.percentage).toBe(95)
+      expect(result.scores.MI_MUSIKAL.raw).toBe(15)
+      expect(result.scores.MI_MUSIKAL.percentage).toBe(75)
+
+      expect(result.top_3_gateways).toEqual([
+        'MI_SPASIAL',
+        'MI_INTERPERSONAL',
+        'MI_MUSIKAL',
+      ])
+      expect(result.ranking[0]?.category).toBe('MI_SPASIAL')
+      expect(result.ranking[1]?.category).toBe('MI_INTERPERSONAL')
+      expect(result.ranking[2]?.category).toBe('MI_MUSIKAL')
+    })
+
+    it('calculates full cumulative PersonaPotentialResult for SMP level', () => {
+      const answers: Record<string, string | number> = {}
+
+      // Fill Paket 1 questions
+      const smpQuestions = getQuestionsForLevel('SMP')
+      for (const q of smpQuestions) {
+        answers[q.id] = q.options[0]!.id
+      }
+      // Fill MBTI
+      for (let i = 1; i <= 20; i++) {
+        answers[`PP-MBTI-${String(i).padStart(2, '0')}`] = 'A'
+      }
+      // Fill MI
+      for (let i = 1; i <= 40; i++) {
+        answers[`PP-MI-${String(i).padStart(2, '0')}`] = 3
+      }
+
+      const fullResult = calculatePersonaPotentialResult('SMP', answers)
+      expect(fullResult.package_code).toBe('PAKET_2_PERSONA_POTENTIAL')
+      expect(fullResult.student_level).toBe('SMP')
+      expect(fullResult.paket_1_results.PM_VAK_01).toBeDefined()
+      expect(fullResult.paket_1_results.PM_HEM_02).toBeDefined()
+      expect(fullResult.paket_1_results.PM_SKB_03).toBeDefined()
+      expect(fullResult.paket_2_modules.PP_MBTI_02.personality_code).toBe('ESTJ')
+      expect(fullResult.paket_2_modules.PP_MI_03.top_3_gateways.length).toBe(3)
     })
   })
 })

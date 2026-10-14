@@ -25,7 +25,18 @@ export function QuestionCard({
       ? 'Modul 2: Dominasi Hemisfer Otak'
       : question.module_code === 'PM-SKB-03'
       ? 'Modul 3: Kebiasaan & Lingkungan Belajar'
-      : 'Asesmen Persona Modality'
+      : question.module_code === 'PP-MBTI-02'
+      ? 'Modul 4: Tipologi Kepribadian (MBTI)'
+      : question.module_code === 'PP-MI-03'
+      ? 'Modul 5: Kecerdasan Majemuk (Multiple Intelligences)'
+      : 'Asesmen Persona'
+
+  const hintText =
+    question.module_code === 'PP-MBTI-02'
+      ? "Pilihlah satu jawaban yang terasa 'paling aku banget'. Kedua pilihan di bawah ini sama-sama bagus dan wajar."
+      : question.module_code === 'PP-MI-03'
+      ? 'Berilah nilai (1, 2, 3, atau 4) seberapa sesuai pernyataan ini dengan kebiasaan atau sifat aslimu.'
+      : 'Pilihlah satu opsi yang paling menggambarkan kebiasaan atau preferensimu secara jujur.'
 
   return (
     <div className="surface-card bg-white p-6 sm:p-8 border border-border/80 shadow-sm max-w-3xl mx-auto rounded-3xl space-y-6">
@@ -45,7 +56,7 @@ export function QuestionCard({
           {question.question_text}
         </h2>
         <p className="text-xs text-[#676A78]">
-          Pilihlah satu opsi yang paling menggambarkan kebiasaan atau preferensimu secara jujur.
+          {hintText}
         </p>
       </div>
 

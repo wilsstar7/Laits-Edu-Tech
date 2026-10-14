@@ -5,11 +5,22 @@ import type {
   BrainDominanceModuleResult,
   HabitsModuleResult,
   HabitClusterResult,
+  MbtiModuleResult,
+  MultipleIntelligencesModuleResult,
+  PersonaPotentialResult,
+  MiCategoryCode,
 } from '@/types/assessment'
 import {
   getQuestionsForLevel,
   type PersonaQuestion,
 } from '@/data/personaModalityData'
+import {
+  MBTI_QUESTIONS,
+  MULTIPLE_INTELLIGENCES_QUESTIONS,
+  MBTI_TUTOR_SOPS,
+  MBTI_PROFILES,
+  MULTIPLE_INTELLIGENCES_METADATA,
+} from '@/data/personaPotentialData'
 
 export interface QuestionScoringItem {
   value: number
@@ -498,3 +509,269 @@ export function calculatePersonaModalityResult(
     },
   }
 }
+
+// =============================================================================
+// 5. SKORING MODUL 2.1: TIPOLOGI KEPRIBADIAN BELAJAR (MBTI - PP-MBTI-02)
+// =============================================================================
+
+function resolveMbtiChoice(
+  q: (typeof MBTI_QUESTIONS)[number],
+  rawAnswer: string | number | undefined
+): 'A' | 'B' {
+  if (rawAnswer === undefined || rawAnswer === null) {
+    return 'A'
+  }
+  const str = String(rawAnswer).trim()
+  if (
+    str === q.optionA.indicator ||
+    str === 'A' ||
+    str.toLowerCase().endsWith('opt-a')
+  ) {
+    return 'A'
+  }
+  if (
+    str === q.optionB.indicator ||
+    str === 'B' ||
+    str.toLowerCase().endsWith('opt-b')
+  ) {
+    return 'B'
+  }
+  return 'A'
+}
+
+export function calculateMbtiScore(
+  answers: Record<string, string | number>
+): MbtiModuleResult {
+  // 1. Dimensi EI (Soal 1-5)
+  let countE = 0
+  let countI = 0
+  for (let i = 1; i <= 5; i++) {
+    const qId = `PP-MBTI-${String(i).padStart(2, '0')}`
+    const q = MBTI_QUESTIONS[i - 1]
+    if (q) {
+      const choice = resolveMbtiChoice(q, answers[qId])
+      if (choice === 'A') countE++
+      else countI++
+    }
+  }
+  const dominantEI: 'E' | 'I' = countE >= 3 ? 'E' : 'I'
+  const percentEI = Math.round(((dominantEI === 'E' ? countE : countI) / 5) * 100)
+
+  // 2. Dimensi SN (Soal 6-10)
+  let countS = 0
+  let countN = 0
+  for (let i = 6; i <= 10; i++) {
+    const qId = `PP-MBTI-${String(i).padStart(2, '0')}`
+    const q = MBTI_QUESTIONS[i - 1]
+    if (q) {
+      const choice = resolveMbtiChoice(q, answers[qId])
+      if (choice === 'A') countS++
+      else countN++
+    }
+  }
+  const dominantSN: 'S' | 'N' = countS >= 3 ? 'S' : 'N'
+  const percentSN = Math.round(((dominantSN === 'S' ? countS : countN) / 5) * 100)
+
+  // 3. Dimensi TF (Soal 11-15)
+  let countT = 0
+  let countF = 0
+  for (let i = 11; i <= 15; i++) {
+    const qId = `PP-MBTI-${String(i).padStart(2, '0')}`
+    const q = MBTI_QUESTIONS[i - 1]
+    if (q) {
+      const choice = resolveMbtiChoice(q, answers[qId])
+      if (choice === 'A') countT++
+      else countF++
+    }
+  }
+  const dominantTF: 'T' | 'F' = countT >= 3 ? 'T' : 'F'
+  const percentTF = Math.round(((dominantTF === 'T' ? countT : countF) / 5) * 100)
+
+  // 4. Dimensi JP (Soal 16-20)
+  let countJ = 0
+  let countP = 0
+  for (let i = 16; i <= 20; i++) {
+    const qId = `PP-MBTI-${String(i).padStart(2, '0')}`
+    const q = MBTI_QUESTIONS[i - 1]
+    if (q) {
+      const choice = resolveMbtiChoice(q, answers[qId])
+      if (choice === 'A') countJ++
+      else countP++
+    }
+  }
+  const dominantJP: 'J' | 'P' = countJ >= 3 ? 'J' : 'P'
+  const percentJP = Math.round(((dominantJP === 'J' ? countJ : countP) / 5) * 100)
+
+  const personalityCode = `${dominantEI}${dominantSN}${dominantTF}${dominantJP}`
+  const profile = MBTI_PROFILES[personalityCode] ?? {
+    title: 'Profil Kognitif Terpadu',
+    nickname: 'Pembelajar Adaptif',
+    description:
+      'Kombinasi fleksibel antara eksplorasi ide konseptual dan aplikasi praktis dalam belajar.',
+  }
+
+  const sopEI = MBTI_TUTOR_SOPS[dominantEI]
+  const sopSN = MBTI_TUTOR_SOPS[dominantSN]
+  const sopTF = MBTI_TUTOR_SOPS[dominantTF]
+  const sopJP = MBTI_TUTOR_SOPS[dominantJP]
+
+  return {
+    total_questions: 20,
+    personality_code: personalityCode,
+    title: profile.title,
+    nickname: profile.nickname,
+    description: profile.description,
+    dimensions: {
+      EI: { E: countE, I: countI, dominant: dominantEI, percentage: percentEI },
+      SN: { S: countS, N: countN, dominant: dominantSN, percentage: percentSN },
+      TF: { T: countT, F: countF, dominant: dominantTF, percentage: percentTF },
+      JP: { J: countJ, P: countP, dominant: dominantJP, percentage: percentJP },
+    },
+    active_tutor_sops: [
+      `SOP_MBTI_${dominantEI}`,
+      `SOP_MBTI_${dominantSN}`,
+      `SOP_MBTI_${dominantTF}`,
+      `SOP_MBTI_${dominantJP}`,
+    ],
+    tutor_sop_details: [
+      {
+        dimension: 'Arah Energi & Pemulihan (EI)',
+        letter: dominantEI,
+        rule: sopEI.rule,
+        instruction: sopEI.instruction,
+      },
+      {
+        dimension: 'Persepsi & Penerimaan Informasi (SN)',
+        letter: dominantSN,
+        rule: sopSN.rule,
+        instruction: sopSN.instruction,
+      },
+      {
+        dimension: 'Kriteria Keputusan & Komunikasi (TF)',
+        letter: dominantTF,
+        rule: sopTF.rule,
+        instruction: sopTF.instruction,
+      },
+      {
+        dimension: 'Orientasi Gaya Belajar & Struktur (JP)',
+        letter: dominantJP,
+        rule: sopJP.rule,
+        instruction: sopJP.instruction,
+      },
+    ],
+  }
+}
+
+// =============================================================================
+// 6. SKORING MODUL 2.2: KECERDASAN MAJEMUK (PP-MI-03)
+// =============================================================================
+
+function resolveLikertValue(rawAnswer: string | number | undefined): number {
+  if (rawAnswer === undefined || rawAnswer === null) {
+    return 3 // Default netral wajar
+  }
+  if (typeof rawAnswer === 'number') {
+    return Math.max(1, Math.min(4, Math.round(rawAnswer)))
+  }
+  const str = String(rawAnswer).trim()
+  if (str.endsWith('-opt-4') || str === '4') return 4
+  if (str.endsWith('-opt-3') || str === '3') return 3
+  if (str.endsWith('-opt-2') || str === '2') return 2
+  if (str.endsWith('-opt-1') || str === '1') return 1
+  const parsed = parseInt(str, 10)
+  return isNaN(parsed) ? 3 : Math.max(1, Math.min(4, parsed))
+}
+
+export function calculateMultipleIntelligencesScore(
+  answers: Record<string, string | number>
+): MultipleIntelligencesModuleResult {
+  const categories: MiCategoryCode[] = [
+    'MI_LINGUISTIK',
+    'MI_LOGIS',
+    'MI_SPASIAL',
+    'MI_KINESTETIK',
+    'MI_MUSIKAL',
+    'MI_INTERPERSONAL',
+    'MI_INTRAPERSONAL',
+    'MI_NATURALIS',
+  ]
+
+  const scores = {} as MultipleIntelligencesModuleResult['scores']
+  const rankingList: MultipleIntelligencesModuleResult['ranking'] = []
+
+  for (const cat of categories) {
+    const catQuestions = MULTIPLE_INTELLIGENCES_QUESTIONS.filter(
+      (q) => q.category === cat
+    )
+    let rawScore = 0
+    for (const q of catQuestions) {
+      const val = resolveLikertValue(answers[q.id])
+      rawScore += val
+    }
+
+    const percentage = Math.round((rawScore / 20) * 100)
+    const meta = MULTIPLE_INTELLIGENCES_METADATA[cat]
+
+    const itemScore = {
+      category: cat,
+      name: meta.name,
+      alias: meta.alias,
+      raw: rawScore,
+      percentage,
+      description: meta.description,
+      gateway_strategy: meta.gatewayStrategy,
+    }
+
+    scores[cat] = itemScore
+    rankingList.push(itemScore)
+  }
+
+  // Urutkan peringkat tertinggi ke terendah
+  rankingList.sort((a, b) => b.raw - a.raw)
+
+  const top3Gateways = rankingList.slice(0, 3).map((item) => item.category)
+
+  return {
+    total_questions: 40,
+    max_score_per_category: 20,
+    scores,
+    ranking: rankingList,
+    top_3_gateways: top3Gateways,
+  }
+}
+
+// =============================================================================
+// 7. FUNGSI UTAMA PERHITUNGAN PAKET 2: PERSONA POTENTIAL (KUMULATIF)
+// =============================================================================
+
+export function calculatePersonaPotentialResult(
+  level: StudentLevel,
+  answers: Record<string, string | number>
+): PersonaPotentialResult {
+  // 1. Eksekusi perhitungan seluruh modul Paket 1
+  const p1Result = calculatePersonaModalityResult(
+    level,
+    answers as Record<string, string>
+  )
+
+  // 2. Eksekusi perhitungan Modul 2.1 MBTI
+  const mbtiResult = calculateMbtiScore(answers)
+
+  // 3. Eksekusi perhitungan Modul 2.2 Multiple Intelligences
+  const miResult = calculateMultipleIntelligencesScore(answers)
+
+  return {
+    package_code: 'PAKET_2_PERSONA_POTENTIAL',
+    student_level: level,
+    paket_1_results: {
+      PM_VAK_01: p1Result.modules.PM_VAK_01,
+      PM_HEM_02: p1Result.modules.PM_HEM_02,
+      PM_SKB_03: p1Result.modules.PM_SKB_03,
+    },
+    paket_2_modules: {
+      PP_MBTI_02: mbtiResult,
+      PP_MI_03: miResult,
+    },
+  }
+}
+

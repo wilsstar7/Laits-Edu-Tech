@@ -153,6 +153,82 @@ export interface PersonaModalityResult {
   }
 }
 
+// =============================================================================
+// SPESIFIKASI PAKET 2: PERSONA POTENTIAL (SESUAI SOAL-PAKET-2.MD)
+// =============================================================================
+
+export type MbtiDimensionKey = 'EI' | 'SN' | 'TF' | 'JP'
+
+export interface MbtiDimensionDetail {
+  leftScore: number
+  rightScore: number
+  dominant: string
+  percentage: number
+}
+
+export interface MbtiModuleResult {
+  total_questions: number
+  personality_code: string
+  title: string
+  nickname: string
+  description: string
+  dimensions: {
+    EI: { E: number; I: number; dominant: 'E' | 'I'; percentage: number }
+    SN: { S: number; N: number; dominant: 'S' | 'N'; percentage: number }
+    TF: { T: number; F: number; dominant: 'T' | 'F'; percentage: number }
+    JP: { J: number; P: number; dominant: 'J' | 'P'; percentage: number }
+  }
+  active_tutor_sops: string[]
+  tutor_sop_details: Array<{
+    dimension: string
+    letter: string
+    rule: string
+    instruction: string
+  }>
+}
+
+export type MiCategoryCode =
+  | 'MI_LINGUISTIK'
+  | 'MI_LOGIS'
+  | 'MI_SPASIAL'
+  | 'MI_KINESTETIK'
+  | 'MI_MUSIKAL'
+  | 'MI_INTERPERSONAL'
+  | 'MI_INTRAPERSONAL'
+  | 'MI_NATURALIS'
+
+export interface MiCategoryScore {
+  category: MiCategoryCode
+  name: string
+  alias: string
+  raw: number
+  percentage: number
+  description: string
+  gateway_strategy: string
+}
+
+export interface MultipleIntelligencesModuleResult {
+  total_questions: number
+  max_score_per_category: number
+  scores: Record<MiCategoryCode, MiCategoryScore>
+  ranking: MiCategoryScore[]
+  top_3_gateways: MiCategoryCode[]
+}
+
+export interface PersonaPotentialResult {
+  package_code: 'PAKET_2_PERSONA_POTENTIAL'
+  student_level: StudentLevel
+  paket_1_results: {
+    PM_VAK_01: VakModuleResult
+    PM_HEM_02: BrainDominanceModuleResult
+    PM_SKB_03: HabitsModuleResult
+  }
+  paket_2_modules: {
+    PP_MBTI_02: MbtiModuleResult
+    PP_MI_03: MultipleIntelligencesModuleResult
+  }
+}
+
 // Compatibility layer for existing reports & dashboard cards
 export interface PersonalityType {
   id: string
@@ -192,6 +268,7 @@ export interface AssessmentResult {
   student_level?: StudentLevel
   package_code?: AssessmentPackageCode
   modality_result?: PersonaModalityResult
+  potential_result?: PersonaPotentialResult
   personality_type?: PersonalityType
   dimensions?: DimensionResult[]
 }

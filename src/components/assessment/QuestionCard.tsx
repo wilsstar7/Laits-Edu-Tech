@@ -13,27 +13,43 @@ interface QuestionCardProps {
 export function QuestionCard({
   question,
   questionNumber,
+  totalQuestions,
   selectedOptionId,
   onSelectOption,
   disabled = false,
 }: QuestionCardProps) {
-  return (
-    <div className="surface-card bg-white p-6 sm:p-8 border border-border/80 shadow-sm max-w-3xl mx-auto">
-      <div className="mb-6 space-y-3">
-        <div className="flex items-center gap-2">
-          <span className="px-2.5 py-1 rounded-md bg-[#6C5CE7]/10 text-[#6C5CE7] text-xs font-bold uppercase tracking-wider">
-            Nomor {questionNumber}
-          </span>
-          {question.required && (
-            <span className="text-[11px] text-[#676A78]">Wajib dijawab</span>
-          )}
-        </div>
+  const moduleLabel =
+    question.module_code === 'PM-VAK-01'
+      ? 'Modul 1: Sensory Modality (VAK)'
+      : question.module_code === 'PM-HEM-02'
+      ? 'Modul 2: Dominasi Hemisfer Otak'
+      : question.module_code === 'PM-SKB-03'
+      ? 'Modul 3: Kebiasaan & Lingkungan Belajar'
+      : 'Asesmen Persona Modality'
 
+  return (
+    <div className="surface-card bg-white p-6 sm:p-8 border border-border/80 shadow-sm max-w-3xl mx-auto rounded-3xl space-y-6">
+      {/* Header Info */}
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/60 pb-4">
+        <span className="text-xs font-bold text-[#6C5CE7] uppercase tracking-wider">
+          {moduleLabel}
+        </span>
+        <span className="px-3 py-1 rounded-full bg-[#F4F5FB] text-[#676A78] text-xs font-mono font-semibold">
+          Soal {questionNumber} dari {totalQuestions}
+        </span>
+      </div>
+
+      {/* Question Text */}
+      <div className="space-y-2">
         <h2 className="text-lg sm:text-xl font-bold text-[#17181C] leading-relaxed">
           {question.question_text}
         </h2>
+        <p className="text-xs text-[#676A78]">
+          Pilihlah satu opsi yang paling menggambarkan kebiasaan atau preferensimu secara jujur.
+        </p>
       </div>
 
+      {/* Options */}
       <LikertScale
         options={question.assessment_options ?? []}
         selectedOptionId={selectedOptionId}

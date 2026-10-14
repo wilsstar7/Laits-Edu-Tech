@@ -1,99 +1,208 @@
-import { requireSupabase } from '@/lib/supabase'
-import type { AssessmentSession } from '@/types/assessment'
+import { getSupabase } from '@/lib/supabase'
+import type { AssessmentSession, StudentLevel } from '@/types/assessment'
+import { PRIMARY_ASSESSMENT_ID } from './assessmentService'
+
+const STORAGE_KEY_PREFIX = 'laits_persona_session_'
 
 export const assessmentSessionService = {
   /**
-   * Finds an existing in_progress session for this user and assessment.
+   * Mencari sesi in_progress yang sedang berjalan untuk user ini.
    */
   async getActiveSession(
     userId: string,
-    assessmentId: string
+    _assessmentId?: string
   ): Promise<AssessmentSession | null> {
-    const supabase = requireSupabase()
-    const { data, error } = await supabase
-      .from('assessment_sessions')
-      .select('*')
-      .eq('user_id', userId)
-      .eq('assessment_id', assessmentId)
-      .eq('status', 'in_progress')
-      .order('started_at', { ascending: false })
-      .limit(1)
-      .maybeSingle()
-
-    if (error) {
-      console.error('Failed to get active assessment session:', error)
-      throw error
+    // 1. Cek local storage terlebih dahulu untuk response instan
+    try {
+      const raw = localStorage.getItem(`${STORAGE_KEY_PREFIX}${userId}`)
+      if (raw) {
+        const session = JSON.parse(raw) as AssessmentSession
+        if (session.status === 'in_progress') {
+          return session
+        }
+      }
+    } catch {
+      // ignore
     }
 
-    return (data as AssessmentSession) ?? null
+    // 2. Cek Supabase jika terhubung
+    const supabase = getSupabase()
+    if (supabase) {
+      try {
+        const { data } = await supabase
+          .from('assessment_sessions')
+          .select('*')
+          .eq('user_id', userId)
+          .eq('status', 'in_progress')
+          .order('started_at', { ascending: false })
+          .limit(1)
+          .maybeSingle()
+
+        if (data) {
+          return data as AssessmentSession
+        }
+      } catch (err) {
+        console.warn('Fallback to local session, supabase fetch error:', err)
+      }
+    }
+
+    return null
   },
 
   /**
-   * Retrieves a session by its unique ID.
+   * Mengambil sesi berdasarkan ID.
    */
   async getSessionById(sessionId: string): Promise<AssessmentSession | null> {
-    const supabase = requireSupabase()
-    const { data, error } = await supabase
-      .from('assessment_sessions')
-      .select('*')
-      .eq('id', sessionId)
-      .maybeSingle()
-
-    if (error) {
-      console.error('Failed to fetch session by id:', error)
-      throw error
+    // 1. Cek seluruh local storage sessions
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i)
+      if (key?.startsWith(STORAGE_KEY_PREFIX)) {
+        try {
+          const raw = localStorage.getItem(key)
+          if (raw) {
+            const s = JSON.parse(raw) as AssessmentSession
+            if (s.id === sessionId) return s
+          }
+        } catch {
+          // ignore
+        }
+      }
     }
 
-    return (data as AssessmentSession) ?? null
+    // 2. Cek Supabase jika ada
+    const supabase = getSupabase()
+    if (supabase) {
+      try {
+        const { data } = await supabase
+          .from('assessment_sessions')
+          .select('*')
+          .eq('id', sessionId)
+          .maybeSingle()
+        if (data) return data as AssessmentSession
+      } catch (err) {
+        console.warn('Supabase getSessionById fallback error:', err)
+      }
+    }
+
+    return null
   },
 
   /**
-   * Starts a brand new session with explicit consent timestamp.
+   * Memulai sesi asesmen baru dengan level siswa terpilih.
    */
   async startNewSession(
     userId: string,
-    assessmentId: string
+    assessmentId: string = PRIMARY_ASSESSMENT_ID,
+    studentLevel: StudentLevel = 'SMA'
   ): Promise<AssessmentSession> {
-    const supabase = requireSupabase()
     const now = new Date().toISOString()
+    const sessionId = 'ses-' + Math.random().toString(36).substring(2, 11) + '-' + Date.now().toString(36)
 
-    const { data, error } = await supabase
-      .from('assessment_sessions')
-      .insert({
-        user_id: userId,
-        assessment_id: assessmentId,
-        status: 'in_progress',
-        current_question_index: 0,
-        consent_at: now,
-        started_at: now,
-        last_saved_at: now,
-      })
-      .select()
-      .single()
-
-    if (error) {
-      console.error('Failed to create new assessment session:', error)
-      throw error
+    const newSession: AssessmentSession = {
+      id: sessionId,
+      user_id: userId,
+      assessment_id: assessmentId,
+      status: 'in_progress',
+      current_question_index: 0,
+      student_level: studentLevel,
+      package_code: 'PAKET_1_PERSONA_MODALITY',
+      consent_at: now,
+      started_at: now,
+      last_saved_at: now,
+      completed_at: null,
     }
 
-    return data as AssessmentSession
+    // Simpan di localStorage
+    localStorage.setItem(`${STORAGE_KEY_PREFIX}${userId}`, JSON.stringify(newSession))
+    localStorage.setItem(`laits_session_data_${sessionId}`, JSON.stringify(newSession))
+
+    // Simpan ke Supabase jika tersedia
+    const supabase = getSupabase()
+    if (supabase) {
+      try {
+        await supabase.from('assessment_sessions').insert({
+          id: sessionId,
+          user_id: userId,
+          assessment_id: assessmentId,
+          status: 'in_progress',
+          current_question_index: 0,
+          consent_at: now,
+          started_at: now,
+          last_saved_at: now,
+        })
+      } catch (err) {
+        console.warn('Supabase startNewSession insert error:', err)
+      }
+    }
+
+    return newSession
   },
 
   /**
-   * Updates the user's current progress index and last_saved_at.
+   * Memperbarui indeks pertanyaan dan timestamp last_saved_at.
    */
   async updateProgress(sessionId: string, index: number): Promise<void> {
-    const supabase = requireSupabase()
-    const { error } = await supabase
-      .from('assessment_sessions')
-      .update({
-        current_question_index: index,
-        last_saved_at: new Date().toISOString(),
-      })
-      .eq('id', sessionId)
+    const now = new Date().toISOString()
 
-    if (error) {
-      console.error('Failed to update session progress:', error)
+    // Update di localStorage
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i)
+      if (key?.startsWith(STORAGE_KEY_PREFIX) || key === `laits_session_data_${sessionId}`) {
+        try {
+          const raw = localStorage.getItem(key)
+          if (raw) {
+            const s = JSON.parse(raw) as AssessmentSession
+            if (s.id === sessionId) {
+              s.current_question_index = index
+              s.last_saved_at = now
+              localStorage.setItem(key, JSON.stringify(s))
+            }
+          }
+        } catch {
+          // ignore
+        }
+      }
+    }
+
+    // Update di Supabase jika ada
+    const supabase = getSupabase()
+    if (supabase) {
+      try {
+        await supabase
+          .from('assessment_sessions')
+          .update({
+            current_question_index: index,
+            last_saved_at: now,
+          })
+          .eq('id', sessionId)
+      } catch {
+        // silent fail
+      }
+    }
+  },
+
+  /**
+   * Menandai sesi selesai.
+   */
+  async completeSession(sessionId: string): Promise<void> {
+    const now = new Date().toISOString()
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i)
+      if (key?.startsWith(STORAGE_KEY_PREFIX) || key === `laits_session_data_${sessionId}`) {
+        try {
+          const raw = localStorage.getItem(key)
+          if (raw) {
+            const s = JSON.parse(raw) as AssessmentSession
+            if (s.id === sessionId) {
+              s.status = 'scored'
+              s.completed_at = now
+              localStorage.setItem(key, JSON.stringify(s))
+            }
+          }
+        } catch {
+          // ignore
+        }
+      }
     }
   },
 }

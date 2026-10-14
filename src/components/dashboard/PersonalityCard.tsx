@@ -1,16 +1,13 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router'
-import { Compass, Brain, CheckCircle2, ArrowRight, FileText } from 'lucide-react'
+import { Compass, Brain, CheckCircle2, ArrowRight } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 import { personalityService } from '@/services/personalityService'
-import { personalityReportService } from '@/services/personalityReportService'
 import type { AssessmentResult } from '@/types/assessment'
-import type { PersonalityReport } from '@/types/report'
 
 export function PersonalityCard() {
   const { user } = useAuth()
   const [result, setResult] = useState<AssessmentResult | null>(null)
-  const [report, setReport] = useState<PersonalityReport | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -22,10 +19,6 @@ export function PersonalityCard() {
       try {
         const latest = await personalityService.getLatestResult(user.id)
         setResult(latest)
-        if (latest) {
-          const latestRep = await personalityReportService.getLatestReport(latest.id)
-          setReport(latestRep)
-        }
       } catch (err) {
         console.error('Failed to load personality result for dashboard:', err)
       } finally {
@@ -38,7 +31,7 @@ export function PersonalityCard() {
 
   if (loading) {
     return (
-      <div className="surface-card p-6 flex flex-col justify-between bg-white border border-border min-h-[220px] animate-pulse">
+      <div className="surface-card p-6 flex flex-col justify-between bg-white border border-border min-h-[220px] animate-pulse rounded-3xl">
         <div className="h-4 w-32 bg-[#EAEBF0] rounded" />
         <div className="h-16 w-full bg-[#F4F5FB] rounded-xl my-4" />
         <div className="h-8 w-28 bg-[#EAEBF0] rounded-lg" />
@@ -47,95 +40,100 @@ export function PersonalityCard() {
   }
 
   const isCompleted = !!result
+  const modality = result?.modality_result
   const pType = result?.personality_type
 
   return (
-    <div className="surface-card p-6 flex flex-col justify-between bg-white border border-border">
+    <div className="surface-card p-6 flex flex-col justify-between bg-white border border-border rounded-3xl space-y-4">
       <div>
         <div className="flex items-center justify-between pb-3 border-b border-border/60">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-[#EFEDFD] text-[#6C5CE7] flex items-center justify-center">
+            <div className="w-8 h-8 rounded-xl bg-[#EFEDFD] text-[#6C5CE7] flex items-center justify-center">
               <Compass className="w-4 h-4" />
             </div>
-            <h3 className="font-bold text-base text-[#17181C]">Profil Belajar Anda</h3>
+            <div>
+              <span className="text-[10px] font-bold text-[#6C5CE7] uppercase tracking-wider block">
+                Paket 1: Persona Modality
+              </span>
+              <h3 className="font-bold text-base text-[#17181C]">Profil Belajar Siswa</h3>
+            </div>
           </div>
           {isCompleted ? (
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1">
-              <CheckCircle2 className="w-3 h-3" />
-              <span>Selesai</span>
+            <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1">
+              <CheckCircle2 className="w-3.5 h-3.5" />
+              <span>Selesai ({result?.student_level || 'SMA'})</span>
             </span>
           ) : (
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-md bg-[#FDF4E2] text-[#B87A14]">
+            <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-[#FDF4E2] text-[#B87A14]">
               Belum Dikerjakan
             </span>
           )}
         </div>
 
-        <div className="py-5 space-y-3">
+        <div className="py-4 space-y-3">
           {isCompleted ? (
-            <div className="space-y-2">
-              <div className="p-3.5 rounded-xl bg-[#F4F5FB] border border-border space-y-1">
+            <div className="space-y-2.5">
+              <div className="p-4 rounded-2xl bg-[#F4F5FB] border border-border/80 space-y-1.5">
                 <span className="text-[11px] font-bold text-[#6C5CE7] uppercase tracking-wide">
-                  Tipe Kepribadian Belajar:
+                  Modalitas Belajar Sensori:
                 </span>
-                <p className="text-sm font-extrabold text-[#17181C]">
-                  {pType?.name || 'Tipe Profil Ditemukan'}
+                <p className="text-base font-extrabold text-[#17181C]">
+                  {modality?.modules.PM_VAK_01.title || pType?.name || 'Profil Belajar Ditemukan'}
                 </p>
                 <p className="text-xs text-[#676A78] leading-relaxed line-clamp-2">
-                  {pType?.learning_style}
+                  {modality?.modules.PM_VAK_01.summary || pType?.description}
                 </p>
               </div>
-              <p className="text-xs text-[#676A78]">
-                Skor Keseluruhan: <span className="font-bold text-[#17181C]">{Math.round(result.overall_score)}%</span>
-              </p>
+
+              {modality && (
+                <div className="grid grid-cols-2 gap-2 text-xs">
+                  <div className="p-2.5 rounded-xl bg-[#F9FAFD] border border-border/60">
+                    <span className="text-[10px] text-[#676A78] block">Dominasi Otak:</span>
+                    <span className="font-bold text-[#17181C] text-[11px]">
+                      {modality.modules.PM_HEM_02.title}
+                    </span>
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-[#F9FAFD] border border-border/60">
+                    <span className="text-[10px] text-[#676A78] block">Jam Biologis:</span>
+                    <span className="font-bold text-[#17181C] text-[11px]">
+                      {modality.modules.PM_SKB_03.clusters.chronobiology.title}
+                    </span>
+                  </div>
+                </div>
+              )}
             </div>
           ) : (
-            <>
-              <div className="flex items-start gap-3 p-3.5 rounded-xl bg-[#F4F5FB] border border-border">
-                <Brain className="w-5 h-5 text-[#6C5CE7] shrink-0 mt-0.5" />
-                <div className="space-y-1">
-                  <p className="text-xs font-bold text-[#17181C]">
-                    Temukan Gaya Belajar & Potensi Unik Anda
-                  </p>
-                  <p className="text-xs text-[#676A78] leading-relaxed">
-                    Asesmen kepribadian membantu tutor menyesuaikan metode mengajar yang paling efektif untuk Anda.
-                  </p>
-                </div>
+            <div className="flex items-start gap-3 p-4 rounded-2xl bg-[#F4F5FB] border border-border">
+              <Brain className="w-5 h-5 text-[#6C5CE7] shrink-0 mt-0.5" />
+              <div className="space-y-1">
+                <p className="text-xs font-bold text-[#17181C]">
+                  Petakan Fondasi Teknis & Cara Belajarmu
+                </p>
+                <p className="text-xs text-[#676A78] leading-relaxed">
+                  Asesmen diagnostik Persona Modality mengukur sensori VAK, dominasi belahan otak, dan 3 klaster kebiasaan belajar.
+                </p>
               </div>
-              <p className="text-xs text-[#676A78]">
-                Status: Asesmen belum dikerjakan.
-              </p>
-            </>
+            </div>
           )}
         </div>
       </div>
 
       <div className="pt-3 border-t border-border/60 flex flex-wrap items-center gap-2.5">
         {isCompleted ? (
-          <>
-            <Link
-              to="/student/personality"
-              className="inline-flex items-center justify-center w-full sm:w-auto px-4 py-2.5 rounded-xl bg-[#6C5CE7] text-white text-xs font-bold shadow-sm hover:bg-[#5243D6] transition-colors min-h-[40px] gap-1.5"
-            >
-              <span>Lihat Hasil Profil</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
-            {report && report.status === 'ready' && (
-              <Link
-                to={`/student/reports/${report.id}`}
-                className="inline-flex items-center justify-center w-full sm:w-auto px-3.5 py-2.5 rounded-xl bg-[#F4F5FB] text-[#17181C] hover:bg-[#EAEBF0] text-xs font-bold transition-colors min-h-[40px] gap-1.5"
-              >
-                <FileText className="w-3.5 h-3.5 text-[#6C5CE7]" />
-                <span>Laporan PDF</span>
-              </Link>
-            )}
-          </>
+          <Link
+            to="/student/personality"
+            className="inline-flex items-center justify-center w-full sm:w-auto px-5 py-2.5 rounded-2xl bg-[#6C5CE7] text-white text-xs font-bold shadow-sm hover:bg-[#5243D6] transition-colors min-h-[42px] gap-1.5"
+          >
+            <span>Buka Laporan Hasil Lengkap</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
         ) : (
           <Link
             to="/student/assessment"
-            className="inline-flex items-center justify-center w-full sm:w-auto px-4 py-2.5 rounded-xl bg-[#6C5CE7] text-white text-xs font-bold shadow-sm hover:bg-[#5243D6] transition-colors min-h-[40px]"
+            className="inline-flex items-center justify-center w-full sm:w-auto px-5 py-2.5 rounded-2xl bg-[#6C5CE7] text-white text-xs font-bold shadow-sm hover:bg-[#5243D6] transition-colors min-h-[42px] gap-1.5"
           >
-            Mulai Asesmen
+            <span>Mulai Asesmen Sekarang</span>
+            <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         )}
       </div>

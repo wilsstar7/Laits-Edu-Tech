@@ -2,67 +2,74 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router'
 import {
   Clock,
-  HelpCircle,
-  ShieldCheck,
-  AlertCircle,
-  Loader2,
   CheckCircle2,
-  History,
+  Lock,
+  Layers,
+  GraduationCap,
+  ArrowRight,
+  Loader2,
+  BookOpen,
+  AlertCircle,
+  RotateCcw,
 } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
-import { assessmentService } from '@/services/assessmentService'
 import { assessmentSessionService } from '@/services/assessmentSessionService'
 import { personalityService } from '@/services/personalityService'
-import type { Assessment, AssessmentSession, AssessmentResult } from '@/types/assessment'
+import {
+  ASSESSMENT_PACKAGES,
+  LEVEL_CONFIG,
+  type StudentLevel,
+  type AssessmentPackage,
+} from '@/data/personaModalityData'
+import type { AssessmentSession, AssessmentResult } from '@/types/assessment'
 import { formatLongDate } from '@/utils/format'
+import { PRIMARY_ASSESSMENT_ID } from '@/services/assessmentService'
 
 export function AssessmentIntroPage() {
   const { user } = useAuth()
   const navigate = useNavigate()
 
   const [loading, setLoading] = useState(true)
-  const [assessment, setAssessment] = useState<Assessment | null>(null)
+  const [selectedPackage, setSelectedPackage] = useState<AssessmentPackage>(
+    ASSESSMENT_PACKAGES[0]!
+  )
+  const [selectedLevel, setSelectedLevel] = useState<StudentLevel>('SMA')
   const [activeSession, setActiveSession] = useState<AssessmentSession | null>(null)
   const [latestResult, setLatestResult] = useState<AssessmentResult | null>(null)
-  const [history, setHistory] = useState<AssessmentResult[]>([])
   const [consentChecked, setConsentChecked] = useState(false)
   const [actionLoading, setActionLoading] = useState(false)
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
 
   useEffect(() => {
-    async function loadAssessmentState() {
+    async function loadData() {
       if (!user) return
       setLoading(true)
       setErrorMsg(null)
 
       try {
-        const activeAsm = await assessmentService.getActiveAssessment()
-        setAssessment(activeAsm)
+        const [session, result] = await Promise.all([
+          assessmentSessionService.getActiveSession(user.id, PRIMARY_ASSESSMENT_ID),
+          personalityService.getLatestResult(user.id),
+        ])
 
-        if (activeAsm) {
-          const [session, result, userHistory] = await Promise.all([
-            assessmentSessionService.getActiveSession(user.id, activeAsm.id),
-            personalityService.getLatestResult(user.id),
-            personalityService.getHistory(user.id),
-          ])
-
-          setActiveSession(session)
-          setLatestResult(result)
-          setHistory(userHistory)
+        setActiveSession(session)
+        setLatestResult(result)
+        if (session?.student_level) {
+          setSelectedLevel(session.student_level)
         }
       } catch (err) {
-        console.error('Failed to load assessment data:', err)
-        setErrorMsg('Gagal memuat informasi asesmen. Silakan muat ulang halaman.')
+        console.error('Failed to load assessment session state:', err)
+        setErrorMsg('Gagal memuat status asesmen. Silakan muat ulang halaman.')
       } finally {
         setLoading(false)
       }
     }
 
-    loadAssessmentState()
+    loadData()
   }, [user])
 
   const handleStart = async () => {
-    if (!user || !assessment) return
+    if (!user) return
     if (!consentChecked && !activeSession) return
 
     setActionLoading(true)
@@ -70,115 +77,68 @@ export function AssessmentIntroPage() {
 
     try {
       if (activeSession) {
-        // Resume existing in_progress session
         navigate(`/student/assessment/${activeSession.id}`)
       } else {
-        // Create new session with consent timestamp
-        const newSession = await assessmentSessionService.startNewSession(
+        const session = await assessmentSessionService.startNewSession(
           user.id,
-          assessment.id
+          PRIMARY_ASSESSMENT_ID,
+          selectedLevel
         )
-        navigate(`/student/assessment/${newSession.id}`)
+        navigate(`/student/assessment/${session.id}`)
       }
     } catch (err) {
-      console.error('Error starting assessment:', err)
+      console.error('Error starting session:', err)
       setErrorMsg('Gagal memulai sesi asesmen. Silakan coba kembali.')
       setActionLoading(false)
     }
   }
 
+  const currentLevelConfig = LEVEL_CONFIG[selectedLevel]
+
   if (loading) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center gap-3">
         <Loader2 className="w-8 h-8 animate-spin text-[#6C5CE7]" />
-        <p className="text-xs text-[#676A78]">Memuat informasi asesmen...</p>
-      </div>
-    )
-  }
-
-  if (!assessment) {
-    return (
-      <div className="max-w-2xl mx-auto py-12 px-4 text-center space-y-4">
-        <div className="w-12 h-12 rounded-2xl bg-[#EAEBF0] text-[#676A78] flex items-center justify-center mx-auto">
-          <AlertCircle className="w-6 h-6" />
-        </div>
-        <h1 className="text-xl font-extrabold text-[#17181C]">
-          Belum ada asesmen yang tersedia
-        </h1>
-        <p className="text-xs text-[#676A78]">
-          Asesmen kepribadian belajar sedang disiapkan oleh tim kurikulum. Silakan periksa kembali nanti.
-        </p>
+        <p className="text-xs text-[#676A78]">Menyiapkan katalog asesmen...</p>
       </div>
     )
   }
 
   return (
-    <div className="max-w-3xl mx-auto py-8 px-4 sm:px-6 space-y-6">
-      {/* Page Title */}
-      <div className="space-y-1.5 text-center sm:text-left">
+    <div className="max-w-5xl mx-auto py-8 px-4 sm:px-6 space-y-8">
+      {/* 1. Page Header */}
+      <div className="space-y-2 text-center sm:text-left">
         <span className="text-xs font-bold text-[#6C5CE7] uppercase tracking-wider">
-          Asesmen Karakter & Gaya Belajar
+          Diagnostic Assessment & Pemetaan Belajar
         </span>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#17181C] tracking-tight">
-          {assessment.name}
+        <h1 className="text-2xl sm:text-4xl font-extrabold text-[#17181C] tracking-tight">
+          Pilih Paket Asesmen Pembelajaran
         </h1>
-        <p className="text-xs sm:text-sm text-[#676A78] max-w-2xl">
-          {assessment.description}
+        <p className="text-xs sm:text-sm text-[#676A78] max-w-2xl leading-relaxed">
+          Temukan metode belajar terbaik, dominasi kognitif, dan gaya pengajaran tutor yang paling tepat melalui instrumen diagnostik psikologi pendidikan.
         </p>
       </div>
 
       {errorMsg && (
-        <div className="p-4 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-700 flex items-center gap-2.5">
+        <div className="p-4 rounded-2xl bg-rose-50 border border-rose-200 text-xs text-rose-700 flex items-center gap-2.5">
           <AlertCircle className="w-4 h-4 shrink-0" />
           <span>{errorMsg}</span>
         </div>
       )}
 
-      {/* State A: Student has a completed result */}
-      {latestResult && !activeSession && (
-        <div className="surface-card bg-emerald-50/60 border border-emerald-200 p-6 rounded-2xl space-y-4">
-          <div className="flex items-start justify-between flex-wrap gap-3">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0">
-                <CheckCircle2 className="w-5 h-5" />
-              </div>
-              <div>
-                <span className="text-xs font-bold text-emerald-800 uppercase tracking-wide">
-                  Asesmen Telah Selesai
-                </span>
-                <h2 className="text-lg font-extrabold text-emerald-950">
-                  {latestResult.personality_type?.name || 'Profil Belajar Ditemukan'}
-                </h2>
-                <p className="text-xs text-emerald-700 mt-0.5">
-                  Diselesaikan pada {formatLongDate(new Date(latestResult.completed_at))}
-                </p>
-              </div>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => navigate('/student/personality')}
-              className="px-5 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold transition-all shadow-sm min-h-[42px]"
-            >
-              Lihat Hasil Profil
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* State B: In-progress session resume banner */}
-      {activeSession && (
-        <div className="surface-card bg-[#FDF4E2] border border-[#F2B84B]/60 p-6 rounded-2xl space-y-4">
+      {/* 2. Banner: Active Session or Completed Result */}
+      {activeSession ? (
+        <div className="surface-card bg-[#FDF4E2] border border-[#F2B84B]/60 p-6 rounded-3xl space-y-4">
           <div className="flex items-start justify-between flex-wrap gap-4">
             <div className="space-y-1">
               <span className="text-xs font-bold text-[#92580E] uppercase tracking-wide">
-                Sesi Belum Selesai
+                Sesi Berjalan Ditemukan
               </span>
-              <h2 className="text-base font-extrabold text-[#17181C]">
-                Anda memiliki progres asesmen yang tersimpan
+              <h2 className="text-base sm:text-lg font-extrabold text-[#17181C]">
+                Kamu memiliki progres tes yang belum selesai
               </h2>
               <p className="text-xs text-[#676A78]">
-                Lanjutkan pengerjaan mulai dari pertanyaan terakhir yang telah Anda simpan.
+                Lanjutkan pengerjaan mulai dari nomor terakhir yang telah tersimpan (Jenjang {activeSession.student_level || 'SMA'}).
               </p>
             </div>
 
@@ -186,76 +146,238 @@ export function AssessmentIntroPage() {
               type="button"
               onClick={handleStart}
               disabled={actionLoading}
-              className="px-6 py-3 rounded-xl bg-[#6C5CE7] hover:bg-[#5243D6] text-white text-xs font-bold shadow-md shadow-[#6C5CE7]/20 transition-all flex items-center gap-2 min-h-[44px]"
+              className="px-6 py-3 rounded-2xl bg-[#6C5CE7] hover:bg-[#5243D6] text-white text-xs font-bold shadow-md shadow-[#6C5CE7]/20 transition-all flex items-center gap-2 min-h-[44px]"
             >
               {actionLoading ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
               ) : (
-                <span>Lanjutkan Asesmen</span>
+                <>
+                  <span>Lanjutkan Pengerjaan</span>
+                  <ArrowRight className="w-4 h-4" />
+                </>
               )}
             </button>
           </div>
         </div>
-      )}
+      ) : latestResult ? (
+        <div className="surface-card bg-emerald-50/70 border border-emerald-200 p-6 rounded-3xl space-y-4">
+          <div className="flex items-start justify-between flex-wrap gap-4">
+            <div className="flex items-start gap-3.5">
+              <div className="w-10 h-10 rounded-2xl bg-emerald-600 text-white flex items-center justify-center shrink-0">
+                <CheckCircle2 className="w-5 h-5" />
+              </div>
+              <div className="space-y-0.5">
+                <span className="text-xs font-bold text-emerald-800 uppercase tracking-wide">
+                  Hasil Terakhir Tersedia
+                </span>
+                <h2 className="text-base sm:text-lg font-extrabold text-emerald-950">
+                  {latestResult.modality_result?.modules.PM_VAK_01.title ||
+                    latestResult.personality_type?.name ||
+                    'Profil Pembelajar Terverifikasi'}
+                </h2>
+                <p className="text-xs text-emerald-700">
+                  Diselesaikan pada {formatLongDate(new Date(latestResult.completed_at))} (Jenjang {latestResult.student_level || 'SMA'})
+                </p>
+              </div>
+            </div>
 
-      {/* Main Assessment Info Card */}
-      <div className="surface-card bg-white p-6 sm:p-8 border border-border/80 rounded-2xl space-y-6">
+            <div className="flex items-center gap-2.5">
+              <button
+                type="button"
+                onClick={() => navigate('/student/personality')}
+                className="px-5 py-2.5 rounded-2xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold transition-all shadow-sm min-h-[42px]"
+              >
+                Lihat Hasil Profil
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
+
+      {/* 3. 3-Package Cards Catalog (Sesuai Soal.Md) */}
+      <div className="space-y-4">
         <h2 className="text-base font-extrabold text-[#17181C]">
-          Panduan Pengerjaan
+          Katalog 3 Paket Asesmen
         </h2>
 
-        {/* 3 Metric Pills */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <div className="p-3.5 rounded-xl bg-[#F4F5FB] border border-border/60 flex items-center gap-3">
-            <Clock className="w-5 h-5 text-[#6C5CE7] shrink-0" />
-            <div>
-              <p className="text-[11px] text-[#676A78]">Estimasi Waktu</p>
-              <p className="text-xs font-bold text-[#17181C]">
-                ± {assessment.estimated_minutes} Menit
-              </p>
-            </div>
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {ASSESSMENT_PACKAGES.map((pkg) => {
+            const isActive = pkg.status === 'active'
+            const isSelected = selectedPackage.code === pkg.code
 
-          <div className="p-3.5 rounded-xl bg-[#F4F5FB] border border-border/60 flex items-center gap-3">
-            <HelpCircle className="w-5 h-5 text-[#6C5CE7] shrink-0" />
-            <div>
-              <p className="text-[11px] text-[#676A78]">Format Soal</p>
-              <p className="text-xs font-bold text-[#17181C]">
-                20 Pernyataan Reflektif
-              </p>
-            </div>
-          </div>
+            return (
+              <div
+                key={pkg.code}
+                onClick={() => isActive && setSelectedPackage(pkg)}
+                className={`relative rounded-3xl p-6 border transition-all flex flex-col justify-between ${
+                  isActive
+                    ? isSelected
+                      ? 'bg-white border-[#6C5CE7] shadow-md ring-2 ring-[#6C5CE7]/30 cursor-pointer'
+                      : 'bg-white border-border/80 hover:border-[#6C5CE7]/40 cursor-pointer'
+                    : 'bg-[#F9FAFD] border-border/60 opacity-80 cursor-not-allowed'
+                }`}
+              >
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between gap-2">
+                    <span
+                      className={`px-3 py-1 rounded-full text-[11px] font-bold ${
+                        isActive
+                          ? 'bg-[#6C5CE7]/10 text-[#6C5CE7]'
+                          : 'bg-zinc-200 text-zinc-600 flex items-center gap-1'
+                      }`}
+                    >
+                      {!isActive && <Lock className="w-3 h-3" />}
+                      <span>{pkg.badgeText}</span>
+                    </span>
+                    <span className="text-[11px] text-[#676A78] font-medium">
+                      Target: {pkg.targetAge}
+                    </span>
+                  </div>
 
-          <div className="p-3.5 rounded-xl bg-[#F4F5FB] border border-border/60 flex items-center gap-3">
-            <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0" />
-            <div>
-              <p className="text-[11px] text-[#676A78]">Tipe Jawaban</p>
-              <p className="text-xs font-bold text-[#17181C]">
-                Skala Likert (1 - 5)
-              </p>
-            </div>
-          </div>
+                  <div>
+                    <h3 className="text-lg font-extrabold text-[#17181C]">
+                      {pkg.name}
+                    </h3>
+                    <p className="text-xs font-semibold text-[#6C5CE7] mt-0.5">
+                      {pkg.subtitle}
+                    </p>
+                  </div>
+
+                  <p className="text-xs text-[#676A78] leading-relaxed">
+                    {pkg.description}
+                  </p>
+
+                  <div className="pt-2 border-t border-border/60 space-y-1.5">
+                    <p className="text-[11px] font-bold text-[#17181C]">Deliverables:</p>
+                    <ul className="space-y-1 text-xs text-[#333542]">
+                      {pkg.deliverables.map((del, dIdx) => (
+                        <li key={dIdx} className="flex items-start gap-1.5">
+                          <span className="text-[#6C5CE7] font-bold">•</span>
+                          <span className="leading-tight">{del}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="pt-5 mt-4 border-t border-border/60">
+                  {isActive ? (
+                    <div className="flex items-center justify-between text-xs font-bold text-[#6C5CE7]">
+                      <span>{isSelected ? 'Paket Terpilih' : 'Pilih Paket Ini'}</span>
+                      <CheckCircle2
+                        className={`w-4 h-4 ${
+                          isSelected ? 'text-[#6C5CE7]' : 'text-transparent'
+                        }`}
+                      />
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-1.5 text-xs text-[#888B98]">
+                      <Lock className="w-3.5 h-3.5" />
+                      <span>Terkunci (Segera Hadir)</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )
+          })}
         </div>
+      </div>
 
-        {/* Instructions */}
-        <div className="space-y-2 text-xs text-[#333542] leading-relaxed">
-          <p className="font-bold text-[#17181C]">Instruksi Khusus:</p>
-          <ul className="list-disc pl-5 space-y-1.5 text-[#676A78]">
-            <li>Tidak ada jawaban benar atau salah. Pilihlah jawaban yang paling jujur menggambarkan diri Anda.</li>
-            <li>Setiap jawaban yang Anda pilih otomatis tersimpan ke server secara berkala.</li>
-            <li>Anda dapat kembali ke pertanyaan sebelumnya jika ingin memperbaiki pilihan jawaban.</li>
-          </ul>
-        </div>
-
-        {/* Psychological Safety Disclaimer */}
-        <div className="p-4 rounded-xl bg-[#F9FAFD] border border-border text-xs text-[#676A78] space-y-1.5">
-          <p className="font-bold text-[#17181C]">Pemberitahuan & Pernyataan:</p>
-          <p className="leading-relaxed">
-            Hasil assessment ini ditujukan untuk membantu pengenalan diri dan pengembangan strategi belajar. Assessment ini bukan diagnosis medis atau psikologis dan tidak menggantikan evaluasi profesional.
+      {/* 4. Leveling Filter & Configuration (SD / SMP / SMA) */}
+      <div className="surface-card bg-white p-6 sm:p-8 border border-border/80 rounded-3xl space-y-6">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2 text-[#6C5CE7]">
+            <GraduationCap className="w-5 h-5" />
+            <h2 className="text-base font-extrabold text-[#17181C]">
+              Pilih Jenjang Pendidikan Siswa
+            </h2>
+          </div>
+          <p className="text-xs text-[#676A78]">
+            Jumlah butir pertanyaan disesuaikan otomatis dengan tingkat perkembangan kognitif siswa.
           </p>
         </div>
 
-        {/* Consent Checkbox (only required for starting a new attempt) */}
+        {/* 3 Level Buttons */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {(['SD', 'SMP', 'SMA'] as StudentLevel[]).map((lvl) => {
+            const isChosen = selectedLevel === lvl
+            const cfg = LEVEL_CONFIG[lvl]
+
+            return (
+              <button
+                key={lvl}
+                type="button"
+                onClick={() => setSelectedLevel(lvl)}
+                className={`p-4 rounded-2xl border text-left transition-all min-h-[52px] ${
+                  isChosen
+                    ? 'border-[#6C5CE7] bg-[#6C5CE7]/5 ring-1 ring-[#6C5CE7]'
+                    : 'border-border/80 hover:border-[#6C5CE7]/30 bg-white'
+                }`}
+              >
+                <div className="flex items-center justify-between mb-1.5">
+                  <span
+                    className={`font-bold text-sm ${
+                      isChosen ? 'text-[#6C5CE7]' : 'text-[#17181C]'
+                    }`}
+                  >
+                    {cfg.label}
+                  </span>
+                  <span className="text-xs font-mono font-bold px-2 py-0.5 rounded-lg bg-[#F4F5FB] text-[#17181C]">
+                    {cfg.totalCount} Soal
+                  </span>
+                </div>
+                <p className="text-[11px] text-[#676A78] leading-relaxed">
+                  {cfg.desc}
+                </p>
+              </button>
+            )
+          })}
+        </div>
+
+        {/* Breakdown Module Indicator for Selected Level */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-4 rounded-2xl bg-[#F4F5FB] border border-border/60">
+          <div className="flex items-center gap-3">
+            <BookOpen className="w-4 h-4 text-[#6C5CE7] shrink-0" />
+            <div>
+              <p className="text-[11px] text-[#676A78]">Modul 1: VAK</p>
+              <p className="text-xs font-bold text-[#17181C]">
+                {currentLevelConfig.vakCount} Soal Sensori
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <Layers className="w-4 h-4 text-[#6C5CE7] shrink-0" />
+            <div>
+              <p className="text-[11px] text-[#676A78]">Modul 2: Hemisfer Otak</p>
+              <p className="text-xs font-bold text-[#17181C]">
+                {currentLevelConfig.hemCount} Soal Gaya Berpikir
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <Clock className="w-4 h-4 text-[#6C5CE7] shrink-0" />
+            <div>
+              <p className="text-[11px] text-[#676A78]">Modul 3: Kebiasaan Belajar</p>
+              <p className="text-xs font-bold text-[#17181C]">
+                {currentLevelConfig.skbCount} Soal Lingkungan
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Psychological safety & instructions */}
+        <div className="p-4 rounded-2xl bg-[#F9FAFD] border border-border text-xs text-[#676A78] space-y-1.5 leading-relaxed">
+          <p className="font-bold text-[#17181C]">Panduan Pengerjaan:</p>
+          <ul className="list-disc pl-5 space-y-1">
+            <li>Tidak ada jawaban benar atau salah, pilih yang paling nyaman dan menggambarkan dirimu apa adanya.</li>
+            <li>Jawaban otomatis tersimpan berkala, kamu dapat kembali ke nomor sebelumnya bila diperlukan.</li>
+            <li>Hasil asesmen digunakan untuk memetakan metode belajar personal dan pencocokan guru privat.</li>
+          </ul>
+        </div>
+
+        {/* Consent Checkbox */}
         {!activeSession && (
           <div className="pt-2">
             <label className="flex items-start gap-3 cursor-pointer select-none">
@@ -266,7 +388,7 @@ export function AssessmentIntroPage() {
                 className="mt-0.5 w-4 h-4 rounded border-[#BDC1D0] text-[#6C5CE7] focus:ring-[#6C5CE7]"
               />
               <span className="text-xs text-[#17181C] font-medium leading-relaxed">
-                Saya memahami bahwa assessment ini digunakan untuk pengenalan diri dan pengembangan pembelajaran, bukan diagnosis psikologis atau medis.
+                Saya memahami bahwa asesmen ini digunakan untuk pengenalan gaya belajar personal, bukan diagnosis psikologis atau medis klinis.
               </span>
             </label>
           </div>
@@ -274,10 +396,10 @@ export function AssessmentIntroPage() {
 
         {/* Action Button */}
         {!activeSession && (
-          <div className="pt-3 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="pt-3 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-border/60">
             <p className="text-[11px] text-[#676A78]">
               {consentChecked
-                ? 'Persetujuan terverifikasi. Anda siap memulai.'
+                ? `Siap mengerjakan ${currentLevelConfig.totalCount} butir soal (${currentLevelConfig.label}).`
                 : 'Beri tanda centang pada pernyataan persetujuan untuk memulai.'}
             </p>
 
@@ -285,7 +407,7 @@ export function AssessmentIntroPage() {
               type="button"
               onClick={handleStart}
               disabled={!consentChecked || actionLoading}
-              className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#6C5CE7] hover:bg-[#5243D6] text-white text-xs font-bold shadow-md shadow-[#6C5CE7]/25 disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 min-h-[46px]"
+              className="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-[#6C5CE7] hover:bg-[#5243D6] text-white text-xs font-bold shadow-md shadow-[#6C5CE7]/25 disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 min-h-[46px]"
             >
               {actionLoading ? (
                 <>
@@ -293,52 +415,20 @@ export function AssessmentIntroPage() {
                   <span>Menyiapkan Sesi...</span>
                 </>
               ) : latestResult ? (
-                <span>Ambil Ulang Asesmen</span>
+                <>
+                  <RotateCcw className="w-4 h-4" />
+                  <span>Ambil Ulang Asesmen ({selectedLevel})</span>
+                </>
               ) : (
-                <span>Mulai Asesmen</span>
+                <>
+                  <span>Mulai Asesmen ({selectedLevel})</span>
+                  <ArrowRight className="w-4 h-4" />
+                </>
               )}
             </button>
           </div>
         )}
       </div>
-
-      {/* History section if available */}
-      {history.length > 0 && (
-        <div className="surface-card bg-white p-6 border border-border/80 rounded-2xl space-y-4">
-          <div className="flex items-center gap-2">
-            <History className="w-4 h-4 text-[#6C5CE7]" />
-            <h3 className="text-xs font-bold text-[#17181C] uppercase tracking-wider">
-              Riwayat Asesmen Anda ({history.length})
-            </h3>
-          </div>
-
-          <div className="divide-y divide-border/60">
-            {history.map((item) => (
-              <div
-                key={item.id}
-                className="py-3 flex items-center justify-between text-xs"
-              >
-                <div>
-                  <p className="font-bold text-[#17181C]">
-                    {item.personality_type?.name || 'Hasil Asesmen'}
-                  </p>
-                  <p className="text-[11px] text-[#676A78]">
-                    {formatLongDate(new Date(item.completed_at))}
-                  </p>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => navigate(`/student/personality/${item.id}`)}
-                  className="px-3 py-1.5 rounded-lg border border-border text-[#6C5CE7] font-bold hover:bg-[#6C5CE7]/5 transition-colors"
-                >
-                  Lihat Hasil
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   )
 }

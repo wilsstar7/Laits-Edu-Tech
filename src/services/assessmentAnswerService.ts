@@ -1,56 +1,82 @@
-import { requireSupabase } from '@/lib/supabase'
+import { getSupabase } from '@/lib/supabase'
+
+const ANSWER_STORAGE_PREFIX = 'laits_answers_'
 
 export const assessmentAnswerService = {
   /**
-   * Fetches all saved answers for this session.
-   * Returns a key-value mapping of question_id -> option_id for instantaneous UI lookup.
+   * Mengambil semua jawaban yang tersimpan untuk sesi ini.
+   * Format mapping: question_id -> option_id / indicator
    */
-  async getAnswersForSession(
-    sessionId: string
-  ): Promise<Record<string, string>> {
-    const supabase = requireSupabase()
-    const { data, error } = await supabase
-      .from('assessment_answers')
-      .select('question_id, option_id')
-      .eq('session_id', sessionId)
-
-    if (error) {
-      console.error('Failed to fetch session answers:', error)
-      throw error
-    }
-
+  async getAnswersForSession(sessionId: string): Promise<Record<string, string>> {
     const map: Record<string, string> = {}
-    for (const item of data ?? []) {
-      map[item.question_id] = item.option_id
+
+    // 1. Cek local storage
+    try {
+      const raw = localStorage.getItem(`${ANSWER_STORAGE_PREFIX}${sessionId}`)
+      if (raw) {
+        Object.assign(map, JSON.parse(raw))
+      }
+    } catch {
+      // ignore
     }
+
+    // 2. Cek Supabase jika ada dan gabungkan
+    const supabase = getSupabase()
+    if (supabase) {
+      try {
+        const { data } = await supabase
+          .from('assessment_answers')
+          .select('question_id, option_id')
+          .eq('session_id', sessionId)
+
+        if (data) {
+          for (const item of data) {
+            map[item.question_id] = item.option_id
+          }
+        }
+      } catch {
+        // fallback to local answers
+      }
+    }
+
     return map
   },
 
   /**
-   * Upserts a student's answer.
-   * Frontend only sends option_id: scoring is strictly computed server-side in RPC.
+   * Menyimpan / upsert jawaban siswa untuk suatu butir soal.
    */
   async saveAnswer(
     sessionId: string,
     questionId: string,
     optionId: string
   ): Promise<void> {
-    const supabase = requireSupabase()
-    const { error } = await supabase.from('assessment_answers').upsert(
-      {
-        session_id: sessionId,
-        question_id: questionId,
-        option_id: optionId,
-        answered_at: new Date().toISOString(),
-      },
-      { onConflict: 'session_id,question_id' }
-    )
+    // 1. Simpan di local storage
+    try {
+      const storageKey = `${ANSWER_STORAGE_PREFIX}${sessionId}`
+      const existingRaw = localStorage.getItem(storageKey)
+      const answers = existingRaw ? JSON.parse(existingRaw) : {}
+      answers[questionId] = optionId
+      localStorage.setItem(storageKey, JSON.stringify(answers))
+    } catch {
+      // ignore
+    }
 
-    if (error) {
-      console.error('Failed to save assessment answer:', error)
-      throw new Error(
-        'Gagal menyimpan jawaban. Periksa koneksi Anda dan coba lagi.'
-      )
+    // 2. Simpan di Supabase jika terhubung
+    const supabase = getSupabase()
+    if (supabase) {
+      try {
+        await supabase.from('assessment_answers').upsert(
+          {
+            session_id: sessionId,
+            question_id: questionId,
+            option_id: optionId,
+            answered_at: new Date().toISOString(),
+          },
+          { onConflict: 'session_id,question_id' }
+        )
+      } catch {
+        // local storage guarantees answer is safe
+      }
     }
   },
 }

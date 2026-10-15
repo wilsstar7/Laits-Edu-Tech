@@ -1965,6 +1965,48 @@ export type Database = {
         }
         Relationships: []
       }
+      conversations: {
+        Row: {
+          id: string
+          student_id: string
+          tutor_id: string
+          last_message_at: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          student_id: string
+          tutor_id: string
+          last_message_at?: string | null
+          created_at?: string
+        }
+        Update: {
+          last_message_at?: string | null
+        }
+        Relationships: []
+      }
+      messages: {
+        Row: {
+          id: string
+          conversation_id: string
+          sender_id: string
+          body: string
+          read_at: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          conversation_id: string
+          sender_id: string
+          body: string
+          read_at?: string | null
+          created_at?: string
+        }
+        Update: {
+          read_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -2138,6 +2180,49 @@ export type Database = {
           p_subject_ids?: string[]
         }
         Returns: string
+      }
+      start_conversation: {
+        Args: {
+          p_other_user_id: string
+        }
+        Returns: string
+      }
+      send_message: {
+        Args: {
+          p_conversation_id: string
+          p_body: string
+        }
+        Returns: Database['public']['Tables']['messages']['Row']
+      }
+      mark_conversation_read: {
+        Args: {
+          p_conversation_id: string
+        }
+        Returns: number
+      }
+      list_my_conversations: {
+        Args: never
+        Returns: {
+          conversation_id: string
+          other_user_id: string
+          other_name: string
+          other_avatar_url: string | null
+          other_role: string
+          last_message_body: string | null
+          last_message_sender_id: string | null
+          last_message_at: string
+          unread_count: number
+          created_at: string
+        }[]
+      }
+      list_message_contacts: {
+        Args: never
+        Returns: {
+          user_id: string
+          full_name: string
+          avatar_url: string | null
+          subtitle: string | null
+        }[]
       }
     }
     Enums: {

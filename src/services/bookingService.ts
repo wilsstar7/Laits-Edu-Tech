@@ -285,11 +285,10 @@ export const bookingService = {
   },
 
   /**
-   * Computes authentic statistics for the tutor dashboard using real database bookings.
+   * Computes tutor dashboard statistics from bookings already fetched via getTutorBookings.
+   * Counts only cover the fetched page (getTutorBookings is limited to 50 rows).
    */
-  async getTutorDashboardStats(tutorUserId?: string): Promise<TutorDashboardStats> {
-    const bookings = await this.getTutorBookings(tutorUserId)
-
+  computeTutorDashboardStats(bookings: Booking[]): TutorDashboardStats {
     const now = new Date()
     const todayYMD = now.toISOString().slice(0, 10)
 

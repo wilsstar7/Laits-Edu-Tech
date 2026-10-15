@@ -23,19 +23,14 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { toast } from 'sonner'
 
 export function TutorDashboardPage() {
-  const { profile } = useAuth()
+  const { profile, user } = useAuth()
+  const userId = user?.id
   const tutorName = profile?.full_name ? getFirstName(profile.full_name) : 'Tutor'
   const todayStr = formatLongDate(new Date())
 
   const [loading, setLoading] = useState(true)
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
   const [allBookings, setAllBookings] = useState<Booking[]>([])
-  const [stats, setStats] = useState({
-    activeStudentsCount: 0,
-    upcomingSessionsCount: 0,
-    completedSessionsCount: 0,
-    pendingRequestsCount: 0,
-  })
 
   // Rejection / Cancel modal state
   const [actionBooking, setActionBooking] = useState<{
@@ -43,25 +38,16 @@ export function TutorDashboardPage() {
     mode: 'cancel' | 'reject'
   } | null>(null)
 
+  const [reloadKey, setReloadKey] = useState(0)
+
   useEffect(() => {
+    if (!userId) return
     let isMounted = true
 
-    async function init() {
+    async function init(tutorUserId: string) {
       try {
-        const [statsData, bookingsData] = await Promise.all([
-          bookingService.getTutorDashboardStats(),
-          bookingService.getTutorBookings(),
-        ])
-
-        if (isMounted) {
-          setStats({
-            activeStudentsCount: statsData.activeStudentsCount,
-            upcomingSessionsCount: statsData.upcomingSessionsCount,
-            completedSessionsCount: statsData.completedSessionsCount,
-            pendingRequestsCount: statsData.pendingRequestsCount,
-          })
-          setAllBookings(bookingsData)
-        }
+        const bookingsData = await bookingService.getTutorBookings(tutorUserId)
+        if (isMounted) setAllBookings(bookingsData)
       } catch (err: unknown) {
         console.error('Failed to load tutor dashboard:', err)
         if (isMounted) {
@@ -74,35 +60,22 @@ export function TutorDashboardPage() {
       }
     }
 
-    init()
+    init(userId)
     return () => {
       isMounted = false
     }
-  }, [])
+  }, [userId, reloadKey])
 
   const reloadData = () => {
     setLoading(true)
     setErrorMsg(null)
-    Promise.all([
-      bookingService.getTutorDashboardStats(),
-      bookingService.getTutorBookings(),
-    ])
-      .then(([statsData, bookingsData]) => {
-        setStats({
-          activeStudentsCount: statsData.activeStudentsCount,
-          upcomingSessionsCount: statsData.upcomingSessionsCount,
-          completedSessionsCount: statsData.completedSessionsCount,
-          pendingRequestsCount: statsData.pendingRequestsCount,
-        })
-        setAllBookings(bookingsData)
-      })
-      .catch((err) => {
-        setErrorMsg(
-          err instanceof Error ? err.message : 'Gagal memuat dashboard bimbingan tutor.'
-        )
-      })
-      .finally(() => setLoading(false))
+    setReloadKey((k) => k + 1)
   }
+
+  const stats = useMemo(
+    () => bookingService.computeTutorDashboardStats(allBookings),
+    [allBookings]
+  )
 
   // Split into pending requests and confirmed/upcoming sessions
   const { pendingRequests, upcomingSessions } = useMemo(() => {

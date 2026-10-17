@@ -1,28 +1,27 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router'
 import {
   Users,
   CheckCircle,
   Clock,
   CalendarCheck,
+  CalendarClock,
+  ArrowRight,
   Sliders,
   MessageSquare,
   RefreshCw,
 } from 'lucide-react'
+import { toast } from 'sonner'
 import { AppShell } from '@/components/layout/AppShell'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { StatCard } from '@/components/dashboard/StatCard'
 import { ErrorState } from '@/components/ui/ErrorState'
+import { BookingCard } from '@/components/booking/BookingCard'
+import { BookingCancelDialog } from '@/components/booking/BookingCancelDialog'
 import { bookingService } from '@/services/bookingService'
 import { useAuth } from '@/hooks/useAuth'
 import { formatLongDate, getFirstName } from '@/utils/format'
-
-interface DashboardCounts {
-  activeStudentsCount: number
-  upcomingSessionsCount: number
-  pendingRequestsCount: number
-  completedSessionsCount: number
-}
+import type { Booking } from '@/types/booking'
 
 function useAnimatedCount(target: number, durationMs = 450): number {
   const [displayValue, setDisplayValue] = useState(0)
@@ -65,29 +64,28 @@ export function TutorDashboardPage() {
 
   const [refreshing, setRefreshing] = useState(false)
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
-  const [counts, setCounts] = useState<DashboardCounts>({
-    activeStudentsCount: 0,
-    upcomingSessionsCount: 0,
-    pendingRequestsCount: 0,
-    completedSessionsCount: 0,
-  })
+  const [allBookings, setAllBookings] = useState<Booking[]>([])
+  const [actionBooking, setActionBooking] = useState<{
+    booking: Booking
+    mode: 'cancel' | 'reject'
+  } | null>(null)
   const [reloadKey, setReloadKey] = useState(0)
 
   useEffect(() => {
     if (!userId) return
     let isMounted = true
 
-    async function loadCounts(tutorUserId: string) {
+    async function init(tutorUserId: string) {
       try {
-        const result = await bookingService.getTutorDashboardCounts(tutorUserId)
+        const bookingsData = await bookingService.getTutorBookings(tutorUserId)
         if (isMounted) {
-          setCounts(result)
+          setAllBookings(bookingsData)
           setErrorMsg(null)
         }
       } catch (err: unknown) {
         if (isMounted) {
           setErrorMsg(
-            err instanceof Error ? err.message : 'Gagal memuat ringkasan statistik tutor.'
+            err instanceof Error ? err.message : 'Gagal memuat dashboard bimbingan tutor.'
           )
         }
       } finally {
@@ -97,34 +95,83 @@ export function TutorDashboardPage() {
       }
     }
 
-    loadCounts(userId)
+    init(userId)
     return () => {
       isMounted = false
     }
   }, [userId, reloadKey])
 
-  const handleRefresh = () => {
+  const reloadData = () => {
     setRefreshing(true)
     setErrorMsg(null)
     setReloadKey((k) => k + 1)
   }
 
-  const activeStudentsDisplay = useAnimatedCount(counts.activeStudentsCount)
-  const upcomingSessionsDisplay = useAnimatedCount(counts.upcomingSessionsCount)
-  const pendingRequestsDisplay = useAnimatedCount(counts.pendingRequestsCount)
-  const completedSessionsDisplay = useAnimatedCount(counts.completedSessionsCount)
+  const stats = useMemo(
+    () => bookingService.computeTutorDashboardStats(allBookings),
+    [allBookings]
+  )
+
+  const activeStudentsDisplay = useAnimatedCount(stats.activeStudentsCount)
+  const upcomingSessionsDisplay = useAnimatedCount(stats.upcomingSessionsCount)
+  const pendingRequestsDisplay = useAnimatedCount(stats.pendingRequestsCount)
+  const completedSessionsDisplay = useAnimatedCount(stats.completedSessionsCount)
+
+  const { pendingRequests, upcomingSessions } = useMemo(() => {
+    const pending = allBookings.filter((b) => b.status === 'pending')
+    const upcoming = allBookings.filter((b) => b.status === 'confirmed')
+
+    return {
+      pendingRequests: [...pending].sort(
+        (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+      ),
+      upcomingSessions: [...upcoming].sort(
+        (a, b) => new Date(a.scheduledStart).getTime() - new Date(b.scheduledStart).getTime()
+      ),
+    }
+  }, [allBookings])
+
+  const handleComplete = async (booking: Booking) => {
+    try {
+      await bookingService.updateBookingStatus(booking.id, 'completed')
+      toast.success('Sesi bimbingan ditandai selesai.')
+      reloadData()
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Gagal memperbarui status sesi.'
+      toast.error(msg)
+    }
+  }
+
+  const handleConfirmRejectionOrCancel = async (bookingId: string, reason: string) => {
+    if (!actionBooking) return
+    const targetStatus = actionBooking.mode === 'reject' ? 'rejected' : 'cancelled'
+
+    try {
+      await bookingService.updateBookingStatus(bookingId, targetStatus, { reason })
+      toast.success(
+        actionBooking.mode === 'reject'
+          ? 'Permintaan sesi berhasil ditolak.'
+          : 'Sesi berhasil dibatalkan.'
+      )
+      reloadData()
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Gagal memproses perubahan sesi.'
+      toast.error(msg)
+      throw err
+    }
+  }
 
   return (
     <AppShell>
       <PageHeader
         title={`Dashboard Tutor: ${tutorName}`}
-        subtitle={`Hari ini adalah ${todayStr}. Pantau jumlah murid aktif, sesi mendatang, permintaan menunggu, dan sesi selesai.`}
+        subtitle={`Hari ini adalah ${todayStr}. Pantau permintaan masuk, jadwal mengajar, dan murid bimbingan Anda.`}
         badge="Tutor Portal"
         action={
           <div className="flex flex-wrap items-center gap-2">
             <button
               type="button"
-              onClick={handleRefresh}
+              onClick={reloadData}
               disabled={refreshing}
               className="inline-flex items-center px-3.5 py-2 rounded-xl bg-white border border-border text-ink-primary text-xs font-bold shadow-2xs hover:bg-surface transition-colors gap-2 min-h-[44px] cursor-pointer disabled:opacity-60"
             >
@@ -151,93 +198,190 @@ export function TutorDashboardPage() {
 
       {errorMsg ? (
         <ErrorState
-          title="Kendala Memuat Statistik Tutor"
+          title="Kendala Memuat Dashboard"
           message={errorMsg}
-          onRetry={handleRefresh}
+          onRetry={reloadData}
         />
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          <StatCard
-            label="Murid Aktif"
-            value={activeStudentsDisplay}
-            description={
-              counts.activeStudentsCount > 0
-                ? 'Murid terhubung dalam bimbingan'
-                : 'Belum ada murid bimbingan'
-            }
-            icon={Users}
-            iconBg="bg-brand-primary/10"
-            iconColor="text-brand-primary"
-            action={
-              <Link
-                to="/tutor/messages"
-                className="inline-flex items-center gap-1 text-brand-primary font-bold hover:underline"
-              >
-                <MessageSquare className="w-3.5 h-3.5" />
-                <span>Pesan</span>
-              </Link>
-            }
-          />
+        <div className="space-y-8">
+          {/* 4 Counting Metric Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            <StatCard
+              label="Murid Aktif"
+              value={activeStudentsDisplay}
+              description={
+                stats.activeStudentsCount > 0
+                  ? 'Murid terhubung dalam bimbingan aktif'
+                  : 'Belum ada murid bimbingan'
+              }
+              icon={Users}
+              iconBg="bg-brand-primary/10"
+              iconColor="text-brand-primary"
+              action={
+                <Link
+                  to="/tutor/messages"
+                  className="inline-flex items-center gap-1 text-brand-primary font-bold hover:underline"
+                >
+                  <MessageSquare className="w-3.5 h-3.5" />
+                  <span>Pesan</span>
+                </Link>
+              }
+            />
 
-          <StatCard
-            label="Sesi Mendatang"
-            value={upcomingSessionsDisplay}
-            description={
-              counts.upcomingSessionsCount > 0
-                ? 'Sesi terkonfirmasi siap berjalan'
-                : 'Tidak ada sesi terjadwal'
-            }
-            icon={CalendarCheck}
-            iconBg="bg-brand-primary/10"
-            iconColor="text-brand-primary"
-            action={
-              <Link
-                to="/tutor/sessions"
-                className="text-brand-primary font-bold hover:underline"
-              >
-                Lihat Sesi
-              </Link>
-            }
-          />
+            <StatCard
+              label="Sesi Mendatang"
+              value={upcomingSessionsDisplay}
+              description={
+                stats.upcomingSessionsCount > 0
+                  ? 'Sesi terjadwal siap dilaksanakan'
+                  : 'Tidak ada sesi terjadwal'
+              }
+              icon={CalendarCheck}
+              iconBg="bg-brand-primary/10"
+              iconColor="text-brand-primary"
+              action={
+                <Link
+                  to="/tutor/sessions"
+                  className="text-brand-primary font-bold hover:underline"
+                >
+                  Lihat Sesi
+                </Link>
+              }
+            />
 
-          <StatCard
-            label="Permintaan Menunggu"
-            value={pendingRequestsDisplay}
-            description={
-              counts.pendingRequestsCount > 0
-                ? 'Menunggu verifikasi Super Admin'
-                : 'Semua permintaan telah diproses'
-            }
-            icon={Clock}
-            iconBg="bg-warning/10"
-            iconColor="text-warning"
-            action={
-              <Link
-                to="/tutor/availability"
-                className="text-ink-primary font-bold hover:underline"
-              >
-                Jadwal
-              </Link>
-            }
-          />
+            <StatCard
+              label="Permintaan Menunggu"
+              value={pendingRequestsDisplay}
+              description={
+                stats.pendingRequestsCount > 0
+                  ? 'Menunggu verifikasi pembayaran Super Admin'
+                  : 'Semua permintaan telah diproses'
+              }
+              icon={Clock}
+              iconBg="bg-warning/10"
+              iconColor="text-warning"
+              action={
+                <Link
+                  to="/tutor/availability"
+                  className="text-ink-primary font-bold hover:underline"
+                >
+                  Jadwal
+                </Link>
+              }
+            />
 
-          <StatCard
-            label="Sesi Selesai"
-            value={completedSessionsDisplay}
-            description="Total sesi bimbingan tuntas"
-            icon={CheckCircle}
-            iconBg="bg-success/10"
-            iconColor="text-success"
-            action={
-              <Link
-                to="/tutor/sessions"
-                className="text-success font-bold hover:underline"
-              >
-                Riwayat
-              </Link>
-            }
-          />
+            <StatCard
+              label="Sesi Selesai"
+              value={completedSessionsDisplay}
+              description="Total sesi bimbingan tuntas"
+              icon={CheckCircle}
+              iconBg="bg-success/10"
+              iconColor="text-success"
+              action={
+                <Link
+                  to="/tutor/sessions"
+                  className="text-success font-bold hover:underline"
+                >
+                  Riwayat
+                </Link>
+              }
+            />
+          </div>
+
+          {/* Section: Pending Booking Requests */}
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-base font-bold text-ink-primary flex items-center gap-2">
+                  <Clock className="w-4 h-4 text-warning" />
+                  <span>Permintaan Sesi Belajar Masuk ({pendingRequestsDisplay})</span>
+                </h3>
+                <p className="text-xs text-ink-muted">
+                  Daftar sesi belajar dari murid. Sesi akan otomatis terkonfirmasi setelah pembayaran diverifikasi oleh Super Admin.
+                </p>
+              </div>
+            </div>
+
+            {pendingRequests.length === 0 ? (
+              <div className="p-6 bg-white rounded-2xl border border-dashed border-border text-center">
+                <p className="text-xs text-ink-muted">
+                  Tidak ada permintaan sesi yang menunggu konfirmasi saat ini.
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {pendingRequests.map((b) => (
+                  <BookingCard
+                    key={b.id}
+                    booking={b}
+                    perspective="tutor"
+                    onReject={(booking) =>
+                      setActionBooking({ booking, mode: 'reject' })
+                    }
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Section: Upcoming Confirmed Sessions */}
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-base font-bold text-ink-primary flex items-center gap-2">
+                  <CalendarClock className="w-4 h-4 text-brand-primary" />
+                  <span>Jadwal Mengajar Terkonfirmasi ({upcomingSessionsDisplay})</span>
+                </h3>
+                <p className="text-xs text-ink-muted">
+                  Sesi privat yang siap dilaksanakan sesuai jadwal waktu yang disepakati.
+                </p>
+              </div>
+            </div>
+
+            {upcomingSessions.length === 0 ? (
+              <div className="p-8 bg-white rounded-2xl border border-dashed border-border text-center space-y-2">
+                <p className="text-xs font-semibold text-ink-primary">
+                  Belum ada jadwal mengajar terkonfirmasi mendatang
+                </p>
+                <p className="text-xs text-ink-muted max-w-sm mx-auto">
+                  Pastikan jam ketersediaan mingguan Anda telah aktif agar murid dapat menemukan dan memesan sesi belajar.
+                </p>
+                <Link
+                  to="/tutor/availability"
+                  className="min-h-[44px] px-4 py-2 rounded-xl bg-surface border border-border text-brand-primary hover:bg-brand-primary/5 text-xs font-bold inline-flex items-center gap-1.5 mt-2"
+                >
+                  <span>Atur Jam Ketersediaan</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {upcomingSessions.map((b) => (
+                  <BookingCard
+                    key={b.id}
+                    booking={b}
+                    perspective="tutor"
+                    onComplete={handleComplete}
+                    onCancel={(booking) =>
+                      setActionBooking({ booking, mode: 'cancel' })
+                    }
+                  />
+                ))}
+              </div>
+            )}
+          </div>
         </div>
+      )}
+
+      {/* Rejection / Cancellation Modal */}
+      {actionBooking && (
+        <BookingCancelDialog
+          booking={actionBooking.booking}
+          mode={actionBooking.mode}
+          isOpen={true}
+          onClose={() => setActionBooking(null)}
+          onConfirm={handleConfirmRejectionOrCancel}
+        />
       )}
     </AppShell>
   )

@@ -198,59 +198,74 @@ export const bookingService = {
       }
       if (!targetUserId) return []
 
-      // 1. Get tutor profile ID
-      const { data: tp, error: tpError } = await supabase
-        .from('tutor_profiles')
-        .select('id')
-        .eq('user_id', targetUserId)
-        .single()
-
-      if (tpError || !tp) throw new Error('Akun tutor tidak ditemukan.')
-
-      const { data, error } = await supabase
-        .from('bookings')
-        .select(`
-          id,
-          student_id,
-          tutor_id,
-          subject_id,
-          scheduled_start,
-          scheduled_end,
-          timezone,
-          status,
-          student_note,
-          tutor_note,
-          meeting_url,
-          created_at,
-          updated_at,
-          cancelled_at,
-          cancelled_by,
-          cancellation_reason,
-          student:profiles!bookings_student_id_fkey (
-            full_name,
-            email,
-            avatar_url
-          ),
-          tutor:tutor_profiles!bookings_tutor_id_fkey (
-            user_id,
-            hourly_rate,
-            profile:profiles!inner (
+      const [bookingsRes, contactsRes] = await Promise.all([
+        supabase
+          .from('bookings')
+          .select(`
+            id,
+            student_id,
+            tutor_id,
+            subject_id,
+            scheduled_start,
+            scheduled_end,
+            timezone,
+            status,
+            student_note,
+            tutor_note,
+            meeting_url,
+            created_at,
+            updated_at,
+            cancelled_at,
+            cancelled_by,
+            cancellation_reason,
+            student:profiles!bookings_student_id_fkey (
               full_name,
+              email,
               avatar_url
+            ),
+            tutor:tutor_profiles!bookings_tutor_id_fkey!inner (
+              user_id,
+              hourly_rate,
+              profile:profiles!inner (
+                full_name,
+                avatar_url
+              )
+            ),
+            subject:subjects!bookings_subject_id_fkey (
+              name,
+              category
             )
-          ),
-          subject:subjects!bookings_subject_id_fkey (
-            name,
-            category
-          )
-        `)
-        .eq('tutor_id', tp.id)
-        .order('scheduled_start', { ascending: false })
-        .limit(50)
+          `)
+          .eq('tutor.user_id', targetUserId)
+          .order('scheduled_start', { ascending: false })
+          .limit(50),
+        supabase.rpc('list_message_contacts'),
+      ])
 
-      if (error) throw error
+      if (bookingsRes.error) throw bookingsRes.error
 
-      return (data || []).map((row) => formatBookingRow(row))
+      const contactMap = new Map<string, { fullName: string; avatarUrl: string | null }>()
+      if (!contactsRes.error && Array.isArray(contactsRes.data)) {
+        contactsRes.data.forEach((c) => {
+          contactMap.set(c.user_id, {
+            fullName: c.full_name,
+            avatarUrl: c.avatar_url,
+          })
+        })
+      }
+
+      return (bookingsRes.data || []).map((row) => {
+        const formatted = formatBookingRow(row)
+        const contact = contactMap.get(formatted.studentId)
+        if (contact && formatted.studentName === 'Siswa') {
+          return {
+            ...formatted,
+            studentName: contact.fullName || formatted.studentName,
+            studentAvatarUrl: formatted.studentAvatarUrl ?? contact.avatarUrl,
+          }
+        }
+        return formatted
+      })
     } catch (err) {
       logger.error('Failed to get tutor bookings:', err)
       throw toAppError(err, 'Gagal memuat daftar sesi bimbingan tutor.')

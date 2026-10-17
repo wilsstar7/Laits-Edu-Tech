@@ -6,10 +6,111 @@ const LATEST_RESULT_PREFIX = 'laits_persona_latest_'
 
 export const personalityService = {
   /**
+   * Menghapus memori hasil dan sesi Paket 2 / Paket 3 ketika siswa mengulang dari Paket 1.
+   */
+  resetSubsequentPackages(userId: string): void {
+    try {
+      const keysToRemove: string[] = []
+      const paket2SessionIds = new Set<string>()
+
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i)
+        if (!key) continue
+
+        if (key.startsWith(RESULT_STORAGE_PREFIX)) {
+          try {
+            const parsed = JSON.parse(localStorage.getItem(key) || '{}') as AssessmentResult
+            if (
+              parsed.user_id === userId &&
+              (parsed.package_code === 'PAKET_2_PERSONA_POTENTIAL' ||
+                parsed.package_code === 'PAKET_3_PERSONA_MASTERY' ||
+                Boolean(parsed.potential_result))
+            ) {
+              keysToRemove.push(key)
+              if (parsed.session_id) paket2SessionIds.add(parsed.session_id)
+            }
+          } catch {
+            // ignore
+          }
+        } else if (key.startsWith('laits_session_data_')) {
+          try {
+            const parsed = JSON.parse(localStorage.getItem(key) || '{}') as {
+              id?: string
+              user_id?: string
+              package_code?: string
+            }
+            if (
+              parsed.user_id === userId &&
+              (parsed.package_code === 'PAKET_2_PERSONA_POTENTIAL' ||
+                parsed.package_code === 'PAKET_3_PERSONA_MASTERY')
+            ) {
+              keysToRemove.push(key)
+              if (parsed.id) paket2SessionIds.add(parsed.id)
+            }
+          } catch {
+            // ignore
+          }
+        }
+      }
+
+      for (const sid of paket2SessionIds) {
+        keysToRemove.push(`laits_answers_${sid}`)
+      }
+
+      for (const k of keysToRemove) {
+        localStorage.removeItem(k)
+      }
+
+      // Bersihkan latest jika masih menyimpan hasil Paket 2/3
+      const latestKey = `${LATEST_RESULT_PREFIX}${userId}`
+      const latestRaw = localStorage.getItem(latestKey)
+      if (latestRaw) {
+        try {
+          const latestParsed = JSON.parse(latestRaw) as AssessmentResult
+          if (
+            latestParsed.package_code === 'PAKET_2_PERSONA_POTENTIAL' ||
+            latestParsed.package_code === 'PAKET_3_PERSONA_MASTERY' ||
+            Boolean(latestParsed.potential_result)
+          ) {
+            localStorage.removeItem(latestKey)
+          }
+        } catch {
+          // ignore
+        }
+      }
+
+      // Bersihkan history dari hasil Paket 2/3
+      const historyKey = `laits_persona_history_${userId}`
+      const existingHistoryRaw = localStorage.getItem(historyKey)
+      if (existingHistoryRaw) {
+        try {
+          const historyList: AssessmentResult[] = JSON.parse(existingHistoryRaw)
+          const cleaned = historyList.filter(
+            (item) =>
+              item.package_code !== 'PAKET_2_PERSONA_POTENTIAL' &&
+              item.package_code !== 'PAKET_3_PERSONA_MASTERY' &&
+              !item.potential_result
+          )
+          localStorage.setItem(historyKey, JSON.stringify(cleaned))
+        } catch {
+          // ignore
+        }
+      }
+    } catch (err) {
+      console.warn('Failed to reset subsequent package memory:', err)
+    }
+  },
+
+  /**
    * Menyimpan hasil kalkulasi asesmen siswa.
    */
   async saveResult(result: AssessmentResult): Promise<void> {
     try {
+      // Jika siswa mengulang dan menyelesaikan Paket 1, hapus memori Paket 2 & 3 sebelumnya
+      if (result.package_code === 'PAKET_1_PERSONA_MODALITY') {
+        this.resetSubsequentPackages(result.user_id)
+      }
+
       localStorage.setItem(`${RESULT_STORAGE_PREFIX}${result.id}`, JSON.stringify(result))
       localStorage.setItem(`${LATEST_RESULT_PREFIX}${result.user_id}`, JSON.stringify(result))
 

@@ -20,15 +20,15 @@ export function QuestionCard({
 }: QuestionCardProps) {
   const moduleLabel =
     question.module_code === 'PM-VAK-01'
-      ? 'Modul 1: Sensory Modality (VAK)'
+      ? 'Paket 1 (Persona Modality) • Bagian A: Modalitas Sensori (VAK)'
       : question.module_code === 'PM-HEM-02'
-      ? 'Modul 2: Dominasi Hemisfer Otak'
+      ? 'Paket 1 (Persona Modality) • Bagian B: Dominasi Belahan Otak'
       : question.module_code === 'PM-SKB-03'
-      ? 'Modul 3: Kebiasaan & Lingkungan Belajar'
+      ? 'Paket 1 (Persona Modality) • Bagian C: Kebiasaan & Lingkungan Belajar'
       : question.module_code === 'PP-MBTI-02'
-      ? 'Modul 4: Tipologi Kepribadian (MBTI)'
+      ? 'Paket 2 (Persona Potential) • Bagian A: Tipologi Kepribadian (MBTI)'
       : question.module_code === 'PP-MI-03'
-      ? 'Modul 5: Kecerdasan Majemuk (Multiple Intelligences)'
+      ? 'Paket 2 (Persona Potential) • Bagian B: 8 Kecerdasan Majemuk'
       : 'Asesmen Persona'
 
   const hintText =

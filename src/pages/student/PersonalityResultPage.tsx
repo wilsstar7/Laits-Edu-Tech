@@ -64,6 +64,15 @@ export function PersonalityResultPage() {
           data = await personalityService.getLatestResult(user.id)
         }
 
+        // Jika hasil yang dimuat adalah Paket 1, pastikan memori Paket 2 & Paket 3 lama dihapus
+        if (
+          data &&
+          data.package_code !== 'PAKET_2_PERSONA_POTENTIAL' &&
+          !data.potential_result
+        ) {
+          personalityService.resetSubsequentPackages(user.id)
+        }
+
         setResult(data)
       } catch (err) {
         console.error('Failed to load assessment result:', err)
@@ -268,28 +277,53 @@ export function PersonalityResultPage() {
         </div>
 
         {/* Executive Summary Banner */}
-        <div className="p-5 rounded-2xl bg-[#F4F6FA] border border-border/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="space-y-1">
-            <span className="text-[11px] font-bold text-[#183058] uppercase tracking-wider">
-              {isPotential ? 'Profil Karakter Utama:' : 'Kesimpulan Modalitas Utama (Paket 1):'}
-            </span>
-            <h2 className="text-lg sm:text-xl font-extrabold text-[#17181C]">
-              {isPotential && mbti
-                ? `${mbti.personality_code}: ${mbti.nickname} (${mbti.title})`
-                : vak.title}
-            </h2>
-            <p className="text-xs text-[#676A78] max-w-2xl leading-relaxed">
-              {isPotential && mbti ? mbti.description : vak.summary}
-            </p>
+        <div className="p-5 rounded-2xl bg-[#F4F6FA] border border-border/60 space-y-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="space-y-1">
+              <span className="text-[11px] font-bold text-[#183058] uppercase tracking-wider">
+                {isPotential ? 'Profil Karakter Utama (Paket 1 & Paket 2):' : 'Ringkasan Hasil Paket 1 (Persona Modality):'}
+              </span>
+              <h2 className="text-lg sm:text-xl font-extrabold text-[#17181C]">
+                {isPotential && mbti
+                  ? `${mbti.personality_code}: ${mbti.nickname} (${mbti.title})`
+                  : `${vak.title} • ${hem.title}`}
+              </h2>
+              <p className="text-xs text-[#676A78] max-w-2xl leading-relaxed">
+                {isPotential && mbti ? mbti.description : vak.summary}
+              </p>
+            </div>
+
+            <div className="shrink-0 text-left sm:text-right">
+              <span className="text-[11px] text-[#676A78] block">
+                Status Penyelesaian:
+              </span>
+              <span className="px-3 py-1 rounded-xl text-xs font-bold bg-[#183058]/10 text-[#183058] inline-block mt-0.5">
+                {isPotential ? 'Paket 1 & Paket 2 Selesai' : 'Hanya Paket 1 (Paket 2 & 3 Belum Dikerjakan)'}
+              </span>
+            </div>
           </div>
 
-          <div className="shrink-0 text-left sm:text-right">
-            <span className="text-[11px] text-[#676A78] block">
-              {isPotential ? 'Modalitas Sensori Utama:' : 'Tipe Dominasi Sensori:'}
-            </span>
-            <span className="px-3 py-1 rounded-xl text-xs font-bold bg-[#183058]/10 text-[#183058] inline-block mt-0.5">
-              {vak.title}
-            </span>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-3 border-t border-border/60 text-xs">
+            <div className="px-3.5 py-2.5 rounded-xl bg-white border border-border/60">
+              <span className="text-[10px] font-bold text-[#676A78] uppercase block">
+                Paket 1 (Bagian A • Sensori VAK)
+              </span>
+              <span className="font-extrabold text-[#183058]">{vak.title}</span>
+            </div>
+            <div className="px-3.5 py-2.5 rounded-xl bg-white border border-border/60">
+              <span className="text-[10px] font-bold text-[#676A78] uppercase block">
+                Paket 1 (Bagian B • Dominasi Otak)
+              </span>
+              <span className="font-extrabold text-[#183058]">{hem.title}</span>
+            </div>
+            <div className="px-3.5 py-2.5 rounded-xl bg-white border border-border/60">
+              <span className="text-[10px] font-bold text-[#676A78] uppercase block">
+                Paket 1 (Bagian C • Kebiasaan Belajar)
+              </span>
+              <span className="font-extrabold text-[#183058]">
+                {habits.clusters.chronobiology.title} • {habits.clusters.attention_span.title}
+              </span>
+            </div>
           </div>
         </div>
 
@@ -328,14 +362,14 @@ export function PersonalityResultPage() {
           ========================================================================= */}
       {isPotential && mbti && mi && (
         <>
-          {/* 2. Modul 2.1: Tipologi Kepribadian Belajar (MBTI Edukatif) */}
+          {/* 2. Hasil Paket 2 (Bagian A): Tipologi Kepribadian Belajar (MBTI Edukatif) */}
           <div className="surface-card bg-white p-6 sm:p-8 border border-border/80 rounded-3xl shadow-sm space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border/60 pb-4">
               <div className="space-y-1">
                 <div className="flex items-center gap-2 text-[#183058]">
                   <Layers className="w-5 h-5" />
                   <span className="text-xs font-bold uppercase tracking-wider">
-                    Modul 2.1: Tipologi Kepribadian (PP-MBTI-02)
+                    Hasil Paket 2 (Bagian A): Tipologi Kepribadian (MBTI)
                   </span>
                 </div>
                 <h2 className="text-xl font-extrabold text-[#17181C]">
@@ -520,13 +554,13 @@ export function PersonalityResultPage() {
             </div>
           </div>
 
-          {/* 3. Modul 2.2: Peta 8 Kecerdasan Majemuk (Multiple Intelligences) */}
+          {/* 3. Hasil Paket 2 (Bagian B): Peta 8 Kecerdasan Majemuk (Multiple Intelligences) */}
           <div className="surface-card bg-white p-6 sm:p-8 border border-border/80 rounded-3xl shadow-sm space-y-6">
             <div className="space-y-1 border-b border-border/60 pb-4">
               <div className="flex items-center gap-2 text-[#183058]">
                 <Lightbulb className="w-5 h-5" />
                 <span className="text-xs font-bold uppercase tracking-wider">
-                  Modul 2.2: Peta Kecerdasan Majemuk (PP-MI-03)
+                  Hasil Paket 2 (Bagian B): Peta 8 Kecerdasan Majemuk
                 </span>
               </div>
               <h2 className="text-xl font-extrabold text-[#17181C]">
@@ -621,443 +655,397 @@ export function PersonalityResultPage() {
       )}
 
       {/* =========================================================================
-          BAGIAN MODALITAS BELAJAR (VAK) & DOMINASI BELAHAN OTAK (PAKET 1)
+          HASIL ASESMEN PAKET 1: PERSONA MODALITY (TERPADU DALAM 1 KARTU)
           ========================================================================= */}
-
-      {/* 4. Modul 1.1: Sensory Modality (VAK) */}
-      <div className="surface-card bg-white p-6 sm:p-8 border border-border/80 rounded-3xl shadow-sm space-y-6">
-        <div className="space-y-1 border-b border-border/60 pb-4">
-          <div className="flex items-center gap-2 text-[#183058]">
-            <BookOpen className="w-5 h-5" />
-            <span className="text-xs font-bold uppercase tracking-wider">
-              Modul 1: Sensory Modality (PM-VAK-01)
+      <div className="surface-card bg-white p-6 sm:p-8 border border-border/80 rounded-3xl shadow-sm space-y-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border/60 pb-4">
+          <div className="space-y-1">
+            <span className="px-3 py-1 rounded-full bg-[#183058]/10 text-[#183058] text-[11px] font-bold uppercase tracking-wider inline-block">
+              Hasil Paket 1 • Persona Modality ({levelInfo.totalCount} Soal)
             </span>
-          </div>
-          <h2 className="text-xl font-extrabold text-[#17181C]">
-            Distribusi Modalitas Belajar Sensori (VAK)
-          </h2>
-          <p className="text-xs text-[#676A78]">
-            Mengukur panca indra dominan yang digunakan otak anak untuk menerima dan memproses materi baru secara cepat.
-          </p>
-        </div>
-
-        {/* 3 Modality Bars */}
-        <div className="space-y-4">
-          {/* Visual */}
-          <div className="p-4 rounded-2xl bg-[#F9FAFD] border border-border/70 space-y-2">
-            <div className="flex items-center justify-between text-xs">
-              <div className="flex items-center gap-2">
-                <Eye className="w-4 h-4 text-[#183058]" />
-                <span className="font-bold text-[#17181C]">Visual (Penglihatan)</span>
-              </div>
-              <span className="font-mono font-bold text-[#17181C]">
-                {vak.scores.V} Soal ({vak.percentages.V}%)
-              </span>
-            </div>
-            <div className="h-3 w-full bg-[#EAEBF0] rounded-full overflow-hidden">
-              <div
-                className="h-full rounded-full transition-all bg-[#183058]"
-                style={{ width: `${vak.percentages.V}%` }}
-              />
-            </div>
-          </div>
-
-          {/* Auditori */}
-          <div className="p-4 rounded-2xl bg-[#F9FAFD] border border-border/70 space-y-2">
-            <div className="flex items-center justify-between text-xs">
-              <div className="flex items-center gap-2">
-                <Volume2 className="w-4 h-4 text-sky-600" />
-                <span className="font-bold text-[#17181C]">Auditori (Pendengaran)</span>
-              </div>
-              <span className="font-mono font-bold text-[#17181C]">
-                {vak.scores.A} Soal ({vak.percentages.A}%)
-              </span>
-            </div>
-            <div className="h-3 w-full bg-[#EAEBF0] rounded-full overflow-hidden">
-              <div
-                className="h-full rounded-full transition-all bg-sky-500"
-                style={{ width: `${vak.percentages.A}%` }}
-              />
-            </div>
-          </div>
-
-          {/* Kinestetik */}
-          <div className="p-4 rounded-2xl bg-[#F9FAFD] border border-border/70 space-y-2">
-            <div className="flex items-center justify-between text-xs">
-              <div className="flex items-center gap-2">
-                <Activity className="w-4 h-4 text-emerald-600" />
-                <span className="font-bold text-[#17181C]">Kinestetik (Gerakan & Praktik)</span>
-              </div>
-              <span className="font-mono font-bold text-[#17181C]">
-                {vak.scores.K} Soal ({vak.percentages.K}%)
-              </span>
-            </div>
-            <div className="h-3 w-full bg-[#EAEBF0] rounded-full overflow-hidden">
-              <div
-                className="h-full rounded-full transition-all bg-emerald-500"
-                style={{ width: `${vak.percentages.K}%` }}
-              />
-            </div>
+            <h2 className="text-xl sm:text-2xl font-extrabold text-[#17181C]">
+              Rincian Diagnostik Fondasi &amp; Cara Belajar Siswa (Paket 1)
+            </h2>
+            <p className="text-xs text-[#676A78]">
+              Ketiga aspek di bawah ini (Modalitas Sensori VAK, Dominasi Belahan Otak, dan Kebiasaan Belajar) merupakan satu kesatuan hasil dari pengerjaan Soal Paket 1.
+            </p>
           </div>
         </div>
 
-        {/* Study Recommendations & Tutor SOP for VAK */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
-          <div className="p-4 rounded-2xl bg-[#F4F6FA] border border-border/60 space-y-2">
-            <span className="text-xs font-bold text-[#183058] block uppercase tracking-wide">
-              Rekomendasi Metode Belajar Mandiri:
-            </span>
-            <ul className="space-y-1.5 text-xs text-[#333542]">
-              {vak.study_recommendations.map((rec: string, rIdx: number) => (
-                <li key={rIdx} className="flex items-start gap-2">
-                  <span className="text-[#183058] font-bold">•</span>
-                  <span className="leading-relaxed">{rec}</span>
-                </li>
-              ))}
-            </ul>
+        {/* Bagian A Paket 1: Sensory Modality (VAK) */}
+        <div className="space-y-5">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2 text-[#183058]">
+              <BookOpen className="w-4 h-4" />
+              <span className="text-xs font-bold uppercase tracking-wider">
+                Paket 1 (Bagian A): Modalitas Belajar Sensori (VAK)
+              </span>
+            </div>
+            <h3 className="text-lg font-extrabold text-[#17181C]">
+              Distribusi Modalitas Belajar Sensori (VAK)
+            </h3>
+            <p className="text-xs text-[#676A78]">
+              Mengukur panca indra dominan yang digunakan otak anak untuk menerima dan memproses materi baru secara cepat.
+            </p>
           </div>
 
+          {/* 3 Modality Bars */}
+          <div className="space-y-4">
+            {/* Visual */}
+            <div className="p-4 rounded-2xl bg-[#F9FAFD] border border-border/70 space-y-2">
+              <div className="flex items-center justify-between text-xs">
+                <div className="flex items-center gap-2">
+                  <Eye className="w-4 h-4 text-[#183058]" />
+                  <span className="font-bold text-[#17181C]">Visual (Penglihatan)</span>
+                </div>
+                <span className="font-mono font-bold text-[#17181C]">
+                  {vak.scores.V} Soal ({vak.percentages.V}%)
+                </span>
+              </div>
+              <div className="h-3 w-full bg-[#EAEBF0] rounded-full overflow-hidden">
+                <div
+                  className="h-full rounded-full transition-all bg-[#183058]"
+                  style={{ width: `${vak.percentages.V}%` }}
+                />
+              </div>
+            </div>
+
+            {/* Auditori */}
+            <div className="p-4 rounded-2xl bg-[#F9FAFD] border border-border/70 space-y-2">
+              <div className="flex items-center justify-between text-xs">
+                <div className="flex items-center gap-2">
+                  <Volume2 className="w-4 h-4 text-sky-600" />
+                  <span className="font-bold text-[#17181C]">Auditori (Pendengaran)</span>
+                </div>
+                <span className="font-mono font-bold text-[#17181C]">
+                  {vak.scores.A} Soal ({vak.percentages.A}%)
+                </span>
+              </div>
+              <div className="h-3 w-full bg-[#EAEBF0] rounded-full overflow-hidden">
+                <div
+                  className="h-full rounded-full transition-all bg-sky-500"
+                  style={{ width: `${vak.percentages.A}%` }}
+                />
+              </div>
+            </div>
+
+            {/* Kinestetik */}
+            <div className="p-4 rounded-2xl bg-[#F9FAFD] border border-border/70 space-y-2">
+              <div className="flex items-center justify-between text-xs">
+                <div className="flex items-center gap-2">
+                  <Activity className="w-4 h-4 text-emerald-600" />
+                  <span className="font-bold text-[#17181C]">Kinestetik (Gerakan &amp; Praktik)</span>
+                </div>
+                <span className="font-mono font-bold text-[#17181C]">
+                  {vak.scores.K} Soal ({vak.percentages.K}%)
+                </span>
+              </div>
+              <div className="h-3 w-full bg-[#EAEBF0] rounded-full overflow-hidden">
+                <div
+                  className="h-full rounded-full transition-all bg-emerald-500"
+                  style={{ width: `${vak.percentages.K}%` }}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Study Recommendations & Tutor SOP for VAK */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+            <div className="p-4 rounded-2xl bg-[#F4F6FA] border border-border/60 space-y-2">
+              <span className="text-xs font-bold text-[#183058] block uppercase tracking-wide">
+                Rekomendasi Metode Belajar Mandiri:
+              </span>
+              <ul className="space-y-1.5 text-xs text-[#333542]">
+                {vak.study_recommendations.map((rec: string, rIdx: number) => (
+                  <li key={rIdx} className="flex items-start gap-2">
+                    <span className="text-[#183058] font-bold">•</span>
+                    <span className="leading-relaxed">{rec}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-[#F4F6FA] border border-border/60 space-y-2">
+              <span className="text-xs font-bold text-[#183058] block uppercase tracking-wide">
+                Instruksi Khusus untuk Guru Privat (SOP Intervensi VAK):
+              </span>
+              <p className="text-xs text-[#333542] leading-relaxed">
+                {vak.tutor_sop}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Bagian B Paket 1: Dominasi Hemisfer Otak */}
+        <div className="space-y-5 pt-6 border-t border-border/60">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2 text-[#183058]">
+              <Brain className="w-4 h-4" />
+              <span className="text-xs font-bold uppercase tracking-wider">
+                Paket 1 (Bagian B): Dominasi Belahan Otak
+              </span>
+            </div>
+            <h3 className="text-lg font-extrabold text-[#17181C]">
+              Gaya Berpikir Kognitif: {hem.title}
+            </h3>
+            <p className="text-xs text-[#676A78]">
+              Memetakan orientasi berpikir dari soal Paket 1: Analitis-Sekuensial (Otak Kiri) vs Intuitif-Holistik (Otak Kanan).
+            </p>
+          </div>
+
+          {/* Brain Balance Split Display */}
+          <div className="p-5 rounded-2xl bg-[#F9FAFD] border border-border/70 space-y-4">
+            <div className="flex items-center justify-between text-xs font-bold">
+              <div className="flex items-center gap-1.5 text-sky-700">
+                <span className="w-2.5 h-2.5 rounded-full bg-sky-500" />
+                <span>Otak Kiri: {hem.percentages.LEFT_BRAIN}%</span>
+              </div>
+              <div className="text-[#676A78] text-[11px] font-normal">
+                Status: <span className="font-bold text-[#17181C]">{hem.title}</span>
+              </div>
+              <div className="flex items-center gap-1.5 text-rose-700">
+                <span>Otak Kanan: {hem.percentages.RIGHT_BRAIN}%</span>
+                <span className="w-2.5 h-2.5 rounded-full bg-rose-500" />
+              </div>
+            </div>
+
+            {/* Dual Bar Balance Meter */}
+            <div className="h-4 w-full bg-[#EAEBF0] rounded-full overflow-hidden flex">
+              <div
+                className="h-full bg-sky-500 transition-all"
+                style={{ width: `${hem.percentages.LEFT_BRAIN}%` }}
+              />
+              <div
+                className="h-full bg-rose-500 transition-all"
+                style={{ width: `${hem.percentages.RIGHT_BRAIN}%` }}
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 text-xs pt-1">
+              <div className="space-y-1">
+                <span className="font-bold text-sky-800 block text-[11px] uppercase tracking-wide">
+                  Karakter Otak Kiri:
+                </span>
+                <p className="text-[#676A78] text-xs leading-relaxed">
+                  Logis, matematis, analitis, sekuensial, teratur, menyukai kepastian aturan angka.
+                </p>
+              </div>
+              <div className="space-y-1 text-right">
+                <span className="font-bold text-rose-800 block text-[11px] uppercase tracking-wide">
+                  Karakter Otak Kanan:
+                </span>
+                <p className="text-[#676A78] text-xs leading-relaxed">
+                  Kreatif, imajinatif, holistik, menyukai cerita kontekstual, analogi visual bebas.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Brain Tutor SOP Card */}
           <div className="p-4 rounded-2xl bg-[#F4F6FA] border border-border/60 space-y-2">
             <span className="text-xs font-bold text-[#183058] block uppercase tracking-wide">
-              Instruksi Khusus untuk Guru Privat (SOP Intervensi VAK):
+              SOP Guru Privat untuk Gaya Berpikir Ini:
             </span>
             <p className="text-xs text-[#333542] leading-relaxed">
-              {vak.tutor_sop}
+              {hem.tutor_sop}
             </p>
           </div>
         </div>
-      </div>
 
-      {/* 5. Modul 1.2: Dominasi Hemisfer Otak */}
-      <div className="surface-card bg-white p-6 sm:p-8 border border-border/80 rounded-3xl shadow-sm space-y-6">
-        <div className="space-y-1 border-b border-border/60 pb-4">
-          <div className="flex items-center gap-2 text-[#183058]">
-            <Brain className="w-5 h-5" />
-            <span className="text-xs font-bold uppercase tracking-wider">
-              Modul 2: Dominasi Hemisfer Otak (PM-HEM-02)
-            </span>
-          </div>
-          <h2 className="text-xl font-extrabold text-[#17181C]">
-            Gaya Berpikir Kognitif: {hem.title}
-          </h2>
-          <p className="text-xs text-[#676A78]">
-            Memetakan orientasi berpikir: Analitis-Sekuensial (Otak Kiri) vs Intuitif-Holistik (Otak Kanan).
-          </p>
-        </div>
-
-        {/* Brain Balance Split Display */}
-        <div className="p-5 rounded-2xl bg-[#F9FAFD] border border-border/70 space-y-4">
-          <div className="flex items-center justify-between text-xs font-bold">
-            <div className="flex items-center gap-1.5 text-sky-700">
-              <span className="w-2.5 h-2.5 rounded-full bg-sky-500" />
-              <span>Otak Kiri: {hem.percentages.LEFT_BRAIN}%</span>
-            </div>
-            <div className="text-[#676A78] text-[11px] font-normal">
-              Status: <span className="font-bold text-[#17181C]">{hem.title}</span>
-            </div>
-            <div className="flex items-center gap-1.5 text-rose-700">
-              <span>Otak Kanan: {hem.percentages.RIGHT_BRAIN}%</span>
-              <span className="w-2.5 h-2.5 rounded-full bg-rose-500" />
-            </div>
-          </div>
-
-          {/* Dual Bar Balance Meter */}
-          <div className="h-4 w-full bg-[#EAEBF0] rounded-full overflow-hidden flex">
-            <div
-              className="h-full bg-sky-500 transition-all"
-              style={{ width: `${hem.percentages.LEFT_BRAIN}%` }}
-            />
-            <div
-              className="h-full bg-rose-500 transition-all"
-              style={{ width: `${hem.percentages.RIGHT_BRAIN}%` }}
-            />
-          </div>
-
-          <div className="grid grid-cols-2 gap-4 text-xs pt-1">
-            <div className="space-y-1">
-              <span className="font-bold text-sky-800 block text-[11px] uppercase tracking-wide">
-                Karakter Otak Kiri:
+        {/* Bagian C Paket 1: 3 Klaster Kebiasaan & Lingkungan Belajar */}
+        <div className="space-y-5 pt-6 border-t border-border/60">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2 text-[#183058]">
+              <Hourglass className="w-4 h-4" />
+              <span className="text-xs font-bold uppercase tracking-wider">
+                Paket 1 (Bagian C): Kebiasaan &amp; Lingkungan Belajar
               </span>
-              <p className="text-[#676A78] text-xs leading-relaxed">
-                Logis, matematis, analitis, sekuensial, teratur, menyukai kepastian aturan angka.
-              </p>
             </div>
-            <div className="space-y-1 text-right">
-              <span className="font-bold text-rose-800 block text-[11px] uppercase tracking-wide">
-                Karakter Otak Kanan:
-              </span>
-              <p className="text-[#676A78] text-xs leading-relaxed">
-                Kreatif, imajinatif, holistik, menyukai cerita kontekstual, analogi visual bebas.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Brain Tutor SOP Card */}
-        <div className="p-4 rounded-2xl bg-[#F4F6FA] border border-border/60 space-y-2">
-          <span className="text-xs font-bold text-[#183058] block uppercase tracking-wide">
-            SOP Guru Privat untuk Gaya Berpikir Ini:
-          </span>
-          <p className="text-xs text-[#333542] leading-relaxed">
-            {hem.tutor_sop}
-          </p>
-        </div>
-      </div>
-
-      {/* 6. Modul 1.3: 3 Klaster Kebiasaan & Lingkungan Belajar */}
-      <div className="surface-card bg-white p-6 sm:p-8 border border-border/80 rounded-3xl shadow-sm space-y-6">
-        <div className="space-y-1 border-b border-border/60 pb-4">
-          <div className="flex items-center gap-2 text-[#183058]">
-            <Hourglass className="w-5 h-5" />
-            <span className="text-xs font-bold uppercase tracking-wider">
-              Modul 3: Kebiasaan & Lingkungan Belajar (PM-SKB-03)
-            </span>
-          </div>
-          <h2 className="text-xl font-extrabold text-[#17181C]">
-            3 Klaster Gaya Kerja & Stamina Belajar
-          </h2>
-          <p className="text-xs text-[#676A78]">
-            Screening jam biologis prima, toleransi kebisingan ruangan, dan durasi rentang ketahanan fokus.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {/* Klaster 1: Kronobiologi */}
-          <div className="p-5 rounded-2xl border border-border/80 bg-[#F9FAFD] flex flex-col justify-between space-y-4">
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <div className="w-8 h-8 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
-                  {habits.clusters.chronobiology.result === 'MORNING_LARK' ? (
-                    <Sun className="w-4 h-4" />
-                  ) : habits.clusters.chronobiology.result === 'AFTERNOON_PERSON' ? (
-                    <Sunset className="w-4 h-4" />
-                  ) : (
-                    <Moon className="w-4 h-4" />
-                  )}
-                </div>
-                <span className="text-[10px] font-bold text-[#676A78] uppercase tracking-wider">
-                  Klaster 1: Jam Prima
-                </span>
-              </div>
-
-              <div>
-                <span className="text-[11px] text-[#676A78]">Ritme Biologis:</span>
-                <h3 className="text-base font-extrabold text-[#17181C]">
-                  {habits.clusters.chronobiology.title}
-                </h3>
-              </div>
-
-              <p className="text-xs text-[#676A78] leading-relaxed">
-                {habits.clusters.chronobiology.description}
-              </p>
-            </div>
-
-            <div className="p-3 rounded-xl bg-[#F4F6FA] border border-border/60 text-xs text-[#333542] space-y-1">
-              <span className="text-[10px] font-bold text-[#183058] block uppercase">
-                SOP Guru Privat:
-              </span>
-              <p className="leading-relaxed">
-                {habits.clusters.chronobiology.tutor_sop}
-              </p>
-            </div>
-          </div>
-
-          {/* Klaster 2: Lingkungan Belajar */}
-          <div className="p-5 rounded-2xl border border-border/80 bg-[#F9FAFD] flex flex-col justify-between space-y-4">
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <div className="w-8 h-8 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center">
-                  {habits.clusters.environment.result === 'FORMAL_AND_SENSITIVE' ? (
-                    <VolumeX className="w-4 h-4" />
-                  ) : habits.clusters.environment.result === 'AMBIENT_TOLERANT' ? (
-                    <Coffee className="w-4 h-4" />
-                  ) : (
-                    <Home className="w-4 h-4" />
-                  )}
-                </div>
-                <span className="text-[10px] font-bold text-[#676A78] uppercase tracking-wider">
-                  Klaster 2: Suasana
-                </span>
-              </div>
-
-              <div>
-                <span className="text-[11px] text-[#676A78]">Toleransi Ruang:</span>
-                <h3 className="text-base font-extrabold text-[#17181C]">
-                  {habits.clusters.environment.title}
-                </h3>
-              </div>
-
-              <p className="text-xs text-[#676A78] leading-relaxed">
-                {habits.clusters.environment.description}
-              </p>
-            </div>
-
-            <div className="p-3 rounded-xl bg-[#F4F6FA] border border-border/60 text-xs text-[#333542] space-y-1">
-              <span className="text-[10px] font-bold text-[#183058] block uppercase">
-                SOP Guru Privat:
-              </span>
-              <p className="leading-relaxed">
-                {habits.clusters.environment.tutor_sop}
-              </p>
-            </div>
-          </div>
-
-          {/* Klaster 3: Rentang Fokus */}
-          <div className="p-5 rounded-2xl border border-border/80 bg-[#F9FAFD] flex flex-col justify-between space-y-4">
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <div className="w-8 h-8 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center">
-                  {habits.clusters.attention_span.result === 'TIPE_POMODORO' ? (
-                    <Timer className="w-4 h-4" />
-                  ) : (
-                    <Zap className="w-4 h-4" />
-                  )}
-                </div>
-                <span className="text-[10px] font-bold text-[#676A78] uppercase tracking-wider">
-                  Klaster 3: Fokus
-                </span>
-              </div>
-
-              <div>
-                <span className="text-[11px] text-[#676A78]">Rentang Ketahanan:</span>
-                <h3 className="text-base font-extrabold text-[#17181C]">
-                  {habits.clusters.attention_span.title}
-                </h3>
-              </div>
-
-              <p className="text-xs text-[#676A78] leading-relaxed">
-                {habits.clusters.attention_span.description}
-              </p>
-            </div>
-
-            <div className="p-3 rounded-xl bg-[#F4F6FA] border border-border/60 text-xs text-[#333542] space-y-1">
-              <span className="text-[10px] font-bold text-[#183058] block uppercase">
-                SOP Guru Privat:
-              </span>
-              <p className="leading-relaxed">
-                {habits.clusters.attention_span.tutor_sop}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* 7. Opsi Melanjutkan ke Paket Kedua atau Ketiga */}
-      {!isPotential ? (
-        <div className="surface-card p-6 sm:p-8 border border-[#183058]/25 rounded-3xl space-y-5 bg-white">
-          <div className="space-y-1.5">
-            <span className="px-3 py-1 rounded-full bg-[#183058] text-white text-[11px] font-bold uppercase tracking-wider inline-block">
-              Opsi Lanjutan Asesmen Bertahap
-            </span>
-            <h3 className="text-lg sm:text-xl font-extrabold text-[#17181C]">
-              Lanjutkan ke Paket Kedua atau Paket Ketiga
+            <h3 className="text-lg font-extrabold text-[#17181C]">
+              3 Klaster Gaya Kerja &amp; Stamina Belajar Harian
             </h3>
-            <p className="text-xs text-[#676A78] max-w-2xl leading-relaxed">
-              Anda telah menyelesaikan <strong>Paket 1 (Persona Modality)</strong>. Soal Paket 2 sudah dipisahkan sehingga Anda cukup mengerjakan 60 soal lanjutan tanpa mengulang soal Paket 1.
+            <p className="text-xs text-[#676A78]">
+              Hasil screening jam biologis prima, toleransi kebisingan ruangan, dan durasi rentang ketahanan fokus dari soal Paket 1.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Opsi Lanjut ke Paket 2 */}
-            <div className="p-5 rounded-2xl border-2 border-[#183058] bg-[#F4F6FA] flex flex-col justify-between gap-4">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between gap-2">
-                  <span className="px-2.5 py-0.5 rounded-full bg-[#183058] text-white text-[10px] font-bold uppercase tracking-wider">
-                    Tahap 2 • Tersedia
-                  </span>
-                  <span className="text-xs font-extrabold text-[#183058]">
-                    60 Soal Terpisah
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {/* Klaster 1: Kronobiologi */}
+            <div className="p-5 rounded-2xl border border-border/80 bg-[#F9FAFD] flex flex-col justify-between space-y-4">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="w-8 h-8 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                    {habits.clusters.chronobiology.result === 'MORNING_LARK' ? (
+                      <Sun className="w-4 h-4" />
+                    ) : habits.clusters.chronobiology.result === 'AFTERNOON_PERSON' ? (
+                      <Sunset className="w-4 h-4" />
+                    ) : (
+                      <Moon className="w-4 h-4" />
+                    )}
+                  </div>
+                  <span className="text-[10px] font-bold text-[#676A78] uppercase tracking-wider">
+                    Klaster 1: Jam Prima
                   </span>
                 </div>
-                <h4 className="text-base font-extrabold text-[#17181C]">
-                  Paket 2: Persona Potential
-                </h4>
+
+                <div>
+                  <span className="text-[11px] text-[#676A78]">Ritme Biologis:</span>
+                  <h4 className="text-base font-extrabold text-[#17181C]">
+                    {habits.clusters.chronobiology.title}
+                  </h4>
+                </div>
+
                 <p className="text-xs text-[#676A78] leading-relaxed">
-                  20 Soal Tipologi Karakter (MBTI Edukasi) + 40 Soal Peta 8 Kecerdasan Majemuk (Howard Gardner). Hasilnya akan digabungkan dengan hasil Paket 1 Anda.
+                  {habits.clusters.chronobiology.description}
                 </p>
               </div>
 
+              <div className="p-3 rounded-xl bg-[#F4F6FA] border border-border/60 text-xs text-[#333542] space-y-1">
+                <span className="text-[10px] font-bold text-[#183058] block uppercase">
+                  SOP Guru Privat:
+                </span>
+                <p className="leading-relaxed">
+                  {habits.clusters.chronobiology.tutor_sop}
+                </p>
+              </div>
+            </div>
+
+            {/* Klaster 2: Lingkungan Belajar */}
+            <div className="p-5 rounded-2xl border border-border/80 bg-[#F9FAFD] flex flex-col justify-between space-y-4">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="w-8 h-8 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center">
+                    {habits.clusters.environment.result === 'FORMAL_AND_SENSITIVE' ? (
+                      <VolumeX className="w-4 h-4" />
+                    ) : habits.clusters.environment.result === 'AMBIENT_TOLERANT' ? (
+                      <Coffee className="w-4 h-4" />
+                    ) : (
+                      <Home className="w-4 h-4" />
+                    )}
+                  </div>
+                  <span className="text-[10px] font-bold text-[#676A78] uppercase tracking-wider">
+                    Klaster 2: Suasana
+                  </span>
+                </div>
+
+                <div>
+                  <span className="text-[11px] text-[#676A78]">Toleransi Ruang:</span>
+                  <h4 className="text-base font-extrabold text-[#17181C]">
+                    {habits.clusters.environment.title}
+                  </h4>
+                </div>
+
+                <p className="text-xs text-[#676A78] leading-relaxed">
+                  {habits.clusters.environment.description}
+                </p>
+              </div>
+
+              <div className="p-3 rounded-xl bg-[#F4F6FA] border border-border/60 text-xs text-[#333542] space-y-1">
+                <span className="text-[10px] font-bold text-[#183058] block uppercase">
+                  SOP Guru Privat:
+                </span>
+                <p className="leading-relaxed">
+                  {habits.clusters.environment.tutor_sop}
+                </p>
+              </div>
+            </div>
+
+            {/* Klaster 3: Rentang Fokus */}
+            <div className="p-5 rounded-2xl border border-border/80 bg-[#F9FAFD] flex flex-col justify-between space-y-4">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="w-8 h-8 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center">
+                    {habits.clusters.attention_span.result === 'TIPE_POMODORO' ? (
+                      <Timer className="w-4 h-4" />
+                    ) : (
+                      <Zap className="w-4 h-4" />
+                    )}
+                  </div>
+                  <span className="text-[10px] font-bold text-[#676A78] uppercase tracking-wider">
+                    Klaster 3: Fokus
+                  </span>
+                </div>
+
+                <div>
+                  <span className="text-[11px] text-[#676A78]">Rentang Ketahanan:</span>
+                  <h4 className="text-base font-extrabold text-[#17181C]">
+                    {habits.clusters.attention_span.title}
+                  </h4>
+                </div>
+
+                <p className="text-xs text-[#676A78] leading-relaxed">
+                  {habits.clusters.attention_span.description}
+                </p>
+              </div>
+
+              <div className="p-3 rounded-xl bg-[#F4F6FA] border border-border/60 text-xs text-[#333542] space-y-1">
+                <span className="text-[10px] font-bold text-[#183058] block uppercase">
+                  SOP Guru Privat:
+                </span>
+                <p className="leading-relaxed">
+                  {habits.clusters.attention_span.tutor_sop}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 7. Opsi Melanjutkan ke Paket Berikutnya (Tanpa menampilkan kartu hasil paket yang belum dikerjakan) */}
+      {!isPotential ? (
+        <div className="surface-card p-6 sm:p-8 border border-[#183058]/25 rounded-3xl space-y-4 bg-[#F4F6FA]">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="space-y-1">
+              <span className="px-3 py-1 rounded-full bg-[#183058] text-white text-[11px] font-bold uppercase tracking-wider inline-block">
+                Paket 1 Selesai • Opsi Lanjut Paket Berikutnya
+              </span>
+              <h3 className="text-base sm:text-lg font-extrabold text-[#17181C]">
+                Ingin Melanjutkan ke Paket 2 atau Paket 3?
+              </h3>
+              <p className="text-xs text-[#676A78] max-w-xl leading-relaxed">
+                Hasil Paket 2 dan Paket 3 baru akan ditampilkan setelah Anda menyelesaikan soal paket terkait. Silakan pilih opsi di samping jika ingin melanjutkan ke tahap berikutnya.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2.5 shrink-0">
               <button
                 type="button"
                 disabled={startingNextPkg}
                 onClick={() => handleContinueToPackage2('PAKET_2_PERSONA_POTENTIAL')}
-                className="w-full px-5 py-3 rounded-xl bg-[#183058] hover:bg-[#102342] text-white text-xs font-bold shadow-sm flex items-center justify-center gap-2 min-h-[44px] disabled:opacity-50"
+                className="px-5 py-3 rounded-2xl bg-[#183058] hover:bg-[#102342] text-white text-xs font-bold shadow-sm flex items-center gap-2 min-h-[44px] disabled:opacity-50"
               >
-                <span>{startingNextPkg ? 'Menyiapkan Sesi Paket 2...' : 'Lanjut ke Paket 2 (60 Soal)'}</span>
+                <span>{startingNextPkg ? 'Menyiapkan Sesi...' : 'Lanjut ke Paket 2 (60 Soal)'}</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
-            </div>
 
-            {/* Opsi Lanjut ke Paket 3 */}
-            <div className="p-5 rounded-2xl border border-border/80 bg-[#F9FAFD] flex flex-col justify-between gap-4">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between gap-2">
-                  <span className="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-bold uppercase tracking-wider">
-                    Tahap 3 • Segera Hadir
-                  </span>
-                  <span className="text-xs font-bold text-[#676A78]">
-                    Setelah Paket 2
-                  </span>
-                </div>
-                <h4 className="text-base font-extrabold text-[#17181C]">
-                  Paket 3: Persona Mastery
-                </h4>
-                <p className="text-xs text-[#676A78] leading-relaxed">
-                  Pemetaan kesiapan akademik tingkat lanjut, strategi ujian, dan rekomendasi peminatan studi. Memerlukan penyelesaian Paket 1 dan Paket 2 terlebih dahulu.
-                </p>
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-2">
-                <button
-                  type="button"
-                  disabled={startingNextPkg}
-                  onClick={() => handleContinueToPackage2('PAKET_3_PERSONA_MASTERY')}
-                  className="flex-1 px-4 py-3 rounded-xl bg-white hover:bg-[#E8ECF6]/60 text-[#183058] border border-[#183058]/30 text-xs font-bold flex items-center justify-center gap-1.5 min-h-[44px] disabled:opacity-50"
-                >
-                  <span>Ambil Tahap 2 Menuju Paket 3</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setShowPkg3Info((prev) => !prev)}
-                  className="px-3.5 py-3 rounded-xl bg-white hover:bg-gray-50 text-[#676A78] border border-border/80 text-xs font-semibold min-h-[44px]"
-                >
-                  Info Paket 3
-                </button>
-              </div>
+              <button
+                type="button"
+                onClick={() => setShowPkg3Info((prev) => !prev)}
+                className="px-4 py-3 rounded-2xl bg-white hover:bg-[#E8ECF6] text-[#183058] border border-[#183058]/30 text-xs font-bold flex items-center gap-1.5 min-h-[44px]"
+              >
+                <span>Opsi Lanjut ke Paket 3</span>
+              </button>
             </div>
           </div>
 
           {showPkg3Info && (
-            <div className="p-4 rounded-2xl bg-amber-50/90 border border-amber-200/80 text-xs text-amber-900 leading-relaxed">
-              <strong>Informasi Paket 3 (Persona Mastery):</strong> Modul soal Paket 3 sedang dalam tahap finalisasi tim psikometri. Anda dapat menyelesaikan <strong>Paket 2 (Persona Potential - 60 Soal)</strong> sekarang agar saat Paket 3 dibuka, Anda bisa langsung mengerjakan soal Paket 3 tanpa mengulang Paket 1 dan Paket 2.
+            <div className="p-4 rounded-2xl bg-white border border-[#183058]/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-[#333542]">
+              <p className="leading-relaxed">
+                Untuk menuju <strong>Paket 3 (Persona Mastery)</strong>, silakan selesaikan <strong>Paket 2 (60 Soal)</strong> terlebih dahulu agar pemetaan berjalan berurutan.
+              </p>
+              <button
+                type="button"
+                disabled={startingNextPkg}
+                onClick={() => handleContinueToPackage2('PAKET_3_PERSONA_MASTERY')}
+                className="shrink-0 px-4 py-2.5 rounded-xl bg-[#183058] hover:bg-[#102342] text-white text-xs font-bold flex items-center gap-1.5 min-h-[40px] disabled:opacity-50"
+              >
+                <span>Mulai Tahap 2 Menuju Paket 3</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
             </div>
           )}
         </div>
-      ) : (
-        <div className="surface-card p-6 sm:p-8 border border-[#183058]/25 rounded-3xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 bg-white">
-          <div className="space-y-2">
-            <span className="px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-[11px] font-bold uppercase tracking-wider inline-block">
-              Tahap 3 • Persona Mastery
-            </span>
-            <h3 className="text-lg sm:text-xl font-extrabold text-[#17181C]">
-              Lanjutkan ke Paket 3: Persona Mastery
-            </h3>
-            <p className="text-xs text-[#676A78] max-w-xl leading-relaxed">
-              Selamat! Anda telah menuntaskan <strong>Paket 1 (Persona Modality)</strong> dan <strong>Paket 2 (Persona Potential)</strong>. Modul soal <strong>Paket 3 (Persona Mastery)</strong> sedang dalam tahap persiapan akhir dan akan dapat diakses langsung setelah dirilis.
-            </p>
-          </div>
-
-          <button
-            type="button"
-            onClick={() => navigate('/student/assessment')}
-            className="shrink-0 px-5 py-3 rounded-2xl bg-[#F4F6FA] hover:bg-[#E8ECF6] text-[#183058] border border-[#183058]/20 text-xs font-bold flex items-center gap-2 min-h-[44px]"
-          >
-            <span>Lihat Katalog Paket Asesmen</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
-        </div>
-      )}
+      ) : null}
 
       {/* 8. Navigation & Next Actions */}
       <div className="p-6 rounded-3xl bg-white border border-border/80 flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -1085,11 +1073,16 @@ export function PersonalityResultPage() {
         {/* Retake Assessment */}
         <button
           type="button"
-          onClick={() => navigate('/student/assessment')}
+          onClick={() => {
+            if (user) {
+              personalityService.resetSubsequentPackages(user.id)
+            }
+            navigate('/student/assessment')
+          }}
           className="text-xs font-bold text-[#676A78] hover:text-[#17181C] flex items-center gap-1.5 py-2 transition-colors"
         >
           <RotateCcw className="w-3.5 h-3.5" />
-          <span>Ambil Ulang Asesmen</span>
+          <span>Ambil Ulang Asesmen dari Paket 1</span>
         </button>
       </div>
 

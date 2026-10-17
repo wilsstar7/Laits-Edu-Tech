@@ -458,7 +458,7 @@ export function AssessmentIntroPage() {
               <div className="flex items-center gap-3">
                 <BookOpen className="w-4 h-4 text-[#183058] shrink-0" />
                 <div>
-                  <p className="text-[11px] text-[#676A78]">Modul 1.1: VAK</p>
+                  <p className="text-[11px] text-[#676A78]">Paket 1 (Bagian A): VAK</p>
                   <p className="text-xs font-bold text-[#17181C]">
                     {currentLevelConfig.vakCount} Soal Sensori
                   </p>
@@ -468,7 +468,7 @@ export function AssessmentIntroPage() {
               <div className="flex items-center gap-3">
                 <Layers className="w-4 h-4 text-[#183058] shrink-0" />
                 <div>
-                  <p className="text-[11px] text-[#676A78]">Modul 1.2: Hemisfer</p>
+                  <p className="text-[11px] text-[#676A78]">Paket 1 (Bagian B): Otak</p>
                   <p className="text-xs font-bold text-[#17181C]">
                     {currentLevelConfig.hemCount} Soal Berpikir
                   </p>
@@ -478,7 +478,7 @@ export function AssessmentIntroPage() {
               <div className="flex items-center gap-3">
                 <Clock className="w-4 h-4 text-[#183058] shrink-0" />
                 <div>
-                  <p className="text-[11px] text-[#676A78]">Modul 1.3: Kebiasaan</p>
+                  <p className="text-[11px] text-[#676A78]">Paket 1 (Bagian C): Kebiasaan</p>
                   <p className="text-xs font-bold text-[#17181C]">
                     {currentLevelConfig.skbCount} Soal Lingkungan
                   </p>
@@ -501,7 +501,7 @@ export function AssessmentIntroPage() {
                 <div className="flex items-center gap-3">
                   <GraduationCap className="w-4 h-4 text-[#183058] shrink-0" />
                   <div>
-                    <p className="text-[11px] text-[#676A78]">Modul 2.1: MBTI Edukatif</p>
+                    <p className="text-[11px] text-[#676A78]">Paket 2 (Bagian A): MBTI Edukatif</p>
                     <p className="text-xs font-bold text-[#17181C]">20 Soal Kepribadian (Terpisah)</p>
                   </div>
                 </div>
@@ -509,7 +509,7 @@ export function AssessmentIntroPage() {
                 <div className="flex items-center gap-3">
                   <CheckCircle2 className="w-4 h-4 text-[#183058] shrink-0" />
                   <div>
-                    <p className="text-[11px] text-[#676A78]">Modul 2.2: Gardner MI</p>
+                    <p className="text-[11px] text-[#676A78]">Paket 2 (Bagian B): Gardner MI</p>
                     <p className="text-xs font-bold text-[#17181C]">40 Soal 8 Kecerdasan (Terpisah)</p>
                   </div>
                 </div>

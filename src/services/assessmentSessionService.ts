@@ -5,6 +5,7 @@ import type {
   AssessmentPackageCode,
 } from '@/types/assessment'
 import { PRIMARY_ASSESSMENT_ID } from './assessmentService'
+import { personalityService } from './personalityService'
 
 const STORAGE_KEY_PREFIX = 'laits_persona_session_'
 
@@ -171,6 +172,11 @@ export const assessmentSessionService = {
       started_at: now,
       last_saved_at: now,
       completed_at: null,
+    }
+
+    // Jika siswa mengulang dari Paket 1, hapus memori hasil & sesi Paket 2 / Paket 3 sebelumnya
+    if (packageCode === 'PAKET_1_PERSONA_MODALITY') {
+      personalityService.resetSubsequentPackages(userId)
     }
 
     // Simpan di localStorage

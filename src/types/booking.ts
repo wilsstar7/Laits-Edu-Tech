@@ -21,6 +21,7 @@ export interface Booking {
   studentEmail?: string
   studentAvatarUrl?: string | null
   tutorId: string
+  tutorUserId?: string
   tutorName: string
   tutorAvatarUrl?: string | null
   tutorHourlyRate: number

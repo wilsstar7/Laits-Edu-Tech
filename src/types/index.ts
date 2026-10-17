@@ -52,3 +52,4 @@ export type AsyncState<T> =
 export * from './learning'
 export * from './tutor'
 export * from './booking'
+export * from './messaging'

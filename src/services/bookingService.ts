@@ -82,6 +82,7 @@ export const bookingService = {
             avatar_url
           ),
           tutor:tutor_profiles!bookings_tutor_id_fkey (
+            user_id,
             hourly_rate,
             profile:profiles!inner (
               full_name,
@@ -138,6 +139,7 @@ export const bookingService = {
             avatar_url
           ),
           tutor:tutor_profiles!bookings_tutor_id_fkey (
+            user_id,
             hourly_rate,
             profile:profiles!inner (
               full_name,
@@ -230,6 +232,7 @@ export const bookingService = {
             avatar_url
           ),
           tutor:tutor_profiles!bookings_tutor_id_fkey (
+            user_id,
             hourly_rate,
             profile:profiles!inner (
               full_name,
@@ -349,6 +352,7 @@ interface RawBookingRow {
     avatar_url: string | null
   } | null
   tutor?: {
+    user_id?: string
     hourly_rate: number | null
     profile?: {
       full_name: string
@@ -371,6 +375,7 @@ function formatBookingRow(r: unknown): Booking {
     studentEmail: row.student?.email,
     studentAvatarUrl: row.student?.avatar_url || null,
     tutorId: row.tutor_id,
+    tutorUserId: row.tutor?.user_id,
     tutorName: row.tutor?.profile?.full_name || 'Tutor',
     tutorAvatarUrl: row.tutor?.profile?.avatar_url || null,
     tutorHourlyRate: Number(row.tutor?.hourly_rate || 0),

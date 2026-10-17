@@ -46,6 +46,7 @@ const CertificateVerifyPage = lazy(() => import('@/pages/CertificateVerifyPage')
 const TutorDashboardPage = lazy(() => import('@/pages/tutor/TutorDashboardPage').then((m) => ({ default: m.TutorDashboardPage })))
 const TutorAvailabilityPage = lazy(() => import('@/pages/tutor/TutorAvailabilityPage').then((m) => ({ default: m.TutorAvailabilityPage })))
 const TutorSessionsPage = lazy(() => import('@/pages/tutor/TutorSessionsPage').then((m) => ({ default: m.TutorSessionsPage })))
+const TutorMessagesPage = lazy(() => import('@/pages/tutor/TutorMessagesPage').then((m) => ({ default: m.TutorMessagesPage })))
 
 // Admin Pages (Code-split)
 const AdminDashboardPage = lazy(() => import('@/pages/admin/AdminDashboardPage').then((m) => ({ default: m.AdminDashboardPage })))
@@ -354,6 +355,16 @@ export function AppRoutes() {
             <ProtectedRoute>
               <RoleGuard allowedRoles={['tutor']}>
                 <TutorSessionsPage />
+              </RoleGuard>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/tutor/messages"
+          element={
+            <ProtectedRoute>
+              <RoleGuard allowedRoles={['tutor']}>
+                <TutorMessagesPage />
               </RoleGuard>
             </ProtectedRoute>
           }

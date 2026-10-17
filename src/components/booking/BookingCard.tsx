@@ -1,3 +1,4 @@
+import { Link } from 'react-router'
 import {
   Calendar,
   Clock,
@@ -166,6 +167,26 @@ export function BookingCard({
 
         {/* Action Buttons */}
         <div className="flex flex-wrap items-center justify-end gap-2.5 pt-4 mt-3 border-t border-border">
+          <Button
+            asChild
+            variant="outline"
+            size="sm"
+            className="min-h-[44px] text-ink-primary border-border hover:bg-surface gap-1.5 font-semibold text-xs mr-auto"
+          >
+            <Link
+              to={
+                perspective === 'student'
+                  ? `/student/messages?tutorId=${encodeURIComponent(
+                      booking.tutorUserId || booking.tutorId
+                    )}`
+                  : `/tutor/messages?studentId=${encodeURIComponent(booking.studentId)}`
+              }
+            >
+              <MessageSquare className="w-4 h-4 text-brand-primary" />
+              <span>{perspective === 'student' ? 'Chat Mentor' : 'Chat Murid'}</span>
+            </Link>
+          </Button>
+
           {/* Tutor actions for pending booking: only Super Admin can verify payment & confirm session */}
           {perspective === 'tutor' && booking.status === 'pending' && (
             <div className="flex flex-wrap items-center justify-between w-full gap-2">

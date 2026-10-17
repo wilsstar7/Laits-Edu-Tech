@@ -5,7 +5,6 @@ import {
   Star,
   Clock,
   GraduationCap,
-  Sparkles,
   BookOpen,
   Calendar,
   MessageCircle,
@@ -240,7 +239,7 @@ export function TutorProfilePage() {
                 <Card className="border border-border/80 bg-white shadow-xs">
                   <CardContent className="p-6 space-y-3">
                     <h2 className="text-base font-bold text-ink-primary flex items-center gap-2">
-                      <Sparkles className="w-4 h-4 text-brand-primary" />
+                      <BookOpen className="w-4 h-4 text-brand-primary" />
                       Gaya & Metodologi Pengajaran
                     </h2>
                     <div className="p-4 bg-surface rounded-xl border border-border">
@@ -375,15 +374,31 @@ export function TutorProfilePage() {
                     }}
                   />
 
-                  {/* Primary CTA */}
-                  <Button
-                    type="button"
-                    onClick={() => setIsBookingOpen(true)}
-                    className="w-full min-h-[44px] bg-brand-primary text-white hover:bg-brand-primary/90 font-bold text-xs gap-2 shadow-sm"
-                  >
-                    <Calendar className="w-4 h-4" />
-                    <span>Lanjutkan Pemesanan Sesi</span>
-                  </Button>
+                  <div className="space-y-2.5">
+                    <Button
+                      type="button"
+                      onClick={() => setIsBookingOpen(true)}
+                      className="w-full min-h-[44px] bg-brand-primary text-white hover:bg-brand-primary/90 font-bold text-xs gap-2 shadow-sm"
+                    >
+                      <Calendar className="w-4 h-4" />
+                      <span>Lanjutkan Pemesanan Sesi</span>
+                    </Button>
+
+                    <Button
+                      asChild
+                      variant="outline"
+                      className="w-full min-h-[44px] border-brand-primary/30 text-brand-primary hover:bg-brand-primary/8 font-bold text-xs gap-2"
+                    >
+                      <Link
+                        to={`/student/messages?tutorId=${encodeURIComponent(
+                          tutor.userId || tutor.id
+                        )}`}
+                      >
+                        <MessageCircle className="w-4 h-4" />
+                        <span>Chat dengan Mentor</span>
+                      </Link>
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
             </div>

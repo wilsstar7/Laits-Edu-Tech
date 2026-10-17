@@ -50,6 +50,7 @@ export const STUDENT_NAV_ITEMS: NavItem[] = [
 
 export const TUTOR_NAV_ITEMS: NavItem[] = [
   { label: 'Dashboard', href: '/tutor/dashboard', icon: LayoutDashboard },
+  { label: 'Pesan Murid', href: '/tutor/messages', icon: MessageSquare },
   { label: 'Jam Ketersediaan', href: '/tutor/availability', icon: Calendar },
   { label: 'Riwayat Sesi Belajar', href: '/tutor/sessions', icon: Clock },
 ]

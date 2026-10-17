@@ -83,10 +83,13 @@ export function AssessmentIntroPage() {
       if (activeSession) {
         navigate(`/student/assessment/${activeSession.id}`)
       } else {
+        // Sesuai aturan bertahap: jika memilih Paket 2 atau Paket 3, kerjakan Paket 1 dahulu
+        // sambil menyimpan target paket pilihan siswa (targetPackageCode).
         const session = await assessmentSessionService.startNewSession(
           user.id,
           PRIMARY_ASSESSMENT_ID,
           selectedLevel,
+          'PAKET_1_PERSONA_MODALITY',
           selectedPackage.code
         )
         navigate(`/student/assessment/${session.id}`)
@@ -94,6 +97,31 @@ export function AssessmentIntroPage() {
     } catch (err) {
       console.error('Error starting session:', err)
       setErrorMsg('Gagal memulai sesi asesmen. Silakan coba kembali.')
+      setActionLoading(false)
+    }
+  }
+
+  const handleStartPackage2Direct = async () => {
+    if (!user) return
+    if (!consentChecked) return
+
+    setActionLoading(true)
+    setErrorMsg(null)
+
+    try {
+      const session = await assessmentSessionService.startNewSession(
+        user.id,
+        PRIMARY_ASSESSMENT_ID,
+        selectedLevel,
+        'PAKET_2_PERSONA_POTENTIAL',
+        selectedPackage.code === 'PAKET_3_PERSONA_MASTERY'
+          ? 'PAKET_3_PERSONA_MASTERY'
+          : 'PAKET_2_PERSONA_POTENTIAL'
+      )
+      navigate(`/student/assessment/${session.id}`)
+    } catch (err) {
+      console.error('Error starting Paket 2 session:', err)
+      setErrorMsg('Gagal memulai sesi Paket 2. Silakan coba kembali.')
       setActionLoading(false)
     }
   }
@@ -120,13 +148,12 @@ export function AssessmentIntroPage() {
   }
 
   const isPackage2 = selectedPackage.code === 'PAKET_2_PERSONA_POTENTIAL'
+  const isPackage3 = selectedPackage.code === 'PAKET_3_PERSONA_MASTERY'
   const currentLevelConfig = LEVEL_CONFIG[selectedLevel]
-  const currentTotalQuestions = isPackage2
-    ? PACKAGE_LEVEL_CONFIG.PAKET_2_PERSONA_POTENTIAL[selectedLevel].totalQuestions
-    : currentLevelConfig.totalCount
-  const currentEstMinutes = isPackage2
-    ? PACKAGE_LEVEL_CONFIG.PAKET_2_PERSONA_POTENTIAL[selectedLevel].estimatedMinutes
-    : currentLevelConfig.estimatedMinutes
+  const currentTotalQuestions = currentLevelConfig.totalCount
+  const currentEstMinutes = currentLevelConfig.estimatedMinutes
+  const package2QuestionsCount =
+    PACKAGE_LEVEL_CONFIG.PAKET_2_PERSONA_POTENTIAL[selectedLevel].totalQuestions
 
   if (loading) {
     return (
@@ -148,7 +175,7 @@ export function AssessmentIntroPage() {
           Pilih Paket Asesmen Pembelajaran
         </h1>
         <p className="text-xs sm:text-sm text-[#676A78] max-w-2xl leading-relaxed">
-          Temukan metode belajar terbaik, dominasi kognitif, dan gaya pengajaran tutor yang paling tepat melalui instrumen diagnostik psikologi pendidikan.
+          Soal asesmen kini dipisahkan per paket secara bertahap. Jika memilih Paket 2 atau Paket 3, kamu akan mengerjakan Paket 1 terlebih dahulu hingga selesai sebelum melanjutkan ke paket berikutnya.
         </p>
       </div>
 
@@ -216,7 +243,11 @@ export function AssessmentIntroPage() {
               </div>
               <div className="space-y-0.5">
                 <span className="text-xs font-bold text-emerald-800 uppercase tracking-wide">
-                  Hasil Terakhir Tersedia
+                  Hasil Terakhir Tersedia (
+                  {latestResult.package_code === 'PAKET_2_PERSONA_POTENTIAL'
+                    ? 'Paket 2: Persona Potential'
+                    : 'Paket 1: Persona Modality'}
+                  )
                 </span>
                 <h2 className="text-base sm:text-lg font-extrabold text-emerald-950">
                   {latestResult.modality_result?.modules.PM_VAK_01.title ||
@@ -235,50 +266,67 @@ export function AssessmentIntroPage() {
                 onClick={() => navigate('/student/personality')}
                 className="px-5 py-2.5 rounded-2xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold transition-all shadow-sm min-h-[42px]"
               >
-                Lihat Hasil Profil
+                Lihat Hasil &amp; Opsi Paket Lanjutan
               </button>
             </div>
           </div>
         </div>
       ) : null}
 
-      {/* 3. 3-Package Cards Catalog (Sesuai Soal.Md) */}
+      {/* 3. 3-Package Cards Catalog (Semua paket dapat dipilih, pengerjaan bertahap dari Paket 1) */}
       <div className="space-y-4">
-        <h2 className="text-base font-extrabold text-[#17181C]">
-          Katalog 3 Paket Asesmen
-        </h2>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <h2 className="text-base font-extrabold text-[#17181C]">
+            Katalog 3 Paket Asesmen (Soal Dipisahkan Per Paket)
+          </h2>
+          <span className="text-xs text-[#676A78] font-medium">
+            Pilih Paket 1, Paket 2, atau Paket 3 untuk memulai
+          </span>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {ASSESSMENT_PACKAGES.map((pkg) => {
-            const isActive = pkg.status === 'active'
+          {ASSESSMENT_PACKAGES.map((pkg, pkgIdx) => {
             const isSelected = selectedPackage.code === pkg.code
+            const isPkg3 = pkg.code === 'PAKET_3_PERSONA_MASTERY'
+            const questionCountBadge =
+              pkg.code === 'PAKET_1_PERSONA_MODALITY'
+                ? `${currentLevelConfig.totalCount} Soal (Tahap 1)`
+                : pkg.code === 'PAKET_2_PERSONA_POTENTIAL'
+                ? '60 Soal Terpisah (Tahap 2)'
+                : 'Tahap 3 (Mulai dari Paket 1)'
 
             return (
               <div
                 key={pkg.code}
-                onClick={() => isActive && setSelectedPackage(pkg)}
-                className={`relative rounded-3xl p-6 border transition-all flex flex-col justify-between ${
-                  isActive
-                    ? isSelected
-                      ? 'bg-white border-[#183058] shadow-md ring-2 ring-[#183058]/30 cursor-pointer'
-                      : 'bg-white border-border/80 hover:border-[#183058]/40 cursor-pointer'
-                    : 'bg-[#F9FAFD] border-border/60 opacity-80 cursor-not-allowed'
+                onClick={() => setSelectedPackage(pkg)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    setSelectedPackage(pkg)
+                  }
+                }}
+                className={`relative rounded-3xl p-6 border transition-all flex flex-col justify-between cursor-pointer ${
+                  isSelected
+                    ? 'bg-white border-[#183058] shadow-md ring-2 ring-[#183058]/30'
+                    : 'bg-white border-border/80 hover:border-[#183058]/40'
                 }`}
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between gap-2">
                     <span
                       className={`px-3 py-1 rounded-full text-[11px] font-bold ${
-                        isActive
-                          ? 'bg-[#183058]/10 text-[#183058]'
-                          : 'bg-zinc-200 text-zinc-600 flex items-center gap-1'
+                        isPkg3
+                          ? 'bg-amber-100 text-amber-800 flex items-center gap-1'
+                          : 'bg-[#183058]/10 text-[#183058]'
                       }`}
                     >
-                      {!isActive && <Lock className="w-3 h-3" />}
-                      <span>{pkg.badgeText}</span>
+                      {isPkg3 && <Lock className="w-3 h-3" />}
+                      <span>Paket {pkgIdx + 1} • {pkg.badgeText}</span>
                     </span>
-                    <span className="text-[11px] text-[#676A78] font-medium">
-                      Target: {pkg.targetAge}
+                    <span className="text-[11px] text-[#676A78] font-bold">
+                      {questionCountBadge}
                     </span>
                   </div>
 
@@ -309,21 +357,20 @@ export function AssessmentIntroPage() {
                 </div>
 
                 <div className="pt-5 mt-4 border-t border-border/60">
-                  {isActive ? (
-                    <div className="flex items-center justify-between text-xs font-bold text-[#183058]">
-                      <span>{isSelected ? 'Paket Terpilih' : 'Pilih Paket Ini'}</span>
-                      <CheckCircle2
-                        className={`w-4 h-4 ${
-                          isSelected ? 'text-[#183058]' : 'text-transparent'
-                        }`}
-                      />
-                    </div>
-                  ) : (
-                    <div className="flex items-center gap-1.5 text-xs text-[#888B98]">
-                      <Lock className="w-3.5 h-3.5" />
-                      <span>Terkunci (Segera Hadir)</span>
-                    </div>
-                  )}
+                  <div className="flex items-center justify-between text-xs font-bold text-[#183058]">
+                    <span>
+                      {isSelected
+                        ? pkg.code === 'PAKET_1_PERSONA_MODALITY'
+                          ? 'Paket 1 Terpilih'
+                          : `${pkg.name} Terpilih (Mulai dari Paket 1)`
+                        : 'Pilih Paket Ini'}
+                    </span>
+                    <CheckCircle2
+                      className={`w-4 h-4 ${
+                        isSelected ? 'text-[#183058]' : 'text-transparent'
+                      }`}
+                    />
+                  </div>
                 </div>
               </div>
             )
@@ -333,6 +380,20 @@ export function AssessmentIntroPage() {
 
       {/* 4. Leveling Filter & Configuration (SD / SMP / SMA) */}
       <div className="surface-card bg-white p-6 sm:p-8 border border-border/80 rounded-3xl space-y-6">
+        {(isPackage2 || isPackage3) && (
+          <div className="p-4 sm:p-5 rounded-2xl bg-[#E8ECF6]/70 border border-[#183058]/20 space-y-2">
+            <div className="flex items-center gap-2 text-[#183058]">
+              <Layers className="w-4 h-4 shrink-0" />
+              <span className="text-xs font-extrabold uppercase tracking-wider">
+                Alur Pengerjaan Bertahap ({selectedPackage.name})
+              </span>
+            </div>
+            <p className="text-xs text-[#1D1D24] leading-relaxed">
+              Karena kamu memilih <strong>{selectedPackage.name}</strong>, soal dipisahkan per paket agar tidak digabung sekaligus. Kamu akan mengerjakan <strong>Soal Paket 1 (Persona Modality: {currentTotalQuestions} Soal)</strong> terlebih dahulu hingga selesai dan melihat hasilnya, kemudian tersedia pilihan langsung untuk melanjutkan ke <strong>Paket 2 (60 Soal: 20 MBTI + 40 Kecerdasan Majemuk)</strong> maupun <strong>Paket 3 (Persona Mastery)</strong>.
+            </p>
+          </div>
+        )}
+
         <div className="space-y-1">
           <div className="flex items-center gap-2 text-[#183058]">
             <GraduationCap className="w-5 h-5" />
@@ -341,7 +402,7 @@ export function AssessmentIntroPage() {
             </h2>
           </div>
           <p className="text-xs text-[#676A78]">
-            Jumlah butir pertanyaan disesuaikan otomatis dengan tingkat perkembangan kognitif siswa.
+            Jumlah butir pertanyaan Paket 1 disesuaikan dengan tingkat perkembangan kognitif siswa, sedangkan Paket 2 terdiri dari 60 soal terpisah.
           </p>
         </div>
 
@@ -371,10 +432,7 @@ export function AssessmentIntroPage() {
                     {cfg.label}
                   </span>
                   <span className="text-xs font-mono font-bold px-2 py-0.5 rounded-lg bg-[#F4F6FA] text-[#17181C]">
-                    {isPackage2
-                      ? PACKAGE_LEVEL_CONFIG.PAKET_2_PERSONA_POTENTIAL[lvl].totalQuestions
-                      : cfg.totalCount}{' '}
-                    Soal
+                    Paket 1: {cfg.totalCount} Soal
                   </span>
                 </div>
                 <p className="text-[11px] text-[#676A78] leading-relaxed">
@@ -385,60 +443,78 @@ export function AssessmentIntroPage() {
           })}
         </div>
 
-        {/* Breakdown Module Indicator for Selected Level & Package */}
-        <div
-          className={`grid gap-3 p-4 rounded-2xl bg-[#F4F6FA] border border-border/60 ${
-            isPackage2 ? 'grid-cols-2 sm:grid-cols-5' : 'grid-cols-1 sm:grid-cols-3'
-          }`}
-        >
-          <div className="flex items-center gap-3">
-            <BookOpen className="w-4 h-4 text-[#183058] shrink-0" />
-            <div>
-              <p className="text-[11px] text-[#676A78]">Modul 1: VAK</p>
-              <p className="text-xs font-bold text-[#17181C]">
-                {currentLevelConfig.vakCount} Soal Sensori
-              </p>
+        {/* Breakdown Module Indicator Separated Per Package */}
+        <div className="space-y-3">
+          <div className="p-4 rounded-2xl bg-[#F4F6FA] border border-border/60 space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-extrabold text-[#0F1D33]">
+                Tahap 1 - Soal Paket 1 (Persona Modality): {currentTotalQuestions} Soal
+              </span>
+              <span className="text-[11px] font-semibold text-[#183058] bg-[#E8ECF6] px-2.5 py-0.5 rounded-full">
+                Dikerjakan Pertama
+              </span>
             </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <Layers className="w-4 h-4 text-[#183058] shrink-0" />
-            <div>
-              <p className="text-[11px] text-[#676A78]">Modul 2: Hemisfer</p>
-              <p className="text-xs font-bold text-[#17181C]">
-                {currentLevelConfig.hemCount} Soal Berpikir
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <Clock className="w-4 h-4 text-[#183058] shrink-0" />
-            <div>
-              <p className="text-[11px] text-[#676A78]">Modul 3: Kebiasaan</p>
-              <p className="text-xs font-bold text-[#17181C]">
-                {currentLevelConfig.skbCount} Soal Lingkungan
-              </p>
-            </div>
-          </div>
-
-          {isPackage2 && (
-            <>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div className="flex items-center gap-3">
-                <GraduationCap className="w-4 h-4 text-[#183058] shrink-0" />
+                <BookOpen className="w-4 h-4 text-[#183058] shrink-0" />
                 <div>
-                  <p className="text-[11px] text-[#676A78]">Modul 4: MBTI</p>
-                  <p className="text-xs font-bold text-[#17181C]">20 Soal Kepribadian</p>
+                  <p className="text-[11px] text-[#676A78]">Modul 1.1: VAK</p>
+                  <p className="text-xs font-bold text-[#17181C]">
+                    {currentLevelConfig.vakCount} Soal Sensori
+                  </p>
                 </div>
               </div>
 
               <div className="flex items-center gap-3">
-                <CheckCircle2 className="w-4 h-4 text-[#183058] shrink-0" />
+                <Layers className="w-4 h-4 text-[#183058] shrink-0" />
                 <div>
-                  <p className="text-[11px] text-[#676A78]">Modul 5: Gardner MI</p>
-                  <p className="text-xs font-bold text-[#17181C]">40 Soal 8 Kecerdasan</p>
+                  <p className="text-[11px] text-[#676A78]">Modul 1.2: Hemisfer</p>
+                  <p className="text-xs font-bold text-[#17181C]">
+                    {currentLevelConfig.hemCount} Soal Berpikir
+                  </p>
                 </div>
               </div>
-            </>
+
+              <div className="flex items-center gap-3">
+                <Clock className="w-4 h-4 text-[#183058] shrink-0" />
+                <div>
+                  <p className="text-[11px] text-[#676A78]">Modul 1.3: Kebiasaan</p>
+                  <p className="text-xs font-bold text-[#17181C]">
+                    {currentLevelConfig.skbCount} Soal Lingkungan
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {(isPackage2 || isPackage3) && (
+            <div className="p-4 rounded-2xl bg-[#F9FAFD] border border-[#183058]/20 space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-extrabold text-[#0F1D33]">
+                  Tahap 2 - Soal Paket 2 (Persona Potential): {package2QuestionsCount} Soal Terpisah
+                </span>
+                <span className="text-[11px] font-semibold text-[#183058] bg-white border border-[#183058]/20 px-2.5 py-0.5 rounded-full">
+                  Dilanjutkan Setelah Paket 1 Selesai
+                </span>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="flex items-center gap-3">
+                  <GraduationCap className="w-4 h-4 text-[#183058] shrink-0" />
+                  <div>
+                    <p className="text-[11px] text-[#676A78]">Modul 2.1: MBTI Edukatif</p>
+                    <p className="text-xs font-bold text-[#17181C]">20 Soal Kepribadian (Terpisah)</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <CheckCircle2 className="w-4 h-4 text-[#183058] shrink-0" />
+                  <div>
+                    <p className="text-[11px] text-[#676A78]">Modul 2.2: Gardner MI</p>
+                    <p className="text-xs font-bold text-[#17181C]">40 Soal 8 Kecerdasan (Terpisah)</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           )}
         </div>
 
@@ -447,8 +523,8 @@ export function AssessmentIntroPage() {
           <p className="font-bold text-[#17181C]">Panduan Pengerjaan:</p>
           <ul className="list-disc pl-5 space-y-1">
             <li>Tidak ada jawaban benar atau salah, pilih yang paling nyaman dan menggambarkan dirimu apa adanya.</li>
+            <li>Soal dipisahkan per paket sehingga kamu dapat fokus menyelesaikan Paket 1 terlebih dahulu, melihat hasilnya, lalu melanjutkan ke Paket 2 atau Paket 3.</li>
             <li>Jawaban otomatis tersimpan berkala, kamu dapat kembali ke nomor sebelumnya bila diperlukan.</li>
-            <li>Hasil asesmen digunakan untuk memetakan metode belajar personal dan bimbingan privat terarah.</li>
           </ul>
         </div>
 
@@ -474,33 +550,56 @@ export function AssessmentIntroPage() {
           <div className="pt-3 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-border/60">
             <p className="text-[11px] text-[#676A78]">
               {consentChecked
-                ? `Siap mengerjakan ${currentTotalQuestions} butir soal (${currentLevelConfig.label} - estimasi ~${currentEstMinutes} menit).`
+                ? isPackage2 || isPackage3
+                  ? `Tahap 1: Siap mengerjakan ${currentTotalQuestions} butir soal Paket 1 terlebih dahulu (${currentLevelConfig.label} - estimasi ~${currentEstMinutes} menit), lalu lanjut ke ${selectedPackage.name}.`
+                  : `Siap mengerjakan ${currentTotalQuestions} butir soal Paket 1 (${currentLevelConfig.label} - estimasi ~${currentEstMinutes} menit).`
                 : 'Beri tanda centang pada pernyataan persetujuan untuk memulai.'}
             </p>
 
-            <button
-              type="button"
-              onClick={handleStart}
-              disabled={!consentChecked || actionLoading}
-              className="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-[#183058] hover:bg-[#102342] text-white text-xs font-bold shadow-md shadow-[#183058]/25 disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 min-h-[46px]"
-            >
-              {actionLoading ? (
-                <>
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  <span>Menyiapkan Sesi...</span>
-                </>
-              ) : latestResult ? (
-                <>
-                  <RotateCcw className="w-4 h-4" />
-                  <span>Ambil Ulang ({selectedLevel} - {selectedPackage.name})</span>
-                </>
-              ) : (
-                <>
-                  <span>Mulai Asesmen ({selectedLevel} - {selectedPackage.name})</span>
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 w-full sm:w-auto">
+              {latestResult && (isPackage2 || isPackage3) && (
+                <button
+                  type="button"
+                  onClick={handleStartPackage2Direct}
+                  disabled={!consentChecked || actionLoading}
+                  className="w-full sm:w-auto px-5 py-3.5 rounded-2xl border border-[#183058] bg-[#E8ECF6]/60 hover:bg-[#E8ECF6] text-[#183058] text-xs font-bold disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 min-h-[46px]"
+                >
+                  <span>Langsung Soal Paket 2 ({package2QuestionsCount} Soal)</span>
                   <ArrowRight className="w-4 h-4" />
-                </>
+                </button>
               )}
-            </button>
+
+              <button
+                type="button"
+                onClick={handleStart}
+                disabled={!consentChecked || actionLoading}
+                className="w-full sm:w-auto px-7 py-3.5 rounded-2xl bg-[#183058] hover:bg-[#102342] text-white text-xs font-bold shadow-md shadow-[#183058]/25 disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 min-h-[46px]"
+              >
+                {actionLoading ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <span>Menyiapkan Sesi...</span>
+                  </>
+                ) : isPackage2 || isPackage3 ? (
+                  <>
+                    <span>
+                      Mulai dari Soal Paket 1 (Menuju {selectedPackage.name})
+                    </span>
+                    <ArrowRight className="w-4 h-4" />
+                  </>
+                ) : latestResult ? (
+                  <>
+                    <RotateCcw className="w-4 h-4" />
+                    <span>Ambil Ulang Paket 1 ({selectedLevel})</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Mulai Paket 1 ({selectedLevel} - {currentTotalQuestions} Soal)</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </>
+                )}
+              </button>
+            </div>
           </div>
         )}
       </div>

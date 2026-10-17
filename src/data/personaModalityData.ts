@@ -111,21 +111,6 @@ export const ASSESSMENT_PACKAGES: AssessmentPackage[] = [
       'Produk utama untuk mengungkap pintu gerbang belajar terkuat anak dan menyelaraskan komunikasi guru privat serta orang tua.',
     modules: [
       {
-        code: 'PM-VAK-01',
-        name: 'Sensory Modality (VAK)',
-        shortDesc: 'Penerimaan dan pemrosesan informasi (Visual, Auditory, Kinesthetic).',
-      },
-      {
-        code: 'PM-HEM-02',
-        name: 'Dominasi Hemisfer Otak',
-        shortDesc: 'Gaya berpikir analitis sekuensial (Kiri) vs holistik kreatif (Kanan).',
-      },
-      {
-        code: 'PM-SKB-03',
-        name: 'Screening Kebiasaan Belajar',
-        shortDesc: 'Jam biologis kognitif, toleransi lingkungan fisik, dan rentang fokus.',
-      },
-      {
         code: 'PP-MBTI-02',
         name: 'Tipologi Kepribadian (MBTI)',
         shortDesc: 'Pemrosesan energi, informasi, keputusan, dan orientasi jadwal (20 soal A/B).',

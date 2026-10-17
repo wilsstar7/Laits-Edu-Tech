@@ -37,8 +37,20 @@ export const assessmentScoringService = {
     const now = new Date().toISOString()
 
     if (packageCode === 'PAKET_2_PERSONA_POTENTIAL') {
-      // Jalankan kalkulasi kumulatif Paket 2 (Paket 1 + MBTI + MI)
-      const potentialResult = calculatePersonaPotentialResult(studentLevel, answers)
+      // Cari hasil Paket 1 sebelumnya dari siswa ini agar tidak perlu mengulang soal Paket 1
+      const latestPrev = await personalityService.getLatestResult(session.user_id)
+      const historyList = await personalityService.getHistory(session.user_id)
+      const prevPaket1Modules =
+        latestPrev?.modality_result?.modules ??
+        latestPrev?.potential_result?.paket_1_results ??
+        historyList.find((r) => r.modality_result?.modules)?.modality_result?.modules
+
+      // Jalankan kalkulasi Paket 2 (MBTI + MI) digabung dengan hasil Paket 1 yang sudah dikerjakan
+      const potentialResult = calculatePersonaPotentialResult(
+        studentLevel,
+        answers,
+        prevPaket1Modules
+      )
       const p1 = potentialResult.paket_1_results
       const mbti = potentialResult.paket_2_modules.PP_MBTI_02
       const mi = potentialResult.paket_2_modules.PP_MI_03
@@ -138,6 +150,7 @@ export const assessmentScoringService = {
         created_at: now,
         student_level: studentLevel,
         package_code: 'PAKET_2_PERSONA_POTENTIAL',
+        target_package_code: session.target_package_code || 'PAKET_2_PERSONA_POTENTIAL',
         modality_result: modalityCompat,
         potential_result: potentialResult,
         personality_type: personalityTypeCompat,
@@ -269,6 +282,7 @@ export const assessmentScoringService = {
       created_at: now,
       student_level: studentLevel,
       package_code: 'PAKET_1_PERSONA_MODALITY',
+      target_package_code: session.target_package_code || 'PAKET_1_PERSONA_MODALITY',
       modality_result: modalityResult,
       personality_type: personalityTypeCompat,
       dimensions: dimensionsCompat,

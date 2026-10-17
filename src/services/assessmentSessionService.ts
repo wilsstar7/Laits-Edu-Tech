@@ -151,7 +151,8 @@ export const assessmentSessionService = {
     userId: string,
     assessmentId: string = PRIMARY_ASSESSMENT_ID,
     studentLevel: StudentLevel = 'SMA',
-    packageCode: AssessmentPackageCode = 'PAKET_1_PERSONA_MODALITY'
+    packageCode: AssessmentPackageCode = 'PAKET_1_PERSONA_MODALITY',
+    targetPackageCode?: AssessmentPackageCode
   ): Promise<AssessmentSession> {
     const now = new Date().toISOString()
     const sessionId =
@@ -165,6 +166,7 @@ export const assessmentSessionService = {
       current_question_index: 0,
       student_level: studentLevel,
       package_code: packageCode,
+      target_package_code: targetPackageCode || packageCode,
       consent_at: now,
       started_at: now,
       last_saved_at: now,

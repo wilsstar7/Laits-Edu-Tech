@@ -21,7 +21,7 @@ import {
   Coffee,
   Zap,
   Timer,
-  Sparkles,
+  Layers,
   Award,
   Users,
   Lightbulb,
@@ -32,7 +32,9 @@ import {
 } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 import { personalityService } from '@/services/personalityService'
-import type { AssessmentResult } from '@/types/assessment'
+import { assessmentSessionService } from '@/services/assessmentSessionService'
+import { PRIMARY_ASSESSMENT_ID } from '@/services/assessmentService'
+import type { AssessmentResult, AssessmentPackageCode } from '@/types/assessment'
 import { formatLongDate } from '@/utils/format'
 import { LEVEL_CONFIG } from '@/data/personaModalityData'
 import { PACKAGE_LEVEL_CONFIG } from '@/data/personaPotentialData'
@@ -45,6 +47,8 @@ export function PersonalityResultPage() {
   const [loading, setLoading] = useState(true)
   const [result, setResult] = useState<AssessmentResult | null>(null)
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
+  const [startingNextPkg, setStartingNextPkg] = useState(false)
+  const [showPkg3Info, setShowPkg3Info] = useState(false)
 
   useEffect(() => {
     async function loadResult() {
@@ -71,6 +75,29 @@ export function PersonalityResultPage() {
 
     loadResult()
   }, [user, resultId])
+
+  const handleContinueToPackage2 = async (
+    targetPkg: AssessmentPackageCode = 'PAKET_2_PERSONA_POTENTIAL'
+  ) => {
+    if (!user || !result || startingNextPkg) return
+    setStartingNextPkg(true)
+    setErrorMsg(null)
+    try {
+      const level = result.student_level || 'SMA'
+      const session = await assessmentSessionService.startNewSession(
+        user.id,
+        PRIMARY_ASSESSMENT_ID,
+        level,
+        'PAKET_2_PERSONA_POTENTIAL',
+        targetPkg
+      )
+      navigate(`/student/assessment/${session.id}`)
+    } catch (err) {
+      console.error('Failed to start Paket 2 session:', err)
+      setErrorMsg('Gagal memulai sesi Paket 2. Silakan coba kembali.')
+      setStartingNextPkg(false)
+    }
+  }
 
   if (loading) {
     return (
@@ -113,10 +140,17 @@ export function PersonalityResultPage() {
       : result.modality_result?.modules
   const studentLevel = result.student_level || 'SMA'
   const levelInfo = LEVEL_CONFIG[studentLevel]
+  const pkg2TotalQuestions =
+    PACKAGE_LEVEL_CONFIG.PAKET_2_PERSONA_POTENTIAL[studentLevel].totalQuestions
 
   const totalQuestionsDone = isPotential
-    ? PACKAGE_LEVEL_CONFIG.PAKET_2_PERSONA_POTENTIAL[studentLevel].totalQuestions
+    ? pkg2TotalQuestions
     : levelInfo.totalCount
+
+  const choseNextTarget =
+    !isPotential &&
+    (result.target_package_code === 'PAKET_2_PERSONA_POTENTIAL' ||
+      result.target_package_code === 'PAKET_3_PERSONA_MASTERY')
 
   // Data Paket 1 (VAK, Otak, Kebiasaan)
   const vak = p1Modules?.PM_VAK_01 || {
@@ -218,17 +252,17 @@ export function PersonalityResultPage() {
             <h1 className="text-2xl sm:text-3xl font-extrabold text-[#17181C] tracking-tight mt-1">
               {isPotential
                 ? 'Profil Karakter, Tipologi Kognitif & Peta Bakat Siswa'
-                : 'Profil Karakter Belajar Siswa'}
+                : 'Profil Karakter Belajar Siswa (Paket 1 Selesai)'}
             </h1>
             <p className="text-xs text-[#676A78] mt-1">
-              Diselesaikan pada {formatLongDate(new Date(result.completed_at))} • Jenjang {levelInfo.label} ({totalQuestionsDone} Soal Selesai)
+              Diselesaikan pada {formatLongDate(new Date(result.completed_at))} • Jenjang {levelInfo.label} ({totalQuestionsDone} Soal Paket {isPotential ? '2' : '1'} Selesai)
             </p>
           </div>
 
           <div className="flex items-center gap-2 self-start sm:self-auto">
             <span className="text-xs font-bold text-emerald-700 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 flex items-center gap-1.5">
               <CheckCircle2 className="w-3.5 h-3.5" />
-              <span>{isPotential ? 'Paket 2 Terverifikasi' : 'Diagnostik Terverifikasi'}</span>
+              <span>{isPotential ? 'Paket 2 Terverifikasi' : 'Paket 1 Terverifikasi'}</span>
             </span>
           </div>
         </div>
@@ -237,7 +271,7 @@ export function PersonalityResultPage() {
         <div className="p-5 rounded-2xl bg-[#F4F6FA] border border-border/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="space-y-1">
             <span className="text-[11px] font-bold text-[#183058] uppercase tracking-wider">
-              {isPotential ? 'Profil Karakter Utama:' : 'Kesimpulan Modalitas Utama:'}
+              {isPotential ? 'Profil Karakter Utama:' : 'Kesimpulan Modalitas Utama (Paket 1):'}
             </span>
             <h2 className="text-lg sm:text-xl font-extrabold text-[#17181C]">
               {isPotential && mbti
@@ -258,6 +292,35 @@ export function PersonalityResultPage() {
             </span>
           </div>
         </div>
+
+        {/* Banner Lanjutan jika siswa memilih Paket 2 atau Paket 3 di awal dan baru selesai Paket 1 */}
+        {choseNextTarget && (
+          <div className="p-5 rounded-2xl bg-[#E8ECF6]/80 border border-[#183058]/25 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="space-y-1">
+              <span className="text-[11px] font-extrabold text-[#183058] uppercase tracking-wider">
+                Tahap 1 (Paket 1) Selesai • Siap Melanjutkan ke Tahap Berikutnya
+              </span>
+              <p className="text-xs text-[#1D1D24] leading-relaxed max-w-2xl">
+                Kamu telah menyelesaikan <strong>Soal Paket 1 ({levelInfo.totalCount} Soal)</strong>. Di bawah ini adalah hasil Paket 1 milikmu. Kamu dapat langsung melanjutkan pengerjaan ke <strong>Soal Paket 2 ({pkg2TotalQuestions} Soal terpisah: 20 MBTI + 40 Kecerdasan Majemuk)</strong> atau memilih opsi <strong>Paket 3</strong>.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => handleContinueToPackage2(result.target_package_code)}
+              disabled={startingNextPkg}
+              className="shrink-0 px-5 py-3 rounded-2xl bg-[#183058] hover:bg-[#102342] text-white text-xs font-bold shadow-md shadow-[#183058]/20 flex items-center gap-2 min-h-[44px] disabled:opacity-50"
+            >
+              {startingNextPkg ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <>
+                  <span>Lanjutkan ke Soal Paket 2 ({pkg2TotalQuestions} Soal)</span>
+                  <ArrowRight className="w-4 h-4" />
+                </>
+              )}
+            </button>
+          </div>
+        )}
       </div>
 
       {/* =========================================================================
@@ -270,7 +333,7 @@ export function PersonalityResultPage() {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border/60 pb-4">
               <div className="space-y-1">
                 <div className="flex items-center gap-2 text-[#183058]">
-                  <Sparkles className="w-5 h-5" />
+                  <Layers className="w-5 h-5" />
                   <span className="text-xs font-bold uppercase tracking-wider">
                     Modul 2.1: Tipologi Kepribadian (PP-MBTI-02)
                   </span>
@@ -477,7 +540,7 @@ export function PersonalityResultPage() {
             {/* Top 3 Gateways Callout Cards */}
             <div className="space-y-3">
               <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-amber-500" />
+                <Award className="w-4 h-4 text-amber-500" />
                 <h3 className="text-sm font-extrabold text-[#17181C]">
                   Top 3 Pintu Gerbang Kecerdasan Utama (Primary Intelligence Gateways)
                 </h3>
@@ -879,27 +942,118 @@ export function PersonalityResultPage() {
         </div>
       </div>
 
-      {/* 7. Teaser to Take Paket 2 if only took Paket 1 */}
-      {!isPotential && (
-        <div className="surface-card bg-gradient-to-r from-[#183058]/10 via-[#A29BFE]/15 to-[#183058]/10 p-6 sm:p-8 border border-[#183058]/30 rounded-3xl flex flex-col sm:flex-row items-center justify-between gap-6">
-          <div className="space-y-2 text-center sm:text-left">
+      {/* 7. Opsi Melanjutkan ke Paket Kedua atau Ketiga */}
+      {!isPotential ? (
+        <div className="surface-card p-6 sm:p-8 border border-[#183058]/25 rounded-3xl space-y-5 bg-white">
+          <div className="space-y-1.5">
             <span className="px-3 py-1 rounded-full bg-[#183058] text-white text-[11px] font-bold uppercase tracking-wider inline-block">
-              Tingkatkan Diagnostik Belajar
+              Opsi Lanjutan Asesmen Bertahap
             </span>
             <h3 className="text-lg sm:text-xl font-extrabold text-[#17181C]">
-              Buka Paket 2: Persona Potential (Karakter & 8 Kecerdasan)
+              Lanjutkan ke Paket Kedua atau Paket Ketiga
+            </h3>
+            <p className="text-xs text-[#676A78] max-w-2xl leading-relaxed">
+              Anda telah menyelesaikan <strong>Paket 1 (Persona Modality)</strong>. Soal Paket 2 sudah dipisahkan sehingga Anda cukup mengerjakan 60 soal lanjutan tanpa mengulang soal Paket 1.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Opsi Lanjut ke Paket 2 */}
+            <div className="p-5 rounded-2xl border-2 border-[#183058] bg-[#F4F6FA] flex flex-col justify-between gap-4">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="px-2.5 py-0.5 rounded-full bg-[#183058] text-white text-[10px] font-bold uppercase tracking-wider">
+                    Tahap 2 • Tersedia
+                  </span>
+                  <span className="text-xs font-extrabold text-[#183058]">
+                    60 Soal Terpisah
+                  </span>
+                </div>
+                <h4 className="text-base font-extrabold text-[#17181C]">
+                  Paket 2: Persona Potential
+                </h4>
+                <p className="text-xs text-[#676A78] leading-relaxed">
+                  20 Soal Tipologi Karakter (MBTI Edukasi) + 40 Soal Peta 8 Kecerdasan Majemuk (Howard Gardner). Hasilnya akan digabungkan dengan hasil Paket 1 Anda.
+                </p>
+              </div>
+
+              <button
+                type="button"
+                disabled={startingNextPkg}
+                onClick={() => handleContinueToPackage2('PAKET_2_PERSONA_POTENTIAL')}
+                className="w-full px-5 py-3 rounded-xl bg-[#183058] hover:bg-[#102342] text-white text-xs font-bold shadow-sm flex items-center justify-center gap-2 min-h-[44px] disabled:opacity-50"
+              >
+                <span>{startingNextPkg ? 'Menyiapkan Sesi Paket 2...' : 'Lanjut ke Paket 2 (60 Soal)'}</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Opsi Lanjut ke Paket 3 */}
+            <div className="p-5 rounded-2xl border border-border/80 bg-[#F9FAFD] flex flex-col justify-between gap-4">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-bold uppercase tracking-wider">
+                    Tahap 3 • Segera Hadir
+                  </span>
+                  <span className="text-xs font-bold text-[#676A78]">
+                    Setelah Paket 2
+                  </span>
+                </div>
+                <h4 className="text-base font-extrabold text-[#17181C]">
+                  Paket 3: Persona Mastery
+                </h4>
+                <p className="text-xs text-[#676A78] leading-relaxed">
+                  Pemetaan kesiapan akademik tingkat lanjut, strategi ujian, dan rekomendasi peminatan studi. Memerlukan penyelesaian Paket 1 dan Paket 2 terlebih dahulu.
+                </p>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-2">
+                <button
+                  type="button"
+                  disabled={startingNextPkg}
+                  onClick={() => handleContinueToPackage2('PAKET_3_PERSONA_MASTERY')}
+                  className="flex-1 px-4 py-3 rounded-xl bg-white hover:bg-[#E8ECF6]/60 text-[#183058] border border-[#183058]/30 text-xs font-bold flex items-center justify-center gap-1.5 min-h-[44px] disabled:opacity-50"
+                >
+                  <span>Ambil Tahap 2 Menuju Paket 3</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowPkg3Info((prev) => !prev)}
+                  className="px-3.5 py-3 rounded-xl bg-white hover:bg-gray-50 text-[#676A78] border border-border/80 text-xs font-semibold min-h-[44px]"
+                >
+                  Info Paket 3
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {showPkg3Info && (
+            <div className="p-4 rounded-2xl bg-amber-50/90 border border-amber-200/80 text-xs text-amber-900 leading-relaxed">
+              <strong>Informasi Paket 3 (Persona Mastery):</strong> Modul soal Paket 3 sedang dalam tahap finalisasi tim psikometri. Anda dapat menyelesaikan <strong>Paket 2 (Persona Potential - 60 Soal)</strong> sekarang agar saat Paket 3 dibuka, Anda bisa langsung mengerjakan soal Paket 3 tanpa mengulang Paket 1 dan Paket 2.
+            </div>
+          )}
+        </div>
+      ) : (
+        <div className="surface-card p-6 sm:p-8 border border-[#183058]/25 rounded-3xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 bg-white">
+          <div className="space-y-2">
+            <span className="px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-[11px] font-bold uppercase tracking-wider inline-block">
+              Tahap 3 • Persona Mastery
+            </span>
+            <h3 className="text-lg sm:text-xl font-extrabold text-[#17181C]">
+              Lanjutkan ke Paket 3: Persona Mastery
             </h3>
             <p className="text-xs text-[#676A78] max-w-xl leading-relaxed">
-              Dapatkan profil tipologi kepribadian 4 huruf (MBTI adaptasi edukasi) dan peta 8 kecerdasan majemuk Howard Gardner untuk menemukan pintu gerbang kecerdasan tertinggi anak.
+              Selamat! Anda telah menuntaskan <strong>Paket 1 (Persona Modality)</strong> dan <strong>Paket 2 (Persona Potential)</strong>. Modul soal <strong>Paket 3 (Persona Mastery)</strong> sedang dalam tahap persiapan akhir dan akan dapat diakses langsung setelah dirilis.
             </p>
           </div>
 
           <button
             type="button"
             onClick={() => navigate('/student/assessment')}
-            className="shrink-0 px-6 py-3.5 rounded-2xl bg-[#183058] hover:bg-[#102342] text-white text-xs font-bold shadow-md shadow-[#183058]/20 flex items-center gap-2 min-h-[46px]"
+            className="shrink-0 px-5 py-3 rounded-2xl bg-[#F4F6FA] hover:bg-[#E8ECF6] text-[#183058] border border-[#183058]/20 text-xs font-bold flex items-center gap-2 min-h-[44px]"
           >
-            <span>Ambil Paket 2 Sekarang</span>
+            <span>Lihat Katalog Paket Asesmen</span>
             <ArrowRight className="w-4 h-4" />
           </button>
         </div>

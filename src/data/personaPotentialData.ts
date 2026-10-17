@@ -1040,28 +1040,27 @@ export const PACKAGE_LEVEL_CONFIG = {
   },
   PAKET_2_PERSONA_POTENTIAL: {
     SD: {
-      totalQuestions: 100,
-      estimatedMinutes: 25,
-      breakdown: '40 Paket 1 + 20 MBTI + 40 Kecerdasan Majemuk',
+      totalQuestions: 60,
+      estimatedMinutes: 15,
+      breakdown: '20 Soal MBTI + 40 Soal Kecerdasan Majemuk',
     },
     SMP: {
-      totalQuestions: 110,
-      estimatedMinutes: 30,
-      breakdown: '50 Paket 1 + 20 MBTI + 40 Kecerdasan Majemuk',
+      totalQuestions: 60,
+      estimatedMinutes: 18,
+      breakdown: '20 Soal MBTI + 40 Soal Kecerdasan Majemuk',
     },
     SMA: {
-      totalQuestions: 125,
-      estimatedMinutes: 35,
-      breakdown: '65 Paket 1 + 20 MBTI + 40 Kecerdasan Majemuk',
+      totalQuestions: 60,
+      estimatedMinutes: 20,
+      breakdown: '20 Soal MBTI + 40 Soal Kecerdasan Majemuk',
     },
   },
 } as const
 
 /**
- * Helper untuk mengambil daftar pertanyaan kumulatif Paket 2 sesuai jenjang.
- * SD: 40 soal Paket 1 + 20 MBTI + 40 MI = 100 soal
- * SMP: 50 soal Paket 1 + 20 MBTI + 40 MI = 110 soal
- * SMA: 65 soal Paket 1 + 20 MBTI + 40 MI = 125 soal
+ * Helper untuk mengambil daftar pertanyaan per paket secara terpisah sesuai jenjang:
+ * - Paket 1 (PAKET_1_PERSONA_MODALITY): SD = 40 soal, SMP = 50 soal, SMA = 65 soal
+ * - Paket 2 (PAKET_2_PERSONA_POTENTIAL): 20 soal MBTI + 40 soal MI = 60 soal (terpisah dari Paket 1)
  */
 export function getQuestionsForPackageAndLevel(
   packageCode: AssessmentPackageCode,
@@ -1100,19 +1099,21 @@ export function getQuestionsForPackageAndLevel(
       }>
     }
 > {
-  const p1Questions = getQuestionsForLevel(level).map((q) => ({
-    ...q,
-    questionType: 'multiple_choice' as const,
-  }))
-
-  if (packageCode !== 'PAKET_2_PERSONA_POTENTIAL') {
-    return p1Questions
+  if (packageCode === 'PAKET_1_PERSONA_MODALITY') {
+    return getQuestionsForLevel(level).map((q) => ({
+      ...q,
+      questionType: 'multiple_choice' as const,
+    }))
   }
 
-  // Paket 2 mencakup seluruh soal Paket 1 + 20 Soal MBTI + 40 Soal MI
+  if (packageCode !== 'PAKET_2_PERSONA_POTENTIAL') {
+    return []
+  }
+
+  // Paket 2 hanya berisi soal khusus Paket 2: 20 Soal MBTI + 40 Soal Kecerdasan Majemuk (total 60 soal)
   const mbtiFormatted = MBTI_QUESTIONS.map((q, idx) => ({
     id: q.id,
-    number: p1Questions.length + idx + 1,
+    number: idx + 1,
     moduleCode: 'PP-MBTI-02' as const,
     moduleName: q.moduleName,
     cluster: 'MBTI' as const,
@@ -1142,7 +1143,7 @@ export function getQuestionsForPackageAndLevel(
 
   const miFormatted = MULTIPLE_INTELLIGENCES_QUESTIONS.map((q, idx) => ({
     id: q.id,
-    number: p1Questions.length + mbtiFormatted.length + idx + 1,
+    number: mbtiFormatted.length + idx + 1,
     moduleCode: 'PP-MI-03' as const,
     moduleName: q.moduleName,
     cluster: q.category,
@@ -1157,5 +1158,5 @@ export function getQuestionsForPackageAndLevel(
     })),
   }))
 
-  return [...p1Questions, ...mbtiFormatted, ...miFormatted]
+  return [...mbtiFormatted, ...miFormatted]
 }

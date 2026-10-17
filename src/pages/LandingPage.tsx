@@ -276,7 +276,7 @@ export function LandingPage() {
                   </div>
 
                   {/* Smooth Cross-Fade Animated Photo Container */}
-                  <div className="relative w-full h-56 sm:h-64 rounded-2xl overflow-hidden bg-[#ECEEF5]">
+                  <div className="relative w-full h-56 sm:h-64 rounded-2xl overflow-hidden bg-[#F4F6FA]">
                     {sampleAssessmentOptions.map((opt, idx) => {
                       const isSelected = selectedStyleAnswer === idx
                       return (
@@ -293,7 +293,7 @@ export function LandingPage() {
                             alt={opt.imageCaption}
                             className="w-full h-full object-cover"
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-[#17181C]/85 via-[#17181C]/25 to-transparent flex flex-col justify-end p-4 text-white">
+                          <div className="absolute inset-0 bg-gradient-to-t from-[#0F1D33]/90 via-[#0F1D33]/30 to-transparent flex flex-col justify-end p-4 text-white">
                             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-[11px] font-bold w-fit mb-1 border border-white/25">
                               <opt.icon className="w-3.5 h-3.5" />
                               <span>Pratinjau Suasana: {opt.type}</span>
@@ -495,7 +495,7 @@ export function LandingPage() {
               {/* Bidang Umum - M3 Outlined Card */}
               <div className="rounded-3xl p-6 bg-white border border-[#E0E2EC] shadow-2xs space-y-4 flex flex-col justify-between hover:shadow-xs transition-shadow">
                 <div>
-                  <div className="overflow-hidden rounded-2xl mb-4">
+                  <div className="overflow-hidden rounded-2xl mb-4 bg-[#F4F6FA]">
                     <img
                       src={subjectGeneralImg}
                       alt="Siswa mempelajari materi pelajaran umum sains dan matematika"
@@ -534,7 +534,7 @@ export function LandingPage() {
               {/* Bidang Keagamaan - M3 Outlined Card */}
               <div className="rounded-3xl p-6 bg-white border border-[#E0E2EC] shadow-2xs space-y-4 flex flex-col justify-between hover:shadow-xs transition-shadow">
                 <div>
-                  <div className="overflow-hidden rounded-2xl mb-4">
+                  <div className="overflow-hidden rounded-2xl mb-4 bg-[#F4F6FA]">
                     <img
                       src={subjectQuranImg}
                       alt="Siswa mempelajari Al-Qur'an dan studi keagamaan"
@@ -588,7 +588,7 @@ export function LandingPage() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
               <div className="rounded-3xl p-5 bg-white border border-[#E0E2EC] shadow-2xs space-y-3 flex flex-col justify-between hover:shadow-xs transition-shadow">
                 <div className="space-y-3">
-                  <div className="overflow-hidden rounded-2xl mb-1">
+                  <div className="overflow-hidden rounded-2xl mb-1 bg-[#F4F6FA]">
                     <img
                       src={stepRegisterImg}
                       alt="Langkah pendaftaran akun dan kelengkapan profil siswa"
@@ -610,7 +610,7 @@ export function LandingPage() {
 
               <div className="rounded-3xl p-5 bg-white border border-[#E0E2EC] shadow-2xs space-y-3 flex flex-col justify-between hover:shadow-xs transition-shadow">
                 <div className="space-y-3">
-                  <div className="overflow-hidden rounded-2xl mb-1">
+                  <div className="overflow-hidden rounded-2xl mb-1 bg-[#F4F6FA]">
                     <img
                       src={stepAssessmentImg}
                       alt="Langkah pengerjaan asesmen karakter dan gaya belajar"
@@ -632,7 +632,7 @@ export function LandingPage() {
 
               <div className="rounded-3xl p-5 bg-white border border-[#E0E2EC] shadow-2xs space-y-3 flex flex-col justify-between hover:shadow-xs transition-shadow">
                 <div className="space-y-3">
-                  <div className="overflow-hidden rounded-2xl mb-1">
+                  <div className="overflow-hidden rounded-2xl mb-1 bg-[#F4F6FA]">
                     <img
                       src={stepTutoringImg}
                       alt="Langkah penjadwalan bimbingan privat bersama tutor"

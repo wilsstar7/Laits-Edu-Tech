@@ -9,6 +9,7 @@ import {
   calculatePersonaPotentialResult,
 } from './scoring'
 import { getQuestionsForLevel, PERSONA_MODALITY_QUESTIONS } from '@/data/personaModalityData'
+import { getQuestionsForPackageAndLevel } from '@/data/personaPotentialData'
 
 describe('Persona Modality Scoring Engine', () => {
   describe('Sensory Modality (VAK - PM-VAK-01)', () => {
@@ -306,6 +307,44 @@ describe('Persona Modality Scoring Engine', () => {
       expect(fullResult.paket_1_results.PM_SKB_03).toBeDefined()
       expect(fullResult.paket_2_modules.PP_MBTI_02.personality_code).toBe('ESTJ')
       expect(fullResult.paket_2_modules.PP_MI_03.top_3_gateways.length).toBe(3)
+    })
+
+    it('separates Paket 1 and Paket 2 questions and scores Paket 2 using existing Paket 1 modules', () => {
+      const paket1Sd = getQuestionsForPackageAndLevel('PAKET_1_PERSONA_MODALITY', 'SD')
+      const paket1Smp = getQuestionsForPackageAndLevel('PAKET_1_PERSONA_MODALITY', 'SMP')
+      const paket1Sma = getQuestionsForPackageAndLevel('PAKET_1_PERSONA_MODALITY', 'SMA')
+      expect(paket1Sd.length).toBe(40)
+      expect(paket1Smp.length).toBe(50)
+      expect(paket1Sma.length).toBe(65)
+
+      const paket2Sd = getQuestionsForPackageAndLevel('PAKET_2_PERSONA_POTENTIAL', 'SD')
+      const paket2Smp = getQuestionsForPackageAndLevel('PAKET_2_PERSONA_POTENTIAL', 'SMP')
+      const paket2Sma = getQuestionsForPackageAndLevel('PAKET_2_PERSONA_POTENTIAL', 'SMA')
+      expect(paket2Sd.length).toBe(60)
+      expect(paket2Smp.length).toBe(60)
+      expect(paket2Sma.length).toBe(60)
+      expect(paket2Smp.every((q) => q.moduleCode === 'PP-MBTI-02' || q.moduleCode === 'PP-MI-03')).toBe(true)
+
+      // Complete Paket 1 first
+      const paket1Answers: Record<string, string> = {}
+      for (const q of paket1Smp) {
+        paket1Answers[q.id] = q.options[0]!.id
+      }
+      const paket1Result = calculatePersonaModalityResult('SMP', paket1Answers)
+
+      // Complete separated Paket 2 (60 questions only)
+      const paket2Answers: Record<string, string | number> = {}
+      for (let i = 1; i <= 20; i++) {
+        paket2Answers[`PP-MBTI-${String(i).padStart(2, '0')}`] = 'B'
+      }
+      for (let i = 1; i <= 40; i++) {
+        paket2Answers[`PP-MI-${String(i).padStart(2, '0')}`] = 4
+      }
+
+      const combinedResult = calculatePersonaPotentialResult('SMP', paket2Answers, paket1Result.modules)
+      expect(combinedResult.paket_1_results).toEqual(paket1Result.modules)
+      expect(combinedResult.paket_2_modules.PP_MBTI_02.personality_code).toBe('INFP')
+      expect(combinedResult.paket_2_modules.PP_MI_03.top_3_gateways.length).toBe(3)
     })
   })
 })

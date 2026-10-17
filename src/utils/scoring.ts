@@ -746,27 +746,30 @@ export function calculateMultipleIntelligencesScore(
 
 export function calculatePersonaPotentialResult(
   level: StudentLevel,
-  answers: Record<string, string | number>
+  answers: Record<string, string | number>,
+  existingPaket1Modules?: PersonaModalityResult['modules']
 ): PersonaPotentialResult {
-  // 1. Eksekusi perhitungan seluruh modul Paket 1
-  const p1Result = calculatePersonaModalityResult(
-    level,
-    answers as Record<string, string>
-  )
+  // 1. Gunakan hasil Paket 1 yang sudah selesai sebelumnya, atau hitung dari answers jika tersedia
+  const p1Modules =
+    existingPaket1Modules ??
+    calculatePersonaModalityResult(
+      level,
+      answers as Record<string, string>
+    ).modules
 
-  // 2. Eksekusi perhitungan Modul 2.1 MBTI
+  // 2. Eksekusi perhitungan Modul 2.1 MBTI (20 soal)
   const mbtiResult = calculateMbtiScore(answers)
 
-  // 3. Eksekusi perhitungan Modul 2.2 Multiple Intelligences
+  // 3. Eksekusi perhitungan Modul 2.2 Multiple Intelligences (40 soal)
   const miResult = calculateMultipleIntelligencesScore(answers)
 
   return {
     package_code: 'PAKET_2_PERSONA_POTENTIAL',
     student_level: level,
     paket_1_results: {
-      PM_VAK_01: p1Result.modules.PM_VAK_01,
-      PM_HEM_02: p1Result.modules.PM_HEM_02,
-      PM_SKB_03: p1Result.modules.PM_SKB_03,
+      PM_VAK_01: p1Modules.PM_VAK_01,
+      PM_HEM_02: p1Modules.PM_HEM_02,
+      PM_SKB_03: p1Modules.PM_SKB_03,
     },
     paket_2_modules: {
       PP_MBTI_02: mbtiResult,

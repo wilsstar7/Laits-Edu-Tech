@@ -64,6 +64,7 @@ export interface AssessmentSession {
   current_question_index: number
   student_level?: StudentLevel
   package_code?: AssessmentPackageCode
+  target_package_code?: AssessmentPackageCode
   consent_at: string
   started_at: string
   last_saved_at: string
@@ -267,6 +268,7 @@ export interface AssessmentResult {
   created_at: string
   student_level?: StudentLevel
   package_code?: AssessmentPackageCode
+  target_package_code?: AssessmentPackageCode
   modality_result?: PersonaModalityResult
   potential_result?: PersonaPotentialResult
   personality_type?: PersonalityType

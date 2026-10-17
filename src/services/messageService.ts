@@ -66,20 +66,30 @@ export const messageService = {
       try {
         const { data, error } = await supabase.rpc('list_my_conversations')
         if (!error && Array.isArray(data)) {
-          const mapped: Conversation[] = data.map((row) => ({
-            id: row.conversation_id,
-            studentId: row.other_role === 'student' ? row.other_user_id : '',
-            tutorId: row.other_role === 'tutor' ? row.other_user_id : '',
-            otherUserId: row.other_user_id,
-            otherName: row.other_name,
-            otherAvatarUrl: row.other_avatar_url,
-            otherRole: row.other_role,
-            lastMessageBody: row.last_message_body,
-            lastMessageSenderId: row.last_message_sender_id,
-            lastMessageAt: row.last_message_at,
-            unreadCount: row.unread_count,
-            createdAt: row.created_at,
-          }))
+          const mapped: Conversation[] = data.map((row) => {
+            const localMsgs = getStoredMessages(row.conversation_id)
+            const latestLocalMsg =
+              localMsgs.length > 0 ? localMsgs[localMsgs.length - 1] : undefined
+
+            return {
+              id: row.conversation_id,
+              studentId: row.other_role === 'student' ? row.other_user_id : '',
+              tutorId: row.other_role === 'tutor' ? row.other_user_id : '',
+              otherUserId: row.other_user_id,
+              otherName: row.other_name,
+              otherAvatarUrl: row.other_avatar_url,
+              otherRole: row.other_role,
+              lastMessageBody: row.last_message_body ?? latestLocalMsg?.body ?? null,
+              lastMessageSenderId:
+                row.last_message_sender_id ?? latestLocalMsg?.senderId ?? null,
+              lastMessageAt:
+                row.last_message_body || !latestLocalMsg
+                  ? row.last_message_at
+                  : latestLocalMsg.createdAt,
+              unreadCount: row.unread_count,
+              createdAt: row.created_at,
+            }
+          })
 
           // Preserve local-only fallback threads that have not been migrated to DB UUIDs yet.
           const localOnly = getStoredConversations().filter(
@@ -121,8 +131,22 @@ export const messageService = {
             createdAt: row.created_at,
           }))
 
-          saveStoredMessages(conversationId, mapped)
-          return mapped
+          const localPending = getStoredMessages(conversationId).filter(
+            (localMsg) =>
+              localMsg.id.startsWith('msg_') &&
+              !mapped.some(
+                (dbMsg) =>
+                  dbMsg.id === localMsg.id ||
+                  (dbMsg.body === localMsg.body && dbMsg.senderId === localMsg.senderId)
+              )
+          )
+
+          const merged = [...mapped, ...localPending].sort(
+            (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+          )
+
+          saveStoredMessages(conversationId, merged)
+          return merged
         }
       } catch (err) {
         logger.warn('getMessages query unavailable, falling back to local storage', err)
@@ -149,7 +173,9 @@ export const messageService = {
           p_body: trimmed,
         })
 
-        if (!error && data) {
+        if (error) {
+          logger.warn('send_message RPC returned error, falling back to local storage', error)
+        } else if (data) {
           const sentMessage: Message = {
             id: data.id,
             conversationId: data.conversation_id,
@@ -159,7 +185,9 @@ export const messageService = {
             createdAt: data.created_at,
           }
 
-          const existing = getStoredMessages(conversationId)
+          const existing = getStoredMessages(conversationId).filter(
+            (m) => m.id !== sentMessage.id
+          )
           saveStoredMessages(conversationId, [...existing, sentMessage])
 
           if (typeof window !== 'undefined') {

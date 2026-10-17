@@ -104,16 +104,18 @@ begin
   select role into v_role from public.profiles where id = v_uid;
 
   if v_role = 'student' then
-    if not exists (
-      select 1
-      from public.profiles p
-      join public.tutor_profiles tp on tp.user_id = p.id
-      where p.id = p_other_user_id and p.role = 'tutor' and tp.is_active
-    ) then
+    select p.id into v_tutor_id
+    from public.profiles p
+    join public.tutor_profiles tp on tp.user_id = p.id
+    where (p.id = p_other_user_id or tp.id = p_other_user_id)
+      and p.role = 'tutor'
+      and tp.is_active
+    limit 1;
+
+    if v_tutor_id is null then
       raise exception 'Tutor tidak ditemukan atau sedang tidak aktif.' using errcode = 'P0002';
     end if;
     v_student_id := v_uid;
-    v_tutor_id := p_other_user_id;
 
   elsif v_role = 'tutor' then
     if not exists (
@@ -121,6 +123,10 @@ begin
       from public.bookings b
       join public.tutor_profiles tp on tp.id = b.tutor_id
       where tp.user_id = v_uid and b.student_id = p_other_user_id
+    ) and not exists (
+      select 1
+      from public.conversations c
+      where c.tutor_id = v_uid and c.student_id = p_other_user_id
     ) then
       raise exception 'Anda hanya dapat menghubungi murid yang pernah memesan sesi dengan Anda.' using errcode = '42501';
     end if;
@@ -145,8 +151,8 @@ $$;
 
 -- -----------------------------------------------------------------------------
 -- 4. RPC: send_message
---    Also notifies the recipient, but only when they have no unread message in
---    this thread yet, so a burst of messages produces a single notification.
+--    Also notifies the recipient when public.notifications exists, wrapped in
+--    an exception handler so notification delivery never rolls back a message.
 -- -----------------------------------------------------------------------------
 create or replace function public.send_message(p_conversation_id uuid, p_body text)
 returns public.messages
@@ -195,23 +201,27 @@ begin
   set last_message_at = v_msg.created_at
   where id = v_conv.id;
 
-  if not v_had_unread then
-    select coalesce(nullif(full_name, ''), 'Pengguna') into v_sender_name
-    from public.profiles where id = v_uid;
+  if not v_had_unread and to_regclass('public.notifications') is not null then
+    begin
+      select coalesce(nullif(full_name, ''), 'Pengguna') into v_sender_name
+      from public.profiles where id = v_uid;
 
-    v_link := case when v_recipient = v_conv.tutor_id
-      then '/tutor/messages?c=' || v_conv.id
-      else '/student/messages?c=' || v_conv.id
+      v_link := case when v_recipient = v_conv.tutor_id
+        then '/tutor/messages?c=' || v_conv.id
+        else '/student/messages?c=' || v_conv.id
+      end;
+
+      insert into public.notifications (user_id, title, message, type, link_url)
+      values (
+        v_recipient,
+        'Pesan baru dari ' || left(v_sender_name, 150),
+        left(v_body, 200),
+        'info',
+        v_link
+      );
+    exception when others then
+      null;
     end;
-
-    insert into public.notifications (user_id, title, message, type, link_url)
-    values (
-      v_recipient,
-      'Pesan baru dari ' || left(v_sender_name, 150),
-      left(v_body, 200),
-      'info',
-      v_link
-    );
   end if;
 
   return v_msg;

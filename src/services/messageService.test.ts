@@ -143,4 +143,68 @@ describe('messageService', () => {
       p_body: 'Sampai bertemu di sesi bimbingan.',
     })
   })
+
+  it('preserves local fallback messages when getMessages and listConversations return empty DB history', async () => {
+    const convUuid = 'b3024efe-6af0-4166-988f-7ed273a225ac'
+    const mockRpc = vi.fn().mockImplementation((fnName: string) => {
+      if (fnName === 'send_message') {
+        return Promise.resolve({
+          data: null,
+          error: { code: '42P01', message: 'relation "public.notifications" does not exist' },
+        })
+      }
+      if (fnName === 'list_my_conversations') {
+        return Promise.resolve({
+          data: [
+            {
+              conversation_id: convUuid,
+              other_user_id: 'student-wildan',
+              other_name: 'Wildan',
+              other_avatar_url: null,
+              other_role: 'student',
+              last_message_body: null,
+              last_message_sender_id: null,
+              last_message_at: '2026-10-17T07:00:00Z',
+              unread_count: 0,
+              created_at: '2026-10-17T07:00:00Z',
+            },
+          ],
+          error: null,
+        })
+      }
+      return Promise.resolve({ data: null, error: null })
+    })
+
+    const mockFrom = vi.fn().mockReturnValue({
+      select: vi.fn().mockReturnValue({
+        eq: vi.fn().mockReturnValue({
+          order: vi.fn().mockResolvedValue({ data: [], error: null }),
+        }),
+      }),
+    })
+
+    vi.spyOn(supabaseLib, 'getSupabase').mockReturnValue({
+      rpc: mockRpc,
+      from: mockFrom,
+      channel: vi.fn(),
+    } as unknown as supabaseLib.TypedSupabaseClient)
+
+    const sent = await messageService.sendMessage(
+      convUuid,
+      "Assalamu'alaikum Ustadz/Kak, saya ingin bertanya ketersediaan jadwal bimbingan minggu ini.",
+      'student-wildan'
+    )
+    expect(sent.id.startsWith('msg_')).toBe(true)
+
+    const tutorConvs = await messageService.listConversations()
+    expect(tutorConvs[0]?.lastMessageBody).toBe(
+      "Assalamu'alaikum Ustadz/Kak, saya ingin bertanya ketersediaan jadwal bimbingan minggu ini."
+    )
+
+    const tutorMessages = await messageService.getMessages(convUuid)
+    expect(tutorMessages).toHaveLength(1)
+    expect(tutorMessages[0]?.body).toBe(
+      "Assalamu'alaikum Ustadz/Kak, saya ingin bertanya ketersediaan jadwal bimbingan minggu ini."
+    )
+  })
 })

@@ -1,12 +1,12 @@
-# LAITS EDU TECH — DESIGN DIRECTION (DESIGN.md)
+# PERSONA ACADEMY - DESIGN DIRECTION (DESIGN.md)
 
-> Brand Identity, Aesthetic Philosophy & Liveliness Dials for Laits Edu Tech LMS.
+> Brand Identity, Aesthetic Philosophy & Liveliness Dials for Persona Academy LMS (Learning by Intelligence Type).
 > Mode: Antislop Filter Enabled
 
 ---
 
 ## 1. Identity & Purpose
-- **Product:** LMS pendidikan modern yang memadukan Asesmen Karakter Belajar, Bimbingan Belajar Les Privat, dan Pelaporan Perkembangan Akademik.
+- **Product:** LMS pendidikan modern yang memadukan Asesmen Tipe Kecerdasan & Karakter Belajar (*Learning by Intelligence Type*), Bimbingan Belajar Les Privat, dan Pelaporan Perkembangan Akademik.
 - **Audience:** Siswa (SD, SMP, SMA, Mahasiswa), Wali Murid, dan Tutor/Pendidik di Indonesia.
 - **Tone & Mood:** Edukatif, profesional, tenang, manusiawi, jujur, dan berdaya (bukan tech-hype atau dashboard template AI generik).
 
@@ -23,12 +23,13 @@
 ---
 
 ## 3. Color Architecture
-- **Brand Primary:** `#6C5CE7` (Ungu terarah sebagai penanda aksi utama, bukan latar glow menyeluruh)
-- **Ink Primary:** `#17181C` (Teks judul & sidebar desktop gelap)
+- **Brand Primary (Royal Navy):** `#183058` (Biru navy perisai Persona Academy sebagai penanda aksi utama, hover/strong `#102342`)
+- **Node Accent (Periwinkle Lavender):** `#B0B4E0` (Warna simpul cabang inteligensi pada logo untuk aksen di permukaan gelap dan sorotan sekunder, tint permukaan `#E8ECF6`)
+- **Ink Primary / Sidebar:** `#0F1D33` (Teks judul utama & latar sidebar desktop gelap yang selaras dengan perisai navy)
 - **Text Body:** `#1D1D24` (Memenuhi standar kontras WCAG AA 4.5:1)
 - **Text Muted:** `#676A78` (Kontras tinggi untuk keterbacaan label & subjudul)
-- **Surface Background:** `#F4F5FB` (Krem keabuan lembut, bukan gradasi AI ungu-biru)
-- **Card Surface:** `#FFFFFF` solid dengan border halus `rgba(20, 20, 30, 0.08)`
+- **Surface Background:** `#F4F6FA` (Permukaan sejuk bersih, bukan gradasi AI ungu-biru)
+- **Card Surface:** `#FFFFFF` solid dengan border halus `rgba(15, 29, 51, 0.08)`
 - **Accents:** `#45B97C` (Status sukses/selesai), `#F2B84B` (Perhatian/dalam proses), `#E96A6A` (Peringatan/batal)
 
 ---
@@ -36,16 +37,16 @@
 ## 4. Typography
 - **Typeface:** Plus Jakarta Sans Variable
 - **Hierarchy:**
-  - H1: 32px – 44px (bold, proporsional)
-  - H2: 22px – 28px
-  - H3: 16px – 18px
-  - Body: 14px – 15px
-  - Small / Label: 12px – 13px (minimum 12px untuk keterbacaan)
+  - H1: 32px - 44px (bold, proporsional)
+  - H2: 22px - 28px
+  - H3: 16px - 18px
+  - Body: 14px - 15px
+  - Small / Label: 12px - 13px (minimum 12px untuk keterbacaan)
 
 ---
 
 ## 5. Anti-Slop Rules Guardrails
-- **Tanpa Em Dash (`—`):** Gunakan titik dua `:`, koma `,`, tanda kurung `()`, atau tanda hubung `-` standar.
+- **Tanpa Em Dash:** Gunakan titik dua `:`, koma `,`, tanda kurung `()`, atau tanda hubung `-` standar.
 - **Tanpa Angka / Metrik Palsu:** Tidak menampilkan `10K+ Pengguna`, `99.9% Uptime`, atau statistik buatan.
 - **Tanpa Ikon Klise AI:** Tidak menaruh ikon sparkle / magic di setiap sudut. Ikon hanya digunakan jika relevan langsung dengan konten.
 - **Tanpa Eyebrow Pill:** Headline berbicara langsung tanpa badge kapsul mengambang di atasnya.

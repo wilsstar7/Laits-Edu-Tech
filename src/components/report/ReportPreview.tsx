@@ -107,7 +107,7 @@ export function ReportPreview({ reportId }: ReportPreviewProps) {
             <button
               type="button"
               onClick={() => navigate('/student/reports')}
-              className="p-1.5 rounded-lg hover:bg-[#F4F5FB] text-[#676A78] hover:text-[#17181C] transition-colors"
+              className="p-1.5 rounded-lg hover:bg-[#F4F6FA] text-[#676A78] hover:text-[#17181C] transition-colors"
               aria-label="Kembali"
             >
               <ArrowLeft className="w-4 h-4" />
@@ -115,7 +115,7 @@ export function ReportPreview({ reportId }: ReportPreviewProps) {
             <h1 className="text-base sm:text-lg font-extrabold text-[#17181C]">
               Pratinjau Dokumen Laporan
             </h1>
-            <span className="text-[11px] font-bold text-[#6C5CE7] bg-[#EFEDFD] px-2.5 py-0.5 rounded-md">
+            <span className="text-[11px] font-bold text-[#183058] bg-[#E8ECF6] px-2.5 py-0.5 rounded-md">
               v{report.report_version}
             </span>
           </div>
@@ -140,7 +140,7 @@ export function ReportPreview({ reportId }: ReportPreviewProps) {
               href={pdfUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl border border-border bg-[#F4F5FB] hover:bg-[#EAEBF0] text-[#17181C] text-xs font-bold transition-colors min-h-[44px]"
+              className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl border border-border bg-[#F4F6FA] hover:bg-[#EAEBF0] text-[#17181C] text-xs font-bold transition-colors min-h-[44px]"
             >
               <ExternalLink className="w-3.5 h-3.5" />
               <span>Buka di Tab Baru</span>

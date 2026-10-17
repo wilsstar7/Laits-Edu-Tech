@@ -13,7 +13,7 @@ export function StreakCard({ streak, className = '' }: StreakCardProps) {
   return (
     <div className={`bg-gradient-to-br from-[#17181C] to-[#252630] rounded-2xl p-5 text-white shadow-md relative overflow-hidden ${className}`}>
       {/* Decorative ambient blur */}
-      <div className="absolute -right-6 -bottom-6 w-28 h-28 bg-[#6C5CE7]/20 rounded-full blur-2xl pointer-events-none" />
+      <div className="absolute -right-6 -bottom-6 w-28 h-28 bg-[#183058]/20 rounded-full blur-2xl pointer-events-none" />
 
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2.5">
@@ -33,7 +33,7 @@ export function StreakCard({ streak, className = '' }: StreakCardProps) {
 
       <div className="grid grid-cols-2 gap-2 pt-2 border-t border-white/10 text-xs">
         <div className="flex items-center gap-2">
-          <Award className="w-3.5 h-3.5 text-[#8F7FF7]" />
+          <Award className="w-3.5 h-3.5 text-[#B0B4E0]" />
           <span className="text-[#8A8D9A]">Rekor: <strong className="text-white font-semibold">{longest} hari</strong></span>
         </div>
         <div className="flex items-center gap-2 justify-end">

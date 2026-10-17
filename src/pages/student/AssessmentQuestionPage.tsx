@@ -217,7 +217,7 @@ export function AssessmentQuestionPage() {
   if (loading) {
     return (
       <div className="min-h-[70vh] flex flex-col items-center justify-center gap-3">
-        <Loader2 className="w-8 h-8 animate-spin text-[#6C5CE7]" />
+        <Loader2 className="w-8 h-8 animate-spin text-[#183058]" />
         <p className="text-xs text-[#676A78]">Menyiapkan butir pertanyaan...</p>
       </div>
     )
@@ -235,7 +235,7 @@ export function AssessmentQuestionPage() {
         <button
           type="button"
           onClick={() => navigate('/student/assessment')}
-          className="px-5 py-2.5 rounded-xl bg-[#6C5CE7] text-white text-xs font-bold"
+          className="px-5 py-2.5 rounded-xl bg-[#183058] text-white text-xs font-bold"
         >
           Kembali ke Halaman Asesmen
         </button>

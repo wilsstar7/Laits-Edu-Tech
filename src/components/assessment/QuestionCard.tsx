@@ -42,10 +42,10 @@ export function QuestionCard({
     <div className="surface-card bg-white p-4 sm:p-8 border border-border/80 shadow-sm max-w-3xl mx-auto rounded-2xl sm:rounded-3xl space-y-4 sm:space-y-6">
       {/* Header Info */}
       <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-3 border-b border-border/60 pb-3 sm:pb-4">
-        <span className="text-[11px] sm:text-xs font-bold text-[#6C5CE7] uppercase tracking-wider">
+        <span className="text-[11px] sm:text-xs font-bold text-[#183058] uppercase tracking-wider">
           {moduleLabel}
         </span>
-        <span className="hidden sm:inline-block px-3 py-1 rounded-full bg-[#F4F5FB] text-[#676A78] text-xs font-mono font-semibold">
+        <span className="hidden sm:inline-block px-3 py-1 rounded-full bg-[#F4F6FA] text-[#676A78] text-xs font-mono font-semibold">
           Soal {questionNumber} dari {totalQuestions}
         </span>
       </div>

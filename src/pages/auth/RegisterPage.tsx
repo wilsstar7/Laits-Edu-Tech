@@ -1,5 +1,4 @@
 import { Link, Navigate } from 'react-router'
-import { Layers } from 'lucide-react'
 import { RegisterForm } from '@/components/auth/RegisterForm'
 import { useAuth } from '@/hooks/useAuth'
 
@@ -16,22 +15,29 @@ export function RegisterPage() {
     }
   }
   return (
-    <div className="min-h-screen bg-[#F4F5FB] flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#F4F6FA] flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-2xl">
         {/* Brand */}
-        <Link to="/" className="flex items-center justify-center gap-2.5 mb-6">
-          <div className="w-11 h-11 rounded-2xl bg-[#6C5CE7] flex items-center justify-center text-white shadow-sm">
-            <Layers className="w-6 h-6" />
+        <Link to="/" className="flex flex-col items-center justify-center gap-2 mb-6 group">
+          <img
+            src="/logo-mark.png"
+            alt="Logo Persona Academy"
+            className="w-16 h-16 object-contain drop-shadow-xs transition-transform group-hover:scale-[1.02]"
+          />
+          <div className="text-center">
+            <span className="font-extrabold text-2xl text-[#0F1D33] tracking-tight block leading-none">
+              PERSONA <span className="text-[#183058]">ACADEMY</span>
+            </span>
+            <span className="text-[10px] font-semibold tracking-[0.16em] text-[#676A78] uppercase mt-1.5 block">
+              Learning by Intelligence Type
+            </span>
           </div>
-          <span className="font-extrabold text-2xl text-[#17181C] tracking-tight">
-            PERSONA <span className="text-[#6C5CE7]">ACADEMY</span>
-          </span>
         </Link>
 
         {/* Form Card */}
         <div className="surface-card p-6 sm:p-10 bg-white border border-border shadow-sm">
           <div className="mb-8 text-center space-y-1 pb-4 border-b border-border/60">
-            <h1 className="text-2xl font-extrabold text-[#17181C] tracking-tight">
+            <h1 className="text-2xl font-extrabold text-[#0F1D33] tracking-tight">
               Pendaftaran Siswa Baru
             </h1>
             <p className="text-xs sm:text-sm text-[#676A78]">
@@ -43,7 +49,7 @@ export function RegisterPage() {
 
           <div className="mt-8 pt-5 border-t border-border/60 text-center text-xs text-[#676A78]">
             Sudah memiliki akun terdaftar?{' '}
-            <Link to="/login" className="font-bold text-[#6C5CE7] hover:underline">
+            <Link to="/login" className="font-bold text-[#183058] hover:underline">
               Masuk di Sini
             </Link>
           </div>

@@ -31,7 +31,7 @@ export function PersonalityReportCard({
         {/* Top Badges & Status */}
         <div className="flex items-center justify-between gap-2 flex-wrap">
           <div className="flex items-center gap-2">
-            <span className="text-[11px] font-bold text-[#6C5CE7] bg-[#EFEDFD] px-2.5 py-0.5 rounded-md">
+            <span className="text-[11px] font-bold text-[#183058] bg-[#E8ECF6] px-2.5 py-0.5 rounded-md">
               v{report.report_version}
             </span>
             <span className="text-[11px] text-[#676A78] font-medium">
@@ -64,14 +64,14 @@ export function PersonalityReportCard({
         {/* Title & Personality Type */}
         <div className="space-y-1">
           <div className="flex items-start gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-[#F4F5FB] text-[#17181C] flex items-center justify-center shrink-0 mt-0.5">
+            <div className="w-8 h-8 rounded-lg bg-[#F4F6FA] text-[#17181C] flex items-center justify-center shrink-0 mt-0.5">
               <FileText className="w-4 h-4" />
             </div>
             <div>
               <h3 className="font-extrabold text-sm sm:text-base text-[#17181C] leading-snug">
                 Personality & Learning Profile Report
               </h3>
-              <p className="text-xs font-semibold text-[#6C5CE7] mt-0.5">{personalityType}</p>
+              <p className="text-xs font-semibold text-[#183058] mt-0.5">{personalityType}</p>
             </div>
           </div>
         </div>
@@ -94,7 +94,7 @@ export function PersonalityReportCard({
             <button
               type="button"
               onClick={() => navigate(`/student/reports/${report.id}`)}
-              className="inline-flex items-center justify-center gap-1 px-4 py-2 rounded-xl bg-[#6C5CE7] hover:bg-[#5243D6] text-white text-xs font-bold shadow-xs transition-colors min-h-[44px]"
+              className="inline-flex items-center justify-center gap-1 px-4 py-2 rounded-xl bg-[#183058] hover:bg-[#102342] text-white text-xs font-bold shadow-xs transition-colors min-h-[44px]"
             >
               <span>Lihat Laporan</span>
               <ArrowUpRight className="w-3.5 h-3.5" />

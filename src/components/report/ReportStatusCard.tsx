@@ -45,7 +45,7 @@ export function ReportStatusCard({ assessmentResultId, className = '' }: ReportS
     return (
       <div className={`surface-card p-6 bg-white border border-border/80 rounded-2xl animate-pulse space-y-3 ${className}`}>
         <div className="h-4 w-40 bg-[#EAEBF0] rounded" />
-        <div className="h-3 w-64 bg-[#F4F5FB] rounded" />
+        <div className="h-3 w-64 bg-[#F4F6FA] rounded" />
       </div>
     )
   }
@@ -60,7 +60,7 @@ export function ReportStatusCard({ assessmentResultId, className = '' }: ReportS
         {/* Left: Info */}
         <div className="space-y-1.5 max-w-xl">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-[#EFEDFD] text-[#6C5CE7] flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-[#E8ECF6] text-[#183058] flex items-center justify-center">
               <FileText className="w-4 h-4" />
             </div>
             <h3 className="font-extrabold text-base text-[#17181C]">
@@ -89,7 +89,7 @@ export function ReportStatusCard({ assessmentResultId, className = '' }: ReportS
               <button
                 type="button"
                 onClick={() => navigate(`/student/reports/${report.id}`)}
-                className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#6C5CE7] hover:bg-[#5243D6] text-white text-xs font-bold shadow-sm transition-colors min-h-[44px]"
+                className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#183058] hover:bg-[#102342] text-white text-xs font-bold shadow-sm transition-colors min-h-[44px]"
               >
                 <span>Lihat Laporan</span>
                 <ArrowRight className="w-3.5 h-3.5" />

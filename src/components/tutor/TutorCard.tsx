@@ -14,7 +14,7 @@ export function TutorCard({ tutor, onBook }: TutorCardProps) {
   const initials = getInitials(tutor.fullName)
 
   return (
-    <div className="surface-card p-6 bg-white border border-border rounded-2xl flex flex-col justify-between gap-5 hover:border-[#6C5CE7]/30 transition-all">
+    <div className="surface-card p-6 bg-white border border-border rounded-2xl flex flex-col justify-between gap-5 hover:border-[#183058]/30 transition-all">
       <div className="space-y-4">
         {/* Header: Avatar, Name, Rating, Match Badge */}
         <div className="flex items-start justify-between gap-3">
@@ -26,7 +26,7 @@ export function TutorCard({ tutor, onBook }: TutorCardProps) {
                 className="w-12 h-12 rounded-2xl object-cover border border-border"
               />
             ) : (
-              <div className="w-12 h-12 rounded-2xl bg-[#EFEDFD] text-[#6C5CE7] flex items-center justify-center font-extrabold text-sm border border-[#6C5CE7]/20">
+              <div className="w-12 h-12 rounded-2xl bg-[#E8ECF6] text-[#183058] flex items-center justify-center font-extrabold text-sm border border-[#183058]/20">
                 {initials}
               </div>
             )}
@@ -55,7 +55,7 @@ export function TutorCard({ tutor, onBook }: TutorCardProps) {
           {tutor.subjects.map((sub) => (
             <span
               key={sub.id}
-              className="px-2.5 py-0.5 rounded-lg bg-[#F4F5FB] text-[#17181C] text-[11px] font-semibold border border-border/80"
+              className="px-2.5 py-0.5 rounded-lg bg-[#F4F6FA] text-[#17181C] text-[11px] font-semibold border border-border/80"
             >
               {sub.name}
             </span>

@@ -131,7 +131,7 @@ export function PlaceholderPage({ featureKey }: PlaceholderPageProps) {
       />
 
       <div className="surface-card p-8 sm:p-12 text-center max-w-2xl mx-auto my-6 space-y-6 bg-white border border-border">
-        <div className="w-14 h-14 rounded-2xl bg-[#EFEDFD] text-[#6C5CE7] flex items-center justify-center mx-auto">
+        <div className="w-14 h-14 rounded-2xl bg-[#E8ECF6] text-[#183058] flex items-center justify-center mx-auto">
           <Icon className="w-7 h-7" />
         </div>
 
@@ -147,7 +147,7 @@ export function PlaceholderPage({ featureKey }: PlaceholderPageProps) {
         <div className="pt-2">
           <Link
             to="/student/dashboard"
-            className="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-[#6C5CE7] text-white text-xs font-bold shadow-sm hover:bg-[#5243D6] transition-colors min-h-[42px]"
+            className="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-[#183058] text-white text-xs font-bold shadow-sm hover:bg-[#102342] transition-colors min-h-[42px]"
           >
             Kembali ke Dashboard
           </Link>

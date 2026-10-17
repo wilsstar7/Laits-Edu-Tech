@@ -29,7 +29,7 @@ export function CourseCurriculum({
 
     switch (type) {
       case 'video':
-        return <Video className="w-4 h-4 text-[#6C5CE7] shrink-0" />
+        return <Video className="w-4 h-4 text-[#183058] shrink-0" />
       case 'pdf':
         return <FileDown className="w-4 h-4 text-rose-500 shrink-0" />
       default:
@@ -54,9 +54,9 @@ export function CourseCurriculum({
         return (
           <div key={section.id} className="bg-white rounded-2xl border border-border/80 overflow-hidden shadow-xs">
             {/* Section Header */}
-            <div className="p-4 bg-[#F4F5FB]/70 border-b border-border/70 flex items-center justify-between">
+            <div className="p-4 bg-[#F4F6FA]/70 border-b border-border/70 flex items-center justify-between">
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#6C5CE7]">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#183058]">
                   Bagian {secIdx + 1}
                 </span>
                 <h4 className="text-sm font-bold text-[#17181C] mt-0.5">{section.title}</h4>
@@ -79,7 +79,7 @@ export function CourseCurriculum({
                   <div
                     className={`p-3.5 sm:px-5 flex items-center justify-between transition-colors ${
                       isCurrent
-                        ? 'bg-[#EFEDFD] text-[#6C5CE7] font-semibold'
+                        ? 'bg-[#E8ECF6] text-[#183058] font-semibold'
                         : isEnrolled
                         ? 'hover:bg-[#F9FAFD] cursor-pointer'
                         : 'opacity-90'
@@ -88,7 +88,7 @@ export function CourseCurriculum({
                     <div className="flex items-center gap-3 min-w-0 pr-3">
                       {getLessonIcon(lesson.lessonType, isCompleted)}
                       <div className="min-w-0">
-                        <span className={`text-xs block truncate ${isCurrent ? 'font-bold text-[#6C5CE7]' : 'text-[#17181C]'}`}>
+                        <span className={`text-xs block truncate ${isCurrent ? 'font-bold text-[#183058]' : 'text-[#17181C]'}`}>
                           {lesson.title}
                         </span>
                         <span className="text-[11px] text-[#8A8D9A] block mt-0.5">
@@ -104,7 +104,7 @@ export function CourseCurriculum({
                             Selesai
                           </span>
                         ) : (
-                          <PlayCircle className="w-4 h-4 text-[#6C5CE7]" />
+                          <PlayCircle className="w-4 h-4 text-[#183058]" />
                         )
                       ) : (
                         <Lock className="w-3.5 h-3.5 text-[#8A8D9A]" />

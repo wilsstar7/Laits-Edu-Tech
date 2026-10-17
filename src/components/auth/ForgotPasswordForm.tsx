@@ -49,7 +49,7 @@ export function ForgotPasswordForm() {
         <div className="pt-3">
           <Link
             to="/login"
-            className="inline-flex items-center gap-2 text-xs font-bold text-[#6C5CE7] hover:underline"
+            className="inline-flex items-center gap-2 text-xs font-bold text-[#183058] hover:underline"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Kembali ke Halaman Masuk</span>
@@ -78,7 +78,7 @@ export function ForgotPasswordForm() {
             className={`w-full pl-10 pr-3.5 py-2.5 rounded-xl border bg-white text-sm text-foreground placeholder:text-muted-foreground/60 transition-all min-h-[44px] ${
               errors.email
                 ? 'border-destructive focus:border-destructive ring-1 ring-destructive/20'
-                : 'border-border focus:border-[#6C5CE7] focus:ring-2 focus:ring-[#6C5CE7]/15'
+                : 'border-border focus:border-[#183058] focus:ring-2 focus:ring-[#183058]/15'
             }`}
           />
         </div>
@@ -91,7 +91,7 @@ export function ForgotPasswordForm() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full py-3 px-4 rounded-xl bg-[#6C5CE7] text-white text-sm font-bold shadow-lg shadow-[#6C5CE7]/30 hover:bg-[#5243D6] disabled:opacity-60 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 min-h-[44px]"
+          className="w-full py-3 px-4 rounded-xl bg-[#183058] text-white text-sm font-bold shadow-lg shadow-[#183058]/30 hover:bg-[#102342] disabled:opacity-60 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 min-h-[44px]"
         >
           {loading ? (
             <>

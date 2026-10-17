@@ -82,7 +82,7 @@ export function StudentAchievementsPage() {
               <span className="text-purple-800 text-[11px] block">Sertifikat Resmi</span>
               <strong className="text-base font-extrabold text-purple-900 block mt-0.5">{certificates.length}</strong>
             </div>
-            <div className="p-3 rounded-xl bg-[#F4F5FB] border border-border col-span-2 sm:col-span-1">
+            <div className="p-3 rounded-xl bg-[#F4F6FA] border border-border col-span-2 sm:col-span-1">
               <span className="text-[#8A8D9A] text-[11px] block">Status Belajar</span>
               <strong className="text-base font-extrabold text-[#17181C] block mt-0.5">Aktif</strong>
             </div>
@@ -97,8 +97,8 @@ export function StudentAchievementsPage() {
           onClick={() => setTab('achievements')}
           className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
             tab === 'achievements'
-              ? 'bg-[#6C5CE7] text-white shadow-xs'
-              : 'text-[#676A78] hover:text-[#17181C] hover:bg-[#EEF0F8]'
+              ? 'bg-[#183058] text-white shadow-xs'
+              : 'text-[#676A78] hover:text-[#17181C] hover:bg-[#ECF0F7]'
           }`}
         >
           Lencana & Prestasi ({achievements.length})
@@ -108,8 +108,8 @@ export function StudentAchievementsPage() {
           onClick={() => setTab('certificates')}
           className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
             tab === 'certificates'
-              ? 'bg-[#6C5CE7] text-white shadow-xs'
-              : 'text-[#676A78] hover:text-[#17181C] hover:bg-[#EEF0F8]'
+              ? 'bg-[#183058] text-white shadow-xs'
+              : 'text-[#676A78] hover:text-[#17181C] hover:bg-[#ECF0F7]'
           }`}
         >
           Sertifikat Kelulusan ({certificates.length})
@@ -118,7 +118,7 @@ export function StudentAchievementsPage() {
 
       {loading ? (
         <div className="py-20 text-center flex flex-col items-center justify-center gap-3">
-          <Loader2 className="w-8 h-8 animate-spin text-[#6C5CE7]" />
+          <Loader2 className="w-8 h-8 animate-spin text-[#183058]" />
           <p className="text-xs text-[#8A8D9A]">Memuat daftar pencapaian...</p>
         </div>
       ) : tab === 'achievements' ? (
@@ -134,15 +134,15 @@ export function StudentAchievementsPage() {
                 key={ach.id}
                 className={`p-5 rounded-2xl border transition-all text-center flex flex-col items-center justify-between space-y-3 ${
                   ach.isEarned
-                    ? 'bg-white border-[#6C5CE7]/30 shadow-xs'
+                    ? 'bg-white border-[#183058]/30 shadow-xs'
                     : 'bg-[#F9FAFD] border-border/70 opacity-75'
                 }`}
               >
                 <div
                   className={`w-14 h-14 rounded-2xl flex items-center justify-center ${
                     ach.isEarned
-                      ? 'bg-gradient-to-tr from-[#6C5CE7] to-[#8F7FF7] text-white shadow-md shadow-[#6C5CE7]/20 ring-2 ring-white'
-                      : 'bg-[#EEF0F8] text-[#8A8D9A]'
+                      ? 'bg-gradient-to-tr from-[#183058] to-[#244375] text-white shadow-md shadow-[#183058]/20 ring-2 ring-white'
+                      : 'bg-[#ECF0F7] text-[#8A8D9A]'
                   }`}
                 >
                   {ach.isEarned ? <Award className="w-7 h-7" /> : <Lock className="w-6 h-6" />}
@@ -160,7 +160,7 @@ export function StudentAchievementsPage() {
                       Diraih
                     </span>
                   ) : (
-                    <span className="text-[11px] font-semibold text-[#8A8D9A] bg-[#EEF0F8] px-2.5 py-1 rounded-full block">
+                    <span className="text-[11px] font-semibold text-[#8A8D9A] bg-[#ECF0F7] px-2.5 py-1 rounded-full block">
                       Terkunci
                     </span>
                   )}
@@ -173,7 +173,7 @@ export function StudentAchievementsPage() {
         /* Certificates List */
         certificates.length === 0 ? (
           <div className="bg-white rounded-3xl border border-border p-12 text-center space-y-3">
-            <div className="w-12 h-12 rounded-2xl bg-[#EFEDFD] text-[#6C5CE7] flex items-center justify-center mx-auto">
+            <div className="w-12 h-12 rounded-2xl bg-[#E8ECF6] text-[#183058] flex items-center justify-center mx-auto">
               <Award className="w-6 h-6" />
             </div>
             <h4 className="font-bold text-base text-[#17181C]">Belum Ada Sertifikat Kelulusan</h4>
@@ -181,7 +181,7 @@ export function StudentAchievementsPage() {
               Selesaikan 100% materi pelajaran dan lulus seluruh kuis kursus untuk mendapatkan sertifikat resmi.
             </p>
             <Link to="/student/courses">
-              <Button variant="default" size="sm" className="rounded-xl text-xs bg-[#6C5CE7] text-white">
+              <Button variant="default" size="sm" className="rounded-xl text-xs bg-[#183058] text-white">
                 Mulai Belajar Kursus
               </Button>
             </Link>
@@ -203,7 +203,7 @@ export function StudentAchievementsPage() {
                 </div>
 
                 <div className="space-y-1">
-                  <span className="text-[11px] font-mono font-semibold text-[#6C5CE7]">
+                  <span className="text-[11px] font-mono font-semibold text-[#183058]">
                     {cert.certificateNumber}
                   </span>
                   <h4 className="font-bold text-base text-[#17181C]">
@@ -232,7 +232,7 @@ export function StudentAchievementsPage() {
                     <Button
                       variant="default"
                       size="sm"
-                      className="rounded-xl text-xs bg-[#6C5CE7] hover:bg-[#5B4CD7] text-white font-bold gap-1.5"
+                      className="rounded-xl text-xs bg-[#183058] hover:bg-[#5B4CD7] text-white font-bold gap-1.5"
                     >
                       <span>Verifikasi Publik</span>
                       <ExternalLink className="w-3.5 h-3.5" />

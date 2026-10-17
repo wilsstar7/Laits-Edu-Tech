@@ -13,7 +13,7 @@ export function TutorMatchBadge({ score, reasons }: TutorMatchBadgeProps) {
   return (
     <div
       title={titleText}
-      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#EFEDFD] text-[#6C5CE7] border border-[#6C5CE7]/20 text-xs font-bold"
+      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#E8ECF6] text-[#183058] border border-[#183058]/20 text-xs font-bold"
     >
       <Sparkles className="w-3.5 h-3.5" />
       <span>Kesesuaian {score}%</span>
@@ -30,7 +30,7 @@ export function TutorMatchReasons({ reasons = [] }: TutorMatchReasonsProps) {
 
   return (
     <div className="p-3.5 rounded-xl bg-[#F9FAFD] border border-border/80 space-y-1.5">
-      <div className="text-[11px] font-bold text-[#6C5CE7] uppercase tracking-wider">
+      <div className="text-[11px] font-bold text-[#183058] uppercase tracking-wider">
         Kesesuaian dengan Preferensi Belajar Anda
       </div>
       <ul className="space-y-1 text-xs text-[#333542]">

@@ -68,7 +68,7 @@ export function CourseDetailPage() {
     return (
       <AppShell>
         <div className="py-24 text-center flex flex-col items-center justify-center gap-3">
-          <Loader2 className="w-8 h-8 animate-spin text-[#6C5CE7]" />
+          <Loader2 className="w-8 h-8 animate-spin text-[#183058]" />
           <p className="text-xs text-[#8A8D9A]">Memuat detail silabus kursus...</p>
         </div>
       </AppShell>
@@ -84,7 +84,7 @@ export function CourseDetailPage() {
             Materi kursus yang Anda cari mungkin telah diarsipkan atau belum dipublikasikan.
           </p>
           <Link to="/student/courses">
-            <Button variant="default" size="sm" className="rounded-xl text-xs bg-[#6C5CE7] text-white">
+            <Button variant="default" size="sm" className="rounded-xl text-xs bg-[#183058] text-white">
               Kembali ke Katalog
             </Button>
           </Link>
@@ -114,7 +114,7 @@ export function CourseDetailPage() {
       <div className="bg-gradient-to-br from-[#17181C] via-[#20212B] to-[#2D2845] rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
         <div className="relative z-10 max-w-3xl space-y-4">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="px-3 py-1 rounded-lg bg-white/10 backdrop-blur-xs font-bold text-xs text-[#8F7FF7] border border-white/10">
+            <span className="px-3 py-1 rounded-lg bg-white/10 backdrop-blur-xs font-bold text-xs text-[#B0B4E0] border border-white/10">
               {course.subjectName || 'Umum'}
             </span>
             <span className="px-3 py-1 rounded-lg bg-white/10 backdrop-blur-xs font-semibold text-xs text-white/90 border border-white/10 capitalize">
@@ -132,11 +132,11 @@ export function CourseDetailPage() {
 
           <div className="flex flex-wrap items-center gap-6 pt-2 text-xs text-[#8A8D9A]">
             <div className="flex items-center gap-2">
-              <Clock className="w-4 h-4 text-[#8F7FF7]" />
+              <Clock className="w-4 h-4 text-[#B0B4E0]" />
               <span className="text-white font-medium">{course.estimatedDurationMinutes} Menit</span>
             </div>
             <div className="flex items-center gap-2">
-              <BarChart3 className="w-4 h-4 text-[#8F7FF7]" />
+              <BarChart3 className="w-4 h-4 text-[#B0B4E0]" />
               <span className="text-white font-medium">{course.totalLessons || 0} Pelajaran</span>
             </div>
             {isEnrolled && (
@@ -155,7 +155,7 @@ export function CourseDetailPage() {
                 size="lg"
                 onClick={handleEnroll}
                 disabled={enrolling}
-                className="bg-[#6C5CE7] hover:bg-[#5B4CD7] text-white font-bold rounded-xl text-xs sm:text-sm px-6 shadow-lg shadow-[#6C5CE7]/30"
+                className="bg-[#183058] hover:bg-[#5B4CD7] text-white font-bold rounded-xl text-xs sm:text-sm px-6 shadow-lg shadow-[#183058]/30"
               >
                 {enrolling ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
                 <span>Daftar Kursus Ini Sekarang</span>
@@ -165,7 +165,7 @@ export function CourseDetailPage() {
                 <Button
                   variant="default"
                   size="lg"
-                  className="bg-[#6C5CE7] hover:bg-[#5B4CD7] text-white font-bold rounded-xl text-xs sm:text-sm px-6 shadow-lg shadow-[#6C5CE7]/30"
+                  className="bg-[#183058] hover:bg-[#5B4CD7] text-white font-bold rounded-xl text-xs sm:text-sm px-6 shadow-lg shadow-[#183058]/30"
                 >
                   <span>{isCompleted ? 'Tinjau Materi' : 'Lanjutkan Belajar'}</span>
                 </Button>
@@ -207,7 +207,7 @@ export function CourseDetailPage() {
           {course.objectives && course.objectives.length > 0 && (
             <div className="bg-white rounded-2xl border border-border/80 p-5 shadow-xs space-y-4">
               <div className="flex items-center gap-2 text-sm font-bold text-[#17181C]">
-                <Sparkles className="w-4 h-4 text-[#6C5CE7]" />
+                <Sparkles className="w-4 h-4 text-[#183058]" />
                 <span>Target Capaian Belajar</span>
               </div>
               <ul className="space-y-2.5 text-xs text-[#676A78]">

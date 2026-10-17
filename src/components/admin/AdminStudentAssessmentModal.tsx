@@ -102,14 +102,14 @@ export function AdminStudentAssessmentModal({
     >
       <div className="relative w-full max-w-3xl max-h-[90vh] flex flex-col bg-white rounded-2xl border border-border shadow-xl overflow-hidden my-auto animate-in fade-in-50 zoom-in-95 duration-200">
         {/* Modal Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-border/80 bg-[#F4F5FB]/70 shrink-0">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-border/80 bg-[#F4F6FA]/70 shrink-0">
           <div className="space-y-0.5">
             <div className="flex items-center gap-2">
-              <Compass className="w-4 h-4 text-[#6C5CE7]" />
+              <Compass className="w-4 h-4 text-[#183058]" />
               <h2 id="modal-title" className="text-base font-extrabold text-[#17181C]">
                 Data Profil & Asesmen Belajar Siswa
               </h2>
-              <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-[#EFEDFD] text-[#6C5CE7]">
+              <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-[#E8ECF6] text-[#183058]">
                 Mega Admin Mode
               </span>
             </div>
@@ -132,7 +132,7 @@ export function AdminStudentAssessmentModal({
         <div className="p-6 overflow-y-auto space-y-6">
           {loading ? (
             <div className="py-20 text-center flex flex-col items-center justify-center gap-3">
-              <Loader2 className="w-6 h-6 animate-spin text-[#6C5CE7]" />
+              <Loader2 className="w-6 h-6 animate-spin text-[#183058]" />
               <p className="text-xs text-[#676A78]">Memuat data profil asesmen dari database...</p>
             </div>
           ) : errorMsg || !detail ? (
@@ -143,9 +143,9 @@ export function AdminStudentAssessmentModal({
           ) : (
             <>
               {/* Student Metadata Card */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-4 rounded-xl bg-[#F4F5FB] border border-border/70 text-xs">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-4 rounded-xl bg-[#F4F6FA] border border-border/70 text-xs">
                 <div className="flex items-center gap-2.5">
-                  <User className="w-4 h-4 text-[#6C5CE7] shrink-0" />
+                  <User className="w-4 h-4 text-[#183058] shrink-0" />
                   <div>
                     <p className="text-[10px] text-[#676A78] font-bold uppercase tracking-wider">Nama Siswa</p>
                     <p className="font-bold text-[#17181C] truncate">{detail.student.fullName}</p>
@@ -169,9 +169,9 @@ export function AdminStudentAssessmentModal({
 
               {/* Personality Type Highlight */}
               {pType && (
-                <div className="p-5 rounded-2xl border border-[#6C5CE7]/30 bg-gradient-to-br from-[#EFEDFD]/60 to-white space-y-2">
+                <div className="p-5 rounded-2xl border border-[#183058]/30 bg-gradient-to-br from-[#E8ECF6]/60 to-white space-y-2">
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-[#6C5CE7] text-white">
+                    <span className="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-[#183058] text-white">
                       TIPE: {pType.code}
                     </span>
                     <span className="text-xs text-[#676A78]">Skor Keseluruhan: {detail.result.overall_score}%</span>
@@ -184,7 +184,7 @@ export function AdminStudentAssessmentModal({
               {/* Dimensions Breakdown */}
               <div className="space-y-3">
                 <h4 className="text-xs font-bold uppercase tracking-wider text-[#676A78] flex items-center gap-2">
-                  <BookOpen className="w-4 h-4 text-[#6C5CE7]" />
+                  <BookOpen className="w-4 h-4 text-[#183058]" />
                   <span>Dimensi Kepribadian & Gaya Belajar</span>
                 </h4>
 
@@ -200,11 +200,11 @@ export function AdminStudentAssessmentModal({
                       >
                         <div className="flex items-center justify-between text-xs">
                           <span className="font-bold text-[#17181C]">{dimName}</span>
-                          <span className="font-extrabold text-[#6C5CE7]">{pct}%</span>
+                          <span className="font-extrabold text-[#183058]">{pct}%</span>
                         </div>
-                        <div className="w-full bg-[#F4F5FB] h-2 rounded-full overflow-hidden">
+                        <div className="w-full bg-[#F4F6FA] h-2 rounded-full overflow-hidden">
                           <div
-                            className="bg-[#6C5CE7] h-full rounded-full transition-all duration-300"
+                            className="bg-[#183058] h-full rounded-full transition-all duration-300"
                             style={{ width: `${pct}%` }}
                           />
                         </div>
@@ -264,7 +264,7 @@ export function AdminStudentAssessmentModal({
 
               {/* Learning Profile Details */}
               {pType && (
-                <div className="p-4 rounded-xl border border-border/80 bg-[#F4F5FB]/70 space-y-3">
+                <div className="p-4 rounded-xl border border-border/80 bg-[#F4F6FA]/70 space-y-3">
                   <h4 className="text-xs font-bold uppercase tracking-wider text-[#17181C]">
                     Preferensi & Karakteristik Belajar
                   </h4>
@@ -308,7 +308,7 @@ export function AdminStudentAssessmentModal({
                       {subjects.map((subj, idx) => (
                         <span
                           key={idx}
-                          className="px-2.5 py-1 rounded-lg bg-[#EFEDFD] text-[#6C5CE7] text-xs font-semibold"
+                          className="px-2.5 py-1 rounded-lg bg-[#E8ECF6] text-[#183058] text-xs font-semibold"
                         >
                           {subj}
                         </span>
@@ -335,7 +335,7 @@ export function AdminStudentAssessmentModal({
               </div>
 
               {/* Psychological Safety Notice */}
-              <div className="p-3.5 rounded-xl bg-[#F4F5FB] border border-border/80 flex items-start gap-2.5 text-[11px] text-[#676A78] leading-relaxed">
+              <div className="p-3.5 rounded-xl bg-[#F4F6FA] border border-border/80 flex items-start gap-2.5 text-[11px] text-[#676A78] leading-relaxed">
                 <ShieldCheck className="w-4 h-4 text-[#45B97C] shrink-0 mt-0.5" />
                 <div>
                   <span className="font-bold text-[#17181C]">Catatan Edukatif: </span>
@@ -347,11 +347,11 @@ export function AdminStudentAssessmentModal({
         </div>
 
         {/* Modal Footer */}
-        <div className="flex items-center justify-end px-6 py-3.5 border-t border-border/80 bg-[#F4F5FB]/70 shrink-0">
+        <div className="flex items-center justify-end px-6 py-3.5 border-t border-border/80 bg-[#F4F6FA]/70 shrink-0">
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 rounded-xl bg-white border border-border text-xs font-bold text-[#17181C] hover:bg-[#EEF0F8] transition-colors min-h-[44px]"
+            className="px-4 py-2 rounded-xl bg-white border border-border text-xs font-bold text-[#17181C] hover:bg-[#ECF0F7] transition-colors min-h-[44px]"
           >
             Tutup
           </button>

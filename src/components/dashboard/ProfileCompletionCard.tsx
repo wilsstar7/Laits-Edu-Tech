@@ -38,7 +38,7 @@ export function ProfileCompletionCard() {
     <div className="surface-card p-5 sm:p-6 bg-white border border-border flex flex-col md:flex-row md:items-center justify-between gap-5">
       <div className="space-y-2 max-w-xl">
         <div className="flex items-center gap-2">
-          <span className="w-8 h-8 rounded-lg bg-[#EFEDFD] text-[#6C5CE7] flex items-center justify-center shrink-0">
+          <span className="w-8 h-8 rounded-lg bg-[#E8ECF6] text-[#183058] flex items-center justify-center shrink-0">
             <UserCheck className="w-4 h-4" />
           </span>
           <h4 className="text-base font-bold text-[#17181C]">
@@ -51,9 +51,9 @@ export function ProfileCompletionCard() {
         </p>
 
         {/* Progress meter */}
-        <div className="w-full sm:w-72 h-2.5 bg-[#EEF0F8] rounded-full overflow-hidden">
+        <div className="w-full sm:w-72 h-2.5 bg-[#ECF0F7] rounded-full overflow-hidden">
           <div
-            className="h-full bg-[#6C5CE7] rounded-full transition-all duration-300"
+            className="h-full bg-[#183058] rounded-full transition-all duration-300"
             style={{ width: `${completion.percent}%` }}
           />
         </div>
@@ -69,7 +69,7 @@ export function ProfileCompletionCard() {
       <div className="shrink-0">
         <Link
           to="/student/settings"
-          className="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-[#6C5CE7] text-white text-xs font-bold shadow-sm hover:bg-[#5243D6] transition-colors min-h-[42px] w-full md:w-auto"
+          className="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-[#183058] text-white text-xs font-bold shadow-sm hover:bg-[#102342] transition-colors min-h-[42px] w-full md:w-auto"
         >
           Lengkapi Profil
         </Link>

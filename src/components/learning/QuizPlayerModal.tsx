@@ -70,9 +70,9 @@ export function QuizPlayerModal({ quiz, onClose, onSuccess }: QuizPlayerModalPro
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in-50">
       <div className="bg-white rounded-3xl border border-border shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col overflow-hidden animate-in zoom-in-95">
         {/* Header */}
-        <div className="p-5 sm:p-6 border-b border-border flex items-center justify-between bg-[#F4F5FB]/60">
+        <div className="p-5 sm:p-6 border-b border-border flex items-center justify-between bg-[#F4F6FA]/60">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#6C5CE7]/10 text-[#6C5CE7] flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-[#183058]/10 text-[#183058] flex items-center justify-center">
               <HelpCircle className="w-5 h-5" />
             </div>
             <div>
@@ -135,7 +135,7 @@ export function QuizPlayerModal({ quiz, onClose, onSuccess }: QuizPlayerModalPro
                 <Button
                   variant="default"
                   onClick={onClose}
-                  className="rounded-xl text-xs bg-[#6C5CE7] hover:bg-[#5B4CD7] text-white"
+                  className="rounded-xl text-xs bg-[#183058] hover:bg-[#5B4CD7] text-white"
                 >
                   Selesai
                 </Button>
@@ -147,7 +147,7 @@ export function QuizPlayerModal({ quiz, onClose, onSuccess }: QuizPlayerModalPro
               {questions.map((q, qIndex) => (
                 <div key={q.id} className="p-4 rounded-2xl bg-[#F9FAFD] border border-border/70 space-y-3">
                   <div className="flex items-start justify-between gap-2">
-                    <span className="text-xs font-bold text-[#6C5CE7]">
+                    <span className="text-xs font-bold text-[#183058]">
                       Pertanyaan {qIndex + 1} dari {questions.length}
                     </span>
                     <span className="text-[11px] text-[#8A8D9A] font-semibold">
@@ -169,14 +169,14 @@ export function QuizPlayerModal({ quiz, onClose, onSuccess }: QuizPlayerModalPro
                           onClick={() => handleSelect(q.id, opt.id)}
                           className={`w-full p-3 rounded-xl text-xs font-medium text-left border transition-all flex items-center justify-between cursor-pointer ${
                             isSelected
-                              ? 'bg-[#EFEDFD] border-[#6C5CE7] text-[#6C5CE7] shadow-xs'
+                              ? 'bg-[#E8ECF6] border-[#183058] text-[#183058] shadow-xs'
                               : 'bg-white border-border/80 text-[#17181C] hover:bg-white/80'
                           }`}
                         >
                           <span>{opt.label}</span>
                           <span
                             className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ml-2 ${
-                              isSelected ? 'border-[#6C5CE7] bg-[#6C5CE7]' : 'border-border'
+                              isSelected ? 'border-[#183058] bg-[#183058]' : 'border-border'
                             }`}
                           >
                             {isSelected && <span className="w-1.5 h-1.5 rounded-full bg-white" />}
@@ -193,7 +193,7 @@ export function QuizPlayerModal({ quiz, onClose, onSuccess }: QuizPlayerModalPro
 
         {/* Footer */}
         {!result && (
-          <div className="p-4 sm:p-5 border-t border-border bg-[#F4F5FB]/40 flex items-center justify-between">
+          <div className="p-4 sm:p-5 border-t border-border bg-[#F4F6FA]/40 flex items-center justify-between">
             <span className="text-xs text-[#676A78]">
               Dijawab: {answeredCount} dari {questions.length}
             </span>
@@ -206,7 +206,7 @@ export function QuizPlayerModal({ quiz, onClose, onSuccess }: QuizPlayerModalPro
                 size="sm"
                 onClick={handleSubmit}
                 disabled={submitting || !isAllAnswered}
-                className="rounded-xl text-xs bg-[#6C5CE7] hover:bg-[#5B4CD7] text-white font-bold gap-1.5"
+                className="rounded-xl text-xs bg-[#183058] hover:bg-[#5B4CD7] text-white font-bold gap-1.5"
               >
                 {submitting ? (
                   <Loader2 className="w-3.5 h-3.5 animate-spin" />

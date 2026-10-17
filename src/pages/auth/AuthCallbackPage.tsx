@@ -47,7 +47,7 @@ export function AuthCallbackPage() {
   }, [errorMsg, navigate])
 
   return (
-    <div className="min-h-screen bg-[#F4F5FB] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-[#F4F6FA] flex items-center justify-center p-4">
       <div className="surface-card p-8 max-w-md w-full text-center space-y-4">
         {errorMsg ? (
           <>
@@ -59,7 +59,7 @@ export function AuthCallbackPage() {
             <div className="pt-2">
               <Link
                 to="/login"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#6C5CE7] text-white text-xs font-bold hover:bg-[#5243D6]"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#183058] text-white text-xs font-bold hover:bg-[#102342]"
               >
                 <span>Kembali ke Halaman Masuk</span>
                 <ArrowRight className="w-4 h-4" />
@@ -78,7 +78,7 @@ export function AuthCallbackPage() {
           </>
         ) : (
           <>
-            <Loader2 className="w-10 h-10 text-[#6C5CE7] animate-spin mx-auto" />
+            <Loader2 className="w-10 h-10 text-[#183058] animate-spin mx-auto" />
             <h2 className="text-lg font-bold text-[#17181C]">Memverifikasi Akun...</h2>
             <p className="text-xs text-muted-foreground">
               Mohon tunggu sebentar selagi kami menyiapkan akses Anda.

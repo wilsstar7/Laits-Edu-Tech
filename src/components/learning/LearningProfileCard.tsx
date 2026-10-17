@@ -10,10 +10,10 @@ interface LearningProfileCardProps {
 export function LearningProfileCard({ profile }: LearningProfileCardProps) {
   if (!profile.hasResult) {
     return (
-      <div className="surface-card p-6 sm:p-8 bg-gradient-to-br from-white via-white to-[#EFEDFD]/40 border border-border">
+      <div className="surface-card p-6 sm:p-8 bg-gradient-to-br from-white via-white to-[#E8ECF6]/40 border border-border">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
           <div className="space-y-2 max-w-xl">
-            <div className="flex items-center gap-2 text-[#6C5CE7]">
+            <div className="flex items-center gap-2 text-[#183058]">
               <Brain className="w-5 h-5 shrink-0" />
               <span className="text-xs font-bold uppercase tracking-wider">
                 Profil Karakter Belajar
@@ -42,8 +42,8 @@ export function LearningProfileCard({ profile }: LearningProfileCardProps) {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border/60 pb-5">
         <div>
           <div className="flex items-center gap-2">
-            <Compass className="w-4 h-4 text-[#6C5CE7]" />
-            <span className="text-xs font-bold text-[#6C5CE7] uppercase tracking-wider">
+            <Compass className="w-4 h-4 text-[#183058]" />
+            <span className="text-xs font-bold text-[#183058] uppercase tracking-wider">
               Profil Belajar Anda
             </span>
           </div>
@@ -58,7 +58,7 @@ export function LearningProfileCard({ profile }: LearningProfileCardProps) {
         <Button asChild variant="outline" size="sm" className="self-start sm:self-center shrink-0 min-h-[42px]">
           <Link to="/student/personality" className="flex items-center gap-1.5 font-bold text-xs">
             <span>Lihat Hasil Asesmen Lengkap</span>
-            <ArrowRight className="w-3.5 h-3.5 text-[#6C5CE7]" />
+            <ArrowRight className="w-3.5 h-3.5 text-[#183058]" />
           </Link>
         </Button>
       </div>
@@ -67,7 +67,7 @@ export function LearningProfileCard({ profile }: LearningProfileCardProps) {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* Gaya Belajar */}
         <div className="p-4 rounded-2xl bg-[#F9FAFD] border border-border/80 space-y-1.5">
-          <div className="flex items-center gap-2 text-[#6C5CE7]">
+          <div className="flex items-center gap-2 text-[#183058]">
             <BookOpen className="w-4 h-4" />
             <h3 className="text-xs font-bold text-[#17181C]">Gaya Belajar Utama</h3>
           </div>
@@ -78,7 +78,7 @@ export function LearningProfileCard({ profile }: LearningProfileCardProps) {
 
         {/* Motivasi */}
         <div className="p-4 rounded-2xl bg-[#F9FAFD] border border-border/80 space-y-1.5">
-          <div className="flex items-center gap-2 text-[#6C5CE7]">
+          <div className="flex items-center gap-2 text-[#183058]">
             <Sparkles className="w-4 h-4" />
             <h3 className="text-xs font-bold text-[#17181C]">Faktor Motivasi</h3>
           </div>
@@ -89,7 +89,7 @@ export function LearningProfileCard({ profile }: LearningProfileCardProps) {
 
         {/* Komunikasi */}
         <div className="p-4 rounded-2xl bg-[#F9FAFD] border border-border/80 space-y-1.5">
-          <div className="flex items-center gap-2 text-[#6C5CE7]">
+          <div className="flex items-center gap-2 text-[#183058]">
             <MessageSquare className="w-4 h-4" />
             <h3 className="text-xs font-bold text-[#17181C]">Gaya Komunikasi</h3>
           </div>

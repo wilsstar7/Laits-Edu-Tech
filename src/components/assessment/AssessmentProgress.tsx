@@ -28,7 +28,7 @@ export function AssessmentProgress({
 
           <div className="flex items-center gap-2">
             {isSaving ? (
-              <span className="flex items-center gap-1.5 text-[#6C5CE7] font-medium animate-pulse">
+              <span className="flex items-center gap-1.5 text-[#183058] font-medium animate-pulse">
                 <Loader2 className="w-3.5 h-3.5 animate-spin" />
                 <span>Menyimpan...</span>
               </span>
@@ -38,7 +38,7 @@ export function AssessmentProgress({
                 <span>Tersimpan</span>
               </span>
             ) : null}
-            <span className="font-extrabold text-[#6C5CE7] ml-2">
+            <span className="font-extrabold text-[#183058] ml-2">
               {percentage}%
             </span>
           </div>
@@ -54,7 +54,7 @@ export function AssessmentProgress({
           className="w-full h-2 rounded-full bg-[#EAEBF0] overflow-hidden"
         >
           <div
-            className="h-full bg-[#6C5CE7] rounded-full transition-all duration-300 ease-out"
+            className="h-full bg-[#183058] rounded-full transition-all duration-300 ease-out"
             style={{ width: `${percentage}%` }}
           />
         </div>

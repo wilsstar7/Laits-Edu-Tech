@@ -7,8 +7,8 @@ interface StudyMethodCardProps {
 
 export function StudyMethodCard({ method, index }: StudyMethodCardProps) {
   return (
-    <div className="surface-card p-5 bg-white border border-border flex items-start gap-3.5 rounded-2xl hover:border-[#6C5CE7]/30 transition-colors">
-      <div className="w-8 h-8 rounded-xl bg-[#EFEDFD] text-[#6C5CE7] flex items-center justify-center shrink-0 font-bold text-xs">
+    <div className="surface-card p-5 bg-white border border-border flex items-start gap-3.5 rounded-2xl hover:border-[#183058]/30 transition-colors">
+      <div className="w-8 h-8 rounded-xl bg-[#E8ECF6] text-[#183058] flex items-center justify-center shrink-0 font-bold text-xs">
         0{index + 1}
       </div>
       <div className="space-y-1">

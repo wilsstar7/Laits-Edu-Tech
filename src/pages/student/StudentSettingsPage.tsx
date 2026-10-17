@@ -147,7 +147,7 @@ export function StudentSettingsPage() {
         <div className="lg:col-span-8 space-y-6">
           <div className="surface-card p-6 sm:p-8">
             <div className="flex items-center gap-3 pb-4 mb-6 border-b border-border/60">
-              <div className="w-10 h-10 rounded-xl bg-[#EFEDFD] text-[#6C5CE7] flex items-center justify-center">
+              <div className="w-10 h-10 rounded-xl bg-[#E8ECF6] text-[#183058] flex items-center justify-center">
                 <User className="w-5 h-5" />
               </div>
               <div>
@@ -174,7 +174,7 @@ export function StudentSettingsPage() {
                       type="text"
                       disabled={profileSaving}
                       {...registerProfile('fullName')}
-                      className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-border bg-white text-sm text-foreground focus:border-[#6C5CE7] focus:ring-2 focus:ring-[#6C5CE7]/15 transition-all min-h-[44px]"
+                      className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-border bg-white text-sm text-foreground focus:border-[#183058] focus:ring-2 focus:ring-[#183058]/15 transition-all min-h-[44px]"
                     />
                   </div>
                   {profileErrors.fullName && (
@@ -196,7 +196,7 @@ export function StudentSettingsPage() {
                       value={profile?.email ?? ''}
                       readOnly
                       disabled
-                      className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-border/60 bg-[#EEF0F8]/60 text-sm text-muted-foreground cursor-not-allowed min-h-[44px]"
+                      className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-border/60 bg-[#ECF0F7]/60 text-sm text-muted-foreground cursor-not-allowed min-h-[44px]"
                     />
                   </div>
                   <p className="text-[11px] text-muted-foreground">Email terikat pada autentikasi akun.</p>
@@ -219,7 +219,7 @@ export function StudentSettingsPage() {
                       placeholder="081234567890"
                       disabled={profileSaving}
                       {...registerProfile('phone')}
-                      className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-border bg-white text-sm text-foreground focus:border-[#6C5CE7] focus:ring-2 focus:ring-[#6C5CE7]/15 transition-all min-h-[44px]"
+                      className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-border bg-white text-sm text-foreground focus:border-[#183058] focus:ring-2 focus:ring-[#183058]/15 transition-all min-h-[44px]"
                     />
                   </div>
                   {profileErrors.phone && (
@@ -241,7 +241,7 @@ export function StudentSettingsPage() {
                       max={todayIsoDate()}
                       disabled={profileSaving}
                       {...registerProfile('dateOfBirth')}
-                      className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-border bg-white text-sm text-foreground focus:border-[#6C5CE7] focus:ring-2 focus:ring-[#6C5CE7]/15 transition-all min-h-[44px]"
+                      className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-border bg-white text-sm text-foreground focus:border-[#183058] focus:ring-2 focus:ring-[#183058]/15 transition-all min-h-[44px]"
                     />
                   </div>
                   {profileErrors.dateOfBirth && (
@@ -260,7 +260,7 @@ export function StudentSettingsPage() {
                     id="set-gender"
                     disabled={profileSaving}
                     {...registerProfile('gender')}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-white text-sm text-foreground focus:border-[#6C5CE7] focus:ring-2 focus:ring-[#6C5CE7]/15 transition-all min-h-[44px]"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-white text-sm text-foreground focus:border-[#183058] focus:ring-2 focus:ring-[#183058]/15 transition-all min-h-[44px]"
                   >
                     <option value="">Pilih Jenis Kelamin</option>
                     {GENDER_OPTIONS.map((g) => (
@@ -279,7 +279,7 @@ export function StudentSettingsPage() {
                     id="set-grade"
                     disabled={profileSaving}
                     {...registerProfile('grade')}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-white text-sm text-foreground focus:border-[#6C5CE7] focus:ring-2 focus:ring-[#6C5CE7]/15 transition-all min-h-[44px]"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-white text-sm text-foreground focus:border-[#183058] focus:ring-2 focus:ring-[#183058]/15 transition-all min-h-[44px]"
                   >
                     {GRADE_OPTIONS.map((g) => (
                       <option key={g.value} value={g.value}>
@@ -309,7 +309,7 @@ export function StudentSettingsPage() {
                       placeholder="Nama Sekolah"
                       disabled={profileSaving}
                       {...registerProfile('school')}
-                      className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-border bg-white text-sm text-foreground focus:border-[#6C5CE7] focus:ring-2 focus:ring-[#6C5CE7]/15 transition-all min-h-[44px]"
+                      className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-border bg-white text-sm text-foreground focus:border-[#183058] focus:ring-2 focus:ring-[#183058]/15 transition-all min-h-[44px]"
                     />
                   </div>
                 </div>
@@ -328,7 +328,7 @@ export function StudentSettingsPage() {
                       placeholder="Kota Domisili"
                       disabled={profileSaving}
                       {...registerProfile('city')}
-                      className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-border bg-white text-sm text-foreground focus:border-[#6C5CE7] focus:ring-2 focus:ring-[#6C5CE7]/15 transition-all min-h-[44px]"
+                      className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-border bg-white text-sm text-foreground focus:border-[#183058] focus:ring-2 focus:ring-[#183058]/15 transition-all min-h-[44px]"
                     />
                   </div>
                 </div>
@@ -350,7 +350,7 @@ export function StudentSettingsPage() {
                       placeholder="Nama Orang Tua"
                       disabled={profileSaving}
                       {...registerProfile('parentName')}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-white text-sm text-foreground focus:border-[#6C5CE7] focus:ring-2 focus:ring-[#6C5CE7]/15 transition-all min-h-[44px]"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-white text-sm text-foreground focus:border-[#183058] focus:ring-2 focus:ring-[#183058]/15 transition-all min-h-[44px]"
                     />
                   </div>
 
@@ -368,7 +368,7 @@ export function StudentSettingsPage() {
                         placeholder="081234567890"
                         disabled={profileSaving}
                         {...registerProfile('parentPhone')}
-                        className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-border bg-white text-sm text-foreground focus:border-[#6C5CE7] focus:ring-2 focus:ring-[#6C5CE7]/15 transition-all min-h-[44px]"
+                        className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-border bg-white text-sm text-foreground focus:border-[#183058] focus:ring-2 focus:ring-[#183058]/15 transition-all min-h-[44px]"
                       />
                     </div>
                   </div>
@@ -380,7 +380,7 @@ export function StudentSettingsPage() {
                 <button
                   type="submit"
                   disabled={profileSaving}
-                  className="px-6 py-2.5 rounded-xl bg-[#6C5CE7] text-white text-xs font-bold shadow-md shadow-[#6C5CE7]/25 hover:bg-[#5243D6] disabled:opacity-60 transition-all flex items-center gap-2 min-h-[42px]"
+                  className="px-6 py-2.5 rounded-xl bg-[#183058] text-white text-xs font-bold shadow-md shadow-[#183058]/25 hover:bg-[#102342] disabled:opacity-60 transition-all flex items-center gap-2 min-h-[42px]"
                 >
                   {profileSaving ? (
                     <>
@@ -404,7 +404,7 @@ export function StudentSettingsPage() {
           {/* RBAC Info Card (Read only role) */}
           <div className="surface-card p-6 bg-white space-y-3">
             <div className="flex items-center gap-2 pb-2 border-b border-border/60">
-              <Shield className="w-4 h-4 text-[#6C5CE7]" />
+              <Shield className="w-4 h-4 text-[#183058]" />
               <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
                 Peran & Otorisasi
               </h4>
@@ -413,7 +413,7 @@ export function StudentSettingsPage() {
             <div className="space-y-2">
               <div className="flex items-center justify-between text-xs">
                 <span className="text-muted-foreground">Peran Terdaftar</span>
-                <span className="capitalize font-bold text-xs px-2.5 py-1 rounded-md bg-[#EFEDFD] text-[#6C5CE7]">
+                <span className="capitalize font-bold text-xs px-2.5 py-1 rounded-md bg-[#E8ECF6] text-[#183058]">
                   {role ?? 'Student'}
                 </span>
               </div>
@@ -426,7 +426,7 @@ export function StudentSettingsPage() {
           {/* Change Password Card */}
           <div className="surface-card p-6 bg-white space-y-4">
             <div className="flex items-center gap-2 pb-2 border-b border-border/60">
-              <Lock className="w-4 h-4 text-[#6C5CE7]" />
+              <Lock className="w-4 h-4 text-[#183058]" />
               <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
                 Ganti Kata Sandi
               </h4>
@@ -444,7 +444,7 @@ export function StudentSettingsPage() {
                     placeholder="••••••••"
                     disabled={passwordSaving}
                     {...registerPassword('currentPassword')}
-                    className="w-full px-3.5 pr-10 py-2 rounded-xl border border-border bg-white text-xs text-foreground focus:border-[#6C5CE7] min-h-[40px]"
+                    className="w-full px-3.5 pr-10 py-2 rounded-xl border border-border bg-white text-xs text-foreground focus:border-[#183058] min-h-[40px]"
                   />
                   <button
                     type="button"
@@ -473,7 +473,7 @@ export function StudentSettingsPage() {
                     placeholder="Min. 8 karakter"
                     disabled={passwordSaving}
                     {...registerPassword('newPassword')}
-                    className="w-full px-3.5 pr-10 py-2 rounded-xl border border-border bg-white text-xs text-foreground focus:border-[#6C5CE7] min-h-[40px]"
+                    className="w-full px-3.5 pr-10 py-2 rounded-xl border border-border bg-white text-xs text-foreground focus:border-[#183058] min-h-[40px]"
                   />
                   <button
                     type="button"
@@ -501,7 +501,7 @@ export function StudentSettingsPage() {
                   placeholder="Ketik ulang sandi baru"
                   disabled={passwordSaving}
                   {...registerPassword('confirmPassword')}
-                  className="w-full px-3.5 py-2 rounded-xl border border-border bg-white text-xs text-foreground focus:border-[#6C5CE7] min-h-[40px]"
+                  className="w-full px-3.5 py-2 rounded-xl border border-border bg-white text-xs text-foreground focus:border-[#183058] min-h-[40px]"
                 />
                 {passwordErrors.confirmPassword && (
                   <p className="text-[11px] text-destructive mt-0.5">

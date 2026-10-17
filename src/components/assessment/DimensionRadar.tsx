@@ -107,9 +107,9 @@ export function DimensionRadar({ dimensions, size = 360 }: DimensionRadarProps) 
         {/* Shaded data polygon */}
         <polygon
           points={dataPolygonPoints}
-          fill="#6C5CE7"
+          fill="#183058"
           fillOpacity="0.20"
-          stroke="#6C5CE7"
+          stroke="#183058"
           strokeWidth="2.5"
           className="transition-all duration-500 ease-out"
         />
@@ -123,7 +123,7 @@ export function DimensionRadar({ dimensions, size = 360 }: DimensionRadarProps) 
               cy={pt.y}
               r="4.5"
               fill="#FFFFFF"
-              stroke="#6C5CE7"
+              stroke="#183058"
               strokeWidth="2"
             />
 
@@ -144,7 +144,7 @@ export function DimensionRadar({ dimensions, size = 360 }: DimensionRadarProps) 
               y={pt.labelY + 13}
               textAnchor="middle"
               dominantBaseline="middle"
-              className="text-[10px] font-mono font-extrabold fill-[#6C5CE7]"
+              className="text-[10px] font-mono font-extrabold fill-[#183058]"
             >
               {Math.round(pt.score)}%
             </text>

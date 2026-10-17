@@ -46,9 +46,9 @@ export function UserMenu() {
         onClick={() => setIsOpen(!isOpen)}
         aria-label="Menu Pengguna"
         aria-expanded={isOpen}
-        className="flex items-center gap-2.5 p-1.5 pr-2.5 rounded-2xl bg-white border border-border/80 hover:bg-[#EEF0F8] transition-colors focus-visible:outline-2 focus-visible:outline-[#6C5CE7]"
+        className="flex items-center gap-2.5 p-1.5 pr-2.5 rounded-2xl bg-white border border-border/80 hover:bg-[#ECF0F7] transition-colors focus-visible:outline-2 focus-visible:outline-[#183058]"
       >
-        <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-[#6C5CE7] to-[#8F7FF7] text-white flex items-center justify-center font-bold text-xs shadow-sm">
+        <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-[#183058] to-[#244375] text-white flex items-center justify-center font-bold text-xs shadow-sm">
           {initials}
         </div>
         <div className="hidden sm:flex flex-col text-left leading-tight">
@@ -64,7 +64,7 @@ export function UserMenu() {
           <div className="px-3 py-2.5 border-b border-border/60">
             <p className="text-sm font-bold text-foreground truncate">{fullName}</p>
             <p className="text-xs text-muted-foreground truncate">{email}</p>
-            <div className="mt-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-semibold bg-[#EFEDFD] text-[#6C5CE7]">
+            <div className="mt-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-semibold bg-[#E8ECF6] text-[#183058]">
               <ShieldCheck className="w-3 h-3" />
               <span>{roleLabel}</span>
             </div>
@@ -75,7 +75,7 @@ export function UserMenu() {
             <Link
               to="/student/settings"
               onClick={() => setIsOpen(false)}
-              className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-foreground hover:bg-[#EEF0F8] transition-colors"
+              className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-foreground hover:bg-[#ECF0F7] transition-colors"
             >
               <Settings className="w-4 h-4 text-muted-foreground" />
               <span>Pengaturan Akun</span>
@@ -83,7 +83,7 @@ export function UserMenu() {
             <Link
               to="/student/help"
               onClick={() => setIsOpen(false)}
-              className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-foreground hover:bg-[#EEF0F8] transition-colors"
+              className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-foreground hover:bg-[#ECF0F7] transition-colors"
             >
               <HelpCircle className="w-4 h-4 text-muted-foreground" />
               <span>Pusat Bantuan</span>

@@ -98,7 +98,7 @@ export function NotificationButton() {
         onClick={() => setIsOpen(!isOpen)}
         aria-label="Notifikasi"
         aria-expanded={isOpen}
-        className="relative w-10 h-10 rounded-xl bg-white border border-border/80 flex items-center justify-center text-foreground hover:bg-[#EEF0F8] transition-colors focus-visible:outline-2 focus-visible:outline-[#6C5CE7]"
+        className="relative w-10 h-10 rounded-xl bg-white border border-border/80 flex items-center justify-center text-foreground hover:bg-[#ECF0F7] transition-colors focus-visible:outline-2 focus-visible:outline-[#183058]"
       >
         <Bell className="w-5 h-5 text-[#676A78]" />
         {unreadCount > 0 && (
@@ -116,7 +116,7 @@ export function NotificationButton() {
               <button
                 type="button"
                 onClick={handleMarkAllRead}
-                className="text-[11px] font-medium text-[#6C5CE7] hover:underline flex items-center gap-1 cursor-pointer"
+                className="text-[11px] font-medium text-[#183058] hover:underline flex items-center gap-1 cursor-pointer"
               >
                 <CheckCheck className="w-3.5 h-3.5" /> Tandai semua dibaca
               </button>
@@ -126,12 +126,12 @@ export function NotificationButton() {
           <div className="max-h-[320px] overflow-y-auto divide-y divide-border/60">
             {loading ? (
               <div className="py-8 text-center flex flex-col items-center justify-center gap-2">
-                <Loader2 className="w-5 h-5 animate-spin text-[#6C5CE7]" />
+                <Loader2 className="w-5 h-5 animate-spin text-[#183058]" />
                 <span className="text-xs text-muted-foreground">Memuat notifikasi...</span>
               </div>
             ) : notifications.length === 0 ? (
               <div className="py-8 text-center">
-                <div className="w-12 h-12 rounded-full bg-[#EFEDFD] text-[#6C5CE7] flex items-center justify-center mx-auto mb-3">
+                <div className="w-12 h-12 rounded-full bg-[#E8ECF6] text-[#183058] flex items-center justify-center mx-auto mb-3">
                   <Bell className="w-6 h-6" />
                 </div>
                 <p className="text-sm font-medium text-foreground">Belum ada notifikasi baru</p>
@@ -145,7 +145,7 @@ export function NotificationButton() {
                   key={notif.id}
                   onClick={() => handleItemClick(notif)}
                   className={`p-3 transition-colors cursor-pointer rounded-xl my-1 ${
-                    notif.isRead ? 'hover:bg-[#F4F5FB]' : 'bg-[#EFEDFD]/30 hover:bg-[#EFEDFD]/50'
+                    notif.isRead ? 'hover:bg-[#F4F6FA]' : 'bg-[#E8ECF6]/30 hover:bg-[#E8ECF6]/50'
                   }`}
                 >
                   <div className="flex items-start justify-between gap-2">
@@ -168,7 +168,7 @@ export function NotificationButton() {
             <Link
               to="/student/notifications"
               onClick={() => setIsOpen(false)}
-              className="w-full py-2 px-3 rounded-xl bg-[#F4F5FB] hover:bg-[#EEF0F8] text-xs font-bold text-[#6C5CE7] flex items-center justify-center gap-1.5 transition-colors"
+              className="w-full py-2 px-3 rounded-xl bg-[#F4F6FA] hover:bg-[#ECF0F7] text-xs font-bold text-[#183058] flex items-center justify-center gap-1.5 transition-colors"
             >
               <span>Lihat Semua Notifikasi</span>
               <ArrowRight className="w-3.5 h-3.5" />

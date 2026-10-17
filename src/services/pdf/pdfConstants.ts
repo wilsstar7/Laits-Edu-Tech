@@ -1,10 +1,10 @@
 export const PDF_COLORS = {
-  primary: [108, 92, 231] as [number, number, number],       // #6C5CE7
-  primaryLight: [239, 237, 253] as [number, number, number],  // #EFEDFD
-  dark: [23, 24, 28] as [number, number, number],            // #17181C
-  body: [29, 29, 36] as [number, number, number],            // #1D1D24
-  muted: [103, 106, 120] as [number, number, number],        // #676A78
-  surface: [244, 245, 251] as [number, number, number],      // #F4F5FB
+  primary: [24, 48, 88] as [number, number, number],          // #183058
+  primaryLight: [232, 236, 246] as [number, number, number],  // #E8ECF6
+  dark: [15, 29, 51] as [number, number, number],             // #0F1D33
+  body: [29, 29, 36] as [number, number, number],             // #1D1D24
+  muted: [103, 106, 120] as [number, number, number],         // #676A78
+  surface: [244, 246, 250] as [number, number, number],       // #F4F6FA
   border: [234, 235, 240] as [number, number, number],       // #EAEBF0
   white: [255, 255, 255] as [number, number, number],
   emerald: [69, 185, 124] as [number, number, number],       // #45B97C

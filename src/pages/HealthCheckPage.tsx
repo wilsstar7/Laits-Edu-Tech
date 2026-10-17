@@ -34,11 +34,11 @@ export function HealthCheckPage() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-[#F4F5FB] flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-[#F4F6FA] flex flex-col items-center justify-center p-4">
       <div className="w-full max-w-xl bg-white rounded-2xl border border-border/80 shadow-md p-6 sm:p-8 space-y-6">
         <div className="flex items-center justify-between pb-4 border-b border-border/70">
           <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-xl bg-[#6C5CE7]/10 text-[#6C5CE7] flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-[#183058]/10 text-[#183058] flex items-center justify-center">
               <Server className="w-5 h-5" />
             </div>
             <div>
@@ -85,17 +85,17 @@ export function HealthCheckPage() {
 
             {/* Checks list */}
             <div className="space-y-2.5 text-xs">
-              <div className="p-3.5 rounded-xl bg-[#F4F5FB] border border-border/70 flex items-center justify-between">
+              <div className="p-3.5 rounded-xl bg-[#F4F6FA] border border-border/70 flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
-                  <Globe className="w-4 h-4 text-[#6C5CE7]" />
+                  <Globe className="w-4 h-4 text-[#183058]" />
                   <span className="font-medium text-[#17181C]">Frontend Client</span>
                 </div>
                 <span className="font-bold text-[#22864C]">PASS</span>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-[#F4F5FB] border border-border/70 flex items-center justify-between">
+              <div className="p-3.5 rounded-xl bg-[#F4F6FA] border border-border/70 flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
-                  <Shield className="w-4 h-4 text-[#6C5CE7]" />
+                  <Shield className="w-4 h-4 text-[#183058]" />
                   <span className="font-medium text-[#17181C]">Environment Configuration</span>
                 </div>
                 <span className={`font-bold ${health.checks.configuration.status === 'pass' ? 'text-[#22864C]' : 'text-[#C2410C]'}`}>
@@ -103,9 +103,9 @@ export function HealthCheckPage() {
                 </span>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-[#F4F5FB] border border-border/70 flex items-center justify-between">
+              <div className="p-3.5 rounded-xl bg-[#F4F6FA] border border-border/70 flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
-                  <Server className="w-4 h-4 text-[#6C5CE7]" />
+                  <Server className="w-4 h-4 text-[#183058]" />
                   <div>
                     <span className="font-medium text-[#17181C]">Supabase Gateway Reachable</span>
                     {health.checks.supabaseReachable.latencyMs !== undefined && (
@@ -118,9 +118,9 @@ export function HealthCheckPage() {
                 </span>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-[#F4F5FB] border border-border/70 flex items-center justify-between">
+              <div className="p-3.5 rounded-xl bg-[#F4F6FA] border border-border/70 flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
-                  <Database className="w-4 h-4 text-[#6C5CE7]" />
+                  <Database className="w-4 h-4 text-[#183058]" />
                   <div>
                     <span className="font-medium text-[#17181C]">PostgreSQL Database Query</span>
                     {health.checks.databaseQuery.latencyMs !== undefined && (

@@ -32,7 +32,7 @@ export function AnnouncementBanner({ audience }: AnnouncementBannerProps = {}) {
   if (!latest) return null
 
   return (
-    <div className="bg-gradient-to-r from-[#6C5CE7] to-[#8F7FF7] rounded-2xl p-4 text-white shadow-md relative overflow-hidden flex items-center justify-between gap-4 animate-in fade-in-50">
+    <div className="bg-gradient-to-r from-[#183058] to-[#244375] rounded-2xl p-4 text-white shadow-md relative overflow-hidden flex items-center justify-between gap-4 animate-in fade-in-50">
       <div className="flex items-center gap-3 min-w-0">
         <div className="w-9 h-9 rounded-xl bg-white/20 backdrop-blur-xs flex items-center justify-center shrink-0">
           <Megaphone className="w-4 h-4 text-white" />

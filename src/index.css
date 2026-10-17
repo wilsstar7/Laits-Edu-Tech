@@ -6,10 +6,10 @@
 @custom-variant dark (&:is(.dark *));
 
 /* =============================================================================
-   PERSONA ACADEMY — Design tokens
-   Brand palette (from product spec):
-     bg #F4F5FB / #EEF0F8 · primary #6C5CE7 · dark #17181C · text #1D1D24
-     muted #8A8D9A · success #45B97C · warning #F2B84B · danger #E96A6A
+   PERSONA ACADEMY - Design tokens
+   Brand palette (from Persona Academy logo):
+     bg #F4F6FA / #ECF0F7 · primary #183058 · accent node #B0B4E0 · dark #0F1D33
+     text #1D1D24 · muted #676A78 · success #45B97C · warning #F2B84B · danger #E96A6A
    Accessibility note: #8A8D9A is used for icons / large text (`text-subtle`).
    Body-size muted text uses a darker shade (#676A78) to meet WCAG AA 4.5:1.
    ============================================================================= */
@@ -80,9 +80,9 @@
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
 
-  --shadow-soft: 0 1px 2px rgba(23, 24, 28, 0.04), 0 8px 24px -12px rgba(23, 24, 28, 0.12);
-  --shadow-lift: 0 2px 4px rgba(23, 24, 28, 0.04), 0 20px 40px -16px rgba(23, 24, 28, 0.18);
-  --shadow-glow: 0 12px 32px -12px rgba(108, 92, 231, 0.55);
+  --shadow-soft: 0 1px 2px rgba(15, 29, 51, 0.04), 0 8px 24px -12px rgba(15, 29, 51, 0.12);
+  --shadow-lift: 0 2px 4px rgba(15, 29, 51, 0.04), 0 20px 40px -16px rgba(15, 29, 51, 0.18);
+  --shadow-glow: 0 12px 32px -12px rgba(24, 48, 88, 0.45);
 
   --animate-fade-up: fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
   --animate-float: float 6s ease-in-out infinite;
@@ -115,34 +115,34 @@
 :root {
   --radius: 0.875rem;
 
-  --background: #f4f5fb;
-  --surface: #eef0f8;
+  --background: #f4f6fa;
+  --surface: #ecf0f7;
   --foreground: #1d1d24;
   --card: #ffffff;
   --card-foreground: #1d1d24;
   --popover: #ffffff;
   --popover-foreground: #1d1d24;
 
-  --primary: #6c5ce7;
+  --primary: #183058;
   --primary-foreground: #ffffff;
-  --primary-soft: #efedfd;
-  --primary-strong: #5243d6;
+  --primary-soft: #e8ecf6;
+  --primary-strong: #102342;
 
-  --brand-primary: #6c5ce7;
+  --brand-primary: #183058;
   --brand-primary-foreground: #ffffff;
 
-  --secondary: #eef0f8;
+  --secondary: #ecf0f7;
   --secondary-foreground: #1d1d24;
-  --muted: #eef0f8;
+  --muted: #ecf0f7;
   --muted-foreground: #676a78;
   --subtle: #8a8d9a;
-  --accent: #efedfd;
-  --accent-foreground: #4a3bc9;
+  --accent: #e8ecf6;
+  --accent-foreground: #183058;
 
-  --ink: #17181c;
-  --ink-soft: #24252b;
-  --ink-primary: #17181c;
-  --ink-secondary: #24252b;
+  --ink: #0f1d33;
+  --ink-soft: #1b2d48;
+  --ink-primary: #0f1d33;
+  --ink-secondary: #1b2d48;
   --ink-muted: #676a78;
 
   --success: #45b97c;
@@ -154,24 +154,24 @@
   --danger-soft: #fdecec;
   --destructive: #e96a6a;
 
-  --border: rgba(20, 20, 30, 0.06);
-  --input: rgba(20, 20, 30, 0.14);
-  --ring: #6c5ce7;
+  --border: rgba(15, 29, 51, 0.08);
+  --input: rgba(15, 29, 51, 0.14);
+  --ring: #183058;
 
-  --chart-1: #6c5ce7;
+  --chart-1: #183058;
   --chart-2: #45b97c;
   --chart-3: #f2b84b;
   --chart-4: #e96a6a;
-  --chart-5: #8a8d9a;
+  --chart-5: #b0b4e0;
 
-  --sidebar: #17181c;
-  --sidebar-foreground: #c9cad3;
-  --sidebar-primary: #6c5ce7;
+  --sidebar: #0f1d33;
+  --sidebar-foreground: #c9d2e3;
+  --sidebar-primary: #183058;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: rgba(255, 255, 255, 0.06);
+  --sidebar-accent: rgba(176, 180, 224, 0.10);
   --sidebar-accent-foreground: #ffffff;
-  --sidebar-border: rgba(255, 255, 255, 0.07);
-  --sidebar-ring: #8f83ff;
+  --sidebar-border: rgba(255, 255, 255, 0.08);
+  --sidebar-ring: #b0b4e0;
 }
 
 @layer base {
@@ -202,12 +202,12 @@
     outline: none;
   }
   ::selection {
-    background: rgba(108, 92, 231, 0.18);
+    background: rgba(24, 48, 88, 0.16);
   }
 }
 
 @layer components {
-  /* Soft glass surface — used for header and floating panels */
+  /* Soft glass surface - used for header and floating panels */
   .glass {
     background: rgba(255, 255, 255, 0.72);
     backdrop-filter: saturate(160%) blur(16px);
@@ -220,25 +220,25 @@
     @apply rounded-3xl border border-border bg-card shadow-soft;
   }
 
-  /* Ambient app background (subtle aurora) */
+  /* Ambient app background */
   .app-backdrop {
     background:
-      radial-gradient(900px 480px at 100% -10%, rgba(108, 92, 231, 0.10), transparent 60%),
-      radial-gradient(700px 420px at -10% 110%, rgba(69, 185, 124, 0.07), transparent 60%),
+      radial-gradient(900px 480px at 100% -10%, rgba(24, 48, 88, 0.08), transparent 60%),
+      radial-gradient(700px 420px at -10% 110%, rgba(176, 180, 224, 0.12), transparent 60%),
       var(--background);
   }
 
   .brand-gradient {
     background:
-      radial-gradient(120% 140% at 100% 0%, #8f7ff7 0%, transparent 55%),
-      radial-gradient(90% 120% at 0% 100%, #4a3bc9 0%, transparent 60%),
-      #6c5ce7;
+      radial-gradient(120% 140% at 100% 0%, #2b4c7e 0%, transparent 55%),
+      radial-gradient(90% 120% at 0% 100%, #102342 0%, transparent 60%),
+      #183058;
   }
 
   .ink-gradient {
     background:
-      radial-gradient(80% 120% at 100% 0%, rgba(108, 92, 231, 0.35) 0%, transparent 60%),
-      #17181c;
+      radial-gradient(80% 120% at 100% 0%, rgba(176, 180, 224, 0.22) 0%, transparent 60%),
+      #0f1d33;
   }
 
   .dot-grid {
@@ -253,7 +253,7 @@
   /* Clean auto-hiding scrollbar utility */
   .scrollbar-thin {
     scrollbar-width: thin;
-    scrollbar-color: rgba(108, 92, 231, 0.25) transparent;
+    scrollbar-color: rgba(24, 48, 88, 0.25) transparent;
   }
   .scrollbar-thin::-webkit-scrollbar {
     width: 6px;
@@ -263,11 +263,11 @@
     background: transparent;
   }
   .scrollbar-thin::-webkit-scrollbar-thumb {
-    background: rgba(108, 92, 231, 0.2);
+    background: rgba(24, 48, 88, 0.22);
     border-radius: 9999px;
   }
   .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-    background: rgba(108, 92, 231, 0.4);
+    background: rgba(24, 48, 88, 0.4);
   }
 }
 

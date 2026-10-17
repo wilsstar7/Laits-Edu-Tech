@@ -93,7 +93,7 @@ export function ReportHistory() {
           <Button
             onClick={handleGenerateMonthly}
             disabled={generatingMonthly}
-            className="rounded-xl text-xs bg-[#6C5CE7] hover:bg-[#5B4CD7] text-white font-bold flex items-center gap-2"
+            className="rounded-xl text-xs bg-[#183058] hover:bg-[#5B4CD7] text-white font-bold flex items-center gap-2"
           >
             {generatingMonthly ? (
               <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -159,9 +159,9 @@ export function ReportHistory() {
           className="rounded-xl text-xs flex items-center gap-1.5 cursor-pointer self-start sm:self-auto"
         >
           {generatingMonthly ? (
-            <Loader2 className="w-3.5 h-3.5 animate-spin text-[#6C5CE7]" />
+            <Loader2 className="w-3.5 h-3.5 animate-spin text-[#183058]" />
           ) : (
-            <Sparkles className="w-3.5 h-3.5 text-[#6C5CE7]" />
+            <Sparkles className="w-3.5 h-3.5 text-[#183058]" />
           )}
           <span>Perbarui Laporan Bulan Ini</span>
         </Button>
@@ -171,7 +171,7 @@ export function ReportHistory() {
       {(activeTab === 'all' || activeTab === 'personality') && personalityReports.length > 0 && (
         <div className="space-y-3">
           <div className="flex items-center gap-2">
-            <Award className="w-4 h-4 text-[#6C5CE7]" />
+            <Award className="w-4 h-4 text-[#183058]" />
             <h3 className="text-sm font-extrabold text-[#17181C]">Laporan Karakter & Kepribadian Belajar</h3>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
@@ -201,7 +201,7 @@ export function ReportHistory() {
               {monthlyReports.map((m) => (
                 <div
                   key={m.id}
-                  className="surface-card p-5 sm:p-6 bg-white border border-border shadow-xs hover:border-[#6C5CE7]/40 transition-all rounded-2xl space-y-4"
+                  className="surface-card p-5 sm:p-6 bg-white border border-border shadow-xs hover:border-[#183058]/40 transition-all rounded-2xl space-y-4"
                 >
                   <div className="flex items-start justify-between">
                     <div>
@@ -212,7 +212,7 @@ export function ReportHistory() {
                         Rekap Aktivitas Belajar
                       </h4>
                     </div>
-                    <span className="text-xs font-bold text-[#6C5CE7] bg-[#EFEDFD] px-2.5 py-1 rounded-xl">
+                    <span className="text-xs font-bold text-[#183058] bg-[#E8ECF6] px-2.5 py-1 rounded-xl">
                       {m.avgProgressPercentage}% Progres
                     </span>
                   </div>

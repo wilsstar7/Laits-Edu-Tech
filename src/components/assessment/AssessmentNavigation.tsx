@@ -40,7 +40,7 @@ export function AssessmentNavigation({
             type="button"
             onClick={onPrevious}
             disabled={!canGoPrevious || isSubmitting}
-            className="shrink-0 px-4 sm:px-5 py-3 rounded-xl border border-border text-sm font-bold text-[#333542] hover:bg-[#F4F5FB] active:bg-[#EAEBF0] disabled:opacity-40 disabled:cursor-not-allowed transition-colors min-h-[46px]"
+            className="shrink-0 px-4 sm:px-5 py-3 rounded-xl border border-border text-sm font-bold text-[#333542] hover:bg-[#F4F6FA] active:bg-[#EAEBF0] disabled:opacity-40 disabled:cursor-not-allowed transition-colors min-h-[46px]"
           >
             Kembali
           </button>
@@ -54,7 +54,7 @@ export function AssessmentNavigation({
               type="button"
               onClick={onSubmit}
               disabled={isSubmitting}
-              className="flex-1 sm:flex-none px-6 py-3 rounded-xl bg-[#6C5CE7] hover:bg-[#5243D6] active:bg-[#4636C4] text-white text-sm font-bold shadow-md shadow-[#6C5CE7]/25 disabled:opacity-60 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2 min-h-[46px]"
+              className="flex-1 sm:flex-none px-6 py-3 rounded-xl bg-[#183058] hover:bg-[#102342] active:bg-[#4636C4] text-white text-sm font-bold shadow-md shadow-[#183058]/25 disabled:opacity-60 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2 min-h-[46px]"
             >
               {isSubmitting ? (
                 <>
@@ -70,7 +70,7 @@ export function AssessmentNavigation({
               type="button"
               onClick={onNext}
               disabled={isSubmitting}
-              className="flex-1 sm:flex-none px-6 py-3 rounded-xl bg-[#6C5CE7] hover:bg-[#5243D6] active:bg-[#4636C4] text-white text-sm font-bold shadow-md shadow-[#6C5CE7]/25 disabled:opacity-60 disabled:cursor-not-allowed transition-colors min-h-[46px]"
+              className="flex-1 sm:flex-none px-6 py-3 rounded-xl bg-[#183058] hover:bg-[#102342] active:bg-[#4636C4] text-white text-sm font-bold shadow-md shadow-[#183058]/25 disabled:opacity-60 disabled:cursor-not-allowed transition-colors min-h-[46px]"
             >
               Lanjut
             </button>

@@ -43,9 +43,9 @@ export function AssignmentModal({ assignment, onClose, onSuccess }: AssignmentMo
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in-50">
       <div className="bg-white rounded-3xl border border-border shadow-2xl max-w-xl w-full max-h-[90vh] flex flex-col overflow-hidden animate-in zoom-in-95">
         {/* Header */}
-        <div className="p-5 border-b border-border flex items-center justify-between bg-[#F4F5FB]/60">
+        <div className="p-5 border-b border-border flex items-center justify-between bg-[#F4F6FA]/60">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#6C5CE7]/10 text-[#6C5CE7] flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-[#183058]/10 text-[#183058] flex items-center justify-center">
               <FileText className="w-5 h-5" />
             </div>
             <div>
@@ -66,7 +66,7 @@ export function AssignmentModal({ assignment, onClose, onSuccess }: AssignmentMo
         <div className="p-5 sm:p-6 overflow-y-auto space-y-5 flex-1">
           {/* Instructions */}
           <div className="p-4 rounded-2xl bg-[#F9FAFD] border border-border/70 space-y-2">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-[#6C5CE7]">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-[#183058]">
               Instruksi Pengerjaan
             </span>
             <p className="text-xs text-[#17181C] leading-relaxed whitespace-pre-wrap">
@@ -113,7 +113,7 @@ export function AssignmentModal({ assignment, onClose, onSuccess }: AssignmentMo
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
                 placeholder="Tuliskan jawaban atau rangkuman penyelesaian tugas di sini..."
-                className="w-full p-3.5 rounded-xl border border-border text-xs focus:ring-2 focus:ring-[#6C5CE7] focus:outline-hidden resize-none bg-white"
+                className="w-full p-3.5 rounded-xl border border-border text-xs focus:ring-2 focus:ring-[#183058] focus:outline-hidden resize-none bg-white"
               />
             </div>
 
@@ -127,7 +127,7 @@ export function AssignmentModal({ assignment, onClose, onSuccess }: AssignmentMo
                   variant="default"
                   size="sm"
                   disabled={submitting || !content.trim()}
-                  className="rounded-xl text-xs bg-[#6C5CE7] hover:bg-[#5B4CD7] text-white font-bold gap-1.5"
+                  className="rounded-xl text-xs bg-[#183058] hover:bg-[#5B4CD7] text-white font-bold gap-1.5"
                 >
                   {submitting ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <CheckCircle2 className="w-3.5 h-3.5" />}
                   <span>{isSubmitted ? 'Perbarui Jawaban' : 'Kumpulkan Tugas'}</span>

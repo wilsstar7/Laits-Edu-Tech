@@ -106,7 +106,7 @@ export function AdminAnnouncementsPage() {
           variant="default"
           size="sm"
           onClick={() => setDialogOpen(true)}
-          className="rounded-xl text-xs bg-[#6C5CE7] hover:bg-[#5B4CD7] text-white font-bold gap-1.5 shadow-xs"
+          className="rounded-xl text-xs bg-[#183058] hover:bg-[#5B4CD7] text-white font-bold gap-1.5 shadow-xs"
         >
           <Plus className="w-4 h-4" />
           <span>Buat Pengumuman</span>
@@ -115,12 +115,12 @@ export function AdminAnnouncementsPage() {
 
       {loading ? (
         <div className="py-20 text-center flex flex-col items-center justify-center gap-3">
-          <Loader2 className="w-8 h-8 animate-spin text-[#6C5CE7]" />
+          <Loader2 className="w-8 h-8 animate-spin text-[#183058]" />
           <p className="text-xs text-[#8A8D9A]">Memuat arsip pengumuman...</p>
         </div>
       ) : announcements.length === 0 ? (
         <div className="bg-white rounded-3xl border border-border p-12 text-center space-y-3">
-          <Megaphone className="w-8 h-8 text-[#6C5CE7] mx-auto" />
+          <Megaphone className="w-8 h-8 text-[#183058] mx-auto" />
           <h4 className="font-bold text-base text-[#17181C]">Belum Ada Pengumuman</h4>
           <p className="text-xs text-[#676A78]">
             Buat pesan siaran baru untuk menginformasikan pengumuman penting kepada siswa atau tutor.
@@ -145,7 +145,7 @@ export function AdminAnnouncementsPage() {
                     {item.status === 'published' ? 'Dipublikasikan' : 'Draft'}
                   </span>
 
-                  <span className="px-2.5 py-0.5 rounded text-[10px] font-bold bg-[#F4F5FB] text-[#676A78] uppercase">
+                  <span className="px-2.5 py-0.5 rounded text-[10px] font-bold bg-[#F4F6FA] text-[#676A78] uppercase">
                     Audience: {item.audience}
                   </span>
                 </div>
@@ -169,7 +169,7 @@ export function AdminAnnouncementsPage() {
                     variant="default"
                     size="sm"
                     onClick={() => handlePublish(item.id)}
-                    className="rounded-xl text-xs bg-[#6C5CE7] hover:bg-[#5B4CD7] text-white font-bold gap-1.5"
+                    className="rounded-xl text-xs bg-[#183058] hover:bg-[#5B4CD7] text-white font-bold gap-1.5"
                   >
                     <Send className="w-3.5 h-3.5" />
                     <span>Publikasikan</span>
@@ -213,7 +213,7 @@ export function AdminAnnouncementsPage() {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="Misal: Pembaruan Kurikulum Semester Ganjil"
-                  className="w-full p-2.5 rounded-xl border border-border text-xs focus:ring-2 focus:ring-[#6C5CE7] focus:outline-hidden"
+                  className="w-full p-2.5 rounded-xl border border-border text-xs focus:ring-2 focus:ring-[#183058] focus:outline-hidden"
                 />
               </div>
 
@@ -245,7 +245,7 @@ export function AdminAnnouncementsPage() {
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
                   placeholder="Tuliskan isi pengumuman lengkap di sini..."
-                  className="w-full p-2.5 rounded-xl border border-border text-xs focus:ring-2 focus:ring-[#6C5CE7] focus:outline-hidden resize-none"
+                  className="w-full p-2.5 rounded-xl border border-border text-xs focus:ring-2 focus:ring-[#183058] focus:outline-hidden resize-none"
                 />
               </div>
 
@@ -264,7 +264,7 @@ export function AdminAnnouncementsPage() {
                   variant="default"
                   size="sm"
                   disabled={creating}
-                  className="rounded-xl text-xs bg-[#6C5CE7] hover:bg-[#5B4CD7] text-white font-bold"
+                  className="rounded-xl text-xs bg-[#183058] hover:bg-[#5B4CD7] text-white font-bold"
                 >
                   {creating ? <Loader2 className="w-3.5 h-3.5 animate-spin mr-1" /> : null}
                   <span>Simpan Draft</span>

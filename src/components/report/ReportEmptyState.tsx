@@ -18,7 +18,7 @@ export function ReportEmptyState({
 
   return (
     <div className="p-8 sm:p-12 rounded-2xl bg-white border border-border text-center max-w-lg mx-auto space-y-4 shadow-sm">
-      <div className="w-12 h-12 rounded-2xl bg-[#EFEDFD] text-[#6C5CE7] flex items-center justify-center mx-auto">
+      <div className="w-12 h-12 rounded-2xl bg-[#E8ECF6] text-[#183058] flex items-center justify-center mx-auto">
         <FileText className="w-6 h-6" aria-hidden="true" />
       </div>
       <div className="space-y-1">
@@ -29,7 +29,7 @@ export function ReportEmptyState({
         <button
           type="button"
           onClick={() => navigate(actionHref)}
-          className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#6C5CE7] hover:bg-[#5243D6] text-white text-xs font-bold shadow-sm transition-colors min-h-[44px]"
+          className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#183058] hover:bg-[#102342] text-white text-xs font-bold shadow-sm transition-colors min-h-[44px]"
         >
           <span>{actionLabel}</span>
           <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />

@@ -26,7 +26,7 @@ export function DimensionScoreCard({ dimensions }: DimensionScoreCardProps) {
             <div key={dim.id} className="p-4 rounded-xl bg-[#F9FAFD] border border-border/60 space-y-2">
               <div className="flex items-center justify-between text-xs sm:text-sm">
                 <span className="font-bold text-[#17181C]">{name}</span>
-                <span className="font-mono font-extrabold text-[#6C5CE7] bg-[#6C5CE7]/10 px-2.5 py-0.5 rounded">
+                <span className="font-mono font-extrabold text-[#183058] bg-[#183058]/10 px-2.5 py-0.5 rounded">
                   {score}%
                 </span>
               </div>
@@ -40,7 +40,7 @@ export function DimensionScoreCard({ dimensions }: DimensionScoreCardProps) {
               {/* Progress bar */}
               <div className="w-full h-2 rounded-full bg-[#EAEBF0] overflow-hidden">
                 <div
-                  className="h-full bg-[#6C5CE7] rounded-full transition-all duration-500 ease-out"
+                  className="h-full bg-[#183058] rounded-full transition-all duration-500 ease-out"
                   style={{ width: `${score}%` }}
                 />
               </div>

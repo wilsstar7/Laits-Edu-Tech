@@ -97,7 +97,7 @@ export function RegisterForm() {
         <div className="pt-4 flex flex-col gap-2.5 max-w-xs mx-auto">
           <Link
             to="/login"
-            className="w-full py-2.5 px-4 rounded-xl bg-[#6C5CE7] text-white text-xs font-bold hover:bg-[#5243D6] transition-colors flex items-center justify-center gap-2 min-h-[42px]"
+            className="w-full py-2.5 px-4 rounded-xl bg-[#183058] text-white text-xs font-bold hover:bg-[#102342] transition-colors flex items-center justify-center gap-2 min-h-[42px]"
           >
             <span>Sudah Verifikasi? Masuk Sekarang</span>
             <ArrowRight className="w-4 h-4" />
@@ -126,7 +126,7 @@ export function RegisterForm() {
       {/* SECTION 1: Akun & Keamanan */}
       <div className="space-y-4">
         <div className="flex items-center gap-2 pb-1 border-b border-border/60">
-          <ShieldCheck className="w-4 h-4 text-[#6C5CE7]" />
+          <ShieldCheck className="w-4 h-4 text-[#183058]" />
           <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
             1. Informasi Akun Siswa
           </h3>
@@ -150,7 +150,7 @@ export function RegisterForm() {
               className={`w-full pl-10 pr-3.5 py-2.5 rounded-xl border bg-white text-sm text-foreground placeholder:text-muted-foreground/60 transition-all min-h-[44px] ${
                 errors.fullName
                   ? 'border-destructive focus:border-destructive ring-1 ring-destructive/20'
-                  : 'border-border focus:border-[#6C5CE7] focus:ring-2 focus:ring-[#6C5CE7]/15'
+                  : 'border-border focus:border-[#183058] focus:ring-2 focus:ring-[#183058]/15'
               }`}
             />
           </div>
@@ -178,7 +178,7 @@ export function RegisterForm() {
               className={`w-full pl-10 pr-3.5 py-2.5 rounded-xl border bg-white text-sm text-foreground placeholder:text-muted-foreground/60 transition-all min-h-[44px] ${
                 errors.email
                   ? 'border-destructive focus:border-destructive ring-1 ring-destructive/20'
-                  : 'border-border focus:border-[#6C5CE7] focus:ring-2 focus:ring-[#6C5CE7]/15'
+                  : 'border-border focus:border-[#183058] focus:ring-2 focus:ring-[#183058]/15'
               }`}
             />
           </div>
@@ -207,7 +207,7 @@ export function RegisterForm() {
                 className={`w-full pl-10 pr-10 py-2.5 rounded-xl border bg-white text-sm text-foreground placeholder:text-muted-foreground/60 transition-all min-h-[44px] ${
                   errors.password
                     ? 'border-destructive focus:border-destructive ring-1 ring-destructive/20'
-                    : 'border-border focus:border-[#6C5CE7] focus:ring-2 focus:ring-[#6C5CE7]/15'
+                    : 'border-border focus:border-[#183058] focus:ring-2 focus:ring-[#183058]/15'
                 }`}
               />
               <button
@@ -243,7 +243,7 @@ export function RegisterForm() {
                 className={`w-full pl-10 pr-3.5 py-2.5 rounded-xl border bg-white text-sm text-foreground placeholder:text-muted-foreground/60 transition-all min-h-[44px] ${
                   errors.confirmPassword
                     ? 'border-destructive focus:border-destructive ring-1 ring-destructive/20'
-                    : 'border-border focus:border-[#6C5CE7] focus:ring-2 focus:ring-[#6C5CE7]/15'
+                    : 'border-border focus:border-[#183058] focus:ring-2 focus:ring-[#183058]/15'
                 }`}
               />
             </div>
@@ -259,7 +259,7 @@ export function RegisterForm() {
       {/* SECTION 2: Data Pendidikan Siswa */}
       <div className="space-y-4 pt-2">
         <div className="flex items-center gap-2 pb-1 border-b border-border/60">
-          <School className="w-4 h-4 text-[#6C5CE7]" />
+          <School className="w-4 h-4 text-[#183058]" />
           <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
             2. Data Pendidikan & Kontak
           </h3>
@@ -284,7 +284,7 @@ export function RegisterForm() {
                 className={`w-full pl-10 pr-3.5 py-2.5 rounded-xl border bg-white text-sm text-foreground transition-all min-h-[44px] ${
                   errors.dateOfBirth
                     ? 'border-destructive focus:border-destructive ring-1 ring-destructive/20'
-                    : 'border-border focus:border-[#6C5CE7] focus:ring-2 focus:ring-[#6C5CE7]/15'
+                    : 'border-border focus:border-[#183058] focus:ring-2 focus:ring-[#183058]/15'
                 }`}
               />
             </div>
@@ -304,7 +304,7 @@ export function RegisterForm() {
               id="reg-gender"
               disabled={loading}
               {...register('gender')}
-              className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-white text-sm text-foreground focus:border-[#6C5CE7] focus:ring-2 focus:ring-[#6C5CE7]/15 transition-all min-h-[44px]"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-white text-sm text-foreground focus:border-[#183058] focus:ring-2 focus:ring-[#183058]/15 transition-all min-h-[44px]"
             >
               <option value="">Pilih jenis kelamin (opsional)</option>
               {GENDER_OPTIONS.map((g) => (
@@ -332,7 +332,7 @@ export function RegisterForm() {
               className={`w-full px-3.5 py-2.5 rounded-xl border bg-white text-sm text-foreground transition-all min-h-[44px] ${
                 errors.grade
                   ? 'border-destructive focus:border-destructive ring-1 ring-destructive/20'
-                  : 'border-border focus:border-[#6C5CE7] focus:ring-2 focus:ring-[#6C5CE7]/15'
+                  : 'border-border focus:border-[#183058] focus:ring-2 focus:ring-[#183058]/15'
               }`}
             >
               {GRADE_OPTIONS.map((g) => (
@@ -361,7 +361,7 @@ export function RegisterForm() {
                 placeholder="Contoh: SMA Negeri 1 Jakarta"
                 disabled={loading}
                 {...register('school')}
-                className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-border bg-white text-sm text-foreground placeholder:text-muted-foreground/60 focus:border-[#6C5CE7] focus:ring-2 focus:ring-[#6C5CE7]/15 transition-all min-h-[44px]"
+                className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-border bg-white text-sm text-foreground placeholder:text-muted-foreground/60 focus:border-[#183058] focus:ring-2 focus:ring-[#183058]/15 transition-all min-h-[44px]"
               />
             </div>
             {errors.school && (
@@ -385,7 +385,7 @@ export function RegisterForm() {
               placeholder="Contoh: Jakarta Selatan"
               disabled={loading}
               {...register('city')}
-              className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-border bg-white text-sm text-foreground placeholder:text-muted-foreground/60 focus:border-[#6C5CE7] focus:ring-2 focus:ring-[#6C5CE7]/15 transition-all min-h-[44px]"
+              className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-border bg-white text-sm text-foreground placeholder:text-muted-foreground/60 focus:border-[#183058] focus:ring-2 focus:ring-[#183058]/15 transition-all min-h-[44px]"
             />
           </div>
           {errors.city && (
@@ -405,7 +405,7 @@ export function RegisterForm() {
               placeholder="Contoh: Bapak H. Suryono"
               disabled={loading}
               {...register('parentName')}
-              className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-white text-sm text-foreground placeholder:text-muted-foreground/60 focus:border-[#6C5CE7] focus:ring-2 focus:ring-[#6C5CE7]/15 transition-all min-h-[44px]"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-white text-sm text-foreground placeholder:text-muted-foreground/60 focus:border-[#183058] focus:ring-2 focus:ring-[#183058]/15 transition-all min-h-[44px]"
             />
             {errors.parentName && (
               <p className="text-xs font-medium text-destructive mt-1">{errors.parentName.message}</p>
@@ -429,7 +429,7 @@ export function RegisterForm() {
                 className={`w-full pl-10 pr-3.5 py-2.5 rounded-xl border bg-white text-sm text-foreground placeholder:text-muted-foreground/60 transition-all min-h-[44px] ${
                   errors.parentPhone
                     ? 'border-destructive focus:border-destructive ring-1 ring-destructive/20'
-                    : 'border-border focus:border-[#6C5CE7] focus:ring-2 focus:ring-[#6C5CE7]/15'
+                    : 'border-border focus:border-[#183058] focus:ring-2 focus:ring-[#183058]/15'
                 }`}
               />
             </div>
@@ -445,7 +445,7 @@ export function RegisterForm() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full py-3.5 px-4 rounded-xl bg-[#6C5CE7] text-white text-sm font-bold shadow-lg shadow-[#6C5CE7]/30 hover:bg-[#5243D6] disabled:opacity-60 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 min-h-[46px]"
+          className="w-full py-3.5 px-4 rounded-xl bg-[#183058] text-white text-sm font-bold shadow-lg shadow-[#183058]/30 hover:bg-[#102342] disabled:opacity-60 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 min-h-[46px]"
         >
           {loading ? (
             <>

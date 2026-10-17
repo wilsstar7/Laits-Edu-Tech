@@ -92,13 +92,13 @@ export function NotificationsPage() {
   const getIcon = (type: string) => {
     switch (type) {
       case 'booking':
-        return <BookOpen className="w-4 h-4 text-[#6C5CE7]" />
+        return <BookOpen className="w-4 h-4 text-[#183058]" />
       case 'payment':
         return <CheckCircle2 className="w-4 h-4 text-[#22864C]" />
       case 'report':
         return <CheckCircle2 className="w-4 h-4 text-[#3B82F6]" />
       default:
-        return <Info className="w-4 h-4 text-[#6C5CE7]" />
+        return <Info className="w-4 h-4 text-[#183058]" />
     }
   }
 
@@ -112,7 +112,7 @@ export function NotificationsPage() {
           <div className="flex items-center gap-2">
             <Link
               to="/student/dashboard"
-              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white border border-border text-foreground text-xs font-semibold hover:bg-[#EEF0F8] transition-colors"
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white border border-border text-foreground text-xs font-semibold hover:bg-[#ECF0F7] transition-colors"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>Kembali ke Dashboard</span>
@@ -137,8 +137,8 @@ export function NotificationsPage() {
           onClick={() => setFilter('all')}
           className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-colors cursor-pointer ${
             filter === 'all'
-              ? 'bg-[#6C5CE7] text-white shadow-xs'
-              : 'bg-white border border-border text-[#676A78] hover:bg-[#EEF0F8]'
+              ? 'bg-[#183058] text-white shadow-xs'
+              : 'bg-white border border-border text-[#676A78] hover:bg-[#ECF0F7]'
           }`}
         >
           Semua ({total})
@@ -148,8 +148,8 @@ export function NotificationsPage() {
           onClick={() => setFilter('unread')}
           className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-colors cursor-pointer ${
             filter === 'unread'
-              ? 'bg-[#6C5CE7] text-white shadow-xs'
-              : 'bg-white border border-border text-[#676A78] hover:bg-[#EEF0F8]'
+              ? 'bg-[#183058] text-white shadow-xs'
+              : 'bg-white border border-border text-[#676A78] hover:bg-[#ECF0F7]'
           }`}
         >
           Belum Dibaca ({notifications.filter((n) => !n.isRead).length})
@@ -160,7 +160,7 @@ export function NotificationsPage() {
       <div className="mt-4">
         {loading ? (
           <div className="py-20 text-center flex flex-col items-center justify-center gap-3 bg-white rounded-2xl border border-border">
-            <Loader2 className="w-6 h-6 animate-spin text-[#6C5CE7]" />
+            <Loader2 className="w-6 h-6 animate-spin text-[#183058]" />
             <p className="text-xs text-[#676A78]">Memuat riwayat notifikasi...</p>
           </div>
         ) : errorMsg ? (
@@ -173,7 +173,7 @@ export function NotificationsPage() {
           </div>
         ) : filteredNotifs.length === 0 ? (
           <div className="py-16 text-center bg-white rounded-2xl border border-border space-y-3">
-            <div className="w-12 h-12 rounded-full bg-[#EFEDFD] text-[#6C5CE7] flex items-center justify-center mx-auto">
+            <div className="w-12 h-12 rounded-full bg-[#E8ECF6] text-[#183058] flex items-center justify-center mx-auto">
               <Bell className="w-6 h-6" />
             </div>
             <p className="text-sm font-bold text-foreground">Tidak ada pemberitahuan</p>
@@ -192,7 +192,7 @@ export function NotificationsPage() {
                 className={`p-4 rounded-2xl border transition-all ${
                   notif.isRead
                     ? 'bg-white border-border/80'
-                    : 'bg-[#F9F8FE] border-[#6C5CE7]/30 shadow-xs'
+                    : 'bg-[#F5F7FC] border-[#183058]/30 shadow-xs'
                 }`}
               >
                 <div className="flex items-start gap-3.5">
@@ -215,7 +215,7 @@ export function NotificationsPage() {
                       <div className="mt-2.5">
                         <Link
                           to={notif.linkUrl}
-                          className="inline-flex items-center text-xs font-bold text-[#6C5CE7] hover:underline"
+                          className="inline-flex items-center text-xs font-bold text-[#183058] hover:underline"
                         >
                           Buka tautan &rarr;
                         </Link>

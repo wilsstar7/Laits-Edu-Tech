@@ -13,7 +13,7 @@ export function AppShell({ children }: AppShellProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <div className="min-h-screen bg-[#F4F5FB] flex flex-row antialiased text-[#1D1D24]">
+    <div className="min-h-screen bg-[#F4F6FA] flex flex-row antialiased text-[#1D1D24]">
       {/* Desktop Sidebar (Fixed 270px width) */}
       <div className="hidden lg:block lg:w-[270px] lg:shrink-0 h-screen sticky top-0 z-40">
         <Sidebar />

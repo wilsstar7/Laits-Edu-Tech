@@ -119,7 +119,7 @@ export function LessonPlayerPage() {
     return (
       <AppShell>
         <div className="py-24 text-center flex flex-col items-center justify-center gap-3">
-          <Loader2 className="w-8 h-8 animate-spin text-[#6C5CE7]" />
+          <Loader2 className="w-8 h-8 animate-spin text-[#183058]" />
           <p className="text-xs text-[#8A8D9A]">Memuat konten pelajaran...</p>
         </div>
       </AppShell>
@@ -133,7 +133,7 @@ export function LessonPlayerPage() {
           <h3 className="font-bold text-base text-[#17181C]">Pelajaran Tidak Ditemukan</h3>
           <p className="text-xs text-[#676A78]">Konten materi tidak dapat dimuat atau telah dipindahkan.</p>
           <Link to={`/student/courses/${courseId || ''}`}>
-            <Button variant="default" size="sm" className="rounded-xl text-xs bg-[#6C5CE7] text-white">
+            <Button variant="default" size="sm" className="rounded-xl text-xs bg-[#183058] text-white">
               Kembali ke Silabus
             </Button>
           </Link>
@@ -168,7 +168,7 @@ export function LessonPlayerPage() {
             {/* Lesson Title Header */}
             <div className="border-b border-border/60 pb-5 space-y-2">
               <div className="flex items-center gap-2">
-                <span className="px-2.5 py-0.5 rounded-md bg-[#EFEDFD] text-[#6C5CE7] text-[11px] font-bold uppercase tracking-wider">
+                <span className="px-2.5 py-0.5 rounded-md bg-[#E8ECF6] text-[#183058] text-[11px] font-bold uppercase tracking-wider">
                   {currentLesson.lessonType}
                 </span>
                 <span className="text-xs text-[#8A8D9A] flex items-center gap-1">
@@ -213,7 +213,7 @@ export function LessonPlayerPage() {
                       className="p-3 rounded-xl border border-border/70 flex items-center justify-between bg-[#F9FAFD] hover:bg-white transition-colors"
                     >
                       <div className="flex items-center gap-2.5">
-                        <FileDown className="w-4 h-4 text-[#6C5CE7]" />
+                        <FileDown className="w-4 h-4 text-[#183058]" />
                         <span className="text-xs font-semibold text-[#17181C]">{mat.title}</span>
                       </div>
                       {mat.externalUrl && (
@@ -221,7 +221,7 @@ export function LessonPlayerPage() {
                           href={mat.externalUrl}
                           target="_blank"
                           rel="noreferrer"
-                          className="text-xs font-bold text-[#6C5CE7] hover:underline flex items-center gap-1"
+                          className="text-xs font-bold text-[#183058] hover:underline flex items-center gap-1"
                         >
                           <span>Buka Tautan</span>
                           <ExternalLink className="w-3 h-3" />
@@ -241,9 +241,9 @@ export function LessonPlayerPage() {
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {quiz && (
-                    <div className="p-4 rounded-2xl bg-[#EFEDFD]/60 border border-[#6C5CE7]/20 flex flex-col justify-between space-y-3">
+                    <div className="p-4 rounded-2xl bg-[#E8ECF6]/60 border border-[#183058]/20 flex flex-col justify-between space-y-3">
                       <div>
-                        <div className="flex items-center gap-2 text-xs font-bold text-[#6C5CE7]">
+                        <div className="flex items-center gap-2 text-xs font-bold text-[#183058]">
                           <HelpCircle className="w-4 h-4" />
                           <span>Kuis Evaluasi</span>
                         </div>
@@ -256,7 +256,7 @@ export function LessonPlayerPage() {
                         variant="default"
                         size="sm"
                         onClick={() => setQuizModalOpen(true)}
-                        className="rounded-xl text-xs bg-[#6C5CE7] hover:bg-[#5B4CD7] text-white font-bold"
+                        className="rounded-xl text-xs bg-[#183058] hover:bg-[#5B4CD7] text-white font-bold"
                       >
                         Buka Kuis
                       </Button>
@@ -309,7 +309,7 @@ export function LessonPlayerPage() {
                   onClick={handleMarkComplete}
                   disabled={completing}
                   className={`rounded-xl text-xs font-bold gap-1.5 ${
-                    isCompleted ? 'text-emerald-700 border-emerald-200 bg-emerald-50' : 'bg-[#6C5CE7] hover:bg-[#5B4CD7] text-white'
+                    isCompleted ? 'text-emerald-700 border-emerald-200 bg-emerald-50' : 'bg-[#183058] hover:bg-[#5B4CD7] text-white'
                   }`}
                 >
                   {completing ? (
@@ -337,7 +337,7 @@ export function LessonPlayerPage() {
         <div className="space-y-4">
           <div className="bg-white rounded-3xl border border-border/80 p-5 shadow-xs space-y-4">
             <div className="border-b border-border/60 pb-3">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#6C5CE7]">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#183058]">
                 Daftar Pelajaran
               </span>
               <h4 className="font-bold text-sm text-[#17181C] line-clamp-1 mt-0.5">{course.title}</h4>
@@ -354,8 +354,8 @@ export function LessonPlayerPage() {
                     to={`/student/courses/${course.id}/lessons/${l.id}`}
                     className={`p-3 rounded-xl text-xs flex items-center justify-between transition-colors block ${
                       isCur
-                        ? 'bg-[#6C5CE7] text-white font-bold shadow-xs'
-                        : 'text-[#17181C] hover:bg-[#F4F5FB]'
+                        ? 'bg-[#183058] text-white font-bold shadow-xs'
+                        : 'text-[#17181C] hover:bg-[#F4F6FA]'
                     }`}
                   >
                     <div className="flex items-center gap-2.5 truncate mr-2">

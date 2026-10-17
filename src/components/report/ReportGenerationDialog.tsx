@@ -32,7 +32,7 @@ export function ReportGenerationDialog({
             type="button"
             onClick={onClose}
             aria-label="Tutup dialog"
-            className="absolute top-4 right-4 p-2 rounded-xl text-[#676A78] hover:text-[#17181C] hover:bg-[#F4F5FB] transition-colors"
+            className="absolute top-4 right-4 p-2 rounded-xl text-[#676A78] hover:text-[#17181C] hover:bg-[#F4F6FA] transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
@@ -41,7 +41,7 @@ export function ReportGenerationDialog({
         {/* State: Generating */}
         {status === 'generating' && (
           <div className="text-center py-4 space-y-4">
-            <div className="w-14 h-14 rounded-2xl bg-[#EFEDFD] text-[#6C5CE7] flex items-center justify-center mx-auto">
+            <div className="w-14 h-14 rounded-2xl bg-[#E8ECF6] text-[#183058] flex items-center justify-center mx-auto">
               <Loader2 className="w-7 h-7 animate-spin" aria-hidden="true" />
             </div>
             <div className="space-y-1">
@@ -52,17 +52,17 @@ export function ReportGenerationDialog({
                 Sistem sedang memproses hasil penilaian kognitif Anda menjadi laporan resmi 9 halaman. Proses ini membutuhkan beberapa detik.
               </p>
             </div>
-            <div className="p-3 rounded-xl bg-[#F4F5FB] text-[11px] text-[#676A78] text-left space-y-1">
+            <div className="p-3 rounded-xl bg-[#F4F6FA] text-[11px] text-[#676A78] text-left space-y-1">
               <div className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#6C5CE7] animate-pulse" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#183058] animate-pulse" />
                 <span>Memvalidasi skor dimensi dan profil karakter</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#6C5CE7] animate-pulse" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#183058] animate-pulse" />
                 <span>Menyusun rekomendasi belajar dan gaya tutor</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#6C5CE7] animate-pulse" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#183058] animate-pulse" />
                 <span>Mengunggah dokumen ke penyimpanan aman</span>
               </div>
             </div>
@@ -88,7 +88,7 @@ export function ReportGenerationDialog({
                 <button
                   type="button"
                   onClick={onViewReport}
-                  className="w-full sm:w-1/2 py-2.5 px-4 rounded-xl bg-[#6C5CE7] hover:bg-[#5243D6] text-white text-xs font-bold shadow-sm transition-colors min-h-[44px]"
+                  className="w-full sm:w-1/2 py-2.5 px-4 rounded-xl bg-[#183058] hover:bg-[#102342] text-white text-xs font-bold shadow-sm transition-colors min-h-[44px]"
                 >
                   Lihat Dokumen
                 </button>
@@ -96,7 +96,7 @@ export function ReportGenerationDialog({
               <button
                 type="button"
                 onClick={onClose}
-                className="w-full sm:w-1/2 py-2.5 px-4 rounded-xl bg-[#F4F5FB] hover:bg-[#EAEBF0] text-[#17181C] text-xs font-bold transition-colors min-h-[44px]"
+                className="w-full sm:w-1/2 py-2.5 px-4 rounded-xl bg-[#F4F6FA] hover:bg-[#EAEBF0] text-[#17181C] text-xs font-bold transition-colors min-h-[44px]"
               >
                 Tutup
               </button>
@@ -122,7 +122,7 @@ export function ReportGenerationDialog({
               <button
                 type="button"
                 onClick={onClose}
-                className="w-full py-2.5 px-4 rounded-xl bg-[#F4F5FB] hover:bg-[#EAEBF0] text-[#17181C] text-xs font-bold transition-colors min-h-[44px]"
+                className="w-full py-2.5 px-4 rounded-xl bg-[#F4F6FA] hover:bg-[#EAEBF0] text-[#17181C] text-xs font-bold transition-colors min-h-[44px]"
               >
                 Tutup
               </button>
@@ -133,7 +133,7 @@ export function ReportGenerationDialog({
         {/* State: Idle / Confirm */}
         {status === 'idle' && (
           <div className="text-center py-4 space-y-4">
-            <div className="w-14 h-14 rounded-2xl bg-[#EFEDFD] text-[#6C5CE7] flex items-center justify-center mx-auto">
+            <div className="w-14 h-14 rounded-2xl bg-[#E8ECF6] text-[#183058] flex items-center justify-center mx-auto">
               <FileText className="w-7 h-7" aria-hidden="true" />
             </div>
             <div className="space-y-1">

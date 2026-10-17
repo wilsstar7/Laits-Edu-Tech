@@ -33,7 +33,7 @@ export function PersonalityCard() {
     return (
       <div className="surface-card p-6 flex flex-col justify-between bg-white border border-border min-h-[220px] animate-pulse rounded-3xl">
         <div className="h-4 w-32 bg-[#EAEBF0] rounded" />
-        <div className="h-16 w-full bg-[#F4F5FB] rounded-xl my-4" />
+        <div className="h-16 w-full bg-[#F4F6FA] rounded-xl my-4" />
         <div className="h-8 w-28 bg-[#EAEBF0] rounded-lg" />
       </div>
     )
@@ -51,11 +51,11 @@ export function PersonalityCard() {
       <div>
         <div className="flex items-center justify-between pb-3 border-b border-border/60">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-[#EFEDFD] text-[#6C5CE7] flex items-center justify-center">
+            <div className="w-8 h-8 rounded-xl bg-[#E8ECF6] text-[#183058] flex items-center justify-center">
               <Compass className="w-4 h-4" />
             </div>
             <div>
-              <span className="text-[10px] font-bold text-[#6C5CE7] uppercase tracking-wider block">
+              <span className="text-[10px] font-bold text-[#183058] uppercase tracking-wider block">
                 {isPotential ? 'Paket 2: Persona Potential' : 'Paket 1: Persona Modality'}
               </span>
               <h3 className="font-bold text-base text-[#17181C]">
@@ -80,8 +80,8 @@ export function PersonalityCard() {
             <div className="space-y-2.5">
               {isPotential && potential ? (
                 <>
-                  <div className="p-4 rounded-2xl bg-[#F4F5FB] border border-border/80 space-y-1.5">
-                    <span className="text-[11px] font-bold text-[#6C5CE7] uppercase tracking-wide">
+                  <div className="p-4 rounded-2xl bg-[#F4F6FA] border border-border/80 space-y-1.5">
+                    <span className="text-[11px] font-bold text-[#183058] uppercase tracking-wide">
                       Tipologi MBTI & Gaya Kognitif:
                     </span>
                     <p className="text-base font-extrabold text-[#17181C]">
@@ -109,8 +109,8 @@ export function PersonalityCard() {
                 </>
               ) : (
                 <>
-                  <div className="p-4 rounded-2xl bg-[#F4F5FB] border border-border/80 space-y-1.5">
-                    <span className="text-[11px] font-bold text-[#6C5CE7] uppercase tracking-wide">
+                  <div className="p-4 rounded-2xl bg-[#F4F6FA] border border-border/80 space-y-1.5">
+                    <span className="text-[11px] font-bold text-[#183058] uppercase tracking-wide">
                       Modalitas Belajar Sensori:
                     </span>
                     <p className="text-base font-extrabold text-[#17181C]">
@@ -141,8 +141,8 @@ export function PersonalityCard() {
               )}
             </div>
           ) : (
-            <div className="flex items-start gap-3 p-4 rounded-2xl bg-[#F4F5FB] border border-border">
-              <Brain className="w-5 h-5 text-[#6C5CE7] shrink-0 mt-0.5" />
+            <div className="flex items-start gap-3 p-4 rounded-2xl bg-[#F4F6FA] border border-border">
+              <Brain className="w-5 h-5 text-[#183058] shrink-0 mt-0.5" />
               <div className="space-y-1">
                 <p className="text-xs font-bold text-[#17181C]">
                   Petakan Karakter & Gaya Belajarmu
@@ -160,7 +160,7 @@ export function PersonalityCard() {
         {isCompleted ? (
           <Link
             to="/student/personality"
-            className="inline-flex items-center justify-center w-full sm:w-auto px-5 py-2.5 rounded-2xl bg-[#6C5CE7] text-white text-xs font-bold shadow-sm hover:bg-[#5243D6] transition-colors min-h-[42px] gap-1.5"
+            className="inline-flex items-center justify-center w-full sm:w-auto px-5 py-2.5 rounded-2xl bg-[#183058] text-white text-xs font-bold shadow-sm hover:bg-[#102342] transition-colors min-h-[42px] gap-1.5"
           >
             <span>Buka Laporan Hasil Lengkap</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -168,7 +168,7 @@ export function PersonalityCard() {
         ) : (
           <Link
             to="/student/assessment"
-            className="inline-flex items-center justify-center w-full sm:w-auto px-5 py-2.5 rounded-2xl bg-[#6C5CE7] text-white text-xs font-bold shadow-sm hover:bg-[#5243D6] transition-colors min-h-[42px] gap-1.5"
+            className="inline-flex items-center justify-center w-full sm:w-auto px-5 py-2.5 rounded-2xl bg-[#183058] text-white text-xs font-bold shadow-sm hover:bg-[#102342] transition-colors min-h-[42px] gap-1.5"
           >
             <span>Mulai Asesmen Sekarang</span>
             <ArrowRight className="w-3.5 h-3.5" />

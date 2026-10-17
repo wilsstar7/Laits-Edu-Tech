@@ -26,7 +26,7 @@ export function ReportErrorState({
           <button
             type="button"
             onClick={onRetry}
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#F4F5FB] hover:bg-[#EAEBF0] text-[#17181C] text-xs font-bold transition-colors min-h-[44px]"
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#F4F6FA] hover:bg-[#EAEBF0] text-[#17181C] text-xs font-bold transition-colors min-h-[44px]"
           >
             <RotateCcw className="w-3.5 h-3.5" aria-hidden="true" />
             <span>Coba Lagi</span>

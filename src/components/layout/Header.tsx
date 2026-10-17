@@ -22,7 +22,7 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
           type="button"
           onClick={onOpenMobileMenu}
           aria-label="Buka menu navigasi"
-          className="lg:hidden w-10 h-10 rounded-xl bg-white border border-border/80 flex items-center justify-center text-foreground hover:bg-[#EEF0F8] transition-colors focus-visible:outline-2 focus-visible:outline-[#6C5CE7]"
+          className="lg:hidden w-10 h-10 rounded-xl bg-white border border-border/80 flex items-center justify-center text-foreground hover:bg-[#ECF0F7] transition-colors focus-visible:outline-2 focus-visible:outline-[#183058]"
         >
           <Menu className="w-5 h-5" />
         </button>

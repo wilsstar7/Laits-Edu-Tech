@@ -27,14 +27,14 @@ export function CourseCard({ course, className = '' }: CourseCardProps) {
   }
 
   return (
-    <div className={`bg-white rounded-2xl border border-border/80 overflow-hidden shadow-xs hover:shadow-md hover:border-[#6C5CE7]/30 transition-all flex flex-col justify-between ${className}`}>
+    <div className={`bg-white rounded-2xl border border-border/80 overflow-hidden shadow-xs hover:shadow-md hover:border-[#183058]/30 transition-all flex flex-col justify-between ${className}`}>
       {/* Top Banner / Thumbnail */}
       <div className="relative h-40 bg-gradient-to-tr from-[#17181C] to-[#343542] flex items-center justify-center p-4 overflow-hidden">
         {course.thumbnailUrl ? (
           <img src={course.thumbnailUrl} alt={course.title} className="w-full h-full object-cover" />
         ) : (
           <div className="w-12 h-12 rounded-2xl bg-white/10 text-white flex items-center justify-center backdrop-blur-xs ring-1 ring-white/20">
-            <BookOpen className="w-6 h-6 text-[#8F7FF7]" />
+            <BookOpen className="w-6 h-6 text-[#B0B4E0]" />
           </div>
         )}
 
@@ -53,7 +53,7 @@ export function CourseCard({ course, className = '' }: CourseCardProps) {
       <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
         <div className="space-y-2">
           <Link to={`/student/courses/${course.id}`}>
-            <h3 className="font-bold text-[#17181C] text-base hover:text-[#6C5CE7] transition-colors line-clamp-2">
+            <h3 className="font-bold text-[#17181C] text-base hover:text-[#183058] transition-colors line-clamp-2">
               {course.title}
             </h3>
           </Link>
@@ -88,11 +88,11 @@ export function CourseCard({ course, className = '' }: CourseCardProps) {
                     'Progres Belajar'
                   )}
                 </span>
-                <span className="font-bold text-[#6C5CE7]">{progress}%</span>
+                <span className="font-bold text-[#183058]">{progress}%</span>
               </div>
-              <div className="w-full h-1.5 rounded-full bg-[#EEF0F8] overflow-hidden">
+              <div className="w-full h-1.5 rounded-full bg-[#ECF0F7] overflow-hidden">
                 <div
-                  className={`h-full rounded-full transition-all duration-300 ${isCompleted ? 'bg-emerald-500' : 'bg-[#6C5CE7]'}`}
+                  className={`h-full rounded-full transition-all duration-300 ${isCompleted ? 'bg-emerald-500' : 'bg-[#183058]'}`}
                   style={{ width: `${progress}%` }}
                 />
               </div>
@@ -105,7 +105,7 @@ export function CourseCard({ course, className = '' }: CourseCardProps) {
               <Button
                 variant={isEnrolled ? 'default' : 'outline'}
                 className={`w-full text-xs font-bold rounded-xl justify-center gap-1.5 ${
-                  isEnrolled ? 'bg-[#6C5CE7] hover:bg-[#5B4CD7] text-white' : ''
+                  isEnrolled ? 'bg-[#183058] hover:bg-[#5B4CD7] text-white' : ''
                 }`}
               >
                 <span>{isEnrolled ? (isCompleted ? 'Tinjau Materi' : 'Lanjutkan Belajar') : 'Lihat Silabus'}</span>

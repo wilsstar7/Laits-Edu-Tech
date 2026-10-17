@@ -62,8 +62,8 @@ export function StudentCoursesPage() {
           onClick={() => setTab('all')}
           className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
             tab === 'all'
-              ? 'bg-[#6C5CE7] text-white shadow-xs'
-              : 'text-[#676A78] hover:text-[#17181C] hover:bg-[#EEF0F8]'
+              ? 'bg-[#183058] text-white shadow-xs'
+              : 'text-[#676A78] hover:text-[#17181C] hover:bg-[#ECF0F7]'
           }`}
         >
           Semua Kursus ({courses.length})
@@ -73,8 +73,8 @@ export function StudentCoursesPage() {
           onClick={() => setTab('enrolled')}
           className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
             tab === 'enrolled'
-              ? 'bg-[#6C5CE7] text-white shadow-xs'
-              : 'text-[#676A78] hover:text-[#17181C] hover:bg-[#EEF0F8]'
+              ? 'bg-[#183058] text-white shadow-xs'
+              : 'text-[#676A78] hover:text-[#17181C] hover:bg-[#ECF0F7]'
           }`}
         >
           Sedang Dipelajari ({enrolledCourses.length})
@@ -90,7 +90,7 @@ export function StudentCoursesPage() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Cari materi atau kursus..."
-            className="w-full pl-9 pr-3 py-2 rounded-xl border border-border/80 text-xs focus:ring-2 focus:ring-[#6C5CE7] focus:outline-hidden bg-white"
+            className="w-full pl-9 pr-3 py-2 rounded-xl border border-border/80 text-xs focus:ring-2 focus:ring-[#183058] focus:outline-hidden bg-white"
           />
         </div>
 
@@ -112,12 +112,12 @@ export function StudentCoursesPage() {
       {/* Courses Grid */}
       {loading ? (
         <div className="py-24 text-center flex flex-col items-center justify-center gap-3">
-          <Loader2 className="w-8 h-8 animate-spin text-[#6C5CE7]" />
+          <Loader2 className="w-8 h-8 animate-spin text-[#183058]" />
           <p className="text-xs text-[#8A8D9A]">Memuat daftar kursus materi...</p>
         </div>
       ) : filteredCourses.length === 0 ? (
         <div className="bg-white rounded-3xl border border-border p-12 text-center space-y-3">
-          <div className="w-12 h-12 rounded-2xl bg-[#EFEDFD] text-[#6C5CE7] flex items-center justify-center mx-auto">
+          <div className="w-12 h-12 rounded-2xl bg-[#E8ECF6] text-[#183058] flex items-center justify-center mx-auto">
             <BookOpen className="w-6 h-6" />
           </div>
           <h3 className="font-bold text-base text-[#17181C]">
@@ -133,7 +133,7 @@ export function StudentCoursesPage() {
               variant="default"
               size="sm"
               onClick={() => setTab('all')}
-              className="rounded-xl text-xs bg-[#6C5CE7] hover:bg-[#5B4CD7] text-white font-bold"
+              className="rounded-xl text-xs bg-[#183058] hover:bg-[#5B4CD7] text-white font-bold"
             >
               Jelajahi Katalog
             </Button>

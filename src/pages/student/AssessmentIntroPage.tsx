@@ -131,7 +131,7 @@ export function AssessmentIntroPage() {
   if (loading) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center gap-3">
-        <Loader2 className="w-8 h-8 animate-spin text-[#6C5CE7]" />
+        <Loader2 className="w-8 h-8 animate-spin text-[#183058]" />
         <p className="text-xs text-[#676A78]">Menyiapkan katalog asesmen...</p>
       </div>
     )
@@ -141,7 +141,7 @@ export function AssessmentIntroPage() {
     <div className="max-w-5xl mx-auto py-8 px-4 sm:px-6 space-y-8">
       {/* 1. Page Header */}
       <div className="space-y-2 text-center sm:text-left">
-        <span className="text-xs font-bold text-[#6C5CE7] uppercase tracking-wider">
+        <span className="text-xs font-bold text-[#183058] uppercase tracking-wider">
           Diagnostic Assessment & Pemetaan Belajar
         </span>
         <h1 className="text-2xl sm:text-4xl font-extrabold text-[#17181C] tracking-tight">
@@ -193,7 +193,7 @@ export function AssessmentIntroPage() {
                 type="button"
                 onClick={handleStart}
                 disabled={actionLoading}
-                className="px-6 py-3 rounded-2xl bg-[#6C5CE7] hover:bg-[#5243D6] text-white text-xs font-bold shadow-md shadow-[#6C5CE7]/20 transition-all flex items-center gap-2 min-h-[44px]"
+                className="px-6 py-3 rounded-2xl bg-[#183058] hover:bg-[#102342] text-white text-xs font-bold shadow-md shadow-[#183058]/20 transition-all flex items-center gap-2 min-h-[44px]"
               >
                 {actionLoading ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
@@ -260,8 +260,8 @@ export function AssessmentIntroPage() {
                 className={`relative rounded-3xl p-6 border transition-all flex flex-col justify-between ${
                   isActive
                     ? isSelected
-                      ? 'bg-white border-[#6C5CE7] shadow-md ring-2 ring-[#6C5CE7]/30 cursor-pointer'
-                      : 'bg-white border-border/80 hover:border-[#6C5CE7]/40 cursor-pointer'
+                      ? 'bg-white border-[#183058] shadow-md ring-2 ring-[#183058]/30 cursor-pointer'
+                      : 'bg-white border-border/80 hover:border-[#183058]/40 cursor-pointer'
                     : 'bg-[#F9FAFD] border-border/60 opacity-80 cursor-not-allowed'
                 }`}
               >
@@ -270,7 +270,7 @@ export function AssessmentIntroPage() {
                     <span
                       className={`px-3 py-1 rounded-full text-[11px] font-bold ${
                         isActive
-                          ? 'bg-[#6C5CE7]/10 text-[#6C5CE7]'
+                          ? 'bg-[#183058]/10 text-[#183058]'
                           : 'bg-zinc-200 text-zinc-600 flex items-center gap-1'
                       }`}
                     >
@@ -286,7 +286,7 @@ export function AssessmentIntroPage() {
                     <h3 className="text-lg font-extrabold text-[#17181C]">
                       {pkg.name}
                     </h3>
-                    <p className="text-xs font-semibold text-[#6C5CE7] mt-0.5">
+                    <p className="text-xs font-semibold text-[#183058] mt-0.5">
                       {pkg.subtitle}
                     </p>
                   </div>
@@ -300,7 +300,7 @@ export function AssessmentIntroPage() {
                     <ul className="space-y-1 text-xs text-[#333542]">
                       {pkg.deliverables.map((del, dIdx) => (
                         <li key={dIdx} className="flex items-start gap-1.5">
-                          <span className="text-[#6C5CE7] font-bold">•</span>
+                          <span className="text-[#183058] font-bold">•</span>
                           <span className="leading-tight">{del}</span>
                         </li>
                       ))}
@@ -310,11 +310,11 @@ export function AssessmentIntroPage() {
 
                 <div className="pt-5 mt-4 border-t border-border/60">
                   {isActive ? (
-                    <div className="flex items-center justify-between text-xs font-bold text-[#6C5CE7]">
+                    <div className="flex items-center justify-between text-xs font-bold text-[#183058]">
                       <span>{isSelected ? 'Paket Terpilih' : 'Pilih Paket Ini'}</span>
                       <CheckCircle2
                         className={`w-4 h-4 ${
-                          isSelected ? 'text-[#6C5CE7]' : 'text-transparent'
+                          isSelected ? 'text-[#183058]' : 'text-transparent'
                         }`}
                       />
                     </div>
@@ -334,7 +334,7 @@ export function AssessmentIntroPage() {
       {/* 4. Leveling Filter & Configuration (SD / SMP / SMA) */}
       <div className="surface-card bg-white p-6 sm:p-8 border border-border/80 rounded-3xl space-y-6">
         <div className="space-y-1">
-          <div className="flex items-center gap-2 text-[#6C5CE7]">
+          <div className="flex items-center gap-2 text-[#183058]">
             <GraduationCap className="w-5 h-5" />
             <h2 className="text-base font-extrabold text-[#17181C]">
               Pilih Jenjang Pendidikan Siswa
@@ -358,19 +358,19 @@ export function AssessmentIntroPage() {
                 onClick={() => setSelectedLevel(lvl)}
                 className={`p-4 rounded-2xl border text-left transition-all min-h-[52px] ${
                   isChosen
-                    ? 'border-[#6C5CE7] bg-[#6C5CE7]/5 ring-1 ring-[#6C5CE7]'
-                    : 'border-border/80 hover:border-[#6C5CE7]/30 bg-white'
+                    ? 'border-[#183058] bg-[#183058]/5 ring-1 ring-[#183058]'
+                    : 'border-border/80 hover:border-[#183058]/30 bg-white'
                 }`}
               >
                 <div className="flex items-center justify-between mb-1.5">
                   <span
                     className={`font-bold text-sm ${
-                      isChosen ? 'text-[#6C5CE7]' : 'text-[#17181C]'
+                      isChosen ? 'text-[#183058]' : 'text-[#17181C]'
                     }`}
                   >
                     {cfg.label}
                   </span>
-                  <span className="text-xs font-mono font-bold px-2 py-0.5 rounded-lg bg-[#F4F5FB] text-[#17181C]">
+                  <span className="text-xs font-mono font-bold px-2 py-0.5 rounded-lg bg-[#F4F6FA] text-[#17181C]">
                     {isPackage2
                       ? PACKAGE_LEVEL_CONFIG.PAKET_2_PERSONA_POTENTIAL[lvl].totalQuestions
                       : cfg.totalCount}{' '}
@@ -387,12 +387,12 @@ export function AssessmentIntroPage() {
 
         {/* Breakdown Module Indicator for Selected Level & Package */}
         <div
-          className={`grid gap-3 p-4 rounded-2xl bg-[#F4F5FB] border border-border/60 ${
+          className={`grid gap-3 p-4 rounded-2xl bg-[#F4F6FA] border border-border/60 ${
             isPackage2 ? 'grid-cols-2 sm:grid-cols-5' : 'grid-cols-1 sm:grid-cols-3'
           }`}
         >
           <div className="flex items-center gap-3">
-            <BookOpen className="w-4 h-4 text-[#6C5CE7] shrink-0" />
+            <BookOpen className="w-4 h-4 text-[#183058] shrink-0" />
             <div>
               <p className="text-[11px] text-[#676A78]">Modul 1: VAK</p>
               <p className="text-xs font-bold text-[#17181C]">
@@ -402,7 +402,7 @@ export function AssessmentIntroPage() {
           </div>
 
           <div className="flex items-center gap-3">
-            <Layers className="w-4 h-4 text-[#6C5CE7] shrink-0" />
+            <Layers className="w-4 h-4 text-[#183058] shrink-0" />
             <div>
               <p className="text-[11px] text-[#676A78]">Modul 2: Hemisfer</p>
               <p className="text-xs font-bold text-[#17181C]">
@@ -412,7 +412,7 @@ export function AssessmentIntroPage() {
           </div>
 
           <div className="flex items-center gap-3">
-            <Clock className="w-4 h-4 text-[#6C5CE7] shrink-0" />
+            <Clock className="w-4 h-4 text-[#183058] shrink-0" />
             <div>
               <p className="text-[11px] text-[#676A78]">Modul 3: Kebiasaan</p>
               <p className="text-xs font-bold text-[#17181C]">
@@ -424,7 +424,7 @@ export function AssessmentIntroPage() {
           {isPackage2 && (
             <>
               <div className="flex items-center gap-3">
-                <GraduationCap className="w-4 h-4 text-[#6C5CE7] shrink-0" />
+                <GraduationCap className="w-4 h-4 text-[#183058] shrink-0" />
                 <div>
                   <p className="text-[11px] text-[#676A78]">Modul 4: MBTI</p>
                   <p className="text-xs font-bold text-[#17181C]">20 Soal Kepribadian</p>
@@ -432,7 +432,7 @@ export function AssessmentIntroPage() {
               </div>
 
               <div className="flex items-center gap-3">
-                <CheckCircle2 className="w-4 h-4 text-[#6C5CE7] shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-[#183058] shrink-0" />
                 <div>
                   <p className="text-[11px] text-[#676A78]">Modul 5: Gardner MI</p>
                   <p className="text-xs font-bold text-[#17181C]">40 Soal 8 Kecerdasan</p>
@@ -460,7 +460,7 @@ export function AssessmentIntroPage() {
                 type="checkbox"
                 checked={consentChecked}
                 onChange={(e) => setConsentChecked(e.target.checked)}
-                className="mt-0.5 w-4 h-4 rounded border-[#BDC1D0] text-[#6C5CE7] focus:ring-[#6C5CE7]"
+                className="mt-0.5 w-4 h-4 rounded border-[#BDC1D0] text-[#183058] focus:ring-[#183058]"
               />
               <span className="text-xs text-[#17181C] font-medium leading-relaxed">
                 Saya memahami bahwa asesmen ini digunakan untuk pengenalan gaya belajar personal, bukan diagnosis psikologis klinis.
@@ -482,7 +482,7 @@ export function AssessmentIntroPage() {
               type="button"
               onClick={handleStart}
               disabled={!consentChecked || actionLoading}
-              className="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-[#6C5CE7] hover:bg-[#5243D6] text-white text-xs font-bold shadow-md shadow-[#6C5CE7]/25 disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 min-h-[46px]"
+              className="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-[#183058] hover:bg-[#102342] text-white text-xs font-bold shadow-md shadow-[#183058]/25 disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 min-h-[46px]"
             >
               {actionLoading ? (
                 <>

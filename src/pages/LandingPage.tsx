@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router'
 import {
-  Layers,
   BookOpen,
   GraduationCap,
   Award,
@@ -42,7 +41,7 @@ export function LandingPage() {
       image: styleVisualImg,
       imageCaption: 'Sesi Belajar Visual: Pemetaan Konsep & Infografis Rumus',
       desc: 'Lebih cepat menyerap konsep saat materi dipetakan secara visual dan terstruktur.',
-      tagColor: 'bg-[#EFEDFD] text-[#6C5CE7]',
+      tagColor: 'bg-[#E8ECF6] text-[#183058]',
       focusPoint: 'Peta Konsep (Mind Map), Rangkuman Infografis, dan Visualisasi Rumus.',
       studentBenefit: 'Memudahkan memahami struktur besar materi sebelum membedah hitungan rumit.',
       interactiveSnippet: {
@@ -102,20 +101,22 @@ export function LandingPage() {
   const activeOption = (sampleAssessmentOptions[selectedStyleAnswer] ?? sampleAssessmentOptions[0])!
 
   return (
-    <div className="min-h-screen bg-[#F4F5FB] text-[#1D1D24] antialiased flex flex-col justify-between">
+    <div className="min-h-screen bg-[#F4F6FA] text-[#1D1D24] antialiased flex flex-col justify-between">
       {/* Top Navigation - M3 Top App Bar */}
-      <header className="sticky top-0 z-50 bg-[#FDFBFE]/90 backdrop-blur-md border-b border-[#E0E2EC]/80">
+      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-[#E0E4EE]/80">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-[#6C5CE7] flex items-center justify-center text-white shadow-xs">
-              <Layers className="w-5 h-5" />
-            </div>
+            <img
+              src="/logo-mark.png"
+              alt="Logo Persona Academy"
+              className="w-10 h-10 object-contain shrink-0"
+            />
             <div className="flex flex-col">
-              <span className="font-extrabold text-[#17181C] text-lg tracking-tight leading-none">
-                PERSONA <span className="text-[#6C5CE7]">ACADEMY</span>
+              <span className="font-extrabold text-[#0F1D33] text-lg tracking-tight leading-none">
+                PERSONA <span className="text-[#183058]">ACADEMY</span>
               </span>
-              <span className="text-[11px] text-[#676A78] font-semibold mt-1">
-                LMS & Les Privat Siswa
+              <span className="text-[10px] text-[#676A78] font-semibold uppercase tracking-wider mt-1">
+                Learning by Intelligence Type
               </span>
             </div>
           </Link>
@@ -124,7 +125,7 @@ export function LandingPage() {
             {session ? (
               <Link
                 to={dashboardUrl}
-                className="px-6 py-2.5 rounded-full bg-[#6C5CE7] text-white text-xs font-bold shadow-xs hover:bg-[#5243D6] hover:shadow-sm transition-all min-h-[40px] flex items-center justify-center gap-2"
+                className="px-6 py-2.5 rounded-full bg-[#183058] text-white text-xs font-bold shadow-xs hover:bg-[#102342] hover:shadow-sm transition-all min-h-[40px] flex items-center justify-center gap-2"
               >
                 <span>Buka Dashboard</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -133,13 +134,13 @@ export function LandingPage() {
               <>
                 <Link
                   to="/login"
-                  className="px-5 py-2 rounded-full text-xs font-bold text-[#17181C] hover:bg-[#6C5CE7]/8 transition-colors min-h-[40px] flex items-center"
+                  className="px-5 py-2 rounded-full text-xs font-bold text-[#0F1D33] hover:bg-[#183058]/8 transition-colors min-h-[40px] flex items-center"
                 >
                   Masuk
                 </Link>
                 <Link
                   to="/register"
-                  className="px-6 py-2.5 rounded-full bg-[#6C5CE7] text-white text-xs font-bold shadow-xs hover:bg-[#5243D6] hover:shadow-sm transition-all min-h-[40px] flex items-center gap-2"
+                  className="px-6 py-2.5 rounded-full bg-[#183058] text-white text-xs font-bold shadow-xs hover:bg-[#102342] hover:shadow-sm transition-all min-h-[40px] flex items-center gap-2"
                 >
                   <span>Daftar Siswa</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -172,7 +173,7 @@ export function LandingPage() {
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1">
                   <Link
                     to="/register"
-                    className="px-7 py-3.5 rounded-full bg-[#6C5CE7] text-white text-sm font-bold shadow-xs hover:shadow-sm hover:bg-[#5243D6] transition-all flex items-center justify-center gap-2 min-h-[48px]"
+                    className="px-7 py-3.5 rounded-full bg-[#183058] text-white text-sm font-bold shadow-xs hover:shadow-sm hover:bg-[#102342] transition-all flex items-center justify-center gap-2 min-h-[48px]"
                   >
                     <span>Daftar Akun Siswa</span>
                     <ArrowRight className="w-4 h-4" />
@@ -233,7 +234,7 @@ export function LandingPage() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
               {/* Left Column: Context, Animated Visual Environment, & Educational Value */}
               <div className="lg:col-span-5 space-y-5">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EFEDFD] text-[#6C5CE7] text-xs font-bold">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#E8ECF6] text-[#183058] text-xs font-bold">
                   <Award className="w-3.5 h-3.5" />
                   <span>Diagnostik Karakter Belajar</span>
                 </div>
@@ -309,7 +310,7 @@ export function LandingPage() {
                   {/* Dynamic Pedagogical Breakdown based on selection */}
                   <div className="p-3.5 bg-[#F7F8FC] rounded-2xl border border-[#E0E2EC]/70 space-y-2">
                     <div className="flex items-start gap-2.5">
-                      <div className="w-6 h-6 rounded-full bg-white border border-[#E0E2EC] flex items-center justify-center shrink-0 mt-0.5 text-[#6C5CE7]">
+                      <div className="w-6 h-6 rounded-full bg-white border border-[#E0E2EC] flex items-center justify-center shrink-0 mt-0.5 text-[#183058]">
                         <Check className="w-3.5 h-3.5" />
                       </div>
                       <div>
@@ -336,7 +337,7 @@ export function LandingPage() {
                 <div className="pt-1 flex flex-col sm:flex-row items-start sm:items-center gap-3">
                   <Link
                     to="/register"
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#6C5CE7] text-white text-xs font-bold shadow-xs hover:bg-[#5243D6] hover:shadow-sm transition-all min-h-[44px]"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#183058] text-white text-xs font-bold shadow-xs hover:bg-[#102342] hover:shadow-sm transition-all min-h-[44px]"
                   >
                     <span>Ikuti Asesmen Lengkap</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -352,7 +353,7 @@ export function LandingPage() {
                 <div>
                   <div className="pb-4 border-b border-[#E0E2EC]/80 flex items-center justify-between gap-3">
                     <div>
-                      <span className="text-[11px] font-bold uppercase tracking-wider text-[#6C5CE7]">
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-[#183058]">
                         Simulasi Pertanyaan Asesmen
                       </span>
                       <h3 className="text-sm sm:text-base font-bold text-[#17181C] mt-1 leading-snug">
@@ -377,14 +378,14 @@ export function LandingPage() {
                           onClick={() => setSelectedStyleAnswer(idx)}
                           className={`w-full text-left p-4 rounded-2xl border transition-all flex items-start gap-3.5 min-h-[48px] ${
                             isSelected
-                              ? 'bg-[#F9F8FE] border-[#6C5CE7] ring-1 ring-[#6C5CE7]/30 shadow-2xs'
-                              : 'bg-white border-[#E0E2EC] hover:border-[#6C5CE7]/40 hover:bg-[#FAFBFD]'
+                              ? 'bg-[#F5F7FC] border-[#183058] ring-1 ring-[#183058]/30 shadow-2xs'
+                              : 'bg-white border-[#E0E2EC] hover:border-[#183058]/40 hover:bg-[#FAFBFD]'
                           }`}
                         >
                           <div
                             className={`w-5 h-5 rounded-full border flex items-center justify-center mt-0.5 shrink-0 transition-colors ${
                               isSelected
-                                ? 'border-[#6C5CE7] bg-[#6C5CE7] text-white'
+                                ? 'border-[#183058] bg-[#183058] text-white'
                                 : 'border-[#C9CAD3] bg-white'
                             }`}
                           >
@@ -418,12 +419,12 @@ export function LandingPage() {
                 <div className="mt-5 p-4 sm:p-5 rounded-2xl bg-[#F3F4F9] border border-[#E0E2EC]/80 space-y-3">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full bg-[#6C5CE7]" />
+                      <span className="w-2 h-2 rounded-full bg-[#183058]" />
                       <span className="text-[11px] font-bold text-[#17181C] uppercase tracking-wider">
                         Adaptasi Pendekatan Tutor:
                       </span>
                     </div>
-                    <span className="text-[11px] font-bold text-[#6C5CE7]">
+                    <span className="text-[11px] font-bold text-[#183058]">
                       {activeOption.adaptation.method}
                     </span>
                   </div>
@@ -445,7 +446,7 @@ export function LandingPage() {
                             key={sIdx}
                             className="px-3 py-1.5 rounded-full bg-white border border-[#E0E2EC] text-[11px] font-semibold text-[#17181C] shadow-2xs flex items-center gap-1.5"
                           >
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#6C5CE7]" />
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#183058]" />
                             <span>{step}</span>
                           </div>
                         ))}
@@ -504,7 +505,7 @@ export function LandingPage() {
                   </div>
 
                   <div className="flex items-center gap-3 pb-3 border-b border-[#E0E2EC]/70">
-                    <div className="w-11 h-11 rounded-2xl bg-[#EFEDFD] text-[#6C5CE7] flex items-center justify-center">
+                    <div className="w-11 h-11 rounded-2xl bg-[#E8ECF6] text-[#183058] flex items-center justify-center">
                       <BookOpen className="w-5 h-5" />
                     </div>
                     <div>
@@ -596,7 +597,7 @@ export function LandingPage() {
                     />
                   </div>
                   <div className="space-y-1">
-                    <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-[#EFEDFD] text-[#6C5CE7] inline-block">
+                    <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-[#E8ECF6] text-[#183058] inline-block">
                       Langkah 1
                     </span>
                     <h4 className="text-sm font-bold text-[#17181C]">Daftar & Lengkapi Data</h4>
@@ -618,7 +619,7 @@ export function LandingPage() {
                     />
                   </div>
                   <div className="space-y-1">
-                    <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-[#EFEDFD] text-[#6C5CE7] inline-block">
+                    <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-[#E8ECF6] text-[#183058] inline-block">
                       Langkah 2
                     </span>
                     <h4 className="text-sm font-bold text-[#17181C]">Isi Asesmen Karakter</h4>
@@ -640,7 +641,7 @@ export function LandingPage() {
                     />
                   </div>
                   <div className="space-y-1">
-                    <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-[#EFEDFD] text-[#6C5CE7] inline-block">
+                    <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-[#E8ECF6] text-[#183058] inline-block">
                       Langkah 3
                     </span>
                     <h4 className="text-sm font-bold text-[#17181C]">Jadwalkan Sesi Belajar</h4>
@@ -655,7 +656,7 @@ export function LandingPage() {
             <div className="pt-4 text-center">
               <Link
                 to="/register"
-                className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-[#6C5CE7] text-white text-xs font-bold shadow-xs hover:bg-[#5243D6] hover:shadow-sm transition-all min-h-[44px]"
+                className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-[#183058] text-white text-xs font-bold shadow-xs hover:bg-[#102342] hover:shadow-sm transition-all min-h-[44px]"
               >
                 <span>Mulai Pendaftaran Akun Siswa</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -666,16 +667,25 @@ export function LandingPage() {
       </main>
 
       {/* Footer - M3 Surface Container */}
-      <footer className="bg-[#1D1B20] text-[#E6E0E9] py-12 border-t border-white/10">
+      <footer className="bg-[#0F1D33] text-[#E8ECF6] py-12 border-t border-white/10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-2xl bg-[#6C5CE7] flex items-center justify-center text-white shadow-xs">
-              <Layers className="w-4 h-4" />
+            <div className="w-10 h-10 rounded-xl bg-white p-1 flex items-center justify-center shadow-xs shrink-0">
+              <img
+                src="/logo-mark.png"
+                alt="Logo Persona Academy"
+                className="w-full h-full object-contain"
+              />
             </div>
-            <span className="font-bold text-white text-sm">PERSONA ACADEMY</span>
+            <div className="flex flex-col">
+              <span className="font-bold text-white text-sm leading-tight">PERSONA ACADEMY</span>
+              <span className="text-[10px] text-[#B0B4E0] font-medium tracking-wider uppercase">
+                Learning by Intelligence Type
+              </span>
+            </div>
           </div>
 
-          <p className="text-xs text-[#CAC4D0] text-center sm:text-right">
+          <p className="text-xs text-[#C9D2E3] text-center sm:text-right">
             (c) {new Date().getFullYear()} Persona Academy. Sistem Manajemen Belajar & Bimbingan Les Privat.
           </p>
         </div>

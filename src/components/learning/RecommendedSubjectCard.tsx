@@ -12,7 +12,7 @@ export function RecommendedSubjectCard({ subject }: RecommendedSubjectCardProps)
   const isReligious = subject.category === 'religious'
 
   return (
-    <div className="surface-card p-5 bg-white border border-border rounded-2xl flex flex-col justify-between gap-4 hover:border-[#6C5CE7]/30 transition-all">
+    <div className="surface-card p-5 bg-white border border-border rounded-2xl flex flex-col justify-between gap-4 hover:border-[#183058]/30 transition-all">
       <div className="space-y-2.5">
         <div className="flex items-center justify-between gap-2">
           <Badge
@@ -21,7 +21,7 @@ export function RecommendedSubjectCard({ subject }: RecommendedSubjectCardProps)
           >
             {isReligious ? 'Pendidikan Agama' : 'Mata Pelajaran Umum'}
           </Badge>
-          <span className="text-[11px] font-bold text-[#6C5CE7]">
+          <span className="text-[11px] font-bold text-[#183058]">
             Prioritas #{subject.priority}
           </span>
         </div>
@@ -40,7 +40,7 @@ export function RecommendedSubjectCard({ subject }: RecommendedSubjectCardProps)
         <Button asChild variant="outline" size="sm" className="w-full justify-between font-semibold text-xs min-h-[40px]">
           <Link to={`/student/tutors?subjectId=${subject.subjectId}`}>
             <span>Cari Tutor {subject.name}</span>
-            <ArrowRight className="w-3.5 h-3.5 text-[#6C5CE7]" />
+            <ArrowRight className="w-3.5 h-3.5 text-[#183058]" />
           </Link>
         </Button>
       </div>

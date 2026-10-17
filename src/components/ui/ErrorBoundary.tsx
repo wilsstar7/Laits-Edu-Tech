@@ -53,7 +53,7 @@ export class ErrorBoundary extends Component<Props, State> {
       }
 
       return (
-        <div className="min-h-screen bg-[#F4F5FB] flex items-center justify-center p-4">
+        <div className="min-h-screen bg-[#F4F6FA] flex items-center justify-center p-4">
           <div className="w-full max-w-md bg-white rounded-2xl border border-border/80 shadow-lg p-6 sm:p-8 text-center space-y-5 animate-in fade-in-50 zoom-in-95 duration-200">
             <div className="w-14 h-14 rounded-2xl bg-[#FEE2E2] text-[#EF4444] flex items-center justify-center mx-auto shadow-xs">
               <AlertTriangle className="w-7 h-7" />
@@ -80,7 +80,7 @@ export class ErrorBoundary extends Component<Props, State> {
               <Button
                 variant="default"
                 onClick={this.handleReset}
-                className="w-full sm:w-auto text-xs min-h-[44px] rounded-xl flex items-center justify-center gap-2 bg-[#6C5CE7] hover:bg-[#5B4CD7] text-white font-bold"
+                className="w-full sm:w-auto text-xs min-h-[44px] rounded-xl flex items-center justify-center gap-2 bg-[#183058] hover:bg-[#5B4CD7] text-white font-bold"
               >
                 <RefreshCw className="w-4 h-4" />
                 <span>Coba Lagi</span>

@@ -33,18 +33,18 @@ export function LikertScale({
             aria-checked={isSelected}
             disabled={disabled}
             onClick={() => onSelect(opt.id)}
-            className={`w-full text-left p-3.5 sm:p-5 rounded-2xl border transition-all flex items-start gap-3 sm:gap-3.5 min-h-[56px] group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6C5CE7] focus-visible:ring-offset-2 ${
+            className={`w-full text-left p-3.5 sm:p-5 rounded-2xl border transition-all flex items-start gap-3 sm:gap-3.5 min-h-[56px] group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#183058] focus-visible:ring-offset-2 ${
               isSelected
-                ? 'border-[#6C5CE7] bg-[#6C5CE7]/8 text-[#17181C] shadow-sm ring-1 ring-[#6C5CE7]'
-                : 'border-border/80 bg-white hover:border-[#6C5CE7]/40 hover:bg-[#F9FAFD] active:bg-[#F4F5FB] text-[#333542]'
+                ? 'border-[#183058] bg-[#183058]/8 text-[#17181C] shadow-sm ring-1 ring-[#183058]'
+                : 'border-border/80 bg-white hover:border-[#183058]/40 hover:bg-[#F9FAFD] active:bg-[#F4F6FA] text-[#333542]'
             }`}
           >
             {/* Letter Badge (A, B, C) */}
             <div
               className={`w-7 h-7 rounded-xl flex items-center justify-center shrink-0 font-bold text-xs transition-colors mt-0.5 ${
                 isSelected
-                  ? 'bg-[#6C5CE7] text-white'
-                  : 'bg-[#F4F5FB] text-[#676A78] group-hover:bg-[#EFEDFD] group-hover:text-[#6C5CE7]'
+                  ? 'bg-[#183058] text-white'
+                  : 'bg-[#F4F6FA] text-[#676A78] group-hover:bg-[#E8ECF6] group-hover:text-[#183058]'
               }`}
             >
               {letter}
@@ -65,8 +65,8 @@ export function LikertScale({
             <div
               className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 mt-1 transition-colors ${
                 isSelected
-                  ? 'border-[#6C5CE7] bg-[#6C5CE7]'
-                  : 'border-[#BDC1D0] bg-white group-hover:border-[#6C5CE7]'
+                  ? 'border-[#183058] bg-[#183058]'
+                  : 'border-[#BDC1D0] bg-white group-hover:border-[#183058]'
               }`}
             >
               {isSelected && <div className="w-2 h-2 rounded-full bg-white" />}

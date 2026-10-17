@@ -9,7 +9,7 @@ export function ProgressCard() {
       <div>
         <div className="flex items-center justify-between pb-3 border-b border-border/60">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-[#EFEDFD] text-[#6C5CE7] flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-[#E8ECF6] text-[#183058] flex items-center justify-center">
               <TrendingUp className="w-4 h-4" />
             </div>
             <h3 className="font-bold text-base text-[#17181C]">Progres Pembelajaran</h3>
@@ -26,9 +26,9 @@ export function ProgressCard() {
           </div>
 
           {/* Progress bar */}
-          <div className="w-full h-2.5 bg-[#EEF0F8] rounded-full overflow-hidden border border-border/40">
+          <div className="w-full h-2.5 bg-[#ECF0F7] rounded-full overflow-hidden border border-border/40">
             <div
-              className="h-full bg-[#6C5CE7] rounded-full"
+              className="h-full bg-[#183058] rounded-full"
               style={{ width: `${Math.max(percent, 2)}%` }}
             />
           </div>
@@ -42,7 +42,7 @@ export function ProgressCard() {
       <div className="pt-3 border-t border-border/60">
         <Link
           to="/student/learning"
-          className="inline-block text-xs font-bold text-[#6C5CE7] hover:underline"
+          className="inline-block text-xs font-bold text-[#183058] hover:underline"
         >
           Lihat Katalog Materi Belajar
         </Link>

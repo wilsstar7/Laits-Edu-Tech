@@ -65,7 +65,7 @@ export function StudentDashboardPage() {
         action={
           <Link
             to="/student/assessment"
-            className="hidden sm:inline-flex items-center px-4 py-2.5 rounded-xl bg-[#6C5CE7] text-white text-xs font-bold shadow-sm hover:bg-[#5243D6] transition-colors"
+            className="hidden sm:inline-flex items-center px-4 py-2.5 rounded-xl bg-[#183058] text-white text-xs font-bold shadow-sm hover:bg-[#102342] transition-colors"
           >
             Mulai Asesmen Karakter
           </Link>
@@ -85,12 +85,12 @@ export function StudentDashboardPage() {
           value="Belum ada"
           description="Kuesioner gaya belajar"
           icon={Brain}
-          iconBg="bg-[#EFEDFD]"
-          iconColor="text-[#6C5CE7]"
+          iconBg="bg-[#E8ECF6]"
+          iconColor="text-[#183058]"
           action={
             <Link
               to="/student/assessment"
-              className="text-[#6C5CE7] font-bold hover:underline"
+              className="text-[#183058] font-bold hover:underline"
             >
               Mulai Tes
             </Link>
@@ -128,8 +128,8 @@ export function StudentDashboardPage() {
           value="0%"
           description="Target mingguan"
           icon={TrendingUp}
-          iconBg="bg-[#EFEDFD]"
-          iconColor="text-[#6C5CE7]"
+          iconBg="bg-[#E8ECF6]"
+          iconColor="text-[#183058]"
         />
       </div>
 
@@ -145,14 +145,14 @@ export function StudentDashboardPage() {
         <div className="lg:col-span-5 space-y-6">
           {streak && <StreakCard streak={streak} />}
 
-          <div className="surface-card p-5 border-l-4 border-l-[#6C5CE7] flex items-center justify-between gap-4">
+          <div className="surface-card p-5 border-l-4 border-l-[#183058] flex items-center justify-between gap-4">
             <div>
               <h4 className="text-sm font-bold text-[#17181C]">Modul & Kursus Mandiri</h4>
               <p className="text-xs text-[#8A8D9A] mt-0.5">Jelajahi materi, kuis, dan raih sertifikat kelulusan.</p>
             </div>
             <Link
               to="/student/courses"
-              className="inline-flex items-center gap-1 px-3 py-2 rounded-xl bg-[#6C5CE7] text-white text-xs font-bold hover:bg-[#5243D6] transition-colors shrink-0 shadow-sm"
+              className="inline-flex items-center gap-1 px-3 py-2 rounded-xl bg-[#183058] text-white text-xs font-bold hover:bg-[#102342] transition-colors shrink-0 shadow-sm"
             >
               <Library className="w-3.5 h-3.5" />
               Buka Kursus

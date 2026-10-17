@@ -40,9 +40,9 @@ export function ReportDownloadButton({
     'inline-flex items-center justify-center gap-2 font-bold rounded-xl transition-all duration-150 select-none min-h-[44px]'
 
   const variantStyles = {
-    primary: 'bg-[#6C5CE7] hover:bg-[#5243D6] text-white shadow-sm shadow-[#6C5CE7]/20',
-    secondary: 'bg-[#F4F5FB] hover:bg-[#EAEBF0] text-[#17181C]',
-    outline: 'border border-border/80 hover:bg-[#F4F5FB] text-[#17181C] bg-white',
+    primary: 'bg-[#183058] hover:bg-[#102342] text-white shadow-sm shadow-[#183058]/20',
+    secondary: 'bg-[#F4F6FA] hover:bg-[#EAEBF0] text-[#17181C]',
+    outline: 'border border-border/80 hover:bg-[#F4F6FA] text-[#17181C] bg-white',
   }[variant]
 
   const sizeStyles = {

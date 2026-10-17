@@ -43,7 +43,7 @@ export function LearningGoalCard({ goal, onIncrement }: LearningGoalCardProps) {
       <div className="flex items-start justify-between gap-3 mb-3">
         <div className="flex items-start gap-3">
           <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${
-            isCompleted ? 'bg-emerald-50 text-emerald-600' : 'bg-[#EFEDFD] text-[#6C5CE7]'
+            isCompleted ? 'bg-emerald-50 text-emerald-600' : 'bg-[#E8ECF6] text-[#183058]'
           }`}>
             {isCompleted ? <CheckCircle2 className="w-5 h-5" /> : <Target className="w-5 h-5" />}
           </div>
@@ -74,15 +74,15 @@ export function LearningGoalCard({ goal, onIncrement }: LearningGoalCardProps) {
           <span className="font-semibold text-[#17181C]">
             {goal.currentValue} / {goal.targetValue} {getUnitLabel(goal.targetType)}
           </span>
-          <span className={`font-bold ${isCompleted ? 'text-emerald-600' : 'text-[#6C5CE7]'}`}>
+          <span className={`font-bold ${isCompleted ? 'text-emerald-600' : 'text-[#183058]'}`}>
             {percent}%
           </span>
         </div>
 
-        <div className="w-full h-2 rounded-full bg-[#EEF0F8] overflow-hidden">
+        <div className="w-full h-2 rounded-full bg-[#ECF0F7] overflow-hidden">
           <div
             className={`h-full rounded-full transition-all duration-300 ${
-              isCompleted ? 'bg-emerald-500' : 'bg-[#6C5CE7]'
+              isCompleted ? 'bg-emerald-500' : 'bg-[#183058]'
             }`}
             style={{ width: `${percent}%` }}
           />

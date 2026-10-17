@@ -122,7 +122,7 @@ export function StudentGoalsPage() {
               variant="default"
               size="sm"
               onClick={() => setDialogOpen(true)}
-              className="rounded-xl text-xs bg-[#6C5CE7] hover:bg-[#5B4CD7] text-white font-bold gap-1.5 shadow-xs"
+              className="rounded-xl text-xs bg-[#183058] hover:bg-[#5B4CD7] text-white font-bold gap-1.5 shadow-xs"
             >
               <Plus className="w-4 h-4" />
               <span>Buat Target Baru</span>
@@ -130,7 +130,7 @@ export function StudentGoalsPage() {
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2 text-xs">
-            <div className="p-3 rounded-xl bg-[#F4F5FB] border border-border/60">
+            <div className="p-3 rounded-xl bg-[#F4F6FA] border border-border/60">
               <span className="text-[#8A8D9A] block text-[11px]">Total Target</span>
               <strong className="text-base font-extrabold text-[#17181C] mt-0.5 block">{goals.length}</strong>
             </div>
@@ -138,9 +138,9 @@ export function StudentGoalsPage() {
               <span className="text-emerald-700 block text-[11px]">Tercapai</span>
               <strong className="text-base font-extrabold text-emerald-800 mt-0.5 block">{completedGoals.length}</strong>
             </div>
-            <div className="p-3 rounded-xl bg-[#EFEDFD] border border-[#6C5CE7]/20 col-span-2 sm:col-span-1">
-              <span className="text-[#6C5CE7] block text-[11px]">Konsistensi</span>
-              <strong className="text-base font-extrabold text-[#6C5CE7] mt-0.5 block">{streak.currentStreak} Hari</strong>
+            <div className="p-3 rounded-xl bg-[#E8ECF6] border border-[#183058]/20 col-span-2 sm:col-span-1">
+              <span className="text-[#183058] block text-[11px]">Konsistensi</span>
+              <strong className="text-base font-extrabold text-[#183058] mt-0.5 block">{streak.currentStreak} Hari</strong>
             </div>
           </div>
         </div>
@@ -152,12 +152,12 @@ export function StudentGoalsPage() {
 
         {loading ? (
           <div className="py-16 text-center flex flex-col items-center justify-center gap-3">
-            <Loader2 className="w-6 h-6 animate-spin text-[#6C5CE7]" />
+            <Loader2 className="w-6 h-6 animate-spin text-[#183058]" />
             <p className="text-xs text-[#8A8D9A]">Memuat target belajar...</p>
           </div>
         ) : activeGoals.length === 0 ? (
           <div className="bg-white rounded-2xl border border-border p-8 text-center space-y-3">
-            <div className="w-10 h-10 rounded-xl bg-[#EFEDFD] text-[#6C5CE7] flex items-center justify-center mx-auto">
+            <div className="w-10 h-10 rounded-xl bg-[#E8ECF6] text-[#183058] flex items-center justify-center mx-auto">
               <Target className="w-5 h-5" />
             </div>
             <h4 className="font-bold text-sm text-[#17181C]">Belum Ada Target Aktif</h4>
@@ -203,7 +203,7 @@ export function StudentGoalsPage() {
           <div className="bg-white rounded-3xl border border-border shadow-2xl max-w-md w-full p-6 space-y-5 animate-in zoom-in-95">
             <div className="flex items-center justify-between pb-3 border-b border-border">
               <div className="flex items-center gap-2.5">
-                <Target className="w-5 h-5 text-[#6C5CE7]" />
+                <Target className="w-5 h-5 text-[#183058]" />
                 <h3 className="font-bold text-base text-[#17181C]">Buat Target Belajar</h3>
               </div>
               <button
@@ -227,7 +227,7 @@ export function StudentGoalsPage() {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="Misal: Selesaikan 8 sesi les bulan ini"
-                  className="w-full p-2.5 rounded-xl border border-border text-xs focus:ring-2 focus:ring-[#6C5CE7] focus:outline-hidden"
+                  className="w-full p-2.5 rounded-xl border border-border text-xs focus:ring-2 focus:ring-[#183058] focus:outline-hidden"
                 />
               </div>
 
@@ -241,7 +241,7 @@ export function StudentGoalsPage() {
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="Misal: Fokus pada pemahaman kalkulus"
-                  className="w-full p-2.5 rounded-xl border border-border text-xs focus:ring-2 focus:ring-[#6C5CE7] focus:outline-hidden"
+                  className="w-full p-2.5 rounded-xl border border-border text-xs focus:ring-2 focus:ring-[#183058] focus:outline-hidden"
                 />
               </div>
 
@@ -274,7 +274,7 @@ export function StudentGoalsPage() {
                     required
                     value={targetValue}
                     onChange={(e) => setTargetValue(Number(e.target.value))}
-                    className="w-full p-2.5 rounded-xl border border-border text-xs focus:ring-2 focus:ring-[#6C5CE7] focus:outline-hidden"
+                    className="w-full p-2.5 rounded-xl border border-border text-xs focus:ring-2 focus:ring-[#183058] focus:outline-hidden"
                   />
                 </div>
               </div>
@@ -288,7 +288,7 @@ export function StudentGoalsPage() {
                   type="date"
                   value={targetDate}
                   onChange={(e) => setTargetDate(e.target.value)}
-                  className="w-full p-2.5 rounded-xl border border-border text-xs focus:ring-2 focus:ring-[#6C5CE7] focus:outline-hidden bg-white"
+                  className="w-full p-2.5 rounded-xl border border-border text-xs focus:ring-2 focus:ring-[#183058] focus:outline-hidden bg-white"
                 />
               </div>
 
@@ -307,7 +307,7 @@ export function StudentGoalsPage() {
                   variant="default"
                   size="sm"
                   disabled={creating}
-                  className="rounded-xl text-xs bg-[#6C5CE7] hover:bg-[#5B4CD7] text-white font-bold"
+                  className="rounded-xl text-xs bg-[#183058] hover:bg-[#5B4CD7] text-white font-bold"
                 >
                   {creating ? <Loader2 className="w-3.5 h-3.5 animate-spin mr-1" /> : null}
                   <span>Simpan Target</span>

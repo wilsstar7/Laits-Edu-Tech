@@ -17,8 +17,8 @@ export function StatCard({
   value,
   description,
   icon: Icon,
-  iconColor = 'text-[#6C5CE7]',
-  iconBg = 'bg-[#EFEDFD]',
+  iconColor = 'text-[#183058]',
+  iconBg = 'bg-[#E8ECF6]',
   badge,
   action,
 }: StatCardProps) {
@@ -35,7 +35,7 @@ export function StatCard({
               {value}
             </span>
             {badge && (
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#EFEDFD] text-[#6C5CE7] border border-[#6C5CE7]/15">
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#E8ECF6] text-[#183058] border border-[#183058]/15">
                 {badge}
               </span>
             )}

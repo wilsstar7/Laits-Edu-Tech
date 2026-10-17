@@ -288,32 +288,69 @@ export const bookingService = {
   },
 
   /**
+   * Lightweight counting query for tutor dashboard metrics (active students,
+   * upcoming confirmed sessions, pending requests, and completed sessions).
+   */
+  async getTutorDashboardCounts(tutorUserId?: string): Promise<Omit<TutorDashboardStats, 'todayBookings'>> {
+    const supabase = requireSupabase()
+
+    try {
+      let targetUserId = tutorUserId
+      if (!targetUserId) {
+        const { data: authData } = await supabase.auth.getUser()
+        targetUserId = authData.user?.id
+      }
+      if (!targetUserId) {
+        return {
+          activeStudentsCount: 0,
+          upcomingSessionsCount: 0,
+          pendingRequestsCount: 0,
+          completedSessionsCount: 0,
+        }
+      }
+
+      const { data, error } = await supabase
+        .from('bookings')
+        .select('student_id, status, tutor:tutor_profiles!bookings_tutor_id_fkey!inner(user_id)')
+        .eq('tutor.user_id', targetUserId)
+
+      if (error) throw error
+
+      const rows = (data || []) as Array<{ student_id: string; status: BookingStatus }>
+      const activeStudentIds = new Set(
+        rows
+          .filter((r) => r.status === 'confirmed' || r.status === 'completed' || r.status === 'pending')
+          .map((r) => r.student_id)
+      )
+
+      return {
+        activeStudentsCount: activeStudentIds.size,
+        upcomingSessionsCount: rows.filter((r) => r.status === 'confirmed').length,
+        pendingRequestsCount: rows.filter((r) => r.status === 'pending').length,
+        completedSessionsCount: rows.filter((r) => r.status === 'completed').length,
+      }
+    } catch (err) {
+      logger.error('Failed to get tutor dashboard counts:', err)
+      throw toAppError(err, 'Gagal memuat ringkasan statistik tutor.')
+    }
+  },
+
+  /**
    * Computes tutor dashboard statistics from bookings already fetched via getTutorBookings.
-   * Counts only cover the fetched page (getTutorBookings is limited to 50 rows).
    */
   computeTutorDashboardStats(bookings: Booking[]): TutorDashboardStats {
     const now = new Date()
     const todayYMD = now.toISOString().slice(0, 10)
 
-    // 1. Unique active students (who have confirmed or completed bookings)
-    const confirmedOrCompleted = bookings.filter(
-      (b) => b.status === 'confirmed' || b.status === 'completed'
+    const activeBookings = bookings.filter(
+      (b) => b.status === 'confirmed' || b.status === 'completed' || b.status === 'pending'
     )
-    const studentIds = new Set(confirmedOrCompleted.map((b) => b.studentId))
+    const studentIds = new Set(activeBookings.map((b) => b.studentId))
 
-    // 2. Upcoming sessions (future confirmed or pending)
-    const upcoming = bookings.filter((b) => {
-      const isFuture = new Date(b.scheduledStart) > now
-      return isFuture && (b.status === 'confirmed' || b.status === 'pending')
-    })
-
-    // 3. Completed sessions
+    const upcoming = bookings.filter((b) => b.status === 'confirmed')
     const completed = bookings.filter((b) => b.status === 'completed')
-
-    // 4. Pending requests
     const pending = bookings.filter((b) => b.status === 'pending')
 
-    // 5. Today's bookings
     const todayBookings = bookings.filter((b) => {
       const startYMD = new Date(b.scheduledStart).toISOString().slice(0, 10)
       return startYMD === todayYMD && b.status !== 'cancelled' && b.status !== 'rejected'

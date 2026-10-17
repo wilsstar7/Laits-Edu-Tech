@@ -42,8 +42,8 @@ const StudentMessagesPage = lazy(() => import('@/pages/student/StudentMessagesPa
 const PlaceholderPage = lazy(() => import('@/pages/student/PlaceholderPage').then((m) => ({ default: m.PlaceholderPage })))
 const CertificateVerifyPage = lazy(() => import('@/pages/CertificateVerifyPage').then((m) => ({ default: m.CertificateVerifyPage })))
 
-// Tutor Pages (Code-split)
-const TutorDashboardPage = lazy(() => import('@/pages/tutor/TutorDashboardPage').then((m) => ({ default: m.TutorDashboardPage })))
+// Tutor Pages
+import { TutorDashboardPage } from '@/pages/tutor/TutorDashboardPage'
 const TutorAvailabilityPage = lazy(() => import('@/pages/tutor/TutorAvailabilityPage').then((m) => ({ default: m.TutorAvailabilityPage })))
 const TutorSessionsPage = lazy(() => import('@/pages/tutor/TutorSessionsPage').then((m) => ({ default: m.TutorSessionsPage })))
 const TutorMessagesPage = lazy(() => import('@/pages/tutor/TutorMessagesPage').then((m) => ({ default: m.TutorMessagesPage })))

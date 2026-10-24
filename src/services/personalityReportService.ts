@@ -115,9 +115,9 @@ export const personalityReportService = {
         generatedAt: new Date().toISOString(),
         isDemo,
         title: 'Personality & Learning Profile Report',
-        author: 'Persona Academy LMS',
+        author: 'ZEINBOX LMS',
         subject: `Laporan Profil Belajar Siswa - ${studentName}`,
-        keywords: ['Personality', 'Learning Profile', 'Education', 'Assessment', 'Persona Academy'],
+        keywords: ['Personality', 'Learning Profile', 'Education', 'Assessment', 'ZEINBOX'],
       },
     }
   },

@@ -1,12 +1,12 @@
-# PERSONA ACADEMY - DESIGN DIRECTION (DESIGN.md)
+# ZEINBOX - DESIGN DIRECTION (DESIGN.md)
 
-> Brand Identity, Aesthetic Philosophy & Liveliness Dials for Persona Academy LMS (Learning by Intelligence Type).
+> Brand Identity, Aesthetic Philosophy & Liveliness Dials for ZEINBOX (Where Every Mind Grows).
 > Mode: Antislop Filter Enabled
 
 ---
 
 ## 1. Identity & Purpose
-- **Product:** LMS pendidikan modern yang memadukan Asesmen Tipe Kecerdasan & Karakter Belajar (*Learning by Intelligence Type*), Bimbingan Belajar Les Privat, dan Pelaporan Perkembangan Akademik.
+- **Product:** ZEINBOX · Platform pendidikan modern yang memadukan Asesmen Tipe Kecerdasan & Karakter Belajar, Bimbingan Belajar Les Privat, dan Pelaporan Perkembangan Akademik. *Where Every Mind Grows*.
 - **Audience:** Siswa (SD, SMP, SMA, Mahasiswa), Wali Murid, dan Tutor/Pendidik di Indonesia.
 - **Tone & Mood:** Edukatif, profesional, tenang, manusiawi, jujur, dan berdaya (bukan tech-hype atau dashboard template AI generik).
 
@@ -23,9 +23,9 @@
 ---
 
 ## 3. Color Architecture
-- **Brand Primary (Royal Navy):** `#183058` (Biru navy perisai Persona Academy sebagai penanda aksi utama, hover/strong `#102342`)
-- **Node Accent (Periwinkle Lavender):** `#B0B4E0` (Warna simpul cabang inteligensi pada logo untuk aksen di permukaan gelap dan sorotan sekunder, tint permukaan `#E8ECF6`)
-- **Ink Primary / Sidebar:** `#0F1D33` (Teks judul utama & latar sidebar desktop gelap yang selaras dengan perisai navy)
+- **Brand Primary (Royal Navy):** `#183058` (Biru navy ZEINBOX sebagai penanda aksi utama dan warna logo resmi, hover/strong `#102342`)
+- **Node Accent (Periwinkle Lavender):** `#B0B4E0` (Aksen dedaunan & simpul pada permukaan gelap dan sorotan sekunder, tint permukaan `#E8ECF6`)
+- **Ink Primary / Sidebar:** `#0F1D33` (Teks judul utama & latar sidebar desktop gelap yang selaras dengan navy)
 - **Text Body:** `#1D1D24` (Memenuhi standar kontras WCAG AA 4.5:1)
 - **Text Muted:** `#676A78` (Kontras tinggi untuk keterbacaan label & subjudul)
 - **Surface Background:** `#F4F6FA` (Permukaan sejuk bersih, bukan gradasi AI ungu-biru)

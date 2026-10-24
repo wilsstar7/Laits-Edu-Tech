@@ -37,16 +37,16 @@ export function Sidebar({ onNavigate, className = '' }: SidebarProps) {
         <div className="w-10 h-10 rounded-xl bg-white p-1 flex items-center justify-center shadow-md shadow-black/25 ring-1 ring-white/20 shrink-0">
           <img
             src="/logo-mark.png"
-            alt="Logo Persona Academy"
+            alt="Logo ZEINBOX"
             className="w-full h-full object-contain"
           />
         </div>
         <div className="flex flex-col min-w-0">
           <span className="font-bold text-white text-base tracking-tight flex items-center gap-1.5 leading-none">
-            PERSONA <span className="text-[#B0B4E0] font-semibold text-xs tracking-wider uppercase">ACADEMY</span>
+            ZEINBOX
           </span>
           <span className="text-[10px] text-[#94A3B8] font-medium leading-none mt-1 truncate">
-            Learning by Intelligence Type
+            Where Every Mind Grows
           </span>
         </div>
       </Link>

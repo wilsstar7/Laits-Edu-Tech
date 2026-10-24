@@ -100,7 +100,7 @@ export interface ManualBankTransferInstruction {
 export const MANUAL_TRANSFER_INSTRUCTIONS: ManualBankTransferInstruction = {
   bankName: 'Bank Syariah Indonesia (BSI)',
   accountNumber: '7148-9920-11',
-  accountHolder: 'Yayasan Persona Academy Indonesia',
+  accountHolder: 'Yayasan Zeinbox Indonesia',
   instructions: [
     'Transfer sesuai nominal tepat hingga digit terakhir.',
     'Sertakan nomor invoice pada berita transfer jika memungkinkan.',

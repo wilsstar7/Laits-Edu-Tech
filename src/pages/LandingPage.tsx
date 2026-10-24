@@ -108,15 +108,15 @@ export function LandingPage() {
           <Link to="/" className="flex items-center gap-3">
             <img
               src="/logo-mark.png"
-              alt="Logo Persona Academy"
+              alt="Logo ZEINBOX"
               className="w-10 h-10 object-contain shrink-0"
             />
             <div className="flex flex-col">
               <span className="font-extrabold text-[#0F1D33] text-lg tracking-tight leading-none">
-                PERSONA <span className="text-[#183058]">ACADEMY</span>
+                ZEINBOX
               </span>
               <span className="text-[10px] text-[#676A78] font-semibold uppercase tracking-wider mt-1">
-                Learning by Intelligence Type
+                Where Every Mind Grows
               </span>
             </div>
           </Link>
@@ -165,7 +165,7 @@ export function LandingPage() {
                   </h1>
 
                   <p className="text-base sm:text-lg text-[#676A78] leading-relaxed max-w-xl">
-                    Setiap anak menyerap pelajaran dengan ritme berbeda. Persona Academy memetakan cara belajar siswa sejak awal, lalu menghubungkan Anda dengan tutor privat terverifikasi untuk bimbingan kurikulum akademik dan keagamaan.
+                    Setiap anak menyerap pelajaran dengan ritme berbeda. ZEINBOX memetakan cara belajar siswa sejak awal, lalu menghubungkan Anda dengan tutor privat terverifikasi untuk bimbingan kurikulum akademik dan keagamaan.
                   </p>
                 </div>
 
@@ -573,12 +573,12 @@ export function LandingPage() {
           </div>
         </section>
 
-        {/* Section 3: Alur Bimbingan di Platform Persona Academy - M3 Step Cards */}
+        {/* Section 3: Alur Bimbingan di Platform ZEINBOX - M3 Step Cards */}
         <section className="py-14 sm:py-16 bg-[#FDFBFE]">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
             <div className="max-w-2xl space-y-2">
               <h2 className="text-2xl sm:text-3xl font-extrabold text-[#17181C] tracking-tight">
-                Alur Bimbingan di Platform Persona Academy
+                Alur Bimbingan di Platform ZEINBOX
               </h2>
               <p className="text-sm text-[#676A78]">
                 Langkah teratur untuk memastikan kegiatan belajar mengajar berjalan transparan bagi siswa dan orang tua.
@@ -673,20 +673,20 @@ export function LandingPage() {
             <div className="w-10 h-10 rounded-xl bg-white p-1 flex items-center justify-center shadow-xs shrink-0">
               <img
                 src="/logo-mark.png"
-                alt="Logo Persona Academy"
+                alt="Logo ZEINBOX"
                 className="w-full h-full object-contain"
               />
             </div>
             <div className="flex flex-col">
-              <span className="font-bold text-white text-sm leading-tight">PERSONA ACADEMY</span>
+              <span className="font-bold text-white text-sm leading-tight">ZEINBOX</span>
               <span className="text-[10px] text-[#B0B4E0] font-medium tracking-wider uppercase">
-                Learning by Intelligence Type
+                Where Every Mind Grows
               </span>
             </div>
           </div>
 
           <p className="text-xs text-[#C9D2E3] text-center sm:text-right">
-            (c) {new Date().getFullYear()} Persona Academy. Sistem Manajemen Belajar & Bimbingan Les Privat.
+            (c) {new Date().getFullYear()} ZEINBOX. Sistem Manajemen Belajar & Bimbingan Les Privat.
           </p>
         </div>
       </footer>

@@ -41,7 +41,7 @@ export function renderFinalPage(
     {
       num: '04',
       title: 'Evaluasi & Pantau Progres',
-      desc: 'Gunakan fitur pelaporan berkala di platform Persona Academy untuk mengukur peningkatan pemahaman dan efektivitas sesi les privat Anda.',
+      desc: 'Gunakan fitur pelaporan berkala di platform ZEINBOX untuk mengukur peningkatan pemahaman dan efektivitas sesi les privat Anda.',
     },
   ]
 
@@ -168,7 +168,7 @@ export function renderFinalPage(
   doc.setFont('helvetica', 'bold')
   doc.setFontSize(8.5)
   doc.setTextColor(...PDF_COLORS.dark)
-  doc.text('PERSONA ACADEMY - ACADEMIC ASSESSMENT DIVISION', marginLeft + 18, sealY + 20)
+  doc.text('ZEINBOX - ACADEMIC ASSESSMENT DIVISION', marginLeft + 18, sealY + 20)
 
   doc.setFont('helvetica', 'normal')
   doc.setFontSize(7.5)

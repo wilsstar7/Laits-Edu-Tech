@@ -28,10 +28,10 @@ export async function generatePersonalityReportPdf(data: PersonalityReportData):
   // Set document metadata
   doc.setProperties({
     title: data.metadata?.title || 'Personality & Learning Profile Report',
-    author: data.metadata?.author || 'Persona Academy LMS',
+    author: data.metadata?.author || 'ZEINBOX LMS',
     subject: data.metadata?.subject || 'Student Personality Profile',
     keywords: (data.metadata?.keywords || ['Personality', 'Learning Profile', 'Education']).join(', '),
-    creator: 'Persona Academy PDF Engine',
+    creator: 'ZEINBOX PDF Engine',
   })
 
   const totalPages = TOTAL_REPORT_PAGES

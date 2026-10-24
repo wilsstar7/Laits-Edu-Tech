@@ -18,7 +18,7 @@ export function InvoiceCard({ invoice, payment }: InvoiceCardProps) {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-border/60 pb-6">
         <div>
           <div className="text-xs font-bold text-primary tracking-wider uppercase">
-            Persona Academy • Faktur Resmi
+            ZEINBOX • Faktur Resmi
           </div>
           <h2 className="text-2xl font-black text-foreground mt-1">
             {invoice.invoiceNumber}
@@ -108,7 +108,7 @@ export function InvoiceCard({ invoice, payment }: InvoiceCardProps) {
 
       <div className="flex items-center gap-2 text-xs text-muted-foreground pt-2">
         <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-        <span>Faktur digital ini sah dan diterbitkan secara elektronik oleh platform Persona Academy.</span>
+        <span>Faktur digital ini sah dan diterbitkan secara elektronik oleh platform ZEINBOX.</span>
       </div>
     </div>
   )

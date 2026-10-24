@@ -6,8 +6,8 @@
 @custom-variant dark (&:is(.dark *));
 
 /* =============================================================================
-   PERSONA ACADEMY - Design tokens
-   Brand palette (from Persona Academy logo):
+   ZEINBOX - Design tokens
+   Brand palette (from ZEINBOX logo):
      bg #F4F6FA / #ECF0F7 · primary #183058 · accent node #B0B4E0 · dark #0F1D33
      text #1D1D24 · muted #676A78 · success #45B97C · warning #F2B84B · danger #E96A6A
    Accessibility note: #8A8D9A is used for icons / large text (`text-subtle`).

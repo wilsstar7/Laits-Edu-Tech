@@ -301,6 +301,7 @@ Instrumen ini didasarkan pada Teori Lateralisasi Otak (_Split-Brain Theory_) yan
 
 ##### Bagian 1 (Soal 1–10 | Untuk SD, SMP, SMA)
 
+l
 **1. Saat kamu mulai belajar bab baru di sekolah, mana yang lebih kamu sukai?**[cite: 15]
 
 - [ ] **A.** Membuka-buka seluruh halaman bab tersebut dengan cepat untuk melihat gambar dan ringkasan akhirnya terlebih dahulu. `[Indikator: RIGHT_BRAIN]`[cite: 15]

@@ -11,7 +11,7 @@ export function drawPageHeader(doc: jsPDF, currentSection: string) {
   doc.setFont('helvetica', 'bold')
   doc.setFontSize(8)
   doc.setTextColor(...PDF_COLORS.primary)
-  doc.text('PERSONA ACADEMY', marginLeft, marginTop - 16)
+  doc.text('ZEINBOX', marginLeft, marginTop - 16)
 
   doc.setFont('helvetica', 'normal')
   doc.setFontSize(8)

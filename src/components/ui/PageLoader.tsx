@@ -48,7 +48,7 @@ export function PageLoader({
           <div className="absolute w-13 h-13 rounded-2xl bg-white p-1.5 flex items-center justify-center shadow-md shadow-[#183058]/15 ring-1 ring-[#183058]/10">
             <img
               src="/logo-mark.png"
-              alt="Logo Persona Academy"
+              alt="Logo ZEINBOX"
               className="w-full h-full object-contain"
             />
           </div>
@@ -57,13 +57,10 @@ export function PageLoader({
         {/* Brand Typography */}
         <div className="flex flex-col items-center">
           <div className="font-bold text-[#0F1D33] text-base tracking-tight flex items-center gap-1.5">
-            PERSONA
-            <span className="text-[#183058] font-semibold text-xs tracking-wider uppercase">
-              ACADEMY
-            </span>
+            ZEINBOX
           </div>
           <span className="text-[10px] text-[#676A78] font-semibold uppercase tracking-wider mt-0.5">
-            Learning by Intelligence Type
+            Where Every Mind Grows
           </span>
           <p className="mt-2 text-xs text-[#676A78] font-medium leading-relaxed">
             {message}

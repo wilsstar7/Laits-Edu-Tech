@@ -103,7 +103,7 @@ const FEATURE_CONFIGS: Record<string, FeatureConfig> = {
     icon: HelpCircle,
     phaseText: 'Panduan Informasi',
     description:
-      'Jika Anda memerlukan bantuan terkait registrasi akun, pemilihan jenjang kelas, atau bantuan teknis, silakan hubungi tim dukungan Persona Academy.',
+      'Jika Anda memerlukan bantuan terkait registrasi akun, pemilihan jenjang kelas, atau bantuan teknis, silakan hubungi tim dukungan ZEINBOX.',
   },
 }
 

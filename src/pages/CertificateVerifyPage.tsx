@@ -39,12 +39,12 @@ export function CertificateVerifyPage() {
         <Link to="/" className="flex items-center gap-3">
           <img
             src="/logo-mark.png"
-            alt="Logo Persona Academy"
+            alt="Logo ZEINBOX"
             className="w-10 h-10 object-contain shrink-0"
           />
           <div className="flex flex-col">
             <span className="font-bold text-[#0F1D33] text-base tracking-tight">
-              PERSONA <span className="text-[#183058] font-semibold text-xs uppercase">ACADEMY</span>
+              ZEINBOX
             </span>
             <span className="text-[11px] text-[#676A78]">Portal Verifikasi Sertifikat</span>
           </div>
@@ -109,14 +109,14 @@ export function CertificateVerifyPage() {
                 </div>
 
                 <p className="text-[11px] text-[#676A78] leading-relaxed text-center">
-                  Dokumen ini diterbitkan secara otomatis oleh sistem Persona Academy setelah siswa menyelesaikan seluruh materi kurikulum dan memenuhi standar kelulusan asesmen.
+                  Dokumen ini diterbitkan secara otomatis oleh sistem ZEINBOX setelah siswa menyelesaikan seluruh materi kurikulum dan memenuhi standar kelulusan asesmen.
                 </p>
               </div>
 
               <div className="pt-2 text-center">
                 <Link to="/">
                   <Button variant="outline" size="sm" className="rounded-xl text-xs gap-1.5">
-                    <span>Jelajahi Persona Academy</span>
+                    <span>Jelajahi ZEINBOX</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Button>
                 </Link>
@@ -131,7 +131,7 @@ export function CertificateVerifyPage() {
               <div>
                 <h2 className="text-xl font-extrabold text-[#0F1D33]">Sertifikat Tidak Ditemukan</h2>
                 <p className="text-xs text-[#676A78] max-w-sm mx-auto mt-1">
-                  Nomor sertifikat <strong>{certificateNumber}</strong> tidak terdaftar dalam catatan basis data resmi Persona Academy.
+                  Nomor sertifikat <strong>{certificateNumber}</strong> tidak terdaftar dalam catatan basis data resmi ZEINBOX.
                 </p>
               </div>
               <div className="pt-4">
@@ -148,7 +148,7 @@ export function CertificateVerifyPage() {
 
       {/* Footer */}
       <footer className="py-6 px-4 text-center text-xs text-[#8A8D9A] border-t border-border/80 bg-white">
-        &copy; {new Date().getFullYear()} Persona Academy &bull; Sistem Manajemen Pembelajaran Terakreditasi
+        &copy; {new Date().getFullYear()} ZEINBOX &bull; Sistem Manajemen Pembelajaran Terakreditasi
       </footer>
     </div>
   )

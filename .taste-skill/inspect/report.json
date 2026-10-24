@@ -1,0 +1,2161 @@
+{
+ "url": "http://localhost:5173",
+ "at": "2026-10-24T08:27:21.227Z",
+ "allow": [],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 7,
+   "filled": [
+    0.48,
+    0.93,
+    0.8,
+    1,
+    1,
+    1,
+    1
+   ],
+   "motion": {
+    "elements": 35,
+    "css": 35,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 5880,
+     "screens": 6.5,
+     "words": 546,
+     "img": 12,
+     "video": 0,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 6,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 10,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "hero-student.jpg",
+      "style-visual.jpg",
+      "style-auditory.jpg",
+      "style-kinesthetic.jpg",
+      "subject-quran.jpg",
+      "subject-general.jpg",
+      "subject-quran.jpg",
+      "step-register.jpg"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Belajar Menurut Karakter Siswa.",
+     "words": 4,
+     "chars": 31,
+     "lines": 2,
+     "size": 88,
+     "vw": 6.1,
+     "font": "Plus Jakarta Sans Variable",
+     "weight": 900,
+     "tracking": -0.035,
+     "leading": 0.88,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "right",
+     "widthRatio": 0.54,
+     "top": 139,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Belajar Menurut Karakter Siswa.",
+     "words": 4,
+     "lines": 2,
+     "size": 88,
+     "font": "Plus Jakarta Sans Variable"
+    },
+    "headings": [
+     {
+      "text": "Belajar Menurut Karakter Siswa.",
+      "words": 4,
+      "chars": 31,
+      "lines": 2,
+      "size": 88,
+      "vw": 6.1,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 900,
+      "tracking": -0.035,
+      "leading": 0.88,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.54,
+      "top": 139,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Diagnostik Gaya Belajar.",
+      "words": 3,
+      "chars": 24,
+      "lines": 1,
+      "size": 40,
+      "vw": 2.8,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 900,
+      "tracking": -0.025,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.47,
+      "top": 997,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Dua Pilar Kurikulum.",
+      "words": 3,
+      "chars": 20,
+      "lines": 1,
+      "size": 40,
+      "vw": 2.8,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 900,
+      "tracking": -0.025,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.47,
+      "top": 2609,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "100%",
+      "words": 1,
+      "chars": 4,
+      "lines": 1,
+      "size": 64,
+      "vw": 4.4,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 900,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.22,
+      "top": 3223,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Alur Bimbingan Terarah.",
+      "words": 3,
+      "chars": 23,
+      "lines": 1,
+      "size": 40,
+      "vw": 2.8,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 900,
+      "tracking": -0.025,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.47,
+      "top": 4079,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Pertama, profil didaftarkan.",
+      "words": 3,
+      "chars": 28,
+      "lines": 1,
+      "size": 36,
+      "vw": 2.5,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 900,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.62,
+      "top": 4244,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Kedua, diagnostik dipetakan.",
+      "words": 3,
+      "chars": 28,
+      "lines": 1,
+      "size": 36,
+      "vw": 2.5,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 900,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.62,
+      "top": 4431,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Ketiga, tutor mendampingi.",
+      "words": 3,
+      "chars": 26,
+      "lines": 1,
+      "size": 36,
+      "vw": 2.5,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 900,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.55,
+      "top": 4618,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Keempat, progres terpantau.",
+      "words": 3,
+      "chars": 27,
+      "lines": 1,
+      "size": 36,
+      "vw": 2.5,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 900,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.41,
+      "top": 4805,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Langkah Belajar Terbaik.",
+      "words": 3,
+      "chars": 24,
+      "lines": 1,
+      "size": 40,
+      "vw": 2.8,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 900,
+      "tracking": -0.025,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.54,
+      "top": 5432,
+      "tag": "h2",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 10,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 1,
+     "centered": 0,
+     "medianWords": 3,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Plus Jakarta Sans Variable",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      14,
+      17,
+      20,
+      36,
+      40,
+      64,
+      88
+     ],
+     "sizeCount": 7,
+     "notLoaded": [],
+     "body": {
+      "font": "Plus Jakarta Sans Variable",
+      "size": 17,
+      "leading": 1.6,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 15.6
+     },
+     "measureChars": 79,
+     "max": {
+      "size": 88,
+      "vw": 6.1,
+      "font": "Plus Jakarta Sans Variable",
+      "text": "Belajar Menurut"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.01,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#f4f6fa",
+     "bodyBgHsl": {
+      "h": 220,
+      "s": 0.37,
+      "l": 0.97
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#f4f6fa",
+       "top": 0,
+       "hsl": {
+        "h": 220,
+        "s": 0.37,
+        "l": 0.97
+       }
+      },
+      {
+       "color": "#ffffff",
+       "top": 901,
+       "hsl": {
+        "h": 0,
+        "s": 0,
+        "l": 1
+       }
+      },
+      {
+       "color": "#e8ecf6",
+       "top": 2513,
+       "hsl": {
+        "h": 223,
+        "s": 0.44,
+        "l": 0.94
+       }
+      },
+      {
+       "color": "#0f1d33",
+       "top": 5032,
+       "hsl": {
+        "h": 217,
+        "s": 0.55,
+        "l": 0.13
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#0f1d33",
+       "share": 0.53
+      },
+      {
+       "color": "#e8ecf6",
+       "share": 0.2
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.11
+      },
+      {
+       "color": "#183058",
+       "share": 0.05
+      },
+      {
+       "color": "#b0b4e0",
+       "share": 0.05
+      }
+     ],
+     "button": {
+      "bg": "#183058",
+      "hsl": {
+       "h": 218,
+       "s": 0.57,
+       "l": 0.22
+      },
+      "fg": "#ffffff"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 4,
+     "inHero": 3,
+     "radius": 8,
+     "height": 53,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Daftar Siswa",
+      "Daftarkan Akun Siswa",
+      "Masuk Akun Terdaftar"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 14,
+     "boxRadius": 8,
+     "squareMedia": 3,
+     "roundedMedia": 5,
+     "mediaRadius": 8,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "img",
+      "ratio": 0.27
+     }
+    ],
+    "nav": {
+     "links": 6,
+     "fixed": false,
+     "height": 83,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "plus jakarta sans variable"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 5880,
+    "margins": {
+     "left": 128,
+     "right": 128
+    },
+    "sections": [
+     {
+      "sel": "section.pt-8.pb-16",
+      "tag": "section",
+      "top": 0,
+      "height": 901,
+      "words": 94,
+      "media": 1,
+      "middle": 45,
+      "heading": {
+       "text": "Belajar Menurut",
+       "size": 88,
+       "tag": "h1"
+      },
+      "left": 128,
+      "right": 128,
+      "textLeft": 128,
+      "textRight": 148,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section#diagnostik.py-16.lg:py-24",
+      "tag": "section",
+      "top": 901,
+      "height": 1612,
+      "words": 192,
+      "media": 4,
+      "middle": 0,
+      "heading": {
+       "text": "Diagnostik Gaya Belajar.",
+       "size": 40,
+       "tag": "h2"
+      },
+      "left": 128,
+      "right": 128,
+      "textLeft": 128,
+      "textRight": 160,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section#kurikulum.py-16.lg:py-24",
+      "tag": "section",
+      "top": 2513,
+      "height": 1470,
+      "words": 129,
+      "media": 2,
+      "middle": 0,
+      "heading": {
+       "text": "Dua Pilar Kurikulum.",
+       "size": 40,
+       "tag": "h2"
+      },
+      "left": 128,
+      "right": 128,
+      "textLeft": 128,
+      "textRight": 168,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section#alur.py-16.lg:py-24",
+      "tag": "section",
+      "top": 3983,
+      "height": 1049,
+      "words": 94,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Alur Bimbingan Terarah.",
+       "size": 40,
+       "tag": "h2"
+      },
+      "left": 128,
+      "right": 222,
+      "textLeft": 128,
+      "textRight": 222,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.bg-[#0F1D33].text-white",
+      "tag": "section",
+      "top": 5032,
+      "height": 710,
+      "words": 66,
+      "media": 3,
+      "middle": 0,
+      "heading": {
+       "text": "Langkah Belajar Terbaik.",
+       "size": 40,
+       "tag": "h2"
+      },
+      "left": 0,
+      "right": 0,
+      "textLeft": 128,
+      "textRight": 184,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "footer.bg-[#0A1322].text-[#E8ECF6]",
+      "tag": "footer",
+      "top": 5742,
+      "height": 138,
+      "words": 22,
+      "media": 0,
+      "middle": 69,
+      "heading": null,
+      "left": 178,
+      "right": 128,
+      "textLeft": 178,
+      "textRight": 128,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Belajar Menurut Karakter Siswa.",
+      "size": 88,
+      "top": 139,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 128,
+      "n": 14
+     },
+     {
+      "x": 160,
+      "n": 5
+     },
+     {
+      "x": 200,
+      "n": 2
+     },
+     {
+      "x": 327,
+      "n": 2
+     },
+     {
+      "x": 525,
+      "n": 2
+     },
+     {
+      "x": 539,
+      "n": 2
+     },
+     {
+      "x": 724,
+      "n": 2
+     },
+     {
+      "x": 758,
+      "n": 2
+     },
+     {
+      "x": 148,
+      "n": 1
+     },
+     {
+      "x": 583,
+      "n": 1
+     },
+     {
+      "x": 663,
+      "n": 1
+     },
+     {
+      "x": 957,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 36,
+    "bodySize": 17,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0.09,
+    "voidBox": {
+     "x": 0,
+     "y": 660,
+     "w": 480,
+     "h": 240
+    }
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 7,
+   "filled": [
+    0.55,
+    0.89,
+    0.76,
+    0.93,
+    1,
+    0.98,
+    0.95
+   ],
+   "motion": {
+    "elements": 35,
+    "css": 35,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 6472,
+     "screens": 6.3,
+     "words": 546,
+     "img": 12,
+     "video": 0,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 6,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 10,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "hero-student.jpg",
+      "style-visual.jpg",
+      "style-auditory.jpg",
+      "style-kinesthetic.jpg",
+      "subject-quran.jpg",
+      "subject-general.jpg",
+      "subject-quran.jpg",
+      "step-register.jpg"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Belajar Menurut Karakter Siswa.",
+     "words": 4,
+     "chars": 31,
+     "lines": 2,
+     "size": 68,
+     "vw": 8.9,
+     "font": "Plus Jakarta Sans Variable",
+     "weight": 900,
+     "tracking": -0.035,
+     "leading": 0.88,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.92,
+     "top": 196,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Belajar Menurut Karakter Siswa.",
+     "words": 4,
+     "lines": 2,
+     "size": 68,
+     "font": "Plus Jakarta Sans Variable"
+    },
+    "headings": [
+     {
+      "text": "Belajar Menurut Karakter Siswa.",
+      "words": 4,
+      "chars": 31,
+      "lines": 2,
+      "size": 68,
+      "vw": 8.9,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 900,
+      "tracking": -0.035,
+      "leading": 0.88,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 196,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Diagnostik Gaya Belajar.",
+      "words": 3,
+      "chars": 24,
+      "lines": 1,
+      "size": 40,
+      "vw": 5.2,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 900,
+      "tracking": -0.025,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.88,
+      "top": 1319,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Dua Pilar Kurikulum.",
+      "words": 3,
+      "chars": 20,
+      "lines": 1,
+      "size": 40,
+      "vw": 5.2,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 900,
+      "tracking": -0.025,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.88,
+      "top": 3322,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "100%",
+      "words": 1,
+      "chars": 4,
+      "lines": 1,
+      "size": 64,
+      "vw": 8.3,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 900,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.21,
+      "top": 3780,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Alur Bimbingan Terarah.",
+      "words": 3,
+      "chars": 23,
+      "lines": 1,
+      "size": 40,
+      "vw": 5.2,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 900,
+      "tracking": -0.025,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.88,
+      "top": 4519,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Pertama, profil didaftarkan.",
+      "words": 3,
+      "chars": 28,
+      "lines": 1,
+      "size": 36,
+      "vw": 4.7,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 900,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 4684,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Kedua, diagnostik dipetakan.",
+      "words": 3,
+      "chars": 28,
+      "lines": 1,
+      "size": 36,
+      "vw": 4.7,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 900,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 4871,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Ketiga, tutor mendampingi.",
+      "words": 3,
+      "chars": 26,
+      "lines": 1,
+      "size": 36,
+      "vw": 4.7,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 900,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 5058,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Keempat, progres terpantau.",
+      "words": 3,
+      "chars": 27,
+      "lines": 1,
+      "size": 36,
+      "vw": 4.7,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 900,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 5245,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Langkah Belajar Terbaik.",
+      "words": 3,
+      "chars": 24,
+      "lines": 1,
+      "size": 40,
+      "vw": 5.2,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 900,
+      "tracking": -0.025,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 5823,
+      "tag": "h2",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 10,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 1,
+     "centered": 0,
+     "medianWords": 3,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Plus Jakarta Sans Variable",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      14,
+      17,
+      20,
+      36,
+      40,
+      64,
+      68
+     ],
+     "sizeCount": 7,
+     "notLoaded": [],
+     "body": {
+      "font": "Plus Jakarta Sans Variable",
+      "size": 17,
+      "leading": 1.6,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 15.6
+     },
+     "measureChars": 79,
+     "max": {
+      "size": 68,
+      "vw": 8.9,
+      "font": "Plus Jakarta Sans Variable",
+      "text": "Belajar Menurut"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.01,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#f4f6fa",
+     "bodyBgHsl": {
+      "h": 220,
+      "s": 0.37,
+      "l": 0.97
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#f4f6fa",
+       "top": 0,
+       "hsl": {
+        "h": 220,
+        "s": 0.37,
+        "l": 0.97
+       }
+      },
+      {
+       "color": "#e8ecf6",
+       "top": 367,
+       "hsl": {
+        "h": 223,
+        "s": 0.44,
+        "l": 0.94
+       }
+      },
+      {
+       "color": "#ffffff",
+       "top": 1255,
+       "hsl": {
+        "h": 0,
+        "s": 0,
+        "l": 1
+       }
+      },
+      {
+       "color": "#0f1d33",
+       "top": 5439,
+       "hsl": {
+        "h": 217,
+        "s": 0.55,
+        "l": 0.13
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#0f1d33",
+       "share": 0.53
+      },
+      {
+       "color": "#e8ecf6",
+       "share": 0.2
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.11
+      },
+      {
+       "color": "#183058",
+       "share": 0.05
+      },
+      {
+       "color": "#b0b4e0",
+       "share": 0.05
+      }
+     ],
+     "button": {
+      "bg": "#183058",
+      "hsl": {
+       "h": 218,
+       "s": 0.57,
+       "l": 0.22
+      },
+      "fg": "#ffffff"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 4,
+     "inHero": 3,
+     "radius": 8,
+     "height": 53,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Daftar Siswa",
+      "Daftarkan Akun Siswa",
+      "Masuk Akun Terdaftar"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 17,
+     "boxRadius": 8,
+     "squareMedia": 3,
+     "roundedMedia": 7,
+     "mediaRadius": 8,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "img",
+      "ratio": 0.38
+     }
+    ],
+    "nav": {
+     "links": 6,
+     "fixed": false,
+     "height": 156,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "plus jakarta sans variable"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 6472,
+    "margins": {
+     "left": 32,
+     "right": 32
+    },
+    "sections": [
+     {
+      "sel": "section.pt-8.pb-16",
+      "tag": "section",
+      "top": 0,
+      "height": 1255,
+      "words": 94,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "Belajar Menurut",
+       "size": 68,
+       "tag": "h1"
+      },
+      "left": 32,
+      "right": 32,
+      "textLeft": 32,
+      "textRight": 52,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section#diagnostik.py-16.lg:py-24",
+      "tag": "section",
+      "top": 1255,
+      "height": 2003,
+      "words": 192,
+      "media": 4,
+      "middle": 0,
+      "heading": {
+       "text": "Diagnostik Gaya Belajar.",
+       "size": 40,
+       "tag": "h2"
+      },
+      "left": 32,
+      "right": 32,
+      "textLeft": 32,
+      "textRight": 88,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section#kurikulum.py-16.lg:py-24",
+      "tag": "section",
+      "top": 3258,
+      "height": 1197,
+      "words": 129,
+      "media": 2,
+      "middle": 0,
+      "heading": {
+       "text": "100%",
+       "size": 64,
+       "tag": "p"
+      },
+      "left": 32,
+      "right": 32,
+      "textLeft": 32,
+      "textRight": 79,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section#alur.py-16.lg:py-24",
+      "tag": "section",
+      "top": 4455,
+      "height": 985,
+      "words": 94,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Alur Bimbingan Terarah.",
+       "size": 40,
+       "tag": "h2"
+      },
+      "left": 32,
+      "right": 83,
+      "textLeft": 32,
+      "textRight": 83,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.bg-[#0F1D33].text-white",
+      "tag": "section",
+      "top": 5439,
+      "height": 870,
+      "words": 66,
+      "media": 3,
+      "middle": 0,
+      "heading": {
+       "text": "Langkah Belajar Terbaik.",
+       "size": 40,
+       "tag": "h2"
+      },
+      "left": 0,
+      "right": 0,
+      "textLeft": 32,
+      "textRight": 62,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "footer.bg-[#0A1322].text-[#E8ECF6]",
+      "tag": "footer",
+      "top": 6310,
+      "height": 162,
+      "words": 22,
+      "media": 0,
+      "middle": 95,
+      "heading": null,
+      "left": 82,
+      "right": 32,
+      "textLeft": 82,
+      "textRight": 32,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Belajar Menurut Karakter Siswa.",
+      "size": 68,
+      "top": 196,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 32,
+      "n": 22
+     },
+     {
+      "x": 64,
+      "n": 5
+     },
+     {
+      "x": 52,
+      "n": 2
+     },
+     {
+      "x": 104,
+      "n": 2
+     },
+     {
+      "x": 422,
+      "n": 2
+     },
+     {
+      "x": 76,
+      "n": 1
+     },
+     {
+      "x": 124,
+      "n": 1
+     },
+     {
+      "x": 541,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 36,
+    "bodySize": 17,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 11,
+   "filled": [
+    0.67,
+    0.68,
+    1,
+    0.79,
+    0.77,
+    0.88,
+    1,
+    1,
+    1,
+    1,
+    0.99
+   ],
+   "motion": {
+    "elements": 35,
+    "css": 35,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 9185,
+     "screens": 10.9,
+     "words": 546,
+     "img": 12,
+     "video": 0,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 6,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 10,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "hero-student.jpg",
+      "style-visual.jpg",
+      "style-auditory.jpg",
+      "style-kinesthetic.jpg",
+      "subject-quran.jpg",
+      "subject-general.jpg",
+      "subject-quran.jpg",
+      "step-register.jpg"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Belajar Menurut Karakter Siswa.",
+     "words": 4,
+     "chars": 31,
+     "lines": 2,
+     "size": 44,
+     "vw": 11.3,
+     "font": "Plus Jakarta Sans Variable",
+     "weight": 900,
+     "tracking": -0.035,
+     "leading": 0.88,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.88,
+     "top": 294,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Belajar Menurut Karakter Siswa.",
+     "words": 4,
+     "lines": 2,
+     "size": 44,
+     "font": "Plus Jakarta Sans Variable"
+    },
+    "headings": [
+     {
+      "text": "Belajar Menurut Karakter Siswa.",
+      "words": 4,
+      "chars": 31,
+      "lines": 2,
+      "size": 44,
+      "vw": 11.3,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 900,
+      "tracking": -0.035,
+      "leading": 0.88,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.88,
+      "top": 294,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Diagnostik Gaya Belajar.",
+      "words": 3,
+      "chars": 24,
+      "lines": 2,
+      "size": 36,
+      "vw": 9.2,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 900,
+      "tracking": -0.025,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.88,
+      "top": 1574,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Dua Pilar Kurikulum.",
+      "words": 3,
+      "chars": 20,
+      "lines": 1,
+      "size": 36,
+      "vw": 9.2,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 900,
+      "tracking": -0.025,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.88,
+      "top": 4686,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "100%",
+      "words": 1,
+      "chars": 4,
+      "lines": 1,
+      "size": 56,
+      "vw": 14.4,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 900,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.71,
+      "top": 5434,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Alur Bimbingan Terarah.",
+      "words": 3,
+      "chars": 23,
+      "lines": 2,
+      "size": 36,
+      "vw": 9.2,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 900,
+      "tracking": -0.025,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.88,
+      "top": 6793,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Pertama, profil didaftarkan.",
+      "words": 3,
+      "chars": 28,
+      "lines": 2,
+      "size": 36,
+      "vw": 9.2,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 900,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.88,
+      "top": 7017,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Kedua, diagnostik dipetakan.",
+      "words": 3,
+      "chars": 28,
+      "lines": 2,
+      "size": 36,
+      "vw": 9.2,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 900,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.88,
+      "top": 7240,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Ketiga, tutor mendampingi.",
+      "words": 3,
+      "chars": 26,
+      "lines": 2,
+      "size": 36,
+      "vw": 9.2,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 900,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.88,
+      "top": 7463,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Keempat, progres terpantau.",
+      "words": 3,
+      "chars": 27,
+      "lines": 2,
+      "size": 36,
+      "vw": 9.2,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 900,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.88,
+      "top": 7686,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Langkah Belajar Terbaik.",
+      "words": 3,
+      "chars": 24,
+      "lines": 2,
+      "size": 36,
+      "vw": 9.2,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 900,
+      "tracking": -0.025,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.88,
+      "top": 8268,
+      "tag": "h2",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 10,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 1,
+     "centered": 0,
+     "medianWords": 3,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Plus Jakarta Sans Variable",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      14,
+      17,
+      20,
+      36,
+      44,
+      56
+     ],
+     "sizeCount": 6,
+     "notLoaded": [],
+     "body": {
+      "font": "Plus Jakarta Sans Variable",
+      "size": 17,
+      "leading": 1.6,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 15.6
+     },
+     "measureChars": 40,
+     "max": {
+      "size": 56,
+      "vw": 14.4,
+      "font": "Plus Jakarta Sans Variable",
+      "text": "100%"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.03,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#f4f6fa",
+     "bodyBgHsl": {
+      "h": 220,
+      "s": 0.37,
+      "l": 0.97
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#f4f6fa",
+       "top": 0,
+       "hsl": {
+        "h": 220,
+        "s": 0.37,
+        "l": 0.97
+       }
+      },
+      {
+       "color": "#e8ecf6",
+       "top": 423,
+       "hsl": {
+        "h": 223,
+        "s": 0.44,
+        "l": 0.94
+       }
+      },
+      {
+       "color": "#ffffff",
+       "top": 1510,
+       "hsl": {
+        "h": 0,
+        "s": 0,
+        "l": 1
+       }
+      },
+      {
+       "color": "#0f1d33",
+       "top": 6356,
+       "hsl": {
+        "h": 217,
+        "s": 0.55,
+        "l": 0.13
+       }
+      },
+      {
+       "color": "#0a1322",
+       "top": 8891,
+       "hsl": {
+        "h": 218,
+        "s": 0.55,
+        "l": 0.09
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#0f1d33",
+       "share": 0.53
+      },
+      {
+       "color": "#e8ecf6",
+       "share": 0.2
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.11
+      },
+      {
+       "color": "#183058",
+       "share": 0.05
+      },
+      {
+       "color": "#b0b4e0",
+       "share": 0.05
+      }
+     ],
+     "button": {
+      "bg": "#183058",
+      "hsl": {
+       "h": 218,
+       "s": 0.57,
+       "l": 0.22
+      },
+      "fg": "#ffffff"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 4,
+     "inHero": 1,
+     "radius": 8,
+     "height": 53,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Daftar Siswa"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 17,
+     "boxRadius": 8,
+     "squareMedia": 0,
+     "roundedMedia": 7,
+     "mediaRadius": 8,
+     "textShadow": 0,
+     "cardRows": [
+      {
+       "count": 3,
+       "iconTopped": false,
+       "rounded": true,
+       "top": 3173
+      },
+      {
+       "count": 5,
+       "iconTopped": false,
+       "rounded": true,
+       "top": 4841
+      }
+     ]
+    },
+    "heroMedia": [
+     {
+      "type": "img",
+      "ratio": 0.33
+     }
+    ],
+    "nav": {
+     "links": 3,
+     "fixed": false,
+     "height": 254,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "plus jakarta sans variable"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 9185,
+    "margins": {
+     "left": 24,
+     "right": 24
+    },
+    "sections": [
+     {
+      "sel": "section.pt-8.pb-16",
+      "tag": "section",
+      "top": 0,
+      "height": 1510,
+      "words": 94,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "Belajar Menurut",
+       "size": 44,
+       "tag": "h1"
+      },
+      "left": 24,
+      "right": 24,
+      "textLeft": 24,
+      "textRight": 32,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section#diagnostik.py-16.lg:py-24",
+      "tag": "section",
+      "top": 1510,
+      "height": 3113,
+      "words": 192,
+      "media": 4,
+      "middle": 0,
+      "heading": {
+       "text": "Diagnostik Gaya Belajar.",
+       "size": 36,
+       "tag": "h2"
+      },
+      "left": 24,
+      "right": 24,
+      "textLeft": 24,
+      "textRight": 25,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section#kurikulum.py-16.lg:py-24",
+      "tag": "section",
+      "top": 4622,
+      "height": 2106,
+      "words": 129,
+      "media": 2,
+      "middle": 0,
+      "heading": {
+       "text": "100%",
+       "size": 56,
+       "tag": "p"
+      },
+      "left": 24,
+      "right": 24,
+      "textLeft": 24,
+      "textRight": 34,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section#alur.py-16.lg:py-24",
+      "tag": "section",
+      "top": 6729,
+      "height": 1188,
+      "words": 94,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Alur Bimbingan Terarah.",
+       "size": 36,
+       "tag": "h2"
+      },
+      "left": 24,
+      "right": 33,
+      "textLeft": 24,
+      "textRight": 33,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.bg-[#0F1D33].text-white",
+      "tag": "section",
+      "top": 7916,
+      "height": 974,
+      "words": 66,
+      "media": 3,
+      "middle": 0,
+      "heading": {
+       "text": "Langkah Belajar Terbaik.",
+       "size": 36,
+       "tag": "h2"
+      },
+      "left": 24,
+      "right": 25,
+      "textLeft": 24,
+      "textRight": 25,
+      "fullBleed": true,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "footer.bg-[#0A1322].text-[#E8ECF6]",
+      "tag": "footer",
+      "top": 8891,
+      "height": 294,
+      "words": 22,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": 24,
+      "right": 24,
+      "textLeft": 24,
+      "textRight": 24,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Belajar Menurut Karakter Siswa.",
+      "size": 44,
+      "top": 294,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 24,
+      "n": 22
+     },
+     {
+      "x": 56,
+      "n": 6
+     },
+     {
+      "x": 44,
+      "n": 5
+     },
+     {
+      "x": 72,
+      "n": 2
+     },
+     {
+      "x": 92,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 36,
+    "bodySize": 17,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "WARN",
+   "id": "no-footage",
+   "width": 1440,
+   "message": "No video anywhere on the page.",
+   "fix": "Look for one honest clip with scripts/assets.mjs --video (the place, the material, the process) and use it as a muted loop with a poster frame. Defend its absence only if no clip fits the subject."
+  },
+  {
+   "level": "WARN",
+   "id": "ragged-edges",
+   "width": 1440,
+   "message": "Left-aligned text starts at 12 different lines (128px, 160px, 200px, 327px, 525px, 539px, 724px); the three most used hold only 58% of it.",
+   "fix": "Pick two or three anchor lines from the grid and start every heading and paragraph on one of them."
+  },
+  {
+   "level": "WARN",
+   "id": "card-rows",
+   "width": 390,
+   "message": "2 rows of identical boxed cards.",
+   "fix": "Vary the composition; not every section is a card grid."
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "C:\\Users\\Lenovo\\OneDrive\\Desktop\\Project Aplikasi\\Laits Edu Tech\\.taste-skill\\inspect\\desktop-fold.jpg",
+   "pages": [
+    "C:\\Users\\Lenovo\\OneDrive\\Desktop\\Project Aplikasi\\Laits Edu Tech\\.taste-skill\\inspect\\desktop-page-01.jpg",
+    "C:\\Users\\Lenovo\\OneDrive\\Desktop\\Project Aplikasi\\Laits Edu Tech\\.taste-skill\\inspect\\desktop-page-02.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "C:\\Users\\Lenovo\\OneDrive\\Desktop\\Project Aplikasi\\Laits Edu Tech\\.taste-skill\\inspect\\tablet-fold.jpg",
+   "pages": [
+    "C:\\Users\\Lenovo\\OneDrive\\Desktop\\Project Aplikasi\\Laits Edu Tech\\.taste-skill\\inspect\\tablet-page-01.jpg",
+    "C:\\Users\\Lenovo\\OneDrive\\Desktop\\Project Aplikasi\\Laits Edu Tech\\.taste-skill\\inspect\\tablet-page-02.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "C:\\Users\\Lenovo\\OneDrive\\Desktop\\Project Aplikasi\\Laits Edu Tech\\.taste-skill\\inspect\\mobile-fold.jpg",
+   "pages": [
+    "C:\\Users\\Lenovo\\OneDrive\\Desktop\\Project Aplikasi\\Laits Edu Tech\\.taste-skill\\inspect\\mobile-page-01.jpg",
+    "C:\\Users\\Lenovo\\OneDrive\\Desktop\\Project Aplikasi\\Laits Edu Tech\\.taste-skill\\inspect\\mobile-page-02.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

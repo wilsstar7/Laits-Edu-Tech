@@ -300,18 +300,18 @@
     animation: modalEnter 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
-  /* Fluid type scale for the landing page: ~53px hero at 1024px, ~68px at 1440px. */
+  /* Refined, balanced type scale for the landing page following tasteskill v2 */
   .type-hero {
-    font-size: clamp(2.25rem, 1rem + 3.6vw, 4.25rem);
-    line-height: 1.04;
+    font-size: clamp(1.75rem, 1.25rem + 1.5vw, 2.375rem);
+    line-height: 1.12;
   }
   .type-h2 {
-    font-size: clamp(1.625rem, 1rem + 1.25vw, 2.125rem);
-    line-height: 1.15;
+    font-size: clamp(1.25rem, 1rem + 0.6vw, 1.625rem);
+    line-height: 1.22;
   }
   .type-lead {
-    font-size: clamp(1rem, 0.9rem + 0.3vw, 1.125rem);
-    line-height: 1.65;
+    font-size: clamp(0.875rem, 0.825rem + 0.2vw, 0.975rem);
+    line-height: 1.6;
   }
 }
 

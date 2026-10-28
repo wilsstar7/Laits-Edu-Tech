@@ -98,7 +98,11 @@ export const learningProgressService = {
 
     try {
       let targetStudentId = studentId
-      if (!targetStudentId) {
+      if (!targetStudentId && supabase.auth?.getSession) {
+        const { data: sessionData } = await supabase.auth.getSession()
+        targetStudentId = sessionData?.session?.user?.id
+      }
+      if (!targetStudentId && supabase.auth?.getUser) {
         const { data: authData } = await supabase.auth.getUser()
         targetStudentId = authData.user?.id
       }
@@ -158,7 +162,11 @@ export const learningProgressService = {
 
     try {
       let targetStudentId = studentId
-      if (!targetStudentId) {
+      if (!targetStudentId && supabase.auth?.getSession) {
+        const { data: sessionData } = await supabase.auth.getSession()
+        targetStudentId = sessionData?.session?.user?.id
+      }
+      if (!targetStudentId && supabase.auth?.getUser) {
         const { data: authData } = await supabase.auth.getUser()
         targetStudentId = authData.user?.id
       }
@@ -245,7 +253,11 @@ export const learningProgressService = {
 
     try {
       let targetStudentId = studentId
-      if (!targetStudentId) {
+      if (!targetStudentId && supabase.auth?.getSession) {
+        const { data: sessionData } = await supabase.auth.getSession()
+        targetStudentId = sessionData?.session?.user?.id
+      }
+      if (!targetStudentId && supabase.auth?.getUser) {
         const { data: authData } = await supabase.auth.getUser()
         targetStudentId = authData.user?.id
       }

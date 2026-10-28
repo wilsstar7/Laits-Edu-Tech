@@ -1,22 +1,47 @@
 import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router'
 import { Bell, CheckCheck, Loader2, ArrowRight } from 'lucide-react'
+import { useAuth } from '@/hooks/useAuth'
 import { notificationService } from '@/services/notificationService'
 import type { AppNotification } from '@/types/notification'
 import { formatShortDate } from '@/utils/format'
 
+const UNREAD_CACHE_TTL_MS = 30_000
+let unreadCache: { userId: string; count: number; timestamp: number } | null = null
+
 export function NotificationButton() {
+  const { user } = useAuth()
+  const userId = user?.id ?? 'anon'
+  const cachedInitial =
+    unreadCache &&
+    unreadCache.userId === userId &&
+    Date.now() - unreadCache.timestamp < UNREAD_CACHE_TTL_MS
+      ? unreadCache.count
+      : 0
+
   const [isOpen, setIsOpen] = useState(false)
   const [notifications, setNotifications] = useState<AppNotification[]>([])
-  const [unreadCount, setUnreadCount] = useState<number>(0)
+  const [unreadCount, setUnreadCount] = useState<number>(cachedInitial)
   const [loading, setLoading] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     let mounted = true
+    if (
+      unreadCache &&
+      unreadCache.userId === userId &&
+      Date.now() - unreadCache.timestamp < UNREAD_CACHE_TTL_MS
+    ) {
+      setUnreadCount(unreadCache.count)
+      return () => {
+        mounted = false
+      }
+    }
+
     async function fetchUnread() {
       try {
         const count = await notificationService.getUnreadCount()
+        unreadCache = { userId, count, timestamp: Date.now() }
         if (mounted) setUnreadCount(count)
       } catch {
         // silent fallback
@@ -26,7 +51,7 @@ export function NotificationButton() {
     return () => {
       mounted = false
     }
-  }, [])
+  }, [userId])
 
   useEffect(() => {
     if (!isOpen) return
@@ -67,6 +92,7 @@ export function NotificationButton() {
   const handleMarkAllRead = async () => {
     try {
       await notificationService.markAllAsRead()
+      unreadCache = { userId, count: 0, timestamp: Date.now() }
       setUnreadCount(0)
       setNotifications((prev) => prev.map((n) => ({ ...n, isRead: true })))
     } catch {
@@ -78,7 +104,11 @@ export function NotificationButton() {
     if (!notif.isRead) {
       try {
         await notificationService.markAsRead(notif.id)
-        setUnreadCount((c) => Math.max(0, c - 1))
+        setUnreadCount((c) => {
+          const next = Math.max(0, c - 1)
+          unreadCache = { userId, count: next, timestamp: Date.now() }
+          return next
+        })
         setNotifications((prev) =>
           prev.map((n) => (n.id === notif.id ? { ...n, isRead: true } : n))
         )

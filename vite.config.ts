@@ -13,5 +13,21 @@ export default defineConfig({
   },
   build: {
     chunkSizeWarningLimit: 800,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules/@supabase')) {
+            return 'vendor-supabase'
+          }
+          if (
+            id.includes('node_modules/react-dom') ||
+            id.includes('node_modules/react-router') ||
+            id.includes('node_modules/react/')
+          ) {
+            return 'vendor-react'
+          }
+        },
+      },
+    },
   },
 })

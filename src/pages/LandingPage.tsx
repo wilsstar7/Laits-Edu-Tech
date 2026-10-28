@@ -210,6 +210,8 @@ export function LandingPage() {
                     <img
                       src={heroStudentImg}
                       alt="Siswa sedang belajar dengan bimbingan tutor privat"
+                      fetchPriority="high"
+                      decoding="async"
                       className="w-full h-72 sm:h-80 object-cover"
                     />
                   </div>
@@ -291,6 +293,8 @@ export function LandingPage() {
                           <img
                             src={opt.image}
                             alt={opt.imageCaption}
+                            loading="lazy"
+                            decoding="async"
                             className="w-full h-full object-cover"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-[#0F1D33]/90 via-[#0F1D33]/30 to-transparent flex flex-col justify-end p-4 text-white">
@@ -501,6 +505,7 @@ export function LandingPage() {
                       alt="Siswa mempelajari materi pelajaran umum sains dan matematika"
                       className="w-full h-48 sm:h-52 object-cover"
                       loading="lazy"
+                      decoding="async"
                     />
                   </div>
 
@@ -540,6 +545,7 @@ export function LandingPage() {
                       alt="Siswa mempelajari Al-Qur'an dan studi keagamaan"
                       className="w-full h-48 sm:h-52 object-cover"
                       loading="lazy"
+                      decoding="async"
                     />
                   </div>
 
@@ -594,6 +600,7 @@ export function LandingPage() {
                       alt="Langkah pendaftaran akun dan kelengkapan profil siswa"
                       className="w-full h-40 sm:h-44 object-cover"
                       loading="lazy"
+                      decoding="async"
                     />
                   </div>
                   <div className="space-y-1">
@@ -616,6 +623,7 @@ export function LandingPage() {
                       alt="Langkah pengerjaan asesmen karakter dan gaya belajar"
                       className="w-full h-40 sm:h-44 object-cover"
                       loading="lazy"
+                      decoding="async"
                     />
                   </div>
                   <div className="space-y-1">
@@ -638,6 +646,7 @@ export function LandingPage() {
                       alt="Langkah penjadwalan bimbingan privat bersama tutor"
                       className="w-full h-40 sm:h-44 object-cover"
                       loading="lazy"
+                      decoding="async"
                     />
                   </div>
                   <div className="space-y-1">

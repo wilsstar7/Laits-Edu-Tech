@@ -25,7 +25,6 @@ const StudentSettingsPage = lazy(() => import('@/pages/student/StudentSettingsPa
 const AssessmentIntroPage = lazy(() => import('@/pages/student/AssessmentIntroPage').then((m) => ({ default: m.AssessmentIntroPage })))
 const AssessmentQuestionPage = lazy(() => import('@/pages/student/AssessmentQuestionPage').then((m) => ({ default: m.AssessmentQuestionPage })))
 const PersonalityResultPage = lazy(() => import('@/pages/student/PersonalityResultPage').then((m) => ({ default: m.PersonalityResultPage })))
-const ReportHistoryPage = lazy(() => import('@/pages/student/ReportHistoryPage').then((m) => ({ default: m.ReportHistoryPage })))
 const ReportPreviewPage = lazy(() => import('@/pages/student/ReportPreviewPage').then((m) => ({ default: m.ReportPreviewPage })))
 const PersonalizedLearningPage = lazy(() => import('@/pages/student/PersonalizedLearningPage').then((m) => ({ default: m.PersonalizedLearningPage })))
 const LearningPathDetailPage = lazy(() => import('@/pages/student/LearningPathDetailPage').then((m) => ({ default: m.LearningPathDetailPage })))
@@ -42,7 +41,7 @@ const PlaceholderPage = lazy(() => import('@/pages/student/PlaceholderPage').the
 const CertificateVerifyPage = lazy(() => import('@/pages/CertificateVerifyPage').then((m) => ({ default: m.CertificateVerifyPage })))
 
 // Tutor Pages
-import { TutorDashboardPage } from '@/pages/tutor/TutorDashboardPage'
+const TutorDashboardPage = lazy(() => import('@/pages/tutor/TutorDashboardPage').then((m) => ({ default: m.TutorDashboardPage })))
 const TutorAvailabilityPage = lazy(() => import('@/pages/tutor/TutorAvailabilityPage').then((m) => ({ default: m.TutorAvailabilityPage })))
 const TutorSessionsPage = lazy(() => import('@/pages/tutor/TutorSessionsPage').then((m) => ({ default: m.TutorSessionsPage })))
 const TutorMessagesPage = lazy(() => import('@/pages/tutor/TutorMessagesPage').then((m) => ({ default: m.TutorMessagesPage })))

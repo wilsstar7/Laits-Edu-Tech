@@ -7,15 +7,38 @@ interface AnnouncementBannerProps {
   audience?: AnnouncementAudience
 }
 
+const ANNOUNCEMENT_CACHE_TTL_MS = 60_000
+const announcementCache = new Map<string, { data: Announcement[]; timestamp: number }>()
+const dismissedIds = new Set<string>()
+
 export function AnnouncementBanner({ audience }: AnnouncementBannerProps = {}) {
-  const [announcements, setAnnouncements] = useState<Announcement[]>([])
+  const cacheKey = audience ?? 'all'
+  const cachedEntry = announcementCache.get(cacheKey)
+  const isFresh =
+    cachedEntry && Date.now() - cachedEntry.timestamp < ANNOUNCEMENT_CACHE_TTL_MS
+
+  const [announcements, setAnnouncements] = useState<Announcement[]>(
+    isFresh ? cachedEntry.data : []
+  )
   const [dismissed, setDismissed] = useState(false)
 
   useEffect(() => {
     let isMounted = true
+    const currentCached = announcementCache.get(cacheKey)
+    if (
+      currentCached &&
+      Date.now() - currentCached.timestamp < ANNOUNCEMENT_CACHE_TTL_MS
+    ) {
+      setAnnouncements(currentCached.data)
+      return () => {
+        isMounted = false
+      }
+    }
+
     announcementService
       .getAnnouncements(audience)
       .then((data) => {
+        announcementCache.set(cacheKey, { data, timestamp: Date.now() })
         if (isMounted) setAnnouncements(data)
       })
       .catch(() => {
@@ -25,11 +48,10 @@ export function AnnouncementBanner({ audience }: AnnouncementBannerProps = {}) {
     return () => {
       isMounted = false
     }
-  }, [audience])
+  }, [audience, cacheKey])
 
-  if (dismissed || announcements.length === 0) return null
   const latest = announcements[0]
-  if (!latest) return null
+  if (dismissed || !latest || dismissedIds.has(latest.id)) return null
 
   return (
     <div className="bg-gradient-to-r from-[#183058] to-[#244375] rounded-2xl p-4 text-white shadow-md relative overflow-hidden flex items-center justify-between gap-4 animate-in fade-in-50">
@@ -55,7 +77,10 @@ export function AnnouncementBanner({ audience }: AnnouncementBannerProps = {}) {
       <div className="flex items-center gap-2 shrink-0">
         <button
           type="button"
-          onClick={() => setDismissed(true)}
+          onClick={() => {
+            dismissedIds.add(latest.id)
+            setDismissed(true)
+          }}
           className="text-white/70 hover:text-white p-1 rounded-lg transition-colors cursor-pointer"
           aria-label="Tutup pengumuman"
         >

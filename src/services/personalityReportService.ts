@@ -6,7 +6,6 @@ import type {
   ReportGenerationResponse,
 } from '@/types/report'
 import { REPORT_VERSION } from '@/types/report'
-import { generatePersonalityReportPdf } from './pdf/pdfGenerator'
 import { sanitizeReportFilename } from '@/utils/format'
 import { personalityService } from './personalityService'
 
@@ -165,6 +164,7 @@ export const personalityReportService = {
     }
 
     // 4. Generate in-memory PDF to get exact file size and verify generation
+    const { generatePersonalityReportPdf } = await import('./pdf/pdfGenerator')
     const pdfBlob = await generatePersonalityReportPdf(reportData)
     const safeFileName = sanitizeReportFilename(reportData.student.name, reportData.assessment.completedAt)
 
@@ -211,6 +211,7 @@ export const personalityReportService = {
     }
 
     const reportData = await this.getReportData(report.assessment_result_id)
+    const { generatePersonalityReportPdf } = await import('./pdf/pdfGenerator')
     const blob = await generatePersonalityReportPdf(reportData)
 
     return {

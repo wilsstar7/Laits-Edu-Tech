@@ -9,7 +9,6 @@ import {
   CreditCard,
   Clock,
   Star,
-  FileText,
   MessageSquare,
   Bell,
   Settings,

@@ -14,7 +14,11 @@ export const personalizedLearningService = {
     const supabase = requireSupabase()
     try {
       let targetUserId = userId
-      if (!targetUserId) {
+      if (!targetUserId && supabase.auth?.getSession) {
+        const { data: sessionData } = await supabase.auth.getSession()
+        targetUserId = sessionData?.session?.user?.id
+      }
+      if (!targetUserId && supabase.auth?.getUser) {
         const { data: authData } = await supabase.auth.getUser()
         targetUserId = authData.user?.id
       }

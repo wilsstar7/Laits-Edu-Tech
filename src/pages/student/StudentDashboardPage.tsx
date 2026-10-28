@@ -87,11 +87,12 @@ export function StudentDashboardPage() {
 
   useEffect(() => {
     let mounted = true
-    getStreak().then((res) => {
+    if (!user) return
+    getStreak(user.id).then((res) => {
       if (mounted && res) setStreak(res)
     }).catch(() => {})
     return () => { mounted = false }
-  }, [])
+  }, [user])
 
   useEffect(() => {
     let mounted = true

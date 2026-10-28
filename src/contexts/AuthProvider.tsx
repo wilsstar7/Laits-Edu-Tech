@@ -18,6 +18,43 @@ interface FailedAccount {
   message: string
 }
 
+const ACCOUNT_CACHE_PREFIX = 'zeinbox_account_bundle_'
+
+function readCachedAccount(userId: string): LoadedAccount | null {
+  try {
+    const raw = sessionStorage.getItem(`${ACCOUNT_CACHE_PREFIX}${userId}`)
+    if (!raw) return null
+    const account = JSON.parse(raw) as AccountBundle
+    if (account?.profile?.id === userId) {
+      return { userId, account }
+    }
+  } catch {
+    // ignore storage errors
+  }
+  return null
+}
+
+function writeCachedAccount(userId: string, account: AccountBundle): void {
+  try {
+    sessionStorage.setItem(`${ACCOUNT_CACHE_PREFIX}${userId}`, JSON.stringify(account))
+  } catch {
+    // ignore storage errors
+  }
+}
+
+function clearCachedAccounts(): void {
+  try {
+    for (let i = sessionStorage.length - 1; i >= 0; i--) {
+      const key = sessionStorage.key(i)
+      if (key?.startsWith(ACCOUNT_CACHE_PREFIX)) {
+        sessionStorage.removeItem(key)
+      }
+    }
+  } catch {
+    // ignore storage errors
+  }
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [status, setStatus] = useState<AuthStatus>(supabase ? 'initializing' : 'unconfigured')
   const [session, setSession] = useState<Session | null>(null)
@@ -43,6 +80,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
         manualSignOutRef.current = false
         setIsPasswordRecovery(false)
+        clearCachedAccounts()
       }
 
       hadSessionRef.current = nextSession !== null
@@ -61,7 +99,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     let cancelled = false
     profileService.getAccountBundle().then(
       (account) => {
-        if (!cancelled) setLoaded({ userId, account })
+        if (!cancelled) {
+          writeCachedAccount(userId, account)
+          setLoaded({ userId, account })
+        }
       },
       (error: unknown) => {
         if (!cancelled) setFailed({ userId, message: getErrorMessage(error, MESSAGES.profileLoad) })
@@ -77,6 +118,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setFailed(null)
     try {
       const account = await profileService.getAccountBundle()
+      writeCachedAccount(userId, account)
       setLoaded({ userId, account })
     } catch (error) {
       setFailed({ userId, message: getErrorMessage(error, MESSAGES.profileLoad) })
@@ -84,13 +126,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [userId])
 
   const updateAccount = useCallback((updater: (prev: AccountBundle) => AccountBundle) => {
-    setLoaded((prev) => (prev ? { ...prev, account: updater(prev.account) } : prev))
+    setLoaded((prev) => {
+      if (!prev) return prev
+      const nextAccount = updater(prev.account)
+      writeCachedAccount(prev.userId, nextAccount)
+      return { ...prev, account: nextAccount }
+    })
   }, [])
 
   const signOut = useCallback(async () => {
     manualSignOutRef.current = true
     try {
       await authService.signOut()
+      clearCachedAccounts()
     } catch (error) {
       manualSignOutRef.current = false
       throw error
@@ -100,7 +148,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const clearPasswordRecovery = useCallback(() => setIsPasswordRecovery(false), [])
 
   // --- Derived state ---------------------------------------------------------
-  const account = userId && loaded?.userId === userId ? loaded.account : null
+  const cachedAccount = useMemo(
+    () => (userId ? readCachedAccount(userId) : null),
+    [userId],
+  )
+  const effectiveLoaded =
+    userId && loaded?.userId === userId
+      ? loaded
+      : cachedAccount
+  const account = effectiveLoaded?.account ?? null
   const profileError = userId && failed?.userId === userId ? failed.message : null
 
   let profileStatus: ProfileStatus = 'idle'

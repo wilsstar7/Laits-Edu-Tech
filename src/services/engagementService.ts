@@ -9,17 +9,32 @@ import type {
 import { toAppError } from '@/utils/errors'
 import { logger } from '@/lib/logger'
 
+async function resolveCurrentUserId(
+  supabase: NonNullable<ReturnType<typeof getSupabase>>,
+  explicitUserId?: string
+): Promise<string | undefined> {
+  if (explicitUserId) return explicitUserId
+  if (supabase.auth?.getSession) {
+    const { data } = await supabase.auth.getSession()
+    if (data?.session?.user?.id) return data.session.user.id
+  }
+  if (supabase.auth?.getUser) {
+    const { data } = await supabase.auth.getUser()
+    return data?.user?.id
+  }
+  return undefined
+}
+
 export const engagementService = {
   /**
    * Fetches learning goals for current student.
    */
-  async getGoals(): Promise<LearningGoal[]> {
+  async getGoals(studentIdParam?: string): Promise<LearningGoal[]> {
     const supabase = getSupabase()
     if (!supabase) return []
 
     try {
-      const authData = supabase.auth?.getUser ? await supabase.auth.getUser() : { data: { user: null } }
-      const studentId = authData?.data?.user?.id
+      const studentId = await resolveCurrentUserId(supabase, studentIdParam)
       if (!studentId) return []
 
       const { data, error } = await supabase
@@ -138,13 +153,12 @@ export const engagementService = {
   /**
    * Fetches the current learning streak for student.
    */
-  async getStreak(): Promise<StudentStreak> {
+  async getStreak(studentIdParam?: string): Promise<StudentStreak> {
     const supabase = getSupabase()
     if (!supabase) return { studentId: '', currentStreak: 0, longestStreak: 0, lastActivityDate: null }
 
     try {
-      const { data: authData } = await supabase.auth.getUser()
-      const studentId = authData.user?.id
+      const studentId = await resolveCurrentUserId(supabase, studentIdParam)
       if (!studentId) return { studentId: '', currentStreak: 0, longestStreak: 0, lastActivityDate: null }
 
       const { data, error } = await supabase
@@ -179,13 +193,12 @@ export const engagementService = {
   /**
    * Fetches all achievements with indicator whether earned by the student.
    */
-  async getAchievements(): Promise<Achievement[]> {
+  async getAchievements(studentIdParam?: string): Promise<Achievement[]> {
     const supabase = getSupabase()
     if (!supabase) return []
 
     try {
-      const authData = supabase.auth?.getUser ? await supabase.auth.getUser() : { data: { user: null } }
-      const studentId = authData?.data?.user?.id
+      const studentId = await resolveCurrentUserId(supabase, studentIdParam)
 
       const { data: achievementsData, error } = await supabase
         .from('achievements')

@@ -28,7 +28,7 @@ export const env = {
   appUrl: rawAppUrl || (typeof window !== 'undefined' ? window.location.origin : ''),
   isSupabaseConfigured,
   isGoogleOAuthEnabled:
-    import.meta.env.VITE_ENABLE_GOOGLE_OAUTH === 'true' && isSupabaseConfigured,
+    import.meta.env.VITE_ENABLE_GOOGLE_OAUTH !== 'false' && isSupabaseConfigured,
   isDev: import.meta.env.DEV,
   isProd: import.meta.env.PROD,
   mode: import.meta.env.MODE,

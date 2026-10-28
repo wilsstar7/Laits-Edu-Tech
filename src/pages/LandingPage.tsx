@@ -24,6 +24,7 @@ interface ModalityData {
   id: 'visual' | 'auditory' | 'kinesthetic'
   name: string
   code: 'V' | 'A' | 'K'
+  tagline: string
   icon: typeof Eye
   image: string
   alt: string
@@ -55,54 +56,57 @@ export function LandingPage() {
       id: 'visual',
       name: 'Visual',
       code: 'V',
+      tagline: 'Peta Konsep & Spasial',
       icon: Eye,
       image: styleVisualImg,
       alt: 'Siswa belajar menggunakan peta pikiran dan diagram visual terstruktur',
       summary:
-        'Siswa memproses konsep lebih cepat saat materi disajikan dalam bentuk diagram alur, rangkuman peta konsep, dan catatan berkode warna.',
-      primaryFocus: 'Peta Konsep (Mind Map), Bagan Alur Rumus, dan Rangkuman Berwarna',
+        'Siswa memahami konsep lebih mendalam melalui bagan alur hubungan, diagram warna terarah, dan visualisasi skema terstruktur sebelum masuk ke perhitungan teknis.',
+      primaryFocus: 'Pemetaan Spasial & Rangkuman',
       tutorSop:
-        'Tutor wajib menggambarkan peta konsep di awal sesi, merapikan catatan rumus langkah demi langkah, dan menghindari ceramah lisan tanpa media visual.',
+        'Tutor menggambar bagan konsep di awal sesi, menyusun tahapan rumus langkah demi langkah secara tertulis, dan tidak menggunakan ceramah lisan tanpa media visual pendukung.',
       teachingSteps: [
-        'Tutor memetakan gambaran besar materi ke dalam skema visual',
-        'Pemberian warna penanda stabilo untuk membedakan rumus dan definisi',
-        'Latihan mandiri dengan panduan bagan alur penyelesaian soal',
+        'Pemetaan gambaran besar konsep materi ke dalam bagan alur terstruktur',
+        'Pengelompokan definisi dan rumus penting dengan penanda warna sistematis',
+        'Latihan mandiri terbimbing dengan rujukan diagram penyelesaian soal',
       ],
     },
     {
       id: 'auditory',
       name: 'Auditori',
       code: 'A',
+      tagline: 'Dialog & Narasi Lisan',
       icon: Headphones,
       image: styleAuditoryImg,
       alt: 'Siswa berdiskusi aktif dengan tutor melalui dialog dan tanya jawab lisan',
       summary:
-        'Siswa menangkap esensi materi secara optimal melalui komunikasi lisan, ritme suara, analogi kontekstual, dan dialog tanya-jawab.',
-      primaryFocus: 'Dialog Sokratik, Analogi Kehidupan Nyata, dan Evaluasi Verbal',
+        'Siswa mencerna konsep secara optimal melalui diskusi terarah, penjelasan lisan berintonasi jelas, dan kesempatan menerangkan kembali pemahamannya secara bersuara.',
+      primaryFocus: 'Dialektika & Eksplorasi Konsep',
       tutorSop:
-        'Tutor membuka sesi dengan dialog santai, menjelaskan konsep secara lisan dengan intonasi jelas, lalu meminta siswa menerangkan kembali gagasannya.',
+        'Tutor mengawali sesi dengan tanya jawab kontekstual, menerangkan konsep melalui analogi verbal terstruktur, lalu meminta siswa merumuskan kembali kesimpulan dengan suara terdengar.',
       teachingSteps: [
-        'Pengantar materi melalui analogi naratif yang relevan di dunia nyata',
-        'Tanya-jawab interaktif bertahap untuk menguji nalar logika siswa',
-        'Siswa diajak membacakan kesimpulan pemahamannya dengan bersuara',
+        'Pengenalan ide pokok materi melalui analogi naratif yang akrab dengan siswa',
+        'Sesi tanya jawab timbal-balik untuk menguji alur logika berpikir',
+        'Siswa merangkum pemahamannya secara lisan di akhir setiap topik bahasan',
       ],
     },
     {
       id: 'kinesthetic',
       name: 'Kinestetik',
       code: 'K',
+      tagline: 'Praktik & Gerak Motorik',
       icon: Activity,
       image: styleKinestheticImg,
       alt: 'Siswa langsung mempraktikkan latihan soal dengan corat-coret kertas buram',
       summary:
-        'Siswa mengandalkan sensasi gerak motorik, keterlibatan fisik aktif, dan eksperimen latihan langsung untuk menancapkan logika berpikir.',
-      primaryFocus: 'Bedah Kasus Soal, Menuliskan Langkah Mandiri, dan Jeda Aktif',
+        'Siswa menginternalisasi rumus dan aturan lewat keterlibatan fisik langsung: mencorat-coret kertas buram, membedah soal nyata, serta jeda berkala yang teratur.',
+      primaryFocus: 'Eksperimen & Praktik Mandiri',
       tutorSop:
-        'Tutor langsung mengajak siswa memegang pena untuk latihan soal bersama, membatasi ceramah diam maksimal 15 menit, serta memberi jeda peregangan.',
+        'Tutor langsung melibatkan tangan siswa memegang alat tulis sejak 10 menit pertama, membatasi penjelasan diam searah, dan menyisipkan jeda gerak ringan di tengah sesi.',
       teachingSteps: [
-        'Siswa membedah contoh soal pertama bersama tutor dengan keterlibatan tangan',
-        'Pengerjaan dua soal variasi secara mandiri di atas kertas buram',
-        'Jeda peregangan fisik singkat untuk menjaga stamina kognitif',
+        'Pembedahan contoh kasus langsung di atas kertas kerja bersama tutor',
+        'Penyelesaian soal variasi secara mandiri dengan alat bantu coretan',
+        'Jeda peregangan fisik singkat untuk memulihkan konsentrasi belajar anak',
       ],
     },
   ]
@@ -293,8 +297,8 @@ export function LandingPage() {
             </p>
           </div>
 
-          {/* Interactive Modality Tabs */}
-          <div className="taste-reveal flex flex-wrap items-center gap-2">
+          {/* Elegant Segmented Tab Bar */}
+          <div className="taste-reveal inline-flex flex-wrap p-1.5 rounded-2xl bg-[#EEF2F6] gap-1.5 max-w-full">
             {modalities.map((item, idx) => {
               const isSelected = activeModalityIndex === idx
               return (
@@ -302,74 +306,113 @@ export function LandingPage() {
                   key={item.id}
                   type="button"
                   onClick={() => setActiveModalityIndex(idx)}
-                  className={`px-5 py-3 rounded-xl text-base font-bold transition-colors flex items-center gap-2 ${
+                  className={`group relative px-5 py-3 rounded-xl transition-all duration-300 flex items-center gap-3 text-left ${
                     isSelected
                       ? 'bg-[#0F1D33] text-white'
-                      : 'bg-[#E2E8F0]/60 text-[#334155] hover:bg-[#E2E8F0]'
+                      : 'text-[#475569] hover:text-[#0F1D33] hover:bg-white/60'
                   }`}
                 >
-                  <item.icon className="w-4 h-4" />
-                  <span>{item.name} [{item.code}]</span>
+                  <span
+                    className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-colors ${
+                      isSelected
+                        ? 'bg-white/10 text-emerald-400'
+                        : 'bg-white text-[#475569] group-hover:text-[#0F1D33]'
+                    }`}
+                  >
+                    <item.icon className="w-4 h-4" />
+                  </span>
+                  <div className="flex flex-col">
+                    <div className="flex items-center gap-1.5 font-bold text-base leading-tight">
+                      <span>{item.name} [{item.code}]</span>
+                      {isSelected && (
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                      )}
+                    </div>
+                    <span
+                      className={`text-sm font-semibold leading-tight mt-0.5 ${
+                        isSelected ? 'text-slate-300' : 'text-[#334155]'
+                      }`}
+                    >
+                      {item.tagline}
+                    </span>
+                  </div>
                 </button>
               )
             })}
           </div>
 
-          {/* Selected Modality Dossier */}
-          <div className="taste-reveal grid grid-cols-1 lg:grid-cols-12 gap-8 items-start bg-white p-6 sm:p-8 rounded-2xl">
+          {/* Animated Modality Dossier Presentation */}
+          <div
+            key={activeModality.id}
+            className="animate-modal-enter grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start bg-white p-6 sm:p-10 lg:p-12 rounded-3xl"
+          >
+            {/* Left Column: Photographic Frame with subtle hover scale */}
             <div className="lg:col-span-5 space-y-4">
-              <div className="rounded-xl overflow-hidden bg-slate-100">
+              <div className="group relative rounded-2xl overflow-hidden bg-slate-100">
                 <img
                   src={activeModality.image}
                   alt={activeModality.alt}
-                  className="w-full h-64 sm:h-72 object-cover"
+                  className="w-full h-72 sm:h-80 object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                 />
+                <div className="absolute top-3 left-3 px-3 py-1.5 rounded-lg bg-[#0F1D33] text-white text-sm font-semibold flex items-center gap-2">
+                  <activeModality.icon className="w-4 h-4 text-emerald-400" />
+                  <span>Jalur Belajar {activeModality.name}</span>
+                </div>
               </div>
-              <p className="text-sm text-[#475569] leading-relaxed max-w-[55ch]">
+              <p className="text-base text-[#475569] leading-relaxed max-w-[55ch]">
                 {activeModality.summary}
               </p>
             </div>
 
-            <div className="lg:col-span-7 space-y-5">
+            {/* Right Column: Clinical Protocol & Steps */}
+            <div className="lg:col-span-7 space-y-6">
               <div className="space-y-2">
-                <h3 className="text-xl font-extrabold text-[#0F1D33]">
+                <h3 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-[#0F1D33] tracking-tight leading-snug">
                   {activeModality.primaryFocus}
                 </h3>
               </div>
 
-              <div className="p-5 rounded-xl bg-[#F8FAFD] space-y-2">
-                <span className="text-sm font-bold text-amber-800 flex items-center gap-1.5">
-                  <ShieldCheck className="w-4 h-4" />
-                  <span>SOP Guru Privat</span>
-                </span>
+              {/* SOP Protocol Card */}
+              <div className="p-5 rounded-2xl bg-[#F8FAFD] border-l-4 border-[#0F1D33] space-y-2 transition-all">
+                <div className="flex items-center gap-2 text-sm font-bold text-[#0F1D33]">
+                  <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                  <span>SOP Terverifikasi Guru Privat</span>
+                </div>
                 <p className="text-base text-[#1E293B] leading-relaxed font-medium max-w-[55ch]">
                   {activeModality.tutorSop}
                 </p>
               </div>
 
-              <div className="space-y-3 pt-2">
+              {/* Interactive 3-Step Flow */}
+              <div className="space-y-3 pt-1">
                 <span className="text-sm font-bold text-[#0F1D33] block">
-                  Tahapan bimbingan yang diterapkan di setiap sesi:
+                  Tahapan bimbingan di setiap sesi belajar:
                 </span>
-                <div className="space-y-2.5">
+                <div className="space-y-2">
                   {activeModality.teachingSteps.map((step, sIdx) => (
-                    <div key={sIdx} className="flex items-start gap-3 text-base text-[#334155]">
-                      <span className="w-6 h-6 rounded-md bg-[#EEF2F6] font-bold text-sm flex items-center justify-center shrink-0 mt-0.5 text-[#0F1D33]">
+                    <div
+                      key={sIdx}
+                      className="group/step flex items-start gap-3.5 p-3 rounded-xl transition-all duration-200 hover:bg-[#F8FAFD] hover:translate-x-1 cursor-default"
+                    >
+                      <span className="w-8 h-8 rounded-lg bg-[#EEF2F6] group-hover/step:bg-[#0F1D33] group-hover/step:text-white transition-colors text-sm font-bold flex items-center justify-center shrink-0 mt-0.5 text-[#0F1D33]">
                         {sIdx + 1}
                       </span>
-                      <span className="leading-relaxed max-w-[55ch]">{step}</span>
+                      <span className="text-base text-[#334155] leading-relaxed max-w-[55ch]">
+                        {step}
+                      </span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="pt-3">
+              {/* Minimalist Interactive CTA Link */}
+              <div className="pt-2">
                 <Link
                   to="/register"
-                  className="inline-flex items-center gap-2 text-base font-bold text-[#0F1D33] hover:underline"
+                  className="group inline-flex items-center gap-2 text-base font-bold text-[#0F1D33] hover:text-[#1E293B] transition-colors"
                 >
                   <span>Ikuti diagnostik untuk mengetahui profil anak</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1.5" />
                 </Link>
               </div>
             </div>

@@ -1,23 +1,24 @@
 {
  "url": "http://localhost:5173",
- "at": "2026-10-28T07:44:02.401Z",
+ "at": "2026-10-28T12:33:57.134Z",
  "allow": [],
  "viewports": [
   {
    "width": 1440,
    "height": 900,
    "load": "load",
-   "screens": 5,
+   "screens": 6,
    "filled": [
     0.96,
+    1,
     1,
     1,
     1,
     1
    ],
    "motion": {
-    "elements": 24,
-    "css": 24,
+    "elements": 25,
+    "css": 25,
     "transitions": 0,
     "scripted": 0,
     "videos": 0,
@@ -29,13 +30,13 @@
      "h": 900
     },
     "page": {
-     "height": 4311,
-     "screens": 4.8,
-     "words": 529,
+     "height": 4506,
+     "screens": 5,
+     "words": 544,
      "img": 9,
      "video": 0,
      "canvas": 0,
-     "svg": 16,
+     "svg": 17,
      "sections": 7,
      "horizontalOverflow": 0,
      "overflowCulprits": [],
@@ -131,6 +132,27 @@
       "kind": "heading"
      },
      {
+      "text": "Pemetaan Spasial & Rangkuman",
+      "words": 4,
+      "chars": 28,
+      "lines": 1,
+      "size": 30,
+      "vw": 2.1,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 800,
+      "tracking": -0.025,
+      "leading": 1.38,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.39,
+      "top": 1035,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
       "text": "Dua Rumpun Kurikulum Terpadu",
       "words": 4,
       "chars": 28,
@@ -147,7 +169,7 @@
       "align": "left",
       "position": "left",
       "widthRatio": 0.49,
-      "top": 1572,
+      "top": 1766,
       "tag": "h2",
       "kind": "heading"
      },
@@ -168,7 +190,7 @@
       "align": "left",
       "position": "left",
       "widthRatio": 0.49,
-      "top": 2421,
+      "top": 2616,
       "tag": "h2",
       "kind": "heading"
      },
@@ -189,7 +211,7 @@
       "align": "left",
       "position": "center",
       "widthRatio": 0.49,
-      "top": 3025,
+      "top": 3220,
       "tag": "h2",
       "kind": "heading"
      },
@@ -210,13 +232,13 @@
       "align": "left",
       "position": "left",
       "widthRatio": 0.44,
-      "top": 3850,
+      "top": 4045,
       "tag": "h2",
       "kind": "heading"
      }
     ],
     "headingSummary": {
-     "count": 6,
+     "count": 7,
      "maxLines": 2,
      "over2Lines": 0,
      "statements": 0,
@@ -238,18 +260,19 @@
       16,
       18,
       20,
+      30,
       36,
       68
      ],
-     "sizeCount": 6,
+     "sizeCount": 7,
      "notLoaded": [],
      "body": {
       "font": "Plus Jakarta Sans Variable",
       "size": 16,
       "leading": 1.63,
-      "weight": 500,
+      "weight": 400,
       "tracking": 0,
-      "contrast": 14
+      "contrast": 7.6
      },
      "measureChars": 88,
      "max": {
@@ -266,7 +289,7 @@
      "microLabelShare": 0,
      "microSamples": [],
      "upperShare": 0,
-     "centerShare": 0.01,
+     "centerShare": 0,
      "smallText": 0
     },
     "eyebrows": [],
@@ -291,7 +314,7 @@
       },
       {
        "color": "#ffffff",
-       "top": 960,
+       "top": 987,
        "hsl": {
         "h": 0,
         "s": 0,
@@ -310,7 +333,7 @@
       },
       {
        "color": "#0f1d33",
-       "share": 0.21
+       "share": 0.2
       },
       {
        "color": "#1e293b",
@@ -318,7 +341,7 @@
       },
       {
        "color": "#94a3b8",
-       "share": 0.06
+       "share": 0.05
       }
      ],
      "button": {
@@ -333,10 +356,10 @@
      "lowContrast": []
     },
     "buttons": {
-     "count": 8,
-     "inHero": 6,
+     "count": 6,
+     "inHero": 4,
      "radius": 20,
-     "height": 48,
+     "height": 56,
      "withShadow": 0,
      "withGradient": 0,
      "mono": 0,
@@ -345,8 +368,7 @@
       "Daftar Siswa",
       "Mulai Asesmen & Daftar Siswa",
       "Pelajari Cara Kerja",
-      "Visual [V]",
-      "Auditori [A]"
+      "Visual [V] Peta Konsep & Spasial"
      ]
     },
     "surfaces": {
@@ -373,7 +395,7 @@
        "count": 3,
        "iconTopped": false,
        "rounded": true,
-       "top": 2569
+       "top": 2763
       }
      ]
     },
@@ -399,7 +421,7 @@
      "w": 1440,
      "h": 900
     },
-    "pageH": 4311,
+    "pageH": 4506,
     "margins": {
      "left": 176,
      "right": 200
@@ -432,8 +454,8 @@
       "sel": "section#modalitas.scroll-mt-24.max-w-6xl",
       "tag": "section",
       "top": 732,
-      "height": 728,
-      "words": 134,
+      "height": 922,
+      "words": 152,
       "media": 1,
       "middle": 0,
       "heading": {
@@ -442,9 +464,9 @@
        "tag": "h2"
       },
       "left": 176,
-      "right": 208,
+      "right": 236,
       "textLeft": 176,
-      "textRight": 208,
+      "textRight": 236,
       "fullBleed": false,
       "footer": false,
       "hero": false,
@@ -454,7 +476,7 @@
      {
       "sel": "section#kurikulum.scroll-mt-24.max-w-6xl",
       "tag": "section",
-      "top": 1572,
+      "top": 1766,
       "height": 738,
       "words": 132,
       "media": 2,
@@ -477,7 +499,7 @@
      {
       "sel": "section#alur.scroll-mt-24.max-w-6xl",
       "tag": "section",
-      "top": 2421,
+      "top": 2616,
       "height": 492,
       "words": 94,
       "media": 3,
@@ -500,7 +522,7 @@
      {
       "sel": "section#faq.scroll-mt-24.max-w-4xl",
       "tag": "section",
-      "top": 3025,
+      "top": 3220,
       "height": 658,
       "words": 97,
       "media": 0,
@@ -523,7 +545,7 @@
      {
       "sel": "section.max-w-6xl.mx-auto",
       "tag": "section",
-      "top": 3794,
+      "top": 3989,
       "height": 261,
       "words": 33,
       "media": 0,
@@ -546,7 +568,7 @@
      {
       "sel": "footer.bg-[#0F1D33].text-[#CBD5E1]",
       "tag": "footer",
-      "top": 4135,
+      "top": 4330,
       "height": 176,
       "words": 21,
       "media": 0,
@@ -580,11 +602,11 @@
      },
      {
       "x": 200,
-      "n": 5
+      "n": 4
      },
      {
-      "x": 232,
-      "n": 2
+      "x": 224,
+      "n": 3
      },
      {
       "x": 304,
@@ -603,11 +625,11 @@
       "n": 2
      },
      {
-      "x": 648,
+      "x": 657,
       "n": 1
      },
      {
-      "x": 668,
+      "x": 681,
       "n": 1
      }
     ],
@@ -641,8 +663,8 @@
     1
    ],
    "motion": {
-    "elements": 24,
-    "css": 24,
+    "elements": 25,
+    "css": 25,
     "transitions": 0,
     "scripted": 0,
     "videos": 0,
@@ -654,13 +676,13 @@
      "h": 1024
     },
     "page": {
-     "height": 5376,
-     "screens": 5.3,
-     "words": 529,
+     "height": 5671,
+     "screens": 5.5,
+     "words": 544,
      "img": 9,
      "video": 0,
      "canvas": 0,
-     "svg": 16,
+     "svg": 17,
      "sections": 7,
      "horizontalOverflow": 0,
      "overflowCulprits": [],
@@ -772,7 +794,7 @@
       "align": "left",
       "position": "center",
       "widthRatio": 0.91,
-      "top": 2280,
+      "top": 2575,
       "tag": "h2",
       "kind": "heading"
      },
@@ -793,7 +815,7 @@
       "align": "left",
       "position": "center",
       "widthRatio": 0.91,
-      "top": 3316,
+      "top": 3610,
       "tag": "h2",
       "kind": "heading"
      },
@@ -814,7 +836,7 @@
       "align": "left",
       "position": "center",
       "widthRatio": 0.91,
-      "top": 4016,
+      "top": 4310,
       "tag": "h2",
       "kind": "heading"
      },
@@ -835,7 +857,7 @@
       "align": "left",
       "position": "left",
       "widthRatio": 0.51,
-      "top": 4841,
+      "top": 5136,
       "tag": "h2",
       "kind": "heading"
      }
@@ -863,18 +885,19 @@
       16,
       18,
       20,
+      24,
       36,
       48
      ],
-     "sizeCount": 6,
+     "sizeCount": 7,
      "notLoaded": [],
      "body": {
       "font": "Plus Jakarta Sans Variable",
       "size": 16,
       "leading": 1.63,
-      "weight": 500,
+      "weight": 400,
       "tracking": 0,
-      "contrast": 14
+      "contrast": 7.6
      },
      "measureChars": 88,
      "max": {
@@ -891,7 +914,7 @@
      "microLabelShare": 0,
      "microSamples": [],
      "upperShare": 0,
-     "centerShare": 0.01,
+     "centerShare": 0,
      "smallText": 0
     },
     "eyebrows": [],
@@ -925,7 +948,7 @@
       },
       {
        "color": "#ffffff",
-       "top": 1313,
+       "top": 1410,
        "hsl": {
         "h": 0,
         "s": 0,
@@ -934,7 +957,7 @@
       },
       {
        "color": "#0f1d33",
-       "top": 4785,
+       "top": 5080,
        "hsl": {
         "h": 217,
         "s": 0.55,
@@ -953,7 +976,7 @@
       },
       {
        "color": "#0f1d33",
-       "share": 0.21
+       "share": 0.2
       },
       {
        "color": "#1e293b",
@@ -961,7 +984,7 @@
       },
       {
        "color": "#94a3b8",
-       "share": 0.06
+       "share": 0.05
       }
      ],
      "button": {
@@ -976,10 +999,10 @@
      "lowContrast": []
     },
     "buttons": {
-     "count": 8,
+     "count": 6,
      "inHero": 3,
      "radius": 20,
-     "height": 48,
+     "height": 56,
      "withShadow": 0,
      "withGradient": 0,
      "mono": 0,
@@ -1003,18 +1026,18 @@
      "outlinedBoxes": 0,
      "dashed": 0,
      "blurred": 1,
-     "roundedBoxes": 18,
-     "boxRadius": 20,
+     "roundedBoxes": 19,
+     "boxRadius": 25,
      "squareMedia": 0,
      "roundedMedia": 4,
-     "mediaRadius": 20,
+     "mediaRadius": 25,
      "textShadow": 0,
      "cardRows": [
       {
        "count": 3,
        "iconTopped": false,
        "rounded": true,
-       "top": 3463
+       "top": 3758
       }
      ]
     },
@@ -1040,7 +1063,7 @@
      "w": 768,
      "h": 1024
     },
-    "pageH": 5376,
+    "pageH": 5671,
     "margins": {
      "left": 24,
      "right": 24
@@ -1073,8 +1096,8 @@
       "sel": "section#modalitas.scroll-mt-24.max-w-6xl",
       "tag": "section",
       "top": 1085,
-      "height": 1083,
-      "words": 134,
+      "height": 1378,
+      "words": 152,
       "media": 1,
       "middle": 0,
       "heading": {
@@ -1083,7 +1106,7 @@
        "tag": "h2"
       },
       "left": 24,
-      "right": 56,
+      "right": 58,
       "textLeft": 24,
       "textRight": 58,
       "fullBleed": false,
@@ -1095,7 +1118,7 @@
      {
       "sel": "section#kurikulum.scroll-mt-24.max-w-6xl",
       "tag": "section",
-      "top": 2280,
+      "top": 2575,
       "height": 924,
       "words": 132,
       "media": 2,
@@ -1118,7 +1141,7 @@
      {
       "sel": "section#alur.scroll-mt-24.max-w-6xl",
       "tag": "section",
-      "top": 3316,
+      "top": 3610,
       "height": 588,
       "words": 94,
       "media": 3,
@@ -1141,7 +1164,7 @@
      {
       "sel": "section#faq.scroll-mt-24.max-w-4xl",
       "tag": "section",
-      "top": 4016,
+      "top": 4310,
       "height": 658,
       "words": 97,
       "media": 0,
@@ -1164,7 +1187,7 @@
      {
       "sel": "section.max-w-6xl.mx-auto",
       "tag": "section",
-      "top": 4785,
+      "top": 5080,
       "height": 335,
       "words": 33,
       "media": 0,
@@ -1187,7 +1210,7 @@
      {
       "sel": "footer.bg-[#0F1D33].text-[#CBD5E1]",
       "tag": "footer",
-      "top": 5200,
+      "top": 5495,
       "height": 176,
       "words": 21,
       "media": 0,
@@ -1221,11 +1244,15 @@
      },
      {
       "x": 48,
-      "n": 6
+      "n": 4
      },
      {
-      "x": 76,
+      "x": 80,
       "n": 3
+     },
+     {
+      "x": 64,
+      "n": 2
      },
      {
       "x": 296,
@@ -1255,9 +1282,10 @@
    "width": 390,
    "height": 844,
    "load": "load",
-   "screens": 9,
+   "screens": 10,
    "filled": [
     0.88,
+    1,
     1,
     1,
     1,
@@ -1268,8 +1296,8 @@
     1
    ],
    "motion": {
-    "elements": 24,
-    "css": 24,
+    "elements": 25,
+    "css": 25,
     "transitions": 0,
     "scripted": 0,
     "videos": 0,
@@ -1281,13 +1309,13 @@
      "h": 844
     },
     "page": {
-     "height": 7528,
-     "screens": 8.9,
-     "words": 523,
+     "height": 7783,
+     "screens": 9.2,
+     "words": 538,
      "img": 9,
      "video": 0,
      "canvas": 0,
-     "svg": 16,
+     "svg": 17,
      "sections": 7,
      "horizontalOverflow": 0,
      "overflowCulprits": [],
@@ -1399,7 +1427,7 @@
       "align": "left",
       "position": "center",
       "widthRatio": 0.92,
-      "top": 2689,
+      "top": 2944,
       "tag": "h2",
       "kind": "heading"
      },
@@ -1420,7 +1448,7 @@
       "align": "left",
       "position": "center",
       "widthRatio": 0.92,
-      "top": 4392,
+      "top": 4647,
       "tag": "h2",
       "kind": "heading"
      },
@@ -1441,7 +1469,7 @@
       "align": "left",
       "position": "center",
       "widthRatio": 0.92,
-      "top": 5750,
+      "top": 6005,
       "tag": "h2",
       "kind": "heading"
      },
@@ -1462,7 +1490,7 @@
       "align": "left",
       "position": "center",
       "widthRatio": 0.75,
-      "top": 6753,
+      "top": 7008,
       "tag": "h2",
       "kind": "heading"
      }
@@ -1518,7 +1546,7 @@
      "microLabelShare": 0,
      "microSamples": [],
      "upperShare": 0,
-     "centerShare": 0.02,
+     "centerShare": 0.01,
      "smallText": 0
     },
     "eyebrows": [],
@@ -1552,7 +1580,7 @@
       },
       {
        "color": "#ffffff",
-       "top": 1502,
+       "top": 1613,
        "hsl": {
         "h": 0,
         "s": 0,
@@ -1561,7 +1589,7 @@
       },
       {
        "color": "#0f1d33",
-       "top": 6721,
+       "top": 6976,
        "hsl": {
         "h": 217,
         "s": 0.55,
@@ -1580,7 +1608,7 @@
       },
       {
        "color": "#0f1d33",
-       "share": 0.22
+       "share": 0.21
       },
       {
        "color": "#1e293b",
@@ -1603,7 +1631,7 @@
      "lowContrast": []
     },
     "buttons": {
-     "count": 8,
+     "count": 6,
      "inHero": 3,
      "radius": 20,
      "height": 56,
@@ -1630,8 +1658,8 @@
      "outlinedBoxes": 0,
      "dashed": 0,
      "blurred": 1,
-     "roundedBoxes": 20,
-     "boxRadius": 20,
+     "roundedBoxes": 21,
+     "boxRadius": 25,
      "squareMedia": 0,
      "roundedMedia": 7,
      "mediaRadius": 20,
@@ -1660,7 +1688,7 @@
      "w": 390,
      "h": 844
     },
-    "pageH": 7528,
+    "pageH": 7783,
     "margins": {
      "left": 16,
      "right": 16
@@ -1713,22 +1741,41 @@
       "pinned": false
      },
      {
-      "sel": "div.taste-reveal.grid",
+      "sel": "div.taste-reveal.inline-flex",
       "tag": "div",
-      "top": 1502,
-      "height": 1107,
-      "words": 102,
+      "top": 1366,
+      "height": 215,
+      "words": 15,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": 22,
+      "right": 125,
+      "textLeft": 86,
+      "textRight": 145,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.animate-modal-enter.grid",
+      "tag": "div",
+      "top": 1613,
+      "height": 1252,
+      "words": 108,
       "media": 1,
       "middle": 0,
       "heading": {
-       "text": "Peta Konsep (Mind Map), Bagan Alur Rumus, dan Rang",
+       "text": "Pemetaan Spasial & Rangkuman",
        "size": 20,
        "tag": "h3"
       },
       "left": 40,
       "right": 40,
       "textLeft": 40,
-      "textRight": 44,
+      "textRight": 48,
       "fullBleed": false,
       "footer": false,
       "hero": false,
@@ -1738,7 +1785,7 @@
      {
       "sel": "div.taste-reveal.space-y-3",
       "tag": "div",
-      "top": 2689,
+      "top": 2944,
       "height": 191,
       "words": 26,
       "media": 0,
@@ -1761,7 +1808,7 @@
      {
       "sel": "div.grid.grid-cols-1",
       "tag": "div",
-      "top": 2912,
+      "top": 3167,
       "height": 1400,
       "words": 106,
       "media": 2,
@@ -1784,7 +1831,7 @@
      {
       "sel": "section#alur.scroll-mt-24.max-w-6xl",
       "tag": "section",
-      "top": 4392,
+      "top": 4647,
       "height": 1278,
       "words": 94,
       "media": 3,
@@ -1807,7 +1854,7 @@
      {
       "sel": "section#faq.scroll-mt-24.max-w-4xl",
       "tag": "section",
-      "top": 5750,
+      "top": 6005,
       "height": 891,
       "words": 97,
       "media": 0,
@@ -1830,7 +1877,7 @@
      {
       "sel": "section.max-w-6xl.mx-auto",
       "tag": "section",
-      "top": 6721,
+      "top": 6976,
       "height": 441,
       "words": 33,
       "media": 0,
@@ -1853,7 +1900,7 @@
      {
       "sel": "footer.bg-[#0F1D33].text-[#CBD5E1]",
       "tag": "footer",
-      "top": 7242,
+      "top": 7497,
       "height": 286,
       "words": 21,
       "media": 0,
@@ -1890,7 +1937,7 @@
       "n": 10
      },
      {
-      "x": 60,
+      "x": 64,
       "n": 1
      }
     ],

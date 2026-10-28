@@ -74,11 +74,16 @@ export const personalizedLearningService = {
     const supabase = requireSupabase()
 
     try {
-      if (personalityTypeId) {
+      const isValidUuid =
+        Boolean(personalityTypeId) &&
+        personalityTypeId !== 'undefined' &&
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(personalityTypeId!)
+
+      if (isValidUuid) {
         const { data: mappingData, error: mappingError } = await supabase
           .from('personality_type_subjects')
           .select('id, subject_id, priority, reason')
-          .eq('personality_type_id', personalityTypeId)
+          .eq('personality_type_id', personalityTypeId!)
           .order('priority', { ascending: true })
 
         if (mappingError) throw mappingError

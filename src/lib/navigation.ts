@@ -40,7 +40,6 @@ export const STUDENT_NAV_ITEMS: NavItem[] = [
   { label: 'Perkembangan', href: '/student/progress', icon: TrendingUp },
   { label: 'Pembayaran', href: '/student/payments', icon: CreditCard },
   { label: 'Riwayat Sesi', href: '/student/sessions', icon: Clock },
-  { label: 'Laporan', href: '/student/reports', icon: FileText },
   { label: 'Pesan', href: '/student/messages', icon: MessageSquare },
   { label: 'Notifikasi', href: '/student/notifications', icon: Bell },
   { label: 'Pengaturan', href: '/student/settings', icon: Settings },

@@ -272,13 +272,7 @@ export function AppRoutes() {
         />
         <Route
           path="/student/reports"
-          element={
-            <ProtectedRoute>
-              <RoleGuard allowedRoles={['student']}>
-                <ReportHistoryPage />
-              </RoleGuard>
-            </ProtectedRoute>
-          }
+          element={<Navigate to="/student/learning?tab=reports" replace />}
         />
         <Route
           path="/student/reports/:reportId"

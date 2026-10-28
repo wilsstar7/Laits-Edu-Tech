@@ -32,11 +32,16 @@ export const learningPathService = {
 
       // 2. If personality type is provided, fetch tailored recommendations
       let recommendationsMap: Record<string, { priority: number; reason: string }> = {}
-      if (personalityTypeId) {
+      const isValidUuid =
+        Boolean(personalityTypeId) &&
+        personalityTypeId !== 'undefined' &&
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(personalityTypeId!)
+
+      if (isValidUuid) {
         const { data: recs } = await supabase
           .from('personality_type_learning_paths')
           .select('learning_path_id, priority, reason')
-          .eq('personality_type_id', personalityTypeId)
+          .eq('personality_type_id', personalityTypeId!)
 
         if (recs) {
           recommendationsMap = recs.reduce((acc, cur) => {

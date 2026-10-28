@@ -30,7 +30,7 @@ export function MonthlyReportCard() {
 
       <div className="pt-3 border-t border-border/60">
         <Link
-          to="/student/reports"
+          to="/student/learning?tab=reports"
           className="inline-block text-xs font-bold text-[#183058] hover:underline"
         >
           Buka Arsip Laporan Belajar

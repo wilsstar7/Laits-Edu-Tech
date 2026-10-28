@@ -85,7 +85,7 @@ export function ReportPreview({ reportId }: ReportPreviewProps) {
       <div className="space-y-4">
         <button
           type="button"
-          onClick={() => navigate('/student/reports')}
+          onClick={() => navigate('/student/learning?tab=reports')}
           className="inline-flex items-center gap-1.5 text-xs font-bold text-[#676A78] hover:text-[#17181C] transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
@@ -106,7 +106,7 @@ export function ReportPreview({ reportId }: ReportPreviewProps) {
           <div className="flex items-center gap-2">
             <button
               type="button"
-              onClick={() => navigate('/student/reports')}
+              onClick={() => navigate('/student/learning?tab=reports')}
               className="p-1.5 rounded-lg hover:bg-[#F4F6FA] text-[#676A78] hover:text-[#17181C] transition-colors"
               aria-label="Kembali"
             >

@@ -1,9 +1,10 @@
 import { Link, Navigate } from 'react-router'
 import { RegisterForm } from '@/components/auth/RegisterForm'
 import { useAuth } from '@/hooks/useAuth'
+import { studentNeedsOnboarding } from '@/utils/profileCompletion'
 
 export function RegisterPage() {
-  const { session, role } = useAuth()
+  const { session, role, profile, account } = useAuth()
 
   if (session && role) {
     if (role === 'admin' || role === 'super_admin') {
@@ -11,9 +12,13 @@ export function RegisterPage() {
     } else if (role === 'tutor') {
       return <Navigate to="/tutor/dashboard" replace />
     } else {
+      if (profile && studentNeedsOnboarding(profile, account?.studentProfile ?? null)) {
+        return <Navigate to="/student/complete-profile" replace />
+      }
       return <Navigate to="/student/dashboard" replace />
     }
   }
+
   return (
     <div className="min-h-screen bg-[#F4F6FA] flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-2xl">
@@ -41,7 +46,7 @@ export function RegisterPage() {
               Pendaftaran Siswa Baru
             </h1>
             <p className="text-xs sm:text-sm text-[#676A78]">
-              Lengkapi informasi akun dan data pendidikan untuk memulai bimbingan belajar
+              Daftar instan dengan akun Google atau lengkapi data formulir untuk memulai bimbingan belajar
             </p>
           </div>
 

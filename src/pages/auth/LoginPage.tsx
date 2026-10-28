@@ -3,9 +3,10 @@ import { AlertCircle } from 'lucide-react'
 import { LoginForm } from '@/components/auth/LoginForm'
 import { useAuth } from '@/hooks/useAuth'
 import { env } from '@/lib/env'
+import { studentNeedsOnboarding } from '@/utils/profileCompletion'
 
 export function LoginPage() {
-  const { session, role } = useAuth()
+  const { session, role, profile, account } = useAuth()
 
   if (session && role) {
     if (role === 'admin' || role === 'super_admin') {
@@ -13,6 +14,9 @@ export function LoginPage() {
     } else if (role === 'tutor') {
       return <Navigate to="/tutor/dashboard" replace />
     } else {
+      if (profile && studentNeedsOnboarding(profile, account?.studentProfile ?? null)) {
+        return <Navigate to="/student/complete-profile" replace />
+      }
       return <Navigate to="/student/dashboard" replace />
     }
   }
@@ -44,7 +48,7 @@ export function LoginPage() {
               Masuk ke Akun Anda
             </h1>
             <p className="text-xs text-[#676A78]">
-              Gunakan email dan kata sandi akun terdaftar Anda
+              Gunakan akun Google atau email terdaftar Anda
             </p>
           </div>
 
@@ -66,7 +70,6 @@ export function LoginPage() {
             </Link>
           </div>
         </div>
-
       </div>
     </div>
   )

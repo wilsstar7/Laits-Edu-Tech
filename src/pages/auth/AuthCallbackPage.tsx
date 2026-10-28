@@ -4,6 +4,7 @@ import { Loader2, AlertCircle, CheckCircle2, ArrowRight } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import { profileService } from '@/services/profileService'
 import { readAuthLinkInfo, describeLinkError } from '@/utils/authLink'
+import { studentNeedsOnboarding } from '@/utils/profileCompletion'
 
 export function AuthCallbackPage() {
   const [errorMsg, setErrorMsg] = useState<string | null>(() => {
@@ -30,18 +31,22 @@ export function AuthCallbackPage() {
 
       setIsSuccess(true)
       try {
-        const { profile } = await profileService.getAccountBundle()
+        const { profile, studentProfile } = await profileService.getAccountBundle()
         setTimeout(() => {
           if (profile.role === 'admin' || profile.role === 'super_admin') {
             navigate('/admin/dashboard', { replace: true })
           } else if (profile.role === 'tutor') {
             navigate('/tutor/dashboard', { replace: true })
           } else {
-            navigate('/student/dashboard', { replace: true })
+            if (studentNeedsOnboarding(profile, studentProfile)) {
+              navigate('/student/complete-profile', { replace: true })
+            } else {
+              navigate('/student/dashboard', { replace: true })
+            }
           }
-        }, 1200)
+        }, 1000)
       } catch {
-        navigate('/student/dashboard', { replace: true })
+        navigate('/student/complete-profile', { replace: true })
       }
     })
   }, [errorMsg, navigate])
@@ -73,7 +78,7 @@ export function AuthCallbackPage() {
             </div>
             <h2 className="text-lg font-bold text-[#17181C]">Verifikasi Berhasil!</h2>
             <p className="text-xs text-muted-foreground">
-              Sesi Anda telah aktif. Mengarahkan ke dashboard...
+              Sesi Anda telah aktif. Mengarahkan akun Anda...
             </p>
           </>
         ) : (

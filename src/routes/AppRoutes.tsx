@@ -16,6 +16,7 @@ const NotFoundPage = lazy(() => import('@/pages/NotFoundPage').then((m) => ({ de
 const HealthCheckPage = lazy(() => import('@/pages/HealthCheckPage').then((m) => ({ default: m.HealthCheckPage })))
 
 // Student Pages (Code-split)
+const CompleteProfilePage = lazy(() => import('@/pages/student/CompleteProfilePage').then((m) => ({ default: m.CompleteProfilePage })))
 const StudentDashboardPage = lazy(() => import('@/pages/student/StudentDashboardPage').then((m) => ({ default: m.StudentDashboardPage })))
 const StudentCoursesPage = lazy(() => import('@/pages/student/StudentCoursesPage').then((m) => ({ default: m.StudentCoursesPage })))
 const CourseDetailPage = lazy(() => import('@/pages/student/CourseDetailPage').then((m) => ({ default: m.CourseDetailPage })))
@@ -76,6 +77,16 @@ export function AppRoutes() {
         <Route path="/health" element={<HealthCheckPage />} />
 
         {/* Student Protected Routes (Protected & Role-Guarded) */}
+        <Route
+          path="/student/complete-profile"
+          element={
+            <ProtectedRoute>
+              <RoleGuard allowedRoles={['student']}>
+                <CompleteProfilePage />
+              </RoleGuard>
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/student/dashboard"
           element={

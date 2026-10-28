@@ -6,6 +6,7 @@
 import type { StudentLevel, AssessmentPackageCode } from './personaModalityData'
 import {
   getQuestionsForLevel,
+  LEVEL_CONFIG,
   type PersonaQuestion,
 } from './personaModalityData'
 
@@ -1023,19 +1024,37 @@ export const MULTIPLE_INTELLIGENCES_METADATA: Record<
 export const PACKAGE_LEVEL_CONFIG = {
   PAKET_1_PERSONA_MODALITY: {
     SD: {
-      totalQuestions: 15,
-      estimatedMinutes: 5,
-      breakdown: '15 Soal Modalitas Sensori VAK',
+      get totalQuestions() {
+        return LEVEL_CONFIG.SD.totalCount
+      },
+      get estimatedMinutes() {
+        return LEVEL_CONFIG.SD.estimatedMinutes
+      },
+      get breakdown() {
+        return `${LEVEL_CONFIG.SD.totalCount} Soal Modalitas Sensori VAK`
+      },
     },
     SMP: {
-      totalQuestions: 20,
-      estimatedMinutes: 7,
-      breakdown: '20 Soal Modalitas Sensori VAK',
+      get totalQuestions() {
+        return LEVEL_CONFIG.SMP.totalCount
+      },
+      get estimatedMinutes() {
+        return LEVEL_CONFIG.SMP.estimatedMinutes
+      },
+      get breakdown() {
+        return `${LEVEL_CONFIG.SMP.totalCount} Soal Modalitas Sensori VAK`
+      },
     },
     SMA: {
-      totalQuestions: 30,
-      estimatedMinutes: 10,
-      breakdown: '30 Soal Modalitas Sensori VAK',
+      get totalQuestions() {
+        return LEVEL_CONFIG.SMA.totalCount
+      },
+      get estimatedMinutes() {
+        return LEVEL_CONFIG.SMA.estimatedMinutes
+      },
+      get breakdown() {
+        return `${LEVEL_CONFIG.SMA.totalCount} Soal Modalitas Sensori VAK`
+      },
     },
   },
   PAKET_2_PERSONA_POTENTIAL: {

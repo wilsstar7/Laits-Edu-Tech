@@ -54,6 +54,7 @@ const AdminPaymentsPage = lazy(() => import('@/pages/admin/AdminPaymentsPage').t
 const AdminReviewsPage = lazy(() => import('@/pages/admin/AdminReviewsPage').then((m) => ({ default: m.AdminReviewsPage })))
 const AdminUsersPage = lazy(() => import('@/pages/admin/AdminUsersPage').then((m) => ({ default: m.AdminUsersPage })))
 const AdminSubjectsPage = lazy(() => import('@/pages/admin/AdminSubjectsPage').then((m) => ({ default: m.AdminSubjectsPage })))
+const AdminAssessmentsPage = lazy(() => import('@/pages/admin/AdminAssessmentsPage').then((m) => ({ default: m.AdminAssessmentsPage })))
 
 function RouteLoader() {
   return <PageLoader message="Memuat halaman..." />
@@ -435,6 +436,16 @@ export function AppRoutes() {
             <ProtectedRoute>
               <RoleGuard allowedRoles={['admin', 'super_admin']}>
                 <AdminSubjectsPage />
+              </RoleGuard>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/assessments"
+          element={
+            <ProtectedRoute>
+              <RoleGuard allowedRoles={['admin', 'super_admin']}>
+                <AdminAssessmentsPage />
               </RoleGuard>
             </ProtectedRoute>
           }

@@ -14,6 +14,7 @@ import {
   Library,
   Megaphone,
   UserPlus,
+  ClipboardList,
 } from 'lucide-react'
 import { AppShell } from '@/components/layout/AppShell'
 import { PageHeader } from '@/components/layout/PageHeader'
@@ -106,10 +107,17 @@ export function AdminDashboardPage() {
               <span>+ Tambah Akun Tutor</span>
             </button>
             <Link
-              to="/admin/courses"
+              to="/admin/assessments"
               className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#183058] text-white text-xs font-bold hover:bg-[#102342] transition-colors min-h-[44px]"
             >
-              <Library className="w-3.5 h-3.5" />
+              <ClipboardList className="w-3.5 h-3.5" />
+              <span>Kelola Soal &amp; Jenjang</span>
+            </Link>
+            <Link
+              to="/admin/courses"
+              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-border text-foreground text-xs font-bold hover:bg-[#ECF0F7] transition-colors min-h-[44px]"
+            >
+              <Library className="w-3.5 h-3.5 text-[#183058]" />
               <span>Kelola Kursus</span>
             </Link>
             <Link

@@ -950,21 +950,17 @@ export const PERSONA_MODALITY_QUESTIONS: PersonaQuestion[] = [
     ],
   },
 ]
-
-/**
- * Filter soal Paket 1 berdasarkan jenjang siswa:
- * - SD:  15 VAK (No 1-15)
- * - SMP: 20 VAK (No 1-20)
- * - SMA: 30 VAK (No 1-30)
- */
-export function getQuestionsForLevel(level: StudentLevel): PersonaQuestion[] {
-  return PERSONA_MODALITY_QUESTIONS.filter((q) => q.levels.includes(level))
+export interface LevelConfigItem {
+  vakCount: number
+  hemCount: number
+  skbCount: number
+  totalCount: number
+  estimatedMinutes: number
+  label: string
+  desc: string
 }
 
-/**
- * Konfigurasi kuota soal per jenjang untuk validasi dan penunjuk UI
- */
-export const LEVEL_CONFIG = {
+export const BASE_LEVEL_CONFIG: Record<StudentLevel, LevelConfigItem> = {
   SD: {
     vakCount: 15,
     hemCount: 0,
@@ -992,4 +988,94 @@ export const LEVEL_CONFIG = {
     label: 'SMA / SMK (Kelas 10 - 12)',
     desc: '30 butir pertanyaan komprehensif modalitas sensori belajar hingga situasi sosial dan preferensi keseharian.',
   },
-} as const
+}
+
+/**
+ * Mengambil konfigurasi kuota dan durasi aktif per jenjang yang dapat diubah oleh Super Admin.
+ */
+export function getActiveLevelConfig(): Record<StudentLevel, LevelConfigItem> {
+  if (typeof window !== 'undefined' && typeof window.localStorage !== 'undefined') {
+    try {
+      const configRaw = window.localStorage.getItem('laits_assessment_level_config_v1')
+      if (configRaw) {
+        const parsed = JSON.parse(configRaw)
+        return {
+          SD: {
+            ...BASE_LEVEL_CONFIG.SD,
+            ...parsed.SD,
+            totalCount: parsed.SD?.totalCount ?? BASE_LEVEL_CONFIG.SD.totalCount,
+            vakCount: parsed.SD?.totalCount ?? BASE_LEVEL_CONFIG.SD.totalCount,
+            estimatedMinutes: parsed.SD?.estimatedMinutes ?? BASE_LEVEL_CONFIG.SD.estimatedMinutes,
+          },
+          SMP: {
+            ...BASE_LEVEL_CONFIG.SMP,
+            ...parsed.SMP,
+            totalCount: parsed.SMP?.totalCount ?? BASE_LEVEL_CONFIG.SMP.totalCount,
+            vakCount: parsed.SMP?.totalCount ?? BASE_LEVEL_CONFIG.SMP.totalCount,
+            estimatedMinutes: parsed.SMP?.estimatedMinutes ?? BASE_LEVEL_CONFIG.SMP.estimatedMinutes,
+          },
+          SMA: {
+            ...BASE_LEVEL_CONFIG.SMA,
+            ...parsed.SMA,
+            totalCount: parsed.SMA?.totalCount ?? BASE_LEVEL_CONFIG.SMA.totalCount,
+            vakCount: parsed.SMA?.totalCount ?? BASE_LEVEL_CONFIG.SMA.totalCount,
+            estimatedMinutes: parsed.SMA?.estimatedMinutes ?? BASE_LEVEL_CONFIG.SMA.estimatedMinutes,
+          },
+        }
+      }
+    } catch {
+      // fallback to BASE_LEVEL_CONFIG
+    }
+  }
+  return BASE_LEVEL_CONFIG
+}
+
+/**
+ * Filter soal Paket 1 berdasarkan jenjang siswa dengan kuota dinamis yang dapat diatur oleh Super Admin.
+ * Default: SD = 15, SMP = 20, SMA = 30.
+ */
+export function getQuestionsForLevel(level: StudentLevel): PersonaQuestion[] {
+  if (typeof window !== 'undefined' && typeof window.localStorage !== 'undefined') {
+    try {
+      const configRaw = window.localStorage.getItem('laits_assessment_level_config_v1')
+      const questionsRaw = window.localStorage.getItem('laits_assessment_questions_v1')
+
+      const config = configRaw ? JSON.parse(configRaw) : null
+      const quota: number =
+        config?.[level]?.totalCount ?? BASE_LEVEL_CONFIG[level].totalCount
+
+      const questionsList: PersonaQuestion[] = questionsRaw
+        ? JSON.parse(questionsRaw)
+        : PERSONA_MODALITY_QUESTIONS
+
+      const matching = questionsList.filter((q) => q.levels.includes(level))
+      if (matching.length >= quota) {
+        return matching.slice(0, quota)
+      }
+      const extras = questionsList.filter((q) => !matching.some((m) => m.id === q.id))
+      return [...matching, ...extras.slice(0, quota - matching.length)].slice(0, quota)
+    } catch {
+      // fallback
+    }
+  }
+
+  return PERSONA_MODALITY_QUESTIONS.filter((q) => q.levels.includes(level))
+}
+
+/**
+ * Konfigurasi kuota soal per jenjang untuk validasi dan penunjuk UI.
+ * Menggunakan Proxy agar selalu merefleksikan perubahan pengaturan dari dashboard Super Admin.
+ */
+export const LEVEL_CONFIG: Record<StudentLevel, LevelConfigItem> = new Proxy(
+  BASE_LEVEL_CONFIG,
+  {
+    get(target, prop: string) {
+      const active = getActiveLevelConfig()
+      if (prop in active) {
+        return active[prop as StudentLevel]
+      }
+      return Reflect.get(target, prop)
+    },
+  }
+)
+

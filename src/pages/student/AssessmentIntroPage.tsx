@@ -41,6 +41,13 @@ export function AssessmentIntroPage() {
   const [consentChecked, setConsentChecked] = useState(false)
   const [actionLoading, setActionLoading] = useState(false)
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
+  const [, setConfigVersion] = useState(0)
+
+  useEffect(() => {
+    const onUpdated = () => setConfigVersion((v) => v + 1)
+    window.addEventListener('laits_assessment_updated', onUpdated)
+    return () => window.removeEventListener('laits_assessment_updated', onUpdated)
+  }, [])
 
   useEffect(() => {
     async function loadData() {

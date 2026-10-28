@@ -16,6 +16,7 @@ import {
   Award,
   Library,
   Megaphone,
+  ClipboardList,
   type LucideIcon,
 } from 'lucide-react'
 import type { UserRole } from '@/types'
@@ -53,6 +54,7 @@ export const TUTOR_NAV_ITEMS: NavItem[] = [
 
 export const ADMIN_NAV_ITEMS: NavItem[] = [
   { label: 'Admin Overview', href: '/admin/dashboard', icon: Shield },
+  { label: 'Kelola Asesmen & Soal', href: '/admin/assessments', icon: ClipboardList },
   { label: 'Kelola Kursus', href: '/admin/courses', icon: Library },
   { label: 'Pengumuman', href: '/admin/announcements', icon: Megaphone },
   { label: 'Verifikasi Pembayaran', href: '/admin/payments', icon: CreditCard },

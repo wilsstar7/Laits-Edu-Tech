@@ -1,14 +1,13 @@
 import { useState } from 'react'
 import { Link } from 'react-router'
 import {
-  BookOpen,
-  GraduationCap,
-  Award,
-  Check,
   ArrowRight,
   Eye,
   Headphones,
   Activity,
+  ChevronDown,
+  ShieldCheck,
+  Check,
 } from 'lucide-react'
 import heroStudentImg from '@/assets/hero-student.jpg'
 import subjectGeneralImg from '@/assets/subject-general.jpg'
@@ -21,9 +20,28 @@ import styleAuditoryImg from '@/assets/style-auditory.jpg'
 import styleKinestheticImg from '@/assets/style-kinesthetic.jpg'
 import { useAuth } from '@/hooks/useAuth'
 
+interface ModalityData {
+  id: 'visual' | 'auditory' | 'kinesthetic'
+  name: string
+  code: 'V' | 'A' | 'K'
+  icon: typeof Eye
+  image: string
+  alt: string
+  summary: string
+  primaryFocus: string
+  tutorSop: string
+  teachingSteps: string[]
+}
+
+interface FaqData {
+  q: string
+  a: string
+}
+
 export function LandingPage() {
   const { session, role } = useAuth()
-  const [selectedStyleAnswer, setSelectedStyleAnswer] = useState<number>(0)
+  const [activeModalityIndex, setActiveModalityIndex] = useState<number>(0)
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0)
 
   const dashboardUrl =
     role === 'admin' || role === 'super_admin'
@@ -32,450 +50,229 @@ export function LandingPage() {
       ? '/tutor/dashboard'
       : '/student/dashboard'
 
-  const sampleAssessmentOptions = [
+  const modalities: ModalityData[] = [
     {
       id: 'visual',
-      title: 'Melihat skema visual, bagan, dan rangkuman infografis',
-      type: 'Tipe Visual',
+      name: 'Visual',
+      code: 'V',
       icon: Eye,
       image: styleVisualImg,
-      imageCaption: 'Sesi Belajar Visual: Pemetaan Konsep & Infografis Rumus',
-      desc: 'Lebih cepat menyerap konsep saat materi dipetakan secara visual dan terstruktur.',
-      tagColor: 'bg-[#E8ECF6] text-[#183058]',
-      focusPoint: 'Peta Konsep (Mind Map), Rangkuman Infografis, dan Visualisasi Rumus.',
-      studentBenefit: 'Memudahkan memahami struktur besar materi sebelum membedah hitungan rumit.',
-      interactiveSnippet: {
-        type: 'diagram',
-        title: 'Alur Pendekatan Visual:',
-        steps: ['Peta Konsep Utama', 'Bagan Alur Rumus', 'Latihan Terstruktur'],
-      },
-      adaptation: {
-        method: 'Mind Mapping & Visualisasi Terstruktur',
-        desc: 'Tutor menyusun materi dengan bagan alur, skema konsep, dan ringkasan visual bertahap sebelum bedah rumus atau teori kompleks.',
-      },
+      alt: 'Siswa belajar menggunakan peta pikiran dan diagram visual terstruktur',
+      summary:
+        'Siswa memproses konsep lebih cepat saat materi disajikan dalam bentuk diagram alur, rangkuman peta konsep, dan catatan berkode warna.',
+      primaryFocus: 'Peta Konsep (Mind Map), Bagan Alur Rumus, dan Rangkuman Berwarna',
+      tutorSop:
+        'Tutor wajib menggambarkan peta konsep di awal sesi, merapikan catatan rumus langkah demi langkah, dan menghindari ceramah lisan tanpa media visual.',
+      teachingSteps: [
+        'Tutor memetakan gambaran besar materi ke dalam skema visual',
+        'Pemberian warna penanda stabilo untuk membedakan rumus dan definisi',
+        'Latihan mandiri dengan panduan bagan alur penyelesaian soal',
+      ],
     },
     {
       id: 'auditory',
-      title: 'Mendengarkan penjelasan tutor dan berdiskusi langsung',
-      type: 'Tipe Auditori',
+      name: 'Auditori',
+      code: 'A',
       icon: Headphones,
       image: styleAuditoryImg,
-      imageCaption: 'Sesi Belajar Auditori: Dialog Sokratik & Diskusi Lisan',
-      desc: 'Mudah menangkap esensi materi saat didiskusikan secara lisan dengan tanya-jawab interaktif.',
-      tagColor: 'bg-[#E6F6EE] text-[#228653]',
-      focusPoint: 'Komunikasi Dua Arah, Analogi Nyata, dan Tanya-Jawab Lisan.',
-      studentBenefit: 'Materi menancap lebih kuat melalui dialog aktif dan penjelasan verbal terarah.',
-      interactiveSnippet: {
-        type: 'dialogue',
-        title: 'Contoh Sesi Dialog Interaktif:',
-        quote: 'Tutor mengajak siswa menguraikan konsep dengan bahasa sendiri agar pemahaman teruji tuntas.',
-      },
-      adaptation: {
-        method: 'Dialog Sokratik & Analogi Verbal',
-        desc: 'Tutor mengutamakan komunikasi dua arah, penjelasan lisan dengan analogi nyata, dan verifikasi pemahaman secara berkala.',
-      },
+      alt: 'Siswa berdiskusi aktif dengan tutor melalui dialog dan tanya jawab lisan',
+      summary:
+        'Siswa menangkap esensi materi secara optimal melalui komunikasi lisan, ritme suara, analogi kontekstual, dan dialog tanya-jawab.',
+      primaryFocus: 'Dialog Sokratik, Analogi Kehidupan Nyata, dan Evaluasi Verbal',
+      tutorSop:
+        'Tutor membuka sesi dengan dialog santai, menjelaskan konsep secara lisan dengan intonasi jelas, lalu meminta siswa menerangkan kembali gagasannya.',
+      teachingSteps: [
+        'Pengantar materi melalui analogi naratif yang relevan di dunia nyata',
+        'Tanya-jawab interaktif bertahap untuk menguji nalar logika siswa',
+        'Siswa diajak membacakan kesimpulan pemahamannya dengan bersuara',
+      ],
     },
     {
       id: 'kinesthetic',
-      title: 'Mengerjakan langsung latihan soal dan studi kasus nyata',
-      type: 'Tipe Kinestetik & Praktis',
+      name: 'Kinestetik',
+      code: 'K',
       icon: Activity,
       image: styleKinestheticImg,
-      imageCaption: 'Sesi Belajar Praktis: Bedah Kasus & Eksperimen Soal',
-      desc: 'Pemahaman terbentuk mantap lewat aksi langsung, eksperimen mandiri, dan evaluasi langkah.',
-      tagColor: 'bg-[#FFF6E7] text-[#B45309]',
-      focusPoint: 'Pembedahan Kasus Nyata, Latihan Berjenjang, dan Simulasi Mandiri.',
-      studentBenefit: 'Mencegah lupa konsep dengan langsung mempraktikkan langkah penyelesaian ke soal.',
-      interactiveSnippet: {
-        type: 'checklist',
-        title: 'Contoh Langkah Praktik Mandiri:',
-        items: ['Bedah 1 contoh kasus bersama', 'Coba 1 soal variasi mandiri', 'Evaluasi per langkah solusi'],
-      },
-      adaptation: {
-        method: 'Bedah Kasus & Latihan Bertahap',
-        desc: 'Tutor memandu siswa memecahkan masalah langkah demi langkah secara aktif, diikuti simulasi soal mandiri yang terarah.',
-      },
+      alt: 'Siswa langsung mempraktikkan latihan soal dengan corat-coret kertas buram',
+      summary:
+        'Siswa mengandalkan sensasi gerak motorik, keterlibatan fisik aktif, dan eksperimen latihan langsung untuk menancapkan logika berpikir.',
+      primaryFocus: 'Bedah Kasus Soal, Menuliskan Langkah Mandiri, dan Jeda Aktif',
+      tutorSop:
+        'Tutor langsung mengajak siswa memegang pena untuk latihan soal bersama, membatasi ceramah diam maksimal 15 menit, serta memberi jeda peregangan.',
+      teachingSteps: [
+        'Siswa membedah contoh soal pertama bersama tutor dengan keterlibatan tangan',
+        'Pengerjaan dua soal variasi secara mandiri di atas kertas buram',
+        'Jeda peregangan fisik singkat untuk menjaga stamina kognitif',
+      ],
     },
   ]
 
-  const activeOption = (sampleAssessmentOptions[selectedStyleAnswer] ?? sampleAssessmentOptions[0])!
+  const activeModality = modalities[activeModalityIndex] ?? modalities[0]!
+
+  const faqs: FaqData[] = [
+    {
+      q: 'Apa itu diagnostik modalitas sensori belajar di ZEINBOX?',
+      a: 'Diagnostik ini memetakan jalur sensori paling dominan anak dalam mencerna materi baru (Visual, Auditori, atau Kinestetik). Hasilnya menjadi pedoman operasional bagi guru privat dalam menentukan format rangkuman, ritme bicara, dan jenis latihan.',
+    },
+    {
+      q: 'Berapa durasi tes diagnostik untuk siswa?',
+      a: 'Tes dirancang ringkas dan adaptif berjenjang: 15 butir soal untuk SD (sekitar 5 menit), 20 butir soal untuk SMP (sekitar 7 menit), dan 30 butir soal untuk SMA (sekitar 10 menit). Soal berupa pilihan situasi belajar sehari-hari.',
+    },
+    {
+      q: 'Bagaimana jika cara belajar siswa merupakan kombinasi dua jalur?',
+      a: 'Sistem ZEINBOX secara otomatis mengidentifikasi tipe bimodal (misalnya Visual-Auditori atau Visual-Kinestetik) dan menghasilkan panduan gabungan bagi guru privat untuk menyampaikan pelajaran secara multi-stimulus.',
+    },
+    {
+      q: 'Mata pelajaran apa saja yang disediakan?',
+      a: 'Tersedia dua rumpun kurikulum: Akademik Umum (Matematika, Fisika, Kimia, Biologi, Bahasa Inggris) dan Studi Keagamaan (Tahfidz Al-Qur\'an, Tajwid, Bahasa Arab, Fiqih, Hadits) untuk jenjang SD, SMP, SMA, hingga persiapan seleksi masuk universitas.',
+    },
+    {
+      q: 'Bagaimana orang tua memantau perkembangan sesi belajar?',
+      a: 'Setiap kali sesi les selesai, tutor mengisi rangkuman materi, capaian pemahaman siswa, dan tugas latihan ke dashboard. Orang tua dapat memantau riwayat bimbingan dan laporan bulanan secara transparan.',
+    },
+  ]
+
+  const handleToggleFaq = (idx: number) => {
+    setOpenFaqIndex((prev) => (prev === idx ? null : idx))
+  }
 
   return (
-    <div className="min-h-screen bg-[#F4F6FA] text-[#1D1D24] antialiased flex flex-col justify-between">
-      {/* Top Navigation - M3 Top App Bar */}
-      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-[#E0E4EE]/80">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
+    <div className="min-h-screen bg-[#F8FAFD] text-[#0F1D33] antialiased flex flex-col justify-between selection:bg-[#0F1D33] selection:text-white">
+      {/* =========================================================================
+          NAVIGATION BAR
+          ========================================================================= */}
+      <header className="sticky top-0 z-50 bg-[#F8FAFD]/95 backdrop-blur-sm">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3">
-            <img
-              src="/logo-mark.png"
-              alt="Logo ZEINBOX"
-              className="w-10 h-10 object-contain shrink-0"
-            />
+            <div className="w-10 h-10 rounded-xl bg-[#0F1D33] p-2 flex items-center justify-center shrink-0">
+              <img
+                src="/logo-mark.png"
+                alt="Logo ZEINBOX"
+                className="w-full h-full object-contain brightness-0 invert"
+              />
+            </div>
             <div className="flex flex-col">
-              <span className="font-extrabold text-[#0F1D33] text-lg tracking-tight leading-none">
+              <span className="font-extrabold text-[#0F1D33] text-xl tracking-tight leading-none">
                 ZEINBOX
               </span>
-              <span className="text-[10px] text-[#676A78] font-semibold uppercase tracking-wider mt-1">
-                Where Every Mind Grows
+              <span className="text-sm text-[#4B5563] font-medium mt-1">
+                Where every mind grows
               </span>
             </div>
           </Link>
 
-          <nav className="flex items-center gap-2.5">
+          <nav className="hidden md:flex items-center gap-8 text-base font-semibold text-[#334155]">
+            <a href="#modalitas" className="hover:text-[#0F1D33] transition-colors">
+              Modalitas
+            </a>
+            <a href="#kurikulum" className="hover:text-[#0F1D33] transition-colors">
+              Kurikulum
+            </a>
+            <a href="#alur" className="hover:text-[#0F1D33] transition-colors">
+              Alur Belajar
+            </a>
+            <a href="#faq" className="hover:text-[#0F1D33] transition-colors">
+              Tanya Jawab
+            </a>
+          </nav>
+
+          <div className="flex items-center gap-3">
             {session ? (
               <Link
                 to={dashboardUrl}
-                className="px-6 py-2.5 rounded-full bg-[#183058] text-white text-xs font-bold shadow-xs hover:bg-[#102342] hover:shadow-sm transition-all min-h-[40px] flex items-center justify-center gap-2"
+                className="px-6 py-3 rounded-xl bg-[#0F1D33] hover:bg-[#1E293B] text-white text-base font-bold transition-colors min-h-[46px] flex items-center gap-2"
               >
                 <span>Buka Dashboard</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                <ArrowRight className="w-4 h-4" />
               </Link>
             ) : (
               <>
                 <Link
                   to="/login"
-                  className="px-5 py-2 rounded-full text-xs font-bold text-[#0F1D33] hover:bg-[#183058]/8 transition-colors min-h-[40px] flex items-center"
+                  className="px-4 py-2.5 rounded-xl text-base font-semibold text-[#0F1D33] hover:bg-[#E2E8F0]/50 transition-colors min-h-[44px] flex items-center"
                 >
                   Masuk
                 </Link>
                 <Link
                   to="/register"
-                  className="px-6 py-2.5 rounded-full bg-[#183058] text-white text-xs font-bold shadow-xs hover:bg-[#102342] hover:shadow-sm transition-all min-h-[40px] flex items-center gap-2"
+                  className="px-6 py-3 rounded-xl bg-[#0F1D33] hover:bg-[#1E293B] text-white text-base font-bold transition-colors min-h-[46px] flex items-center gap-2"
                 >
                   <span>Daftar Siswa</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <ArrowRight className="w-4 h-4" />
                 </Link>
               </>
             )}
-          </nav>
+          </div>
         </div>
       </header>
 
-      {/* Main Content */}
-      <main className="flex-1">
-        {/* Hero Section - M3 Expressive Layout */}
-        <section className="py-12 lg:py-16 border-b border-[#E0E2EC]/70">
+      {/* =========================================================================
+          MAIN EDITORIAL CONTENT
+          ========================================================================= */}
+      <main className="flex-1 space-y-20 sm:space-y-28 pb-20">
+        {/* =======================================================================
+            SECTION 1: HERO SECTION
+            ======================================================================= */}
+        <section className="pt-6 sm:pt-12">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-              {/* Left Column: Heading & Value Proposition */}
-              <div className="lg:col-span-7 space-y-6">
-                <div className="space-y-3">
-                  <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#17181C] tracking-tight leading-[1.2]">
-                    Les Privat Terarah dengan Pendekatan Karakter dan Tutor Pilihan
-                  </h1>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+              {/* Left Column: Two-line Title at display size + Lead sentence */}
+              <div className="lg:col-span-8 space-y-6">
+                <h1 className="taste-reveal text-4xl sm:text-5xl lg:text-[68px] font-extrabold text-[#0F1D33] tracking-tight leading-[1.04]">
+                  Les Privat Berbasis Karakter Belajar
+                </h1>
 
-                  <p className="text-base sm:text-lg text-[#676A78] leading-relaxed max-w-xl">
-                    Setiap anak menyerap pelajaran dengan ritme berbeda. ZEINBOX memetakan cara belajar siswa sejak awal, lalu menghubungkan Anda dengan tutor privat terverifikasi untuk bimbingan kurikulum akademik dan keagamaan.
-                  </p>
-                </div>
+                <p className="taste-reveal text-lg sm:text-xl text-[#334155] leading-relaxed max-w-[54ch] font-normal">
+                  ZEINBOX memetakan modalitas sensori belajar anak sejak awal, lalu menyelaraskan metode mengajar guru privat pilihan untuk kurikulum akademik dan studi keagamaan.
+                </p>
 
-                {/* M3 Action Buttons (Filled & Outlined) */}
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1">
+                <div className="taste-reveal flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
                   <Link
                     to="/register"
-                    className="px-7 py-3.5 rounded-full bg-[#183058] text-white text-sm font-bold shadow-xs hover:shadow-sm hover:bg-[#102342] transition-all flex items-center justify-center gap-2 min-h-[48px]"
+                    className="px-8 py-4 rounded-xl bg-[#0F1D33] hover:bg-[#1E293B] text-white text-base font-bold transition-colors flex items-center justify-center gap-2.5 min-h-[52px]"
                   >
-                    <span>Daftar Akun Siswa</span>
+                    <span>Mulai Asesmen &amp; Daftar Siswa</span>
                     <ArrowRight className="w-4 h-4" />
                   </Link>
-                  <Link
-                    to="/login"
-                    className="px-7 py-3.5 rounded-full bg-white border border-[#79747E]/30 text-[#17181C] text-sm font-bold hover:bg-[#F3F4F9] transition-colors flex items-center justify-center min-h-[48px]"
+                  <a
+                    href="#modalitas"
+                    className="px-6 py-4 rounded-xl bg-white text-[#0F1D33] text-base font-semibold hover:bg-[#E2E8F0]/40 transition-colors flex items-center justify-center min-h-[52px]"
                   >
-                    Masuk ke Akun Terdaftar
-                  </Link>
+                    <span>Pelajari Cara Kerja</span>
+                  </a>
                 </div>
 
-                {/* M3 Assist Chips (replaces plain text list) */}
-                <div className="pt-3 flex flex-wrap items-center gap-2.5">
-                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#E0E2EC] shadow-2xs text-xs font-semibold text-[#17181C]">
-                    <Check className="w-3.5 h-3.5 text-[#228653]" />
-                    <span>Kurikulum Umum & Keagamaan</span>
-                  </div>
-                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#E0E2EC] shadow-2xs text-xs font-semibold text-[#17181C]">
-                    <Check className="w-3.5 h-3.5 text-[#228653]" />
-                    <span>Diagnostik Gaya Belajar</span>
-                  </div>
-                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#E0E2EC] shadow-2xs text-xs font-semibold text-[#17181C]">
-                    <Check className="w-3.5 h-3.5 text-[#228653]" />
-                    <span>Catatan Kemajuan di Dashboard</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Right Column: M3 Elevated Media Card */}
-              <div className="lg:col-span-5">
-                <div className="rounded-3xl p-3 sm:p-4 bg-white border border-[#E0E2EC]/80 shadow-xs space-y-3">
-                  <div className="overflow-hidden rounded-2xl">
-                    <img
-                      src={heroStudentImg}
-                      alt="Siswa sedang belajar dengan bimbingan tutor privat"
-                      fetchPriority="high"
-                      decoding="async"
-                      className="w-full h-72 sm:h-80 object-cover"
-                    />
-                  </div>
-                  <div className="p-4 bg-[#F3F4F9] rounded-2xl flex items-center justify-between gap-3">
-                    <div>
-                      <p className="text-xs font-bold text-[#17181C]">Fokus Belajar Individual</p>
-                      <p className="text-[11px] text-[#676A78] mt-0.5">Jenjang SD, SMP, SMA, dan Persiapan Kuliah</p>
-                    </div>
-                    <span className="text-[11px] font-bold px-3 py-1 rounded-full bg-white border border-[#E0E2EC] text-[#17181C] shrink-0">
-                      Sistem Terpadu
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Section 1: Interactive Assessment Preview - M3 Surface Container */}
-        <section className="py-14 sm:py-16 bg-[#FDFBFE] border-b border-[#E0E2EC]/70">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-              {/* Left Column: Context, Animated Visual Environment, & Educational Value */}
-              <div className="lg:col-span-5 space-y-5">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#E8ECF6] text-[#183058] text-xs font-bold">
-                  <Award className="w-3.5 h-3.5" />
-                  <span>Diagnostik Karakter Belajar</span>
-                </div>
-
-                <div className="space-y-2">
-                  <h2 className="text-2xl sm:text-3xl font-extrabold text-[#17181C] tracking-tight leading-snug">
-                    Contoh Asesmen: Mengenal Cara Belajar Anda
-                  </h2>
-                  <p className="text-sm text-[#676A78] leading-relaxed">
-                    Sebelum sesi belajar dimulai, siswa mengisi kuesioner singkat. Hasilnya menjadi panduan tutor dalam menyelaraskan metode penjelasan, ritme bimbingan, dan bentuk latihan.
-                  </p>
-                </div>
-
-                {/* Dynamic Animated Media Card with Synchronized Switcher */}
-                <div className="rounded-3xl bg-white border border-[#E0E2EC] p-3 sm:p-4 shadow-xs space-y-3">
-                  {/* Interactive Tab Switcher */}
-                  <div className="flex items-center gap-1.5 p-1 bg-[#F3F4F9] rounded-full">
-                    {sampleAssessmentOptions.map((opt, idx) => {
-                      const isActive = selectedStyleAnswer === idx
-                      return (
-                        <button
-                          key={opt.id}
-                          type="button"
-                          onClick={() => setSelectedStyleAnswer(idx)}
-                          className={`flex-1 py-1.5 px-2.5 rounded-full text-xs font-bold transition-all flex items-center justify-center gap-1.5 min-h-[36px] ${
-                            isActive
-                              ? 'bg-white text-[#17181C] shadow-2xs'
-                              : 'text-[#676A78] hover:text-[#17181C]'
-                          }`}
-                        >
-                          <opt.icon className="w-3.5 h-3.5" />
-                          <span className="hidden sm:inline">{opt.type}</span>
-                          <span className="sm:hidden">
-                            {opt.id === 'visual' ? 'Visual' : opt.id === 'auditory' ? 'Auditori' : 'Praktis'}
-                          </span>
-                        </button>
-                      )
-                    })}
-                  </div>
-
-                  {/* Smooth Cross-Fade Animated Photo Container */}
-                  <div className="relative w-full h-56 sm:h-64 rounded-2xl overflow-hidden bg-[#F4F6FA]">
-                    {sampleAssessmentOptions.map((opt, idx) => {
-                      const isSelected = selectedStyleAnswer === idx
-                      return (
-                        <div
-                          key={opt.id}
-                          className={`absolute inset-0 transition-all duration-500 ease-out ${
-                            isSelected
-                              ? 'opacity-100 scale-100 pointer-events-auto'
-                              : 'opacity-0 scale-105 pointer-events-none'
-                          }`}
-                        >
-                          <img
-                            src={opt.image}
-                            alt={opt.imageCaption}
-                            loading="lazy"
-                            decoding="async"
-                            className="w-full h-full object-cover"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-[#0F1D33]/90 via-[#0F1D33]/30 to-transparent flex flex-col justify-end p-4 text-white">
-                            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-[11px] font-bold w-fit mb-1 border border-white/25">
-                              <opt.icon className="w-3.5 h-3.5" />
-                              <span>Pratinjau Suasana: {opt.type}</span>
-                            </span>
-                            <p className="text-xs sm:text-sm font-bold text-white drop-shadow-xs">
-                              {opt.imageCaption}
-                            </p>
-                          </div>
-                        </div>
-                      )
-                    })}
-                  </div>
-
-                  {/* Dynamic Pedagogical Breakdown based on selection */}
-                  <div className="p-3.5 bg-[#F7F8FC] rounded-2xl border border-[#E0E2EC]/70 space-y-2">
-                    <div className="flex items-start gap-2.5">
-                      <div className="w-6 h-6 rounded-full bg-white border border-[#E0E2EC] flex items-center justify-center shrink-0 mt-0.5 text-[#183058]">
-                        <Check className="w-3.5 h-3.5" />
-                      </div>
-                      <div>
-                        <p className="text-xs font-bold text-[#17181C]">Fokus Utama Pendekatan:</p>
-                        <p className="text-[11px] text-[#676A78] leading-relaxed mt-0.5">
-                          {activeOption.focusPoint}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-2.5">
-                      <div className="w-6 h-6 rounded-full bg-white border border-[#E0E2EC] flex items-center justify-center shrink-0 mt-0.5 text-[#228653]">
-                        <Check className="w-3.5 h-3.5" />
-                      </div>
-                      <div>
-                        <p className="text-xs font-bold text-[#17181C]">Manfaat Bagi Siswa:</p>
-                        <p className="text-[11px] text-[#676A78] leading-relaxed mt-0.5">
-                          {activeOption.studentBenefit}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="pt-1 flex flex-col sm:flex-row items-start sm:items-center gap-3">
-                  <Link
-                    to="/register"
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#183058] text-white text-xs font-bold shadow-xs hover:bg-[#102342] hover:shadow-sm transition-all min-h-[44px]"
-                  >
-                    <span>Ikuti Asesmen Lengkap</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
-                  <span className="text-[11px] text-[#676A78]">
-                    Gratis saat pendaftaran akun siswa baru
+                <div className="taste-reveal pt-4 flex flex-wrap items-center gap-4 text-sm text-[#475569] font-medium">
+                  <span className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-emerald-600" />
+                    <span>Diagnostik VAK SD, SMP, SMA</span>
+                  </span>
+                  <span className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-emerald-600" />
+                    <span>Kurikulum Umum &amp; Tahfidz</span>
+                  </span>
+                  <span className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-emerald-600" />
+                    <span>SOP Mengajar Khusus</span>
                   </span>
                 </div>
               </div>
 
-              {/* Right Column: Interactive Diagnostic Simulator Card - M3 Outlined Card */}
-              <div className="lg:col-span-7 rounded-3xl bg-white border border-[#E0E2EC] p-5 sm:p-6 shadow-xs flex flex-col justify-between">
-                <div>
-                  <div className="pb-4 border-b border-[#E0E2EC]/80 flex items-center justify-between gap-3">
-                    <div>
-                      <span className="text-[11px] font-bold uppercase tracking-wider text-[#183058]">
-                        Simulasi Pertanyaan Asesmen
-                      </span>
-                      <h3 className="text-sm sm:text-base font-bold text-[#17181C] mt-1 leading-snug">
-                        "Saat menghadapi materi pelajaran baru yang sulit, cara mana yang paling membantu Anda memahaminya?"
-                      </h3>
-                    </div>
-                    <span className="text-[11px] font-semibold px-3 py-1 rounded-full bg-[#F3F4F9] border border-[#E0E2EC] text-[#676A78] shrink-0 whitespace-nowrap">
-                      Contoh 1 Soal
+              {/* Right Column: Hero Visual Frame */}
+              <div className="lg:col-span-4">
+                <div className="taste-reveal rounded-2xl overflow-hidden bg-slate-200">
+                  <img
+                    src={heroStudentImg}
+                    alt="Siswa belajar dengan pendampingan guru privat"
+                    fetchPriority="high"
+                    decoding="async"
+                    className="w-full h-80 sm:h-96 lg:h-[420px] object-cover"
+                  />
+                  <div className="p-4 bg-[#EEF2F6] flex items-center justify-between gap-3 text-sm font-semibold text-[#0F1D33]">
+                    <span>Satu siswa satu guru privat pilihan</span>
+                    <span className="text-sm font-bold text-emerald-700 bg-emerald-100 px-3 py-1 rounded-md">
+                      Terverifikasi
                     </span>
-                  </div>
-
-                  {/* Radio Cards with Click Interaction */}
-                  <div className="space-y-2.5 mt-4" role="radiogroup" aria-label="Pilihan simulasi asesmen">
-                    {sampleAssessmentOptions.map((opt, idx) => {
-                      const isSelected = selectedStyleAnswer === idx
-                      return (
-                        <button
-                          key={idx}
-                          type="button"
-                          role="radio"
-                          aria-checked={isSelected}
-                          onClick={() => setSelectedStyleAnswer(idx)}
-                          className={`w-full text-left p-4 rounded-2xl border transition-all flex items-start gap-3.5 min-h-[48px] ${
-                            isSelected
-                              ? 'bg-[#F5F7FC] border-[#183058] ring-1 ring-[#183058]/30 shadow-2xs'
-                              : 'bg-white border-[#E0E2EC] hover:border-[#183058]/40 hover:bg-[#FAFBFD]'
-                          }`}
-                        >
-                          <div
-                            className={`w-5 h-5 rounded-full border flex items-center justify-center mt-0.5 shrink-0 transition-colors ${
-                              isSelected
-                                ? 'border-[#183058] bg-[#183058] text-white'
-                                : 'border-[#C9CAD3] bg-white'
-                            }`}
-                          >
-                            {isSelected ? (
-                              <Check className="w-3 h-3 stroke-[3]" />
-                            ) : (
-                              <span className="w-1.5 h-1.5 rounded-full bg-transparent" />
-                            )}
-                          </div>
-
-                          <div className="flex-1 min-w-0">
-                            <div className="flex flex-wrap items-center justify-between gap-2">
-                              <span className="text-xs sm:text-sm font-bold text-[#17181C]">
-                                {opt.title}
-                              </span>
-                              <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full ${opt.tagColor} shrink-0`}>
-                                {opt.type}
-                              </span>
-                            </div>
-                            <p className="text-xs text-[#676A78] mt-1 leading-relaxed">
-                              {opt.desc}
-                            </p>
-                          </div>
-                        </button>
-                      )
-                    })}
-                  </div>
-                </div>
-
-                {/* Dynamic Tutor Adaptation Box & Interactive Snippet */}
-                <div className="mt-5 p-4 sm:p-5 rounded-2xl bg-[#F3F4F9] border border-[#E0E2EC]/80 space-y-3">
-                  <div className="flex flex-wrap items-center justify-between gap-2">
-                    <div className="flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full bg-[#183058]" />
-                      <span className="text-[11px] font-bold text-[#17181C] uppercase tracking-wider">
-                        Adaptasi Pendekatan Tutor:
-                      </span>
-                    </div>
-                    <span className="text-[11px] font-bold text-[#183058]">
-                      {activeOption.adaptation.method}
-                    </span>
-                  </div>
-
-                  <p className="text-xs text-[#525562] leading-relaxed">
-                    {activeOption.adaptation.desc}
-                  </p>
-
-                  {/* Interactive Snippet Preview */}
-                  <div className="pt-2 border-t border-[#E0E2EC]/70">
-                    <div className="text-[11px] font-bold text-[#17181C] mb-2">
-                      {activeOption.interactiveSnippet.title}
-                    </div>
-
-                    {activeOption.interactiveSnippet.type === 'diagram' && (
-                      <div className="flex flex-wrap items-center gap-2">
-                        {activeOption.interactiveSnippet.steps?.map((step, sIdx) => (
-                          <div
-                            key={sIdx}
-                            className="px-3 py-1.5 rounded-full bg-white border border-[#E0E2EC] text-[11px] font-semibold text-[#17181C] shadow-2xs flex items-center gap-1.5"
-                          >
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#183058]" />
-                            <span>{step}</span>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-
-                    {activeOption.interactiveSnippet.type === 'dialogue' && (
-                      <div className="p-3 rounded-xl bg-white border border-[#E0E2EC] text-xs text-[#17181C] italic leading-relaxed shadow-2xs">
-                        "{activeOption.interactiveSnippet.quote}"
-                      </div>
-                    )}
-
-                    {activeOption.interactiveSnippet.type === 'checklist' && (
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                        {activeOption.interactiveSnippet.items?.map((item, cIdx) => (
-                          <div
-                            key={cIdx}
-                            className="p-2.5 rounded-xl bg-white border border-[#E0E2EC] text-[11px] font-medium text-[#17181C] flex items-center gap-2 shadow-2xs"
-                          >
-                            <Check className="w-3.5 h-3.5 text-[#B45309] shrink-0" />
-                            <span className="leading-tight">{item}</span>
-                          </div>
-                        ))}
-                      </div>
-                    )}
                   </div>
                 </div>
               </div>
@@ -483,93 +280,177 @@ export function LandingPage() {
           </div>
         </section>
 
-        {/* Section 2: Pilihan Bidang Studi - M3 Cards with Filter Chips */}
-        <section className="py-14 sm:py-16 bg-[#F7F8FC] border-b border-[#E0E2EC]/70">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-            <div className="max-w-2xl space-y-2">
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#17181C] tracking-tight">
-                Pilihan Bidang Studi Terpadu
-              </h2>
-              <p className="text-sm text-[#676A78]">
-                Materi disiapkan oleh pendidik spesialis dengan kurikulum terstruktur yang tersimpan langsung di basis data platform.
+        {/* =======================================================================
+            SECTION 2: MODALITAS SENSORI SHOWCASE (#modalitas)
+            ======================================================================= */}
+        <section id="modalitas" className="scroll-mt-24 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+          <div className="taste-reveal space-y-3 max-w-[60ch]">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0F1D33] tracking-tight leading-tight">
+              Tiga Modalitas Sensori Belajar
+            </h2>
+            <p className="text-base sm:text-lg text-[#334155] leading-relaxed max-w-[60ch]">
+              Setiap siswa memiliki jalur dominan dalam memproses konsep baru. Guru privat menyelaraskan format catatan dan ritme bimbingan berdasarkan hasil diagnostik.
+            </p>
+          </div>
+
+          {/* Interactive Modality Tabs */}
+          <div className="taste-reveal flex flex-wrap items-center gap-2">
+            {modalities.map((item, idx) => {
+              const isSelected = activeModalityIndex === idx
+              return (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => setActiveModalityIndex(idx)}
+                  className={`px-5 py-3 rounded-xl text-base font-bold transition-colors flex items-center gap-2 ${
+                    isSelected
+                      ? 'bg-[#0F1D33] text-white'
+                      : 'bg-[#E2E8F0]/60 text-[#334155] hover:bg-[#E2E8F0]'
+                  }`}
+                >
+                  <item.icon className="w-4 h-4" />
+                  <span>{item.name} [{item.code}]</span>
+                </button>
+              )
+            })}
+          </div>
+
+          {/* Selected Modality Dossier */}
+          <div className="taste-reveal grid grid-cols-1 lg:grid-cols-12 gap-8 items-start bg-white p-6 sm:p-8 rounded-2xl">
+            <div className="lg:col-span-5 space-y-4">
+              <div className="rounded-xl overflow-hidden bg-slate-100">
+                <img
+                  src={activeModality.image}
+                  alt={activeModality.alt}
+                  className="w-full h-64 sm:h-72 object-cover"
+                />
+              </div>
+              <p className="text-sm text-[#475569] leading-relaxed max-w-[55ch]">
+                {activeModality.summary}
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Bidang Umum - M3 Outlined Card */}
-              <div className="rounded-3xl p-6 bg-white border border-[#E0E2EC] shadow-2xs space-y-4 flex flex-col justify-between hover:shadow-xs transition-shadow">
-                <div>
-                  <div className="overflow-hidden rounded-2xl mb-4 bg-[#F4F6FA]">
-                    <img
-                      src={subjectGeneralImg}
-                      alt="Siswa mempelajari materi pelajaran umum sains dan matematika"
-                      className="w-full h-48 sm:h-52 object-cover"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
+            <div className="lg:col-span-7 space-y-5">
+              <div className="space-y-2">
+                <h3 className="text-xl font-extrabold text-[#0F1D33]">
+                  {activeModality.primaryFocus}
+                </h3>
+              </div>
 
-                  <div className="flex items-center gap-3 pb-3 border-b border-[#E0E2EC]/70">
-                    <div className="w-11 h-11 rounded-2xl bg-[#E8ECF6] text-[#183058] flex items-center justify-center">
-                      <BookOpen className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h3 className="text-base font-bold text-[#17181C]">Mata Pelajaran Umum</h3>
-                      <p className="text-xs text-[#676A78]">Penguatan fondasi sekolah dan persiapan ujian</p>
-                    </div>
-                  </div>
+              <div className="p-5 rounded-xl bg-[#F8FAFD] space-y-2">
+                <span className="text-sm font-bold text-amber-800 flex items-center gap-1.5">
+                  <ShieldCheck className="w-4 h-4" />
+                  <span>SOP Guru Privat</span>
+                </span>
+                <p className="text-base text-[#1E293B] leading-relaxed font-medium max-w-[55ch]">
+                  {activeModality.tutorSop}
+                </p>
+              </div>
 
-                  <p className="text-xs text-[#676A78] leading-relaxed mt-3">
-                    Bimbingan intensif untuk mata pelajaran sains dan bahasa. Tutor mendampingi pembedahan konsep dari dasar hingga pembahasan soal olimpiade dan seleksi masuk perguruan tinggi.
-                  </p>
+              <div className="space-y-3 pt-2">
+                <span className="text-sm font-bold text-[#0F1D33] block">
+                  Tahapan bimbingan yang diterapkan di setiap sesi:
+                </span>
+                <div className="space-y-2.5">
+                  {activeModality.teachingSteps.map((step, sIdx) => (
+                    <div key={sIdx} className="flex items-start gap-3 text-base text-[#334155]">
+                      <span className="w-6 h-6 rounded-md bg-[#EEF2F6] font-bold text-sm flex items-center justify-center shrink-0 mt-0.5 text-[#0F1D33]">
+                        {sIdx + 1}
+                      </span>
+                      <span className="leading-relaxed max-w-[55ch]">{step}</span>
+                    </div>
+                  ))}
                 </div>
+              </div>
 
-                <div className="flex flex-wrap gap-2 pt-3 border-t border-[#E0E2EC]/60">
-                  {['Matematika', 'Fisika', 'Kimia', 'Biologi', 'Bahasa Inggris'].map((subj) => (
-                    <span
-                      key={subj}
-                      className="px-3 py-1 rounded-full bg-[#F3F4F9] border border-[#E0E2EC] text-xs font-semibold text-[#17181C]"
-                    >
+              <div className="pt-3">
+                <Link
+                  to="/register"
+                  className="inline-flex items-center gap-2 text-base font-bold text-[#0F1D33] hover:underline"
+                >
+                  <span>Ikuti diagnostik untuk mengetahui profil anak</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* =======================================================================
+            SECTION 3: KURIKULUM TERPADU (#kurikulum)
+            ======================================================================= */}
+        <section id="kurikulum" className="scroll-mt-24 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+          <div className="taste-reveal space-y-3 max-w-[60ch]">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0F1D33] tracking-tight leading-tight">
+              Dua Rumpun Kurikulum Terpadu
+            </h2>
+            <p className="text-base sm:text-lg text-[#334155] leading-relaxed max-w-[60ch]">
+              Materi disiapkan oleh pendidik spesialis dengan kurikulum terstruktur untuk memperkuat prestasi akademis sekolah dan pembinaan adab keagamaan.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Akademik Umum */}
+            <div className="taste-reveal bg-white p-6 sm:p-8 rounded-2xl space-y-5 flex flex-col justify-between">
+              <div className="space-y-4">
+                <div className="rounded-xl overflow-hidden bg-slate-100">
+                  <img
+                    src={subjectGeneralImg}
+                    alt="Siswa mempelajari matematika dan sains"
+                    className="w-full h-52 sm:h-56 object-cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <h3 className="text-xl font-extrabold text-[#0F1D33]">
+                  Mata Pelajaran Akademik Umum
+                </h3>
+                <p className="text-base text-[#475569] leading-relaxed max-w-[55ch]">
+                  Bimbingan intensif matematika, fisika, kimia, biologi, dan bahasa. Guru privat mendampingi siswa membedah konsep dari dasar logika pemahaman hingga siap menghadapi asesmen sekolah dan persiapan ujian perguruan tinggi.
+                </p>
+              </div>
+
+              <div className="space-y-2.5 pt-4">
+                <span className="text-sm font-bold text-[#0F1D33] block">
+                  Mata Pelajaran
+                </span>
+                <div className="flex flex-wrap gap-2 text-sm font-semibold text-[#1E293B]">
+                  {['Matematika Dasar & Lanjut', 'Fisika', 'Kimia', 'Biologi', 'Bahasa Inggris', 'Bahasa Indonesia'].map((subj) => (
+                    <span key={subj} className="px-3 py-1.5 rounded-lg bg-[#F1F5F9]">
                       {subj}
                     </span>
                   ))}
                 </div>
               </div>
+            </div>
 
-              {/* Bidang Keagamaan - M3 Outlined Card */}
-              <div className="rounded-3xl p-6 bg-white border border-[#E0E2EC] shadow-2xs space-y-4 flex flex-col justify-between hover:shadow-xs transition-shadow">
-                <div>
-                  <div className="overflow-hidden rounded-2xl mb-4 bg-[#F4F6FA]">
-                    <img
-                      src={subjectQuranImg}
-                      alt="Siswa mempelajari Al-Qur'an dan studi keagamaan"
-                      className="w-full h-48 sm:h-52 object-cover"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-
-                  <div className="flex items-center gap-3 pb-3 border-b border-[#E0E2EC]/70">
-                    <div className="w-11 h-11 rounded-2xl bg-[#E6F6EE] text-[#228653] flex items-center justify-center">
-                      <GraduationCap className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h3 className="text-base font-bold text-[#17181C]">Studi Keagamaan & Al-Qur'an</h3>
-                      <p className="text-xs text-[#676A78]">Tahfidz, tajwid, hadits, dan bahasa arab</p>
-                    </div>
-                  </div>
-
-                  <p className="text-xs text-[#676A78] leading-relaxed mt-3">
-                    Program talaqqi dan setoran hafalan dibimbing langsung oleh ustadz dan asatidzah berlatar belakang pendidikan Islam teruji untuk anak-anak hingga dewasa.
-                  </p>
+            {/* Keagamaan & Al-Qur'an */}
+            <div className="taste-reveal bg-white p-6 sm:p-8 rounded-2xl space-y-5 flex flex-col justify-between">
+              <div className="space-y-4">
+                <div className="rounded-xl overflow-hidden bg-slate-100">
+                  <img
+                    src={subjectQuranImg}
+                    alt="Siswa mempelajari Al-Qur'an dan studi keagamaan"
+                    className="w-full h-52 sm:h-56 object-cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
                 </div>
+                <h3 className="text-xl font-extrabold text-[#0F1D33]">
+                  Studi Keagamaan &amp; Al-Qur'an
+                </h3>
+                <p className="text-base text-[#475569] leading-relaxed max-w-[55ch]">
+                  Program talaqqi hafalan dan bimbingan adab dibimbing langsung oleh asatidzah berlatar belakang pesantren dan pendidikan Islam teruji. Sesi privat intensif menjamin ketepatan makharijul huruf dan kenyamanan belajar anak.
+                </p>
+              </div>
 
-                <div className="flex flex-wrap gap-2 pt-3 border-t border-[#E0E2EC]/60">
-                  {['Al-Qur\'an & Tajwid', 'Tahfidz Mutqin', 'Hadits Pilihan', 'Fiqih Ibadah', 'Bahasa Arab'].map((subj) => (
-                    <span
-                      key={subj}
-                      className="px-3 py-1 rounded-full bg-[#F3F4F9] border border-[#E0E2EC] text-xs font-semibold text-[#17181C]"
-                    >
+              <div className="space-y-2.5 pt-4">
+                <span className="text-sm font-bold text-emerald-800 block">
+                  Cakupan Studi
+                </span>
+                <div className="flex flex-wrap gap-2 text-sm font-semibold text-emerald-950">
+                  {['Tahfidz Al-Qur\'an Mutqin', 'Tahsin & Tajwid Makhorijul Huruf', 'Bahasa Arab', 'Fiqih Ibadah', 'Hadits Pilihan'].map((subj) => (
+                    <span key={subj} className="px-3 py-1.5 rounded-lg bg-emerald-50">
                       {subj}
                     </span>
                   ))}
@@ -579,107 +460,166 @@ export function LandingPage() {
           </div>
         </section>
 
-        {/* Section 3: Alur Bimbingan di Platform ZEINBOX - M3 Step Cards */}
-        <section className="py-14 sm:py-16 bg-[#FDFBFE]">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-            <div className="max-w-2xl space-y-2">
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#17181C] tracking-tight">
-                Alur Bimbingan di Platform ZEINBOX
+        {/* =======================================================================
+            SECTION 4: TIGA LANGKAH MEMULAI (#alur)
+            ======================================================================= */}
+        <section id="alur" className="scroll-mt-24 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+          <div className="taste-reveal space-y-3 max-w-[60ch]">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0F1D33] tracking-tight leading-tight">
+              Tiga Langkah Memulai Bimbingan
+            </h2>
+            <p className="text-base sm:text-lg text-[#334155] leading-relaxed max-w-[60ch]">
+              Alur pendaftaran teratur untuk memastikan kegiatan belajar mengajar berjalan transparan bagi siswa dan orang tua.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="taste-reveal bg-white p-6 rounded-2xl space-y-4">
+              <div className="rounded-xl overflow-hidden bg-slate-100">
+                <img
+                  src={stepRegisterImg}
+                  alt="Langkah pendaftaran akun siswa"
+                  className="w-full h-44 object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-lg font-extrabold text-[#0F1D33]">
+                  Pilih Jenjang &amp; Pelajaran
+                </h3>
+                <p className="text-sm text-[#475569] leading-relaxed max-w-[55ch]">
+                  Buat akun siswa secara gratis. Tentukan jenjang pendidikan (SD, SMP, atau SMA) dan mata pelajaran yang ingin dipelajari.
+                </p>
+              </div>
+            </div>
+
+            <div className="taste-reveal bg-white p-6 rounded-2xl space-y-4">
+              <div className="rounded-xl overflow-hidden bg-slate-100">
+                <img
+                  src={stepAssessmentImg}
+                  alt="Langkah pengerjaan asesmen diagnostik gaya belajar"
+                  className="w-full h-44 object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-lg font-extrabold text-[#0F1D33]">
+                  Ikuti Tes Diagnostik VAK
+                </h3>
+                <p className="text-sm text-[#475569] leading-relaxed max-w-[55ch]">
+                  Siswa mengisi kuesioner situasi belajar singkat (15 sampai 30 soal sesuai jenjang). Hasil pemetaan langsung keluar seketika.
+                </p>
+              </div>
+            </div>
+
+            <div className="taste-reveal bg-white p-6 rounded-2xl space-y-4">
+              <div className="rounded-xl overflow-hidden bg-slate-100">
+                <img
+                  src={stepTutoringImg}
+                  alt="Langkah bimbingan privat bersama guru"
+                  className="w-full h-44 object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-lg font-extrabold text-[#0F1D33]">
+                  Mulai Les Bersama Guru Privat
+                </h3>
+                <p className="text-sm text-[#475569] leading-relaxed max-w-[55ch]">
+                  Pilih guru privat yang cocok dengan karakter belajar anak. Tentukan jadwal les rutin dan pantau catatan progres di dashboard.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* =======================================================================
+            SECTION 5: FAQ TANYA JAWAB (#faq)
+            ======================================================================= */}
+        <section id="faq" className="scroll-mt-24 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+          <div className="taste-reveal space-y-3 max-w-[60ch]">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0F1D33] tracking-tight leading-tight">
+              Pertanyaan yang Sering Diajukan
+            </h2>
+            <p className="text-base sm:text-lg text-[#334155] leading-relaxed max-w-[60ch]">
+              Informasi lengkap untuk membantu orang tua dan siswa memahami sistem bimbingan belajar ZEINBOX.
+            </p>
+          </div>
+
+          <div className="space-y-3 pt-2">
+            {faqs.map((faq, idx) => {
+              const isOpen = openFaqIndex === idx
+              return (
+                <div key={idx} className="taste-reveal bg-white rounded-xl overflow-hidden">
+                  <button
+                    type="button"
+                    onClick={() => handleToggleFaq(idx)}
+                    className="w-full p-5 text-left flex items-center justify-between gap-4 font-bold text-base text-[#0F1D33] hover:bg-[#F8FAFD] transition-colors"
+                  >
+                    <span>{faq.q}</span>
+                    <span className="w-8 h-8 rounded-lg bg-[#F1F5F9] flex items-center justify-center shrink-0 text-[#0F1D33]">
+                      <ChevronDown
+                        className={`w-4 h-4 transition-transform duration-200 ${
+                          isOpen ? 'rotate-180' : ''
+                        }`}
+                      />
+                    </span>
+                  </button>
+
+                  {isOpen && (
+                    <div className="px-5 pb-5 pt-1 text-base text-[#475569] leading-relaxed max-w-[60ch]">
+                      {faq.a}
+                    </div>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+        </section>
+
+        {/* =======================================================================
+            SECTION 6: CTA BAND
+            ======================================================================= */}
+        <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="taste-reveal bg-[#0F1D33] text-white p-8 sm:p-14 rounded-2xl grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+            <div className="md:col-span-8 space-y-4">
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
+                Mulai Bimbingan Sekarang
               </h2>
-              <p className="text-sm text-[#676A78]">
-                Langkah teratur untuk memastikan kegiatan belajar mengajar berjalan transparan bagi siswa dan orang tua.
+              <p className="text-base sm:text-lg text-[#94A3B8] leading-relaxed max-w-[55ch] font-normal">
+                Daftarkan putra-putri Anda untuk mengikuti pemetaan gaya belajar VAK dan temukan guru privat yang tepat untuk kurikulum umum maupun tahfidz Al-Qur'an.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-              <div className="rounded-3xl p-5 bg-white border border-[#E0E2EC] shadow-2xs space-y-3 flex flex-col justify-between hover:shadow-xs transition-shadow">
-                <div className="space-y-3">
-                  <div className="overflow-hidden rounded-2xl mb-1 bg-[#F4F6FA]">
-                    <img
-                      src={stepRegisterImg}
-                      alt="Langkah pendaftaran akun dan kelengkapan profil siswa"
-                      className="w-full h-40 sm:h-44 object-cover"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-                  <div className="space-y-1">
-                    <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-[#E8ECF6] text-[#183058] inline-block">
-                      Langkah 1
-                    </span>
-                    <h4 className="text-sm font-bold text-[#17181C]">Daftar & Lengkapi Data</h4>
-                    <p className="text-xs text-[#676A78] leading-relaxed">
-                      Buat akun siswa dan cantumkan jenjang kelas, mata pelajaran yang dituju, serta kontak orang tua untuk koordinasi.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="rounded-3xl p-5 bg-white border border-[#E0E2EC] shadow-2xs space-y-3 flex flex-col justify-between hover:shadow-xs transition-shadow">
-                <div className="space-y-3">
-                  <div className="overflow-hidden rounded-2xl mb-1 bg-[#F4F6FA]">
-                    <img
-                      src={stepAssessmentImg}
-                      alt="Langkah pengerjaan asesmen karakter dan gaya belajar"
-                      className="w-full h-40 sm:h-44 object-cover"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-                  <div className="space-y-1">
-                    <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-[#E8ECF6] text-[#183058] inline-block">
-                      Langkah 2
-                    </span>
-                    <h4 className="text-sm font-bold text-[#17181C]">Isi Asesmen Karakter</h4>
-                    <p className="text-xs text-[#676A78] leading-relaxed">
-                      Kerjakan kuesioner singkat untuk memetakan kecenderungan belajar visual, auditori, atau kinestetik Anda.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="rounded-3xl p-5 bg-white border border-[#E0E2EC] shadow-2xs space-y-3 flex flex-col justify-between hover:shadow-xs transition-shadow">
-                <div className="space-y-3">
-                  <div className="overflow-hidden rounded-2xl mb-1 bg-[#F4F6FA]">
-                    <img
-                      src={stepTutoringImg}
-                      alt="Langkah penjadwalan bimbingan privat bersama tutor"
-                      className="w-full h-40 sm:h-44 object-cover"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-                  <div className="space-y-1">
-                    <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-[#E8ECF6] text-[#183058] inline-block">
-                      Langkah 3
-                    </span>
-                    <h4 className="text-sm font-bold text-[#17181C]">Jadwalkan Sesi Belajar</h4>
-                    <p className="text-xs text-[#676A78] leading-relaxed">
-                      Pilih tutor sesuai mata pelajaran dan tentukan jadwal bimbingan rutin dengan pantauan progres di dashboard.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="pt-4 text-center">
+            <div className="md:col-span-4 flex flex-col sm:flex-row md:flex-col items-stretch gap-3">
               <Link
                 to="/register"
-                className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-[#183058] text-white text-xs font-bold shadow-xs hover:bg-[#102342] hover:shadow-sm transition-all min-h-[44px]"
+                className="px-8 py-4 rounded-xl bg-white hover:bg-slate-100 text-[#0F1D33] text-base font-bold transition-colors flex items-center justify-center gap-2 min-h-[50px]"
               >
-                <span>Mulai Pendaftaran Akun Siswa</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                <span>Daftar Akun Siswa</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                to="/login"
+                className="px-6 py-4 rounded-xl bg-[#1E293B] hover:bg-[#334155] text-white text-base font-semibold transition-colors flex items-center justify-center min-h-[50px]"
+              >
+                <span>Masuk ke Akun Terdaftar</span>
               </Link>
             </div>
           </div>
         </section>
       </main>
 
-      {/* Footer - M3 Surface Container */}
-      <footer className="bg-[#0F1D33] text-[#E8ECF6] py-12 border-t border-white/10">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      {/* =========================================================================
+          FOOTER
+          ========================================================================= */}
+      <footer className="bg-[#0F1D33] text-[#CBD5E1] py-14">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-white p-1 flex items-center justify-center shadow-xs shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-white p-2 flex items-center justify-center shrink-0">
               <img
                 src="/logo-mark.png"
                 alt="Logo ZEINBOX"
@@ -687,19 +627,38 @@ export function LandingPage() {
               />
             </div>
             <div className="flex flex-col">
-              <span className="font-bold text-white text-sm leading-tight">ZEINBOX</span>
-              <span className="text-[10px] text-[#B0B4E0] font-medium tracking-wider uppercase">
-                Where Every Mind Grows
+              <span className="font-extrabold text-white text-base leading-tight">
+                ZEINBOX
+              </span>
+              <span className="text-sm text-[#94A3B8] font-medium mt-0.5">
+                Where every mind grows
               </span>
             </div>
           </div>
 
-          <p className="text-xs text-[#C9D2E3] text-center sm:text-right">
-            (c) {new Date().getFullYear()} ZEINBOX. Sistem Manajemen Belajar & Bimbingan Les Privat.
+          <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-[#CBD5E1] font-medium">
+            <a href="#modalitas" className="hover:text-white transition-colors">
+              Modalitas VAK
+            </a>
+            <a href="#kurikulum" className="hover:text-white transition-colors">
+              Pilihan Kurikulum
+            </a>
+            <a href="#alur" className="hover:text-white transition-colors">
+              Alur Belajar
+            </a>
+            <a href="#faq" className="hover:text-white transition-colors">
+              Tanya Jawab
+            </a>
+            <Link to="/login" className="hover:text-white transition-colors">
+              Portal Pengguna
+            </Link>
+          </div>
+
+          <p className="text-sm text-[#94A3B8] text-center sm:text-right">
+            (c) {new Date().getFullYear()} ZEINBOX. Hak Cipta Dilindungi.
           </p>
         </div>
       </footer>
     </div>
   )
 }
-

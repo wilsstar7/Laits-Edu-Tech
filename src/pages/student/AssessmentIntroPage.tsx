@@ -287,13 +287,13 @@ export function AssessmentIntroPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {ASSESSMENT_PACKAGES.map((pkg, pkgIdx) => {
             const isSelected = selectedPackage.code === pkg.code
-            const isPkg3 = pkg.code === 'PAKET_3_PERSONA_MASTERY'
+            const isLocked = pkg.status === 'upcoming'
             const questionCountBadge =
               pkg.code === 'PAKET_1_PERSONA_MODALITY'
                 ? `${currentLevelConfig.totalCount} Soal (Tahap 1)`
-                : pkg.code === 'PAKET_2_PERSONA_POTENTIAL'
-                ? '60 Soal Terpisah (Tahap 2)'
-                : 'Tahap 3 (Mulai dari Paket 1)'
+                : isLocked
+                ? 'Segera Hadir'
+                : '60 Soal Terpisah (Tahap 2)'
 
             return (
               <div
@@ -317,12 +317,12 @@ export function AssessmentIntroPage() {
                   <div className="flex items-center justify-between gap-2">
                     <span
                       className={`px-3 py-1 rounded-full text-[11px] font-bold ${
-                        isPkg3
+                        isLocked
                           ? 'bg-amber-100 text-amber-800 flex items-center gap-1'
                           : 'bg-[#183058]/10 text-[#183058]'
                       }`}
                     >
-                      {isPkg3 && <Lock className="w-3 h-3" />}
+                      {isLocked && <Lock className="w-3 h-3" />}
                       <span>Paket {pkgIdx + 1} • {pkg.badgeText}</span>
                     </span>
                     <span className="text-[11px] text-[#676A78] font-bold">
@@ -360,9 +360,13 @@ export function AssessmentIntroPage() {
                   <div className="flex items-center justify-between text-xs font-bold text-[#183058]">
                     <span>
                       {isSelected
-                        ? pkg.code === 'PAKET_1_PERSONA_MODALITY'
+                        ? isLocked
+                          ? `${pkg.name} (Terkunci)`
+                          : pkg.code === 'PAKET_1_PERSONA_MODALITY'
                           ? 'Paket 1 Terpilih'
-                          : `${pkg.name} Terpilih (Mulai dari Paket 1)`
+                          : `${pkg.name} Terpilih`
+                        : isLocked
+                        ? 'Detail Paket (Terkunci)'
                         : 'Pilih Paket Ini'}
                     </span>
                     <CheckCircle2
@@ -549,7 +553,9 @@ export function AssessmentIntroPage() {
         {!activeSession && (
           <div className="pt-3 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-border/60">
             <p className="text-[11px] text-[#676A78]">
-              {consentChecked
+              {selectedPackage.status === 'upcoming'
+                ? `${selectedPackage.name} saat ini ditutup untuk penyesuaian materi. Silakan pilih Paket 1 untuk mengerjakan asesmen.`
+                : consentChecked
                 ? isPackage2 || isPackage3
                   ? `Tahap 1: Siap mengerjakan ${currentTotalQuestions} butir soal Paket 1 terlebih dahulu (${currentLevelConfig.label} - estimasi ~${currentEstMinutes} menit), lalu lanjut ke ${selectedPackage.name}.`
                   : `Siap mengerjakan ${currentTotalQuestions} butir soal Paket 1 (${currentLevelConfig.label} - estimasi ~${currentEstMinutes} menit).`
@@ -557,7 +563,7 @@ export function AssessmentIntroPage() {
             </p>
 
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 w-full sm:w-auto">
-              {latestResult && (isPackage2 || isPackage3) && (
+              {latestResult && (isPackage2 || isPackage3) && selectedPackage.status !== 'upcoming' && (
                 <button
                   type="button"
                   onClick={handleStartPackage2Direct}
@@ -572,13 +578,18 @@ export function AssessmentIntroPage() {
               <button
                 type="button"
                 onClick={handleStart}
-                disabled={!consentChecked || actionLoading}
+                disabled={!consentChecked || actionLoading || selectedPackage.status === 'upcoming'}
                 className="w-full sm:w-auto px-7 py-3.5 rounded-2xl bg-[#183058] hover:bg-[#102342] text-white text-xs font-bold shadow-md shadow-[#183058]/25 disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 min-h-[46px]"
               >
                 {actionLoading ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin" />
                     <span>Menyiapkan Sesi...</span>
+                  </>
+                ) : selectedPackage.status === 'upcoming' ? (
+                  <>
+                    <Lock className="w-4 h-4" />
+                    <span>Paket Belum Dibuka</span>
                   </>
                 ) : isPackage2 || isPackage3 ? (
                   <>

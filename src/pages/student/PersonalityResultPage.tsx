@@ -29,6 +29,7 @@ import {
   Trees,
   Calculator,
   ArrowRight,
+  Lock,
 } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 import { personalityService } from '@/services/personalityService'
@@ -36,7 +37,7 @@ import { assessmentSessionService } from '@/services/assessmentSessionService'
 import { PRIMARY_ASSESSMENT_ID } from '@/services/assessmentService'
 import type { AssessmentResult, AssessmentPackageCode } from '@/types/assessment'
 import { formatLongDate } from '@/utils/format'
-import { LEVEL_CONFIG } from '@/data/personaModalityData'
+import { LEVEL_CONFIG, ASSESSMENT_PACKAGES } from '@/data/personaModalityData'
 import { PACKAGE_LEVEL_CONFIG } from '@/data/personaPotentialData'
 
 export function PersonalityResultPage() {
@@ -997,38 +998,49 @@ export function PersonalityResultPage() {
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="space-y-1">
               <span className="px-3 py-1 rounded-full bg-[#183058] text-white text-[11px] font-bold uppercase tracking-wider inline-block">
-                Paket 1 Selesai • Opsi Lanjut Paket Berikutnya
+                Paket 1 Selesai • Status Asesmen Lanjutan
               </span>
               <h3 className="text-base sm:text-lg font-extrabold text-[#17181C]">
-                Ingin Melanjutkan ke Paket 2 atau Paket 3?
+                Informasi Paket 2 & Paket 3
               </h3>
               <p className="text-xs text-[#676A78] max-w-xl leading-relaxed">
-                Hasil Paket 2 dan Paket 3 baru akan ditampilkan setelah Anda menyelesaikan soal paket terkait. Silakan pilih opsi di samping jika ingin melanjutkan ke tahap berikutnya.
+                {ASSESSMENT_PACKAGES.find((p) => p.code === 'PAKET_2_PERSONA_POTENTIAL')?.status === 'active'
+                  ? 'Hasil Paket 2 dan Paket 3 baru akan ditampilkan setelah Anda menyelesaikan soal paket terkait. Silakan pilih opsi di samping jika ingin melanjutkan ke tahap berikutnya.'
+                  : 'Akses Paket 2 (Persona Potential) dan Paket 3 (Persona Mastery) saat ini ditutup sementara untuk penyesuaian materi. Hasil asesmen Paket 1 Anda sudah tersimpan dengan aman.'}
               </p>
             </div>
 
             <div className="flex flex-wrap items-center gap-2.5 shrink-0">
-              <button
-                type="button"
-                disabled={startingNextPkg}
-                onClick={() => handleContinueToPackage2('PAKET_2_PERSONA_POTENTIAL')}
-                className="px-5 py-3 rounded-2xl bg-[#183058] hover:bg-[#102342] text-white text-xs font-bold shadow-sm flex items-center gap-2 min-h-[44px] disabled:opacity-50"
-              >
-                <span>{startingNextPkg ? 'Menyiapkan Sesi...' : 'Lanjut ke Paket 2 (60 Soal)'}</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
+              {ASSESSMENT_PACKAGES.find((p) => p.code === 'PAKET_2_PERSONA_POTENTIAL')?.status === 'active' ? (
+                <>
+                  <button
+                    type="button"
+                    disabled={startingNextPkg}
+                    onClick={() => handleContinueToPackage2('PAKET_2_PERSONA_POTENTIAL')}
+                    className="px-5 py-3 rounded-2xl bg-[#183058] hover:bg-[#102342] text-white text-xs font-bold shadow-sm flex items-center gap-2 min-h-[44px] disabled:opacity-50"
+                  >
+                    <span>{startingNextPkg ? 'Menyiapkan Sesi...' : 'Lanjut ke Paket 2 (60 Soal)'}</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
 
-              <button
-                type="button"
-                onClick={() => setShowPkg3Info((prev) => !prev)}
-                className="px-4 py-3 rounded-2xl bg-white hover:bg-[#E8ECF6] text-[#183058] border border-[#183058]/30 text-xs font-bold flex items-center gap-1.5 min-h-[44px]"
-              >
-                <span>Opsi Lanjut ke Paket 3</span>
-              </button>
+                  <button
+                    type="button"
+                    onClick={() => setShowPkg3Info((prev) => !prev)}
+                    className="px-4 py-3 rounded-2xl bg-white hover:bg-[#E8ECF6] text-[#183058] border border-[#183058]/30 text-xs font-bold flex items-center gap-1.5 min-h-[44px]"
+                  >
+                    <span>Opsi Lanjut ke Paket 3</span>
+                  </button>
+                </>
+              ) : (
+                <div className="px-4 py-2.5 rounded-2xl bg-amber-100/90 border border-amber-200 text-amber-900 text-xs font-bold flex items-center gap-2">
+                  <Lock className="w-4 h-4 text-amber-800" />
+                  <span>Paket 2 & 3 Ditutup Sementara</span>
+                </div>
+              )}
             </div>
           </div>
 
-          {showPkg3Info && (
+          {showPkg3Info && ASSESSMENT_PACKAGES.find((p) => p.code === 'PAKET_2_PERSONA_POTENTIAL')?.status === 'active' && (
             <div className="p-4 rounded-2xl bg-white border border-[#183058]/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-[#333542]">
               <p className="leading-relaxed">
                 Untuk menuju <strong>Paket 3 (Persona Mastery)</strong>, silakan selesaikan <strong>Paket 2 (60 Soal)</strong> terlebih dahulu agar pemetaan berjalan berurutan.

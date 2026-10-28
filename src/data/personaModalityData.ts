@@ -96,8 +96,8 @@ export const ASSESSMENT_PACKAGES: AssessmentPackage[] = [
     code: 'PAKET_2_PERSONA_POTENTIAL',
     name: 'Persona Potential',
     subtitle: 'Eksplorasi Karakter & Kecerdasan',
-    status: 'active',
-    badgeText: 'Aktif (Tahap 2)',
+    status: 'upcoming',
+    badgeText: 'Segera Hadir (Tahap 2)',
     targetAge: 'SD, SMP, SMA',
     description:
       'Mendalami tipologi kepribadian kognitif siswa (adaptasi MBTI) dan 8 kecerdasan majemuk (Multiple Intelligences) untuk memetakan bakat sejati serta mencegah bentrok emosional.',

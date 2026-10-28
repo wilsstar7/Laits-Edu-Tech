@@ -20,7 +20,6 @@ const StudentDashboardPage = lazy(() => import('@/pages/student/StudentDashboard
 const StudentCoursesPage = lazy(() => import('@/pages/student/StudentCoursesPage').then((m) => ({ default: m.StudentCoursesPage })))
 const CourseDetailPage = lazy(() => import('@/pages/student/CourseDetailPage').then((m) => ({ default: m.CourseDetailPage })))
 const LessonPlayerPage = lazy(() => import('@/pages/student/LessonPlayerPage').then((m) => ({ default: m.LessonPlayerPage })))
-const StudentGoalsPage = lazy(() => import('@/pages/student/StudentGoalsPage').then((m) => ({ default: m.StudentGoalsPage })))
 const StudentAchievementsPage = lazy(() => import('@/pages/student/StudentAchievementsPage').then((m) => ({ default: m.StudentAchievementsPage })))
 const StudentSettingsPage = lazy(() => import('@/pages/student/StudentSettingsPage').then((m) => ({ default: m.StudentSettingsPage })))
 const AssessmentIntroPage = lazy(() => import('@/pages/student/AssessmentIntroPage').then((m) => ({ default: m.AssessmentIntroPage })))

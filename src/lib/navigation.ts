@@ -14,7 +14,6 @@ import {
   Bell,
   Settings,
   Shield,
-  Target,
   Award,
   Library,
   Megaphone,

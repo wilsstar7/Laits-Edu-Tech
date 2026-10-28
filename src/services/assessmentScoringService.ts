@@ -71,16 +71,20 @@ export const assessmentScoringService = {
         assessment_id: PRIMARY_ASSESSMENT_ID,
         name: `${mbti.nickname} (${mbti.personality_code})`,
         code: `${mbti.personality_code}_${p1.PM_VAK_01.primary_modality}`,
-        description: `${mbti.description} Didukung modalitas sensori ${p1.PM_VAK_01.title} serta dominasi belahan otak ${p1.PM_HEM_02.title}.`,
+        description: `${mbti.description} Didukung modalitas sensori ${p1.PM_VAK_01.title}${p1.PM_HEM_02 ? ` serta dominasi belahan otak ${p1.PM_HEM_02.title}` : ''}.`,
         strengths: [
           `Tipe Kepribadian Kognitif: ${mbti.personality_code} (${mbti.title})`,
           `Pintu Gerbang Kecerdasan Utama: ${topGatewayNames}`,
           `Modalitas Sensori: ${p1.PM_VAK_01.title}`,
-          `Jam Belajar Produktif: ${p1.PM_SKB_03.clusters.chronobiology.title}`,
+          ...(p1.PM_SKB_03 ? [`Jam Belajar Produktif: ${p1.PM_SKB_03.clusters.chronobiology.title}`] : []),
         ],
         challenges: [
-          `Toleransi Lingkungan: ${p1.PM_SKB_03.clusters.environment.title}`,
-          `Rentang Ketahanan Fokus: ${p1.PM_SKB_03.clusters.attention_span.title}`,
+          ...(p1.PM_SKB_03
+            ? [
+                `Toleransi Lingkungan: ${p1.PM_SKB_03.clusters.environment.title}`,
+                `Rentang Ketahanan Fokus: ${p1.PM_SKB_03.clusters.attention_span.title}`,
+              ]
+            : []),
           'Sesuaikan metode penyampaian materi dengan pola MBTI agar tidak terjadi bentrok emosional.',
         ],
         learning_style: `${mbti.personality_code} - ${p1.PM_VAK_01.title}`,
@@ -96,7 +100,7 @@ export const assessmentScoringService = {
         recommended_tutor_style: [
           ...mbti.tutor_sop_details.map((d) => `${d.letter} (${d.dimension}): ${d.instruction}`),
           p1.PM_VAK_01.tutor_sop,
-          p1.PM_HEM_02.tutor_sop,
+          ...(p1.PM_HEM_02 ? [p1.PM_HEM_02.tutor_sop] : []),
         ],
       }
 
@@ -170,25 +174,52 @@ export const assessmentScoringService = {
     const hem = modalityResult.modules.PM_HEM_02
     const habits = modalityResult.modules.PM_SKB_03
 
+    const strengths: string[] = [
+      `Gaya Sensori Utama: ${vak.title}`,
+      `Modalitas Dominan: ${vak.primary_modality}${vak.secondary_modality ? ` & ${vak.secondary_modality}` : ''}`,
+      `Kategori Dominasi: ${
+        vak.dominance_type === 'SINGLE_DOMINANCE'
+          ? 'Dominasi Tunggal'
+          : vak.dominance_type === 'BIMODAL'
+          ? 'Bimodal'
+          : 'Multimodal (Seimbang)'
+      }`,
+    ]
+    if (hem) strengths.push(`Orientasi Berpikir: ${hem.title}`)
+    if (habits) {
+      strengths.push(`Jam Biologis Produktif: ${habits.clusters.chronobiology.title}`)
+      strengths.push(`Ketahanan Fokus: ${habits.clusters.attention_span.title}`)
+    }
+
+    const challenges: string[] = [
+      vak.primary_modality === 'VISUAL'
+        ? 'Dapat mudah terdistraksi oleh kekacauan visual di meja atau ruangan belajar.'
+        : vak.primary_modality === 'AUDITORY'
+        ? 'Sensitif terhadap kebisingan dan obrolan saat mencoba berkonsentrasi membaca.'
+        : 'Cepat bosan atau gelisah jika diminta duduk diam mendengarkan penjelasan panjang.',
+    ]
+    if (habits) {
+      challenges.push(`Toleransi Lingkungan: Membutuhkan penataan ruang ${habits.clusters.environment.title}`)
+    }
+
+    const recommendedTutorStyle: string[] = [vak.tutor_sop]
+    if (hem) recommendedTutorStyle.push(hem.tutor_sop)
+    if (habits) {
+      recommendedTutorStyle.push(habits.clusters.environment.tutor_sop)
+      recommendedTutorStyle.push(habits.clusters.attention_span.tutor_sop)
+    }
+
     const personalityTypeCompat: PersonalityType = {
       id: 'pt-' + vak.primary_modality.toLowerCase(),
       assessment_id: PRIMARY_ASSESSMENT_ID,
-      name: `${vak.title} (${hem.title})`,
-      code: `${vak.primary_modality}_${hem.dominance_category}`,
-      description: `${vak.summary} Dalam cara berpikir, siswa cenderung ${hem.summary}`,
-      strengths: [
-        `Gaya Sensori: ${vak.title}`,
-        `Orientasi Berpikir: ${hem.title}`,
-        `Jam Biologis Produktif: ${habits.clusters.chronobiology.title}`,
-        `Ketahanan Fokus: ${habits.clusters.attention_span.title}`,
-      ],
-      challenges: [
-        `Toleransi Lingkungan: Membutuhkan penataan ruang ${habits.clusters.environment.title}`,
-        'Hindari kejenuhan materi dengan mengadaptasi jeda belajar sesuai rentang fokus.',
-      ],
+      name: hem ? `${vak.title} (${hem.title})` : vak.title,
+      code: `${vak.primary_modality}_${vak.dominance_type}`,
+      description: hem ? `${vak.summary} Dalam cara berpikir, siswa cenderung ${hem.summary}` : vak.summary,
+      strengths,
+      challenges,
       learning_style: vak.title,
-      communication_style: hem.title,
-      motivation: habits.clusters.attention_span.title,
+      communication_style: hem ? hem.title : 'Adaptif & Interaktif',
+      motivation: vak.dominance_type === 'MULTIMODAL' ? 'Fleksibilitas Belajar' : 'Metode Sesuai Sensori',
       recommended_study_method: vak.study_recommendations,
       recommended_subjects: [
         vak.primary_modality === 'VISUAL'
@@ -197,12 +228,7 @@ export const assessmentScoringService = {
           ? 'Bahasa, Sejarah, Diskusi Sosial, Debat'
           : 'Praktikum Fisika/Kimia, Biologi Eksperimen, Olahraga, Kesenian',
       ],
-      recommended_tutor_style: [
-        vak.tutor_sop,
-        hem.tutor_sop,
-        habits.clusters.environment.tutor_sop,
-        habits.clusters.attention_span.tutor_sop,
-      ],
+      recommended_tutor_style: recommendedTutorStyle,
     }
 
     const dimensionsCompat: DimensionResult[] = [
@@ -220,11 +246,14 @@ export const assessmentScoringService = {
           code: 'PM-VAK-01',
           description: vak.title,
           min_score: 0,
-          max_score: 100,
+          max_score: vak.total_questions,
           display_order: 1,
         },
       },
-      {
+    ]
+
+    if (hem) {
+      dimensionsCompat.push({
         id: 'dim-res-2',
         result_id: resultId,
         dimension_id: 'dim-hem-02',
@@ -241,8 +270,11 @@ export const assessmentScoringService = {
           max_score: 100,
           display_order: 2,
         },
-      },
-      {
+      })
+    }
+
+    if (habits) {
+      dimensionsCompat.push({
         id: 'dim-res-3',
         result_id: resultId,
         dimension_id: 'dim-skb-03',
@@ -259,17 +291,10 @@ export const assessmentScoringService = {
           max_score: 100,
           display_order: 3,
         },
-      },
-    ]
+      })
+    }
 
-    const overallScore = Math.round(
-      (vak.percentages.V +
-        vak.percentages.A +
-        vak.percentages.K +
-        hem.percentages.LEFT_BRAIN +
-        hem.percentages.RIGHT_BRAIN) /
-        2
-    )
+    const overallScore = Math.max(vak.percentages.V, vak.percentages.A, vak.percentages.K)
 
     const fullResult: AssessmentResult = {
       id: resultId,

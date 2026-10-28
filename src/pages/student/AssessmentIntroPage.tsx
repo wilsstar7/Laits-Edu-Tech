@@ -1,16 +1,17 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router'
 import {
-  Clock,
   CheckCircle2,
   Lock,
   Layers,
   GraduationCap,
   ArrowRight,
   Loader2,
-  BookOpen,
   AlertCircle,
   RotateCcw,
+  Eye,
+  Volume2,
+  Activity,
 } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 import { assessmentSessionService } from '@/services/assessmentSessionService'
@@ -460,32 +461,26 @@ export function AssessmentIntroPage() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div className="flex items-center gap-3">
-                <BookOpen className="w-4 h-4 text-[#183058] shrink-0" />
+                <Eye className="w-4 h-4 text-[#183058] shrink-0" />
                 <div>
-                  <p className="text-[11px] text-[#676A78]">Paket 1 (Bagian A): VAK</p>
-                  <p className="text-xs font-bold text-[#17181C]">
-                    {currentLevelConfig.vakCount} Soal Sensori
-                  </p>
+                  <p className="text-[11px] text-[#676A78]">Visual (V)</p>
+                  <p className="text-xs font-bold text-[#17181C]">Penglihatan &amp; Spasial</p>
                 </div>
               </div>
 
               <div className="flex items-center gap-3">
-                <Layers className="w-4 h-4 text-[#183058] shrink-0" />
+                <Volume2 className="w-4 h-4 text-[#183058] shrink-0" />
                 <div>
-                  <p className="text-[11px] text-[#676A78]">Paket 1 (Bagian B): Otak</p>
-                  <p className="text-xs font-bold text-[#17181C]">
-                    {currentLevelConfig.hemCount} Soal Berpikir
-                  </p>
+                  <p className="text-[11px] text-[#676A78]">Auditori (A)</p>
+                  <p className="text-xs font-bold text-[#17181C]">Pendengaran &amp; Diskusi</p>
                 </div>
               </div>
 
               <div className="flex items-center gap-3">
-                <Clock className="w-4 h-4 text-[#183058] shrink-0" />
+                <Activity className="w-4 h-4 text-[#183058] shrink-0" />
                 <div>
-                  <p className="text-[11px] text-[#676A78]">Paket 1 (Bagian C): Kebiasaan</p>
-                  <p className="text-xs font-bold text-[#17181C]">
-                    {currentLevelConfig.skbCount} Soal Lingkungan
-                  </p>
+                  <p className="text-[11px] text-[#676A78]">Kinestetik (K)</p>
+                  <p className="text-xs font-bold text-[#17181C]">Praktik &amp; Motorik</p>
                 </div>
               </div>
             </div>

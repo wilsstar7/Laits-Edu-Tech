@@ -668,7 +668,7 @@ export function PersonalityResultPage() {
               Rincian Diagnostik Fondasi &amp; Cara Belajar Siswa (Paket 1)
             </h2>
             <p className="text-xs text-[#676A78]">
-              Ketiga aspek di bawah ini (Modalitas Sensori VAK, Dominasi Belahan Otak, dan Kebiasaan Belajar) merupakan satu kesatuan hasil dari pengerjaan Soal Paket 1.
+              Rincian hasil diagnostik modalitas sensori belajar (Visual, Auditory, Kinesthetic) dari pengerjaan Soal Paket 1.
             </p>
           </div>
         </div>
@@ -679,7 +679,7 @@ export function PersonalityResultPage() {
             <div className="flex items-center gap-2 text-[#183058]">
               <BookOpen className="w-4 h-4" />
               <span className="text-xs font-bold uppercase tracking-wider">
-                Paket 1 (Bagian A): Modalitas Belajar Sensori (VAK)
+                Paket 1: Modalitas Belajar Sensori (VAK)
               </span>
             </div>
             <h3 className="text-lg font-extrabold text-[#17181C]">
@@ -778,218 +778,222 @@ export function PersonalityResultPage() {
         </div>
 
         {/* Bagian B Paket 1: Dominasi Hemisfer Otak */}
-        <div className="space-y-5 pt-6 border-t border-border/60">
-          <div className="space-y-1">
-            <div className="flex items-center gap-2 text-[#183058]">
-              <Brain className="w-4 h-4" />
-              <span className="text-xs font-bold uppercase tracking-wider">
-                Paket 1 (Bagian B): Dominasi Belahan Otak
+        {p1Modules?.PM_HEM_02 && (
+          <div className="space-y-5 pt-6 border-t border-border/60">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2 text-[#183058]">
+                <Brain className="w-4 h-4" />
+                <span className="text-xs font-bold uppercase tracking-wider">
+                  Paket 1 (Bagian B): Dominasi Belahan Otak
+                </span>
+              </div>
+              <h3 className="text-lg font-extrabold text-[#17181C]">
+                Gaya Berpikir Kognitif: {hem.title}
+              </h3>
+              <p className="text-xs text-[#676A78]">
+                Memetakan orientasi berpikir dari soal Paket 1: Analitis-Sekuensial (Otak Kiri) vs Intuitif-Holistik (Otak Kanan).
+              </p>
+            </div>
+
+            {/* Brain Balance Split Display */}
+            <div className="p-5 rounded-2xl bg-[#F9FAFD] border border-border/70 space-y-4">
+              <div className="flex items-center justify-between text-xs font-bold">
+                <div className="flex items-center gap-1.5 text-sky-700">
+                  <span className="w-2.5 h-2.5 rounded-full bg-sky-500" />
+                  <span>Otak Kiri: {hem.percentages.LEFT_BRAIN}%</span>
+                </div>
+                <div className="text-[#676A78] text-[11px] font-normal">
+                  Status: <span className="font-bold text-[#17181C]">{hem.title}</span>
+                </div>
+                <div className="flex items-center gap-1.5 text-rose-700">
+                  <span>Otak Kanan: {hem.percentages.RIGHT_BRAIN}%</span>
+                  <span className="w-2.5 h-2.5 rounded-full bg-rose-500" />
+                </div>
+              </div>
+
+              {/* Dual Bar Balance Meter */}
+              <div className="h-4 w-full bg-[#EAEBF0] rounded-full overflow-hidden flex">
+                <div
+                  className="h-full bg-sky-500 transition-all"
+                  style={{ width: `${hem.percentages.LEFT_BRAIN}%` }}
+                />
+                <div
+                  className="h-full bg-rose-500 transition-all"
+                  style={{ width: `${hem.percentages.RIGHT_BRAIN}%` }}
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 text-xs pt-1">
+                <div className="space-y-1">
+                  <span className="font-bold text-sky-800 block text-[11px] uppercase tracking-wide">
+                    Karakter Otak Kiri:
+                  </span>
+                  <p className="text-[#676A78] text-xs leading-relaxed">
+                    Logis, matematis, analitis, sekuensial, teratur, menyukai kepastian aturan angka.
+                  </p>
+                </div>
+                <div className="space-y-1 text-right">
+                  <span className="font-bold text-rose-800 block text-[11px] uppercase tracking-wide">
+                    Karakter Otak Kanan:
+                  </span>
+                  <p className="text-[#676A78] text-xs leading-relaxed">
+                    Kreatif, imajinatif, holistik, menyukai cerita kontekstual, analogi visual bebas.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Brain Tutor SOP Card */}
+            <div className="p-4 rounded-2xl bg-[#F4F6FA] border border-border/60 space-y-2">
+              <span className="text-xs font-bold text-[#183058] block uppercase tracking-wide">
+                SOP Guru Privat untuk Gaya Berpikir Ini:
               </span>
-            </div>
-            <h3 className="text-lg font-extrabold text-[#17181C]">
-              Gaya Berpikir Kognitif: {hem.title}
-            </h3>
-            <p className="text-xs text-[#676A78]">
-              Memetakan orientasi berpikir dari soal Paket 1: Analitis-Sekuensial (Otak Kiri) vs Intuitif-Holistik (Otak Kanan).
-            </p>
-          </div>
-
-          {/* Brain Balance Split Display */}
-          <div className="p-5 rounded-2xl bg-[#F9FAFD] border border-border/70 space-y-4">
-            <div className="flex items-center justify-between text-xs font-bold">
-              <div className="flex items-center gap-1.5 text-sky-700">
-                <span className="w-2.5 h-2.5 rounded-full bg-sky-500" />
-                <span>Otak Kiri: {hem.percentages.LEFT_BRAIN}%</span>
-              </div>
-              <div className="text-[#676A78] text-[11px] font-normal">
-                Status: <span className="font-bold text-[#17181C]">{hem.title}</span>
-              </div>
-              <div className="flex items-center gap-1.5 text-rose-700">
-                <span>Otak Kanan: {hem.percentages.RIGHT_BRAIN}%</span>
-                <span className="w-2.5 h-2.5 rounded-full bg-rose-500" />
-              </div>
-            </div>
-
-            {/* Dual Bar Balance Meter */}
-            <div className="h-4 w-full bg-[#EAEBF0] rounded-full overflow-hidden flex">
-              <div
-                className="h-full bg-sky-500 transition-all"
-                style={{ width: `${hem.percentages.LEFT_BRAIN}%` }}
-              />
-              <div
-                className="h-full bg-rose-500 transition-all"
-                style={{ width: `${hem.percentages.RIGHT_BRAIN}%` }}
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4 text-xs pt-1">
-              <div className="space-y-1">
-                <span className="font-bold text-sky-800 block text-[11px] uppercase tracking-wide">
-                  Karakter Otak Kiri:
-                </span>
-                <p className="text-[#676A78] text-xs leading-relaxed">
-                  Logis, matematis, analitis, sekuensial, teratur, menyukai kepastian aturan angka.
-                </p>
-              </div>
-              <div className="space-y-1 text-right">
-                <span className="font-bold text-rose-800 block text-[11px] uppercase tracking-wide">
-                  Karakter Otak Kanan:
-                </span>
-                <p className="text-[#676A78] text-xs leading-relaxed">
-                  Kreatif, imajinatif, holistik, menyukai cerita kontekstual, analogi visual bebas.
-                </p>
-              </div>
+              <p className="text-xs text-[#333542] leading-relaxed">
+                {hem.tutor_sop}
+              </p>
             </div>
           </div>
-
-          {/* Brain Tutor SOP Card */}
-          <div className="p-4 rounded-2xl bg-[#F4F6FA] border border-border/60 space-y-2">
-            <span className="text-xs font-bold text-[#183058] block uppercase tracking-wide">
-              SOP Guru Privat untuk Gaya Berpikir Ini:
-            </span>
-            <p className="text-xs text-[#333542] leading-relaxed">
-              {hem.tutor_sop}
-            </p>
-          </div>
-        </div>
+        )}
 
         {/* Bagian C Paket 1: 3 Klaster Kebiasaan & Lingkungan Belajar */}
-        <div className="space-y-5 pt-6 border-t border-border/60">
-          <div className="space-y-1">
-            <div className="flex items-center gap-2 text-[#183058]">
-              <Hourglass className="w-4 h-4" />
-              <span className="text-xs font-bold uppercase tracking-wider">
-                Paket 1 (Bagian C): Kebiasaan &amp; Lingkungan Belajar
-              </span>
+        {p1Modules?.PM_SKB_03 && (
+          <div className="space-y-5 pt-6 border-t border-border/60">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2 text-[#183058]">
+                <Hourglass className="w-4 h-4" />
+                <span className="text-xs font-bold uppercase tracking-wider">
+                  Paket 1 (Bagian C): Kebiasaan &amp; Lingkungan Belajar
+                </span>
+              </div>
+              <h3 className="text-lg font-extrabold text-[#17181C]">
+                3 Klaster Gaya Kerja &amp; Stamina Belajar Harian
+              </h3>
+              <p className="text-xs text-[#676A78]">
+                Hasil screening jam biologis prima, toleransi kebisingan ruangan, dan durasi rentang ketahanan fokus dari soal Paket 1.
+              </p>
             </div>
-            <h3 className="text-lg font-extrabold text-[#17181C]">
-              3 Klaster Gaya Kerja &amp; Stamina Belajar Harian
-            </h3>
-            <p className="text-xs text-[#676A78]">
-              Hasil screening jam biologis prima, toleransi kebisingan ruangan, dan durasi rentang ketahanan fokus dari soal Paket 1.
-            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              {/* Klaster 1: Kronobiologi */}
+              <div className="p-5 rounded-2xl border border-border/80 bg-[#F9FAFD] flex flex-col justify-between space-y-4">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="w-8 h-8 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                      {habits.clusters.chronobiology.result === 'MORNING_LARK' ? (
+                        <Sun className="w-4 h-4" />
+                      ) : habits.clusters.chronobiology.result === 'AFTERNOON_PERSON' ? (
+                        <Sunset className="w-4 h-4" />
+                      ) : (
+                        <Moon className="w-4 h-4" />
+                      )}
+                    </div>
+                    <span className="text-[10px] font-bold text-[#676A78] uppercase tracking-wider">
+                      Klaster 1: Jam Prima
+                    </span>
+                  </div>
+
+                  <div>
+                    <span className="text-[11px] text-[#676A78]">Ritme Biologis:</span>
+                    <h4 className="text-base font-extrabold text-[#17181C]">
+                      {habits.clusters.chronobiology.title}
+                    </h4>
+                  </div>
+
+                  <p className="text-xs text-[#676A78] leading-relaxed">
+                    {habits.clusters.chronobiology.description}
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-[#F4F6FA] border border-border/60 text-xs text-[#333542] space-y-1">
+                  <span className="text-[10px] font-bold text-[#183058] block uppercase">
+                    SOP Guru Privat:
+                  </span>
+                  <p className="leading-relaxed">
+                    {habits.clusters.chronobiology.tutor_sop}
+                  </p>
+                </div>
+              </div>
+
+              {/* Klaster 2: Lingkungan Belajar */}
+              <div className="p-5 rounded-2xl border border-border/80 bg-[#F9FAFD] flex flex-col justify-between space-y-4">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="w-8 h-8 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center">
+                      {habits.clusters.environment.result === 'FORMAL_AND_SENSITIVE' ? (
+                        <VolumeX className="w-4 h-4" />
+                      ) : habits.clusters.environment.result === 'AMBIENT_TOLERANT' ? (
+                        <Coffee className="w-4 h-4" />
+                      ) : (
+                        <Home className="w-4 h-4" />
+                      )}
+                    </div>
+                    <span className="text-[10px] font-bold text-[#676A78] uppercase tracking-wider">
+                      Klaster 2: Suasana
+                    </span>
+                  </div>
+
+                  <div>
+                    <span className="text-[11px] text-[#676A78]">Toleransi Ruang:</span>
+                    <h4 className="text-base font-extrabold text-[#17181C]">
+                      {habits.clusters.environment.title}
+                    </h4>
+                  </div>
+
+                  <p className="text-xs text-[#676A78] leading-relaxed">
+                    {habits.clusters.environment.description}
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-[#F4F6FA] border border-border/60 text-xs text-[#333542] space-y-1">
+                  <span className="text-[10px] font-bold text-[#183058] block uppercase">
+                    SOP Guru Privat:
+                  </span>
+                  <p className="leading-relaxed">
+                    {habits.clusters.environment.tutor_sop}
+                  </p>
+                </div>
+              </div>
+
+              {/* Klaster 3: Rentang Fokus */}
+              <div className="p-5 rounded-2xl border border-border/80 bg-[#F9FAFD] flex flex-col justify-between space-y-4">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="w-8 h-8 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center">
+                      {habits.clusters.attention_span.result === 'TIPE_POMODORO' ? (
+                        <Timer className="w-4 h-4" />
+                      ) : (
+                        <Zap className="w-4 h-4" />
+                      )}
+                    </div>
+                    <span className="text-[10px] font-bold text-[#676A78] uppercase tracking-wider">
+                      Klaster 3: Fokus
+                    </span>
+                  </div>
+
+                  <div>
+                    <span className="text-[11px] text-[#676A78]">Rentang Ketahanan:</span>
+                    <h4 className="text-base font-extrabold text-[#17181C]">
+                      {habits.clusters.attention_span.title}
+                    </h4>
+                  </div>
+
+                  <p className="text-xs text-[#676A78] leading-relaxed">
+                    {habits.clusters.attention_span.description}
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-[#F4F6FA] border border-border/60 text-xs text-[#333542] space-y-1">
+                  <span className="text-[10px] font-bold text-[#183058] block uppercase">
+                    SOP Guru Privat:
+                  </span>
+                  <p className="leading-relaxed">
+                    {habits.clusters.attention_span.tutor_sop}
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {/* Klaster 1: Kronobiologi */}
-            <div className="p-5 rounded-2xl border border-border/80 bg-[#F9FAFD] flex flex-col justify-between space-y-4">
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <div className="w-8 h-8 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
-                    {habits.clusters.chronobiology.result === 'MORNING_LARK' ? (
-                      <Sun className="w-4 h-4" />
-                    ) : habits.clusters.chronobiology.result === 'AFTERNOON_PERSON' ? (
-                      <Sunset className="w-4 h-4" />
-                    ) : (
-                      <Moon className="w-4 h-4" />
-                    )}
-                  </div>
-                  <span className="text-[10px] font-bold text-[#676A78] uppercase tracking-wider">
-                    Klaster 1: Jam Prima
-                  </span>
-                </div>
-
-                <div>
-                  <span className="text-[11px] text-[#676A78]">Ritme Biologis:</span>
-                  <h4 className="text-base font-extrabold text-[#17181C]">
-                    {habits.clusters.chronobiology.title}
-                  </h4>
-                </div>
-
-                <p className="text-xs text-[#676A78] leading-relaxed">
-                  {habits.clusters.chronobiology.description}
-                </p>
-              </div>
-
-              <div className="p-3 rounded-xl bg-[#F4F6FA] border border-border/60 text-xs text-[#333542] space-y-1">
-                <span className="text-[10px] font-bold text-[#183058] block uppercase">
-                  SOP Guru Privat:
-                </span>
-                <p className="leading-relaxed">
-                  {habits.clusters.chronobiology.tutor_sop}
-                </p>
-              </div>
-            </div>
-
-            {/* Klaster 2: Lingkungan Belajar */}
-            <div className="p-5 rounded-2xl border border-border/80 bg-[#F9FAFD] flex flex-col justify-between space-y-4">
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <div className="w-8 h-8 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center">
-                    {habits.clusters.environment.result === 'FORMAL_AND_SENSITIVE' ? (
-                      <VolumeX className="w-4 h-4" />
-                    ) : habits.clusters.environment.result === 'AMBIENT_TOLERANT' ? (
-                      <Coffee className="w-4 h-4" />
-                    ) : (
-                      <Home className="w-4 h-4" />
-                    )}
-                  </div>
-                  <span className="text-[10px] font-bold text-[#676A78] uppercase tracking-wider">
-                    Klaster 2: Suasana
-                  </span>
-                </div>
-
-                <div>
-                  <span className="text-[11px] text-[#676A78]">Toleransi Ruang:</span>
-                  <h4 className="text-base font-extrabold text-[#17181C]">
-                    {habits.clusters.environment.title}
-                  </h4>
-                </div>
-
-                <p className="text-xs text-[#676A78] leading-relaxed">
-                  {habits.clusters.environment.description}
-                </p>
-              </div>
-
-              <div className="p-3 rounded-xl bg-[#F4F6FA] border border-border/60 text-xs text-[#333542] space-y-1">
-                <span className="text-[10px] font-bold text-[#183058] block uppercase">
-                  SOP Guru Privat:
-                </span>
-                <p className="leading-relaxed">
-                  {habits.clusters.environment.tutor_sop}
-                </p>
-              </div>
-            </div>
-
-            {/* Klaster 3: Rentang Fokus */}
-            <div className="p-5 rounded-2xl border border-border/80 bg-[#F9FAFD] flex flex-col justify-between space-y-4">
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <div className="w-8 h-8 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center">
-                    {habits.clusters.attention_span.result === 'TIPE_POMODORO' ? (
-                      <Timer className="w-4 h-4" />
-                    ) : (
-                      <Zap className="w-4 h-4" />
-                    )}
-                  </div>
-                  <span className="text-[10px] font-bold text-[#676A78] uppercase tracking-wider">
-                    Klaster 3: Fokus
-                  </span>
-                </div>
-
-                <div>
-                  <span className="text-[11px] text-[#676A78]">Rentang Ketahanan:</span>
-                  <h4 className="text-base font-extrabold text-[#17181C]">
-                    {habits.clusters.attention_span.title}
-                  </h4>
-                </div>
-
-                <p className="text-xs text-[#676A78] leading-relaxed">
-                  {habits.clusters.attention_span.description}
-                </p>
-              </div>
-
-              <div className="p-3 rounded-xl bg-[#F4F6FA] border border-border/60 text-xs text-[#333542] space-y-1">
-                <span className="text-[10px] font-bold text-[#183058] block uppercase">
-                  SOP Guru Privat:
-                </span>
-                <p className="leading-relaxed">
-                  {habits.clusters.attention_span.tutor_sop}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+        )}
       </div>
 
       {/* 7. Opsi Melanjutkan ke Paket Berikutnya (Tanpa menampilkan kartu hasil paket yang belum dikerjakan) */}

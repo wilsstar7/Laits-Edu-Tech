@@ -1023,19 +1023,19 @@ export const MULTIPLE_INTELLIGENCES_METADATA: Record<
 export const PACKAGE_LEVEL_CONFIG = {
   PAKET_1_PERSONA_MODALITY: {
     SD: {
-      totalQuestions: 40,
-      estimatedMinutes: 10,
-      breakdown: '20 VAK + 10 Belahan Otak + 10 Kebiasaan Belajar',
+      totalQuestions: 15,
+      estimatedMinutes: 5,
+      breakdown: '15 Soal Modalitas Sensori VAK',
     },
     SMP: {
-      totalQuestions: 50,
-      estimatedMinutes: 12,
-      breakdown: '24 VAK + 12 Belahan Otak + 14 Kebiasaan Belajar',
+      totalQuestions: 20,
+      estimatedMinutes: 7,
+      breakdown: '20 Soal Modalitas Sensori VAK',
     },
     SMA: {
-      totalQuestions: 65,
-      estimatedMinutes: 15,
-      breakdown: '30 VAK + 15 Belahan Otak + 20 Kebiasaan Belajar',
+      totalQuestions: 30,
+      estimatedMinutes: 10,
+      breakdown: '30 Soal Modalitas Sensori VAK',
     },
   },
   PAKET_2_PERSONA_POTENTIAL: {

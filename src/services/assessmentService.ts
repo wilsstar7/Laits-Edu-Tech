@@ -105,8 +105,8 @@ export const assessmentService = {
 
   /**
    * Mengambil butir pertanyaan terfilter berdasarkan jenjang siswa dan paket:
-   * Paket 1: SD 40, SMP 50, SMA 65
-   * Paket 2: SD 100, SMP 110, SMA 125
+   * Paket 1: SD 15, SMP 20, SMA 30
+   * Paket 2: 60 Soal Terpisah
    */
   async getQuestions(
     _assessmentId?: string,

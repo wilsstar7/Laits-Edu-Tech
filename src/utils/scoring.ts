@@ -496,17 +496,22 @@ export function calculatePersonaModalityResult(
   const skbQuestions = allLevelQuestions.filter((q) => q.moduleCode === 'PM-SKB-03')
 
   const vakResult = calculateVakScore(vakQuestions, answers)
-  const brainResult = calculateBrainDominanceScore(hemQuestions, answers)
-  const habitsResult = calculateHabitsScore(skbQuestions, answers)
+
+  const modules: PersonaModalityResult['modules'] = {
+    PM_VAK_01: vakResult,
+  }
+
+  if (hemQuestions.length > 0) {
+    modules.PM_HEM_02 = calculateBrainDominanceScore(hemQuestions, answers)
+  }
+  if (skbQuestions.length > 0) {
+    modules.PM_SKB_03 = calculateHabitsScore(skbQuestions, answers)
+  }
 
   return {
     package_code: 'PAKET_1_PERSONA_MODALITY',
     student_level: level,
-    modules: {
-      PM_VAK_01: vakResult,
-      PM_HEM_02: brainResult,
-      PM_SKB_03: habitsResult,
-    },
+    modules,
   }
 }
 

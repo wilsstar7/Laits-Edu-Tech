@@ -149,8 +149,8 @@ export interface PersonaModalityResult {
   student_level: StudentLevel
   modules: {
     PM_VAK_01: VakModuleResult
-    PM_HEM_02: BrainDominanceModuleResult
-    PM_SKB_03: HabitsModuleResult
+    PM_HEM_02?: BrainDominanceModuleResult
+    PM_SKB_03?: HabitsModuleResult
   }
 }
 
@@ -221,8 +221,8 @@ export interface PersonaPotentialResult {
   student_level: StudentLevel
   paket_1_results: {
     PM_VAK_01: VakModuleResult
-    PM_HEM_02: BrainDominanceModuleResult
-    PM_SKB_03: HabitsModuleResult
+    PM_HEM_02?: BrainDominanceModuleResult
+    PM_SKB_03?: HabitsModuleResult
   }
   paket_2_modules: {
     PP_MBTI_02: MbtiModuleResult

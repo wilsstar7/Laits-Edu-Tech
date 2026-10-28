@@ -67,60 +67,117 @@ describe('Persona Modality Scoring Engine', () => {
   })
 
   describe('Brain Dominance (PM-HEM-02)', () => {
+    // Mock questions for isolated scoring engine verification
+    const mockHemQuestions = Array.from({ length: 10 }, (_, idx) => ({
+      id: `pm-hem-mock-${idx + 1}`,
+      number: idx + 1,
+      moduleCode: 'PM-HEM-02' as const,
+      moduleName: 'Brain Dominance',
+      cluster: 'HEM' as const,
+      levels: ['SD', 'SMP', 'SMA'] as StudentLevel[],
+      questionText: `Pertanyaan Hem ${idx + 1}`,
+      options: [
+        { id: `opt-l-${idx + 1}`, label: 'A', indicator: 'LEFT_BRAIN' as const },
+        { id: `opt-r-${idx + 1}`, label: 'B', indicator: 'RIGHT_BRAIN' as const },
+      ],
+    }))
+
     it('detects Left Brain Dominant when percentage > 65%', () => {
-      const hemQuestions = PERSONA_MODALITY_QUESTIONS.filter((q) => q.moduleCode === 'PM-HEM-02').slice(0, 10)
       const answers: Record<string, string> = {}
 
       // 8 Left Brain, 2 Right Brain
-      hemQuestions.forEach((q, idx) => {
+      mockHemQuestions.forEach((q, idx) => {
         const leftOpt = q.options.find((opt) => opt.indicator === 'LEFT_BRAIN')!
         const rightOpt = q.options.find((opt) => opt.indicator === 'RIGHT_BRAIN')!
         answers[q.id] = idx < 8 ? leftOpt.id : rightOpt.id
       })
 
-      const result = calculateBrainDominanceScore(hemQuestions, answers)
+      const result = calculateBrainDominanceScore(mockHemQuestions, answers)
       expect(result.dominance_category).toBe('LEFT_DOMINANT')
       expect(result.tutor_sop_key).toBe('SOP_HEM_LEFT')
       expect(result.percentages.LEFT_BRAIN).toBe(80)
     })
 
     it('detects Right Brain Dominant when percentage > 65%', () => {
-      const hemQuestions = PERSONA_MODALITY_QUESTIONS.filter((q) => q.moduleCode === 'PM-HEM-02').slice(0, 10)
       const answers: Record<string, string> = {}
 
       // 7 Right Brain, 3 Left Brain (70% > 65%)
-      hemQuestions.forEach((q, idx) => {
+      mockHemQuestions.forEach((q, idx) => {
         const leftOpt = q.options.find((opt) => opt.indicator === 'LEFT_BRAIN')!
         const rightOpt = q.options.find((opt) => opt.indicator === 'RIGHT_BRAIN')!
         answers[q.id] = idx < 7 ? rightOpt.id : leftOpt.id
       })
 
-      const result = calculateBrainDominanceScore(hemQuestions, answers)
+      const result = calculateBrainDominanceScore(mockHemQuestions, answers)
       expect(result.dominance_category).toBe('RIGHT_DOMINANT')
       expect(result.tutor_sop_key).toBe('SOP_HEM_RIGHT')
       expect(result.percentages.RIGHT_BRAIN).toBe(70)
     })
 
     it('detects Whole-Brain (Seimbang) when both sides <= 65%', () => {
-      const hemQuestions = PERSONA_MODALITY_QUESTIONS.filter((q) => q.moduleCode === 'PM-HEM-02').slice(0, 10)
       const answers: Record<string, string> = {}
 
       // 6 Left Brain (60%), 4 Right Brain (40%)
-      hemQuestions.forEach((q, idx) => {
+      mockHemQuestions.forEach((q, idx) => {
         const leftOpt = q.options.find((opt) => opt.indicator === 'LEFT_BRAIN')!
         const rightOpt = q.options.find((opt) => opt.indicator === 'RIGHT_BRAIN')!
         answers[q.id] = idx < 6 ? leftOpt.id : rightOpt.id
       })
 
-      const result = calculateBrainDominanceScore(hemQuestions, answers)
+      const result = calculateBrainDominanceScore(mockHemQuestions, answers)
       expect(result.dominance_category).toBe('WHOLE_BRAIN')
       expect(result.tutor_sop_key).toBe('SOP_HEM_WHOLE_BRAIN')
     })
   })
 
   describe('Screening Kebiasaan Belajar (PM-SKB-03)', () => {
+    // Mock questions for isolated scoring engine verification
+    const mockSkbQuestions = [
+      ...Array.from({ length: 5 }, (_, i) => ({
+        id: `pm-skb-${String(i + 1).padStart(2, '0')}`,
+        number: i + 1,
+        moduleCode: 'PM-SKB-03' as const,
+        moduleName: 'Habits',
+        cluster: 'BIO' as const,
+        levels: ['SD', 'SMP', 'SMA'] as StudentLevel[],
+        questionText: `Bio ${i + 1}`,
+        options: [
+          { id: 'A', label: 'A', indicator: 'A' as const },
+          { id: 'B', label: 'B', indicator: 'B' as const },
+          { id: 'C', label: 'C', indicator: 'C' as const },
+        ],
+      })),
+      ...Array.from({ length: 5 }, (_, i) => ({
+        id: `pm-skb-${String(i + 6).padStart(2, '0')}`,
+        number: i + 6,
+        moduleCode: 'PM-SKB-03' as const,
+        moduleName: 'Habits',
+        cluster: 'ENV' as const,
+        levels: ['SD', 'SMP', 'SMA'] as StudentLevel[],
+        questionText: `Env ${i + 6}`,
+        options: [
+          { id: 'A', label: 'A', indicator: 'A' as const },
+          { id: 'B', label: 'B', indicator: 'B' as const },
+          { id: 'C', label: 'C', indicator: 'C' as const },
+        ],
+      })),
+      ...Array.from({ length: 5 }, (_, i) => ({
+        id: `pm-skb-${String(i + 11).padStart(2, '0')}`,
+        number: i + 11,
+        moduleCode: 'PM-SKB-03' as const,
+        moduleName: 'Habits',
+        cluster: 'FOCUS' as const,
+        levels: ['SD', 'SMP', 'SMA'] as StudentLevel[],
+        questionText: `Focus ${i + 11}`,
+        options: [
+          { id: 'A', label: 'A', indicator: 'A' as const },
+          { id: 'B', label: 'B', indicator: 'B' as const },
+          { id: 'C', label: 'C', indicator: 'C' as const },
+        ],
+      })),
+    ]
+
     it('produces 3 distinct cluster results with tie-breaker anchor resolution', () => {
-      const skbQuestions = PERSONA_MODALITY_QUESTIONS.filter((q) => q.moduleCode === 'PM-SKB-03')
       const answers: Record<string, string> = {}
 
       // BIO Cluster (Soal 1-5): 2A, 2C, 1B (Tie between A and C). Anchor is Soal 1 with choice C
@@ -144,7 +201,7 @@ describe('Persona Modality Scoring Engine', () => {
       answers['pm-skb-14'] = 'A'
       answers['pm-skb-15'] = 'C'
 
-      const result = calculateHabitsScore(skbQuestions, answers)
+      const result = calculateHabitsScore(mockSkbQuestions, answers)
 
       // BIO: Anchor was C, so winner is NIGHT_OWL
       expect(result.clusters.chronobiology.result).toBe('NIGHT_OWL')
@@ -161,15 +218,15 @@ describe('Persona Modality Scoring Engine', () => {
   })
 
   describe('Full Persona Modality Level Filtering', () => {
-    it('correctly filters questions by level: SD=40, SMP=50, SMA=65', () => {
+    it('correctly filters questions by level: SD=15, SMP=20, SMA=30', () => {
       const sdQuestions = getQuestionsForLevel('SD')
-      expect(sdQuestions.length).toBe(40)
+      expect(sdQuestions.length).toBe(15)
 
       const smpQuestions = getQuestionsForLevel('SMP')
-      expect(smpQuestions.length).toBe(50)
+      expect(smpQuestions.length).toBe(20)
 
       const smaQuestions = getQuestionsForLevel('SMA')
-      expect(smaQuestions.length).toBe(65)
+      expect(smaQuestions.length).toBe(30)
     })
 
     it('runs calculatePersonaModalityResult without error for SD level', () => {
@@ -183,8 +240,8 @@ describe('Persona Modality Scoring Engine', () => {
       expect(fullResult.package_code).toBe('PAKET_1_PERSONA_MODALITY')
       expect(fullResult.student_level).toBe('SD')
       expect(fullResult.modules.PM_VAK_01.total_questions).toBe(15)
-      expect(fullResult.modules.PM_HEM_02.total_questions).toBe(10)
-      expect(fullResult.modules.PM_SKB_03.total_questions).toBe(15)
+      expect(fullResult.modules.PM_HEM_02).toBeUndefined()
+      expect(fullResult.modules.PM_SKB_03).toBeUndefined()
     })
   })
 
@@ -303,8 +360,6 @@ describe('Persona Modality Scoring Engine', () => {
       expect(fullResult.package_code).toBe('PAKET_2_PERSONA_POTENTIAL')
       expect(fullResult.student_level).toBe('SMP')
       expect(fullResult.paket_1_results.PM_VAK_01).toBeDefined()
-      expect(fullResult.paket_1_results.PM_HEM_02).toBeDefined()
-      expect(fullResult.paket_1_results.PM_SKB_03).toBeDefined()
       expect(fullResult.paket_2_modules.PP_MBTI_02.personality_code).toBe('ESTJ')
       expect(fullResult.paket_2_modules.PP_MI_03.top_3_gateways.length).toBe(3)
     })
@@ -313,9 +368,9 @@ describe('Persona Modality Scoring Engine', () => {
       const paket1Sd = getQuestionsForPackageAndLevel('PAKET_1_PERSONA_MODALITY', 'SD')
       const paket1Smp = getQuestionsForPackageAndLevel('PAKET_1_PERSONA_MODALITY', 'SMP')
       const paket1Sma = getQuestionsForPackageAndLevel('PAKET_1_PERSONA_MODALITY', 'SMA')
-      expect(paket1Sd.length).toBe(40)
-      expect(paket1Smp.length).toBe(50)
-      expect(paket1Sma.length).toBe(65)
+      expect(paket1Sd.length).toBe(15)
+      expect(paket1Smp.length).toBe(20)
+      expect(paket1Sma.length).toBe(30)
 
       const paket2Sd = getQuestionsForPackageAndLevel('PAKET_2_PERSONA_POTENTIAL', 'SD')
       const paket2Smp = getQuestionsForPackageAndLevel('PAKET_2_PERSONA_POTENTIAL', 'SMP')

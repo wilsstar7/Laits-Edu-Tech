@@ -122,17 +122,23 @@ export function PersonalityCard() {
                   </div>
 
                   {modality && (
-                    <div className="grid grid-cols-2 gap-2 text-xs">
+                    <div className="grid grid-cols-3 gap-2 text-xs">
                       <div className="p-2.5 rounded-xl bg-[#F9FAFD] border border-border/60">
-                        <span className="text-[10px] text-[#676A78] block">Dominasi Otak:</span>
+                        <span className="text-[10px] text-[#676A78] block">Visual:</span>
                         <span className="font-bold text-[#17181C] text-[11px]">
-                          {modality.modules.PM_HEM_02.title}
+                          {modality.modules.PM_VAK_01.scores.V} Soal ({modality.modules.PM_VAK_01.percentages.V}%)
                         </span>
                       </div>
                       <div className="p-2.5 rounded-xl bg-[#F9FAFD] border border-border/60">
-                        <span className="text-[10px] text-[#676A78] block">Jam Biologis:</span>
+                        <span className="text-[10px] text-[#676A78] block">Auditori:</span>
                         <span className="font-bold text-[#17181C] text-[11px]">
-                          {modality.modules.PM_SKB_03.clusters.chronobiology.title}
+                          {modality.modules.PM_VAK_01.scores.A} Soal ({modality.modules.PM_VAK_01.percentages.A}%)
+                        </span>
+                      </div>
+                      <div className="p-2.5 rounded-xl bg-[#F9FAFD] border border-border/60">
+                        <span className="text-[10px] text-[#676A78] block">Kinestetik:</span>
+                        <span className="font-bold text-[#17181C] text-[11px]">
+                          {modality.modules.PM_VAK_01.scores.K} Soal ({modality.modules.PM_VAK_01.percentages.K}%)
                         </span>
                       </div>
                     </div>

@@ -1,23 +1,19 @@
 {
- "url": "http://localhost:5173",
- "at": "2026-10-28T12:38:39.498Z",
+ "url": "http://localhost:5173/admin/assessments",
+ "at": "2026-10-28T14:20:19.541Z",
  "allow": [],
  "viewports": [
   {
    "width": 1440,
    "height": 900,
    "load": "load",
-   "screens": 5,
+   "screens": 1,
    "filled": [
-    0.93,
-    1,
-    1,
-    1,
-    1
+    0.19
    ],
    "motion": {
-    "elements": 25,
-    "css": 25,
+    "elements": 0,
+    "css": 0,
     "transitions": 0,
     "scripted": 0,
     "videos": 0,
@@ -29,30 +25,22 @@
      "h": 900
     },
     "page": {
-     "height": 4141,
-     "screens": 4.6,
-     "words": 544,
-     "img": 9,
+     "height": 900,
+     "screens": 1,
+     "words": 35,
+     "img": 1,
      "video": 0,
      "canvas": 0,
-     "svg": 17,
-     "sections": 7,
+     "svg": 4,
+     "sections": 1,
      "horizontalOverflow": 0,
      "overflowCulprits": [],
      "uiFragments": 0,
      "uiAbuse": false,
-     "realPictures": 7,
+     "realPictures": 0,
      "videoCount": 0,
      "uiPictures": 0,
-     "pictureSamples": [
-      "hero-student.jpg",
-      "style-visual.jpg",
-      "subject-general.jpg",
-      "subject-quran.jpg",
-      "step-register.jpg",
-      "step-assessment.jpg",
-      "step-tutoring.jpg"
-     ],
+     "pictureSamples": [],
      "blendText": 0,
      "sideScrollers": 0,
      "brokenImages": [],
@@ -60,1424 +48,37 @@
      "videosNoPoster": 0
     },
     "hero": {
-     "text": "Les Privat Berbasis Karakter Belajar",
-     "words": 5,
-     "chars": 36,
-     "lines": 2,
-     "size": 67.8,
-     "vw": 4.7,
-     "font": "Plus Jakarta Sans Variable",
-     "weight": 800,
-     "tracking": -0.025,
-     "leading": 1.04,
-     "upper": false,
-     "italic": false,
-     "mono": false,
-     "align": "left",
-     "position": "left",
-     "widthRatio": 0.49,
-     "top": 140,
-     "tag": "h1",
-     "kind": "heading"
-    },
-    "h1": {
-     "text": "Les Privat Berbasis Karakter Belajar",
-     "words": 5,
-     "lines": 2,
-     "size": 67.8,
-     "font": "Plus Jakarta Sans Variable"
-    },
-    "headings": [
-     {
-      "text": "Les Privat Berbasis Karakter Belajar",
-      "words": 5,
-      "chars": 36,
-      "lines": 2,
-      "size": 67.8,
-      "vw": 4.7,
-      "font": "Plus Jakarta Sans Variable",
-      "weight": 800,
-      "tracking": -0.025,
-      "leading": 1.04,
-      "upper": false,
-      "italic": false,
-      "mono": false,
-      "align": "left",
-      "position": "left",
-      "widthRatio": 0.49,
-      "top": 140,
-      "tag": "h1",
-      "kind": "heading"
-     },
-     {
-      "text": "Tiga Modalitas Sensori Belajar",
-      "words": 4,
-      "chars": 30,
-      "lines": 1,
-      "size": 34,
-      "vw": 2.4,
-      "font": "Plus Jakarta Sans Variable",
-      "weight": 800,
-      "tracking": -0.025,
-      "leading": 1.15,
-      "upper": false,
-      "italic": false,
-      "mono": false,
-      "align": "left",
-      "position": "left",
-      "widthRatio": 0.49,
-      "top": 664,
-      "tag": "h2",
-      "kind": "heading"
-     },
-     {
-      "text": "Dua Rumpun Kurikulum Terpadu",
-      "words": 4,
-      "chars": 28,
-      "lines": 1,
-      "size": 34,
-      "vw": 2.4,
-      "font": "Plus Jakarta Sans Variable",
-      "weight": 800,
-      "tracking": -0.025,
-      "leading": 1.15,
-      "upper": false,
-      "italic": false,
-      "mono": false,
-      "align": "left",
-      "position": "left",
-      "widthRatio": 0.49,
-      "top": 1616,
-      "tag": "h2",
-      "kind": "heading"
-     },
-     {
-      "text": "Tiga Langkah Memulai Bimbingan",
-      "words": 4,
-      "chars": 30,
-      "lines": 1,
-      "size": 34,
-      "vw": 2.4,
-      "font": "Plus Jakarta Sans Variable",
-      "weight": 800,
-      "tracking": -0.025,
-      "leading": 1.15,
-      "upper": false,
-      "italic": false,
-      "mono": false,
-      "align": "left",
-      "position": "left",
-      "widthRatio": 0.49,
-      "top": 2413,
-      "tag": "h2",
-      "kind": "heading"
-     },
-     {
-      "text": "Pertanyaan yang Sering Diajukan",
-      "words": 4,
-      "chars": 31,
-      "lines": 1,
-      "size": 34,
-      "vw": 2.4,
-      "font": "Plus Jakarta Sans Variable",
-      "weight": 800,
-      "tracking": -0.025,
-      "leading": 1.15,
-      "upper": false,
-      "italic": false,
-      "mono": false,
-      "align": "left",
-      "position": "center",
-      "widthRatio": 0.49,
-      "top": 2981,
-      "tag": "h2",
-      "kind": "heading"
-     },
-     {
-      "text": "Mulai Bimbingan Sekarang",
-      "words": 3,
-      "chars": 24,
-      "lines": 1,
-      "size": 34,
-      "vw": 2.4,
-      "font": "Plus Jakarta Sans Variable",
-      "weight": 800,
-      "tracking": -0.025,
-      "leading": 1.15,
-      "upper": false,
-      "italic": false,
-      "mono": false,
-      "align": "left",
-      "position": "left",
-      "widthRatio": 0.45,
-      "top": 3746,
-      "tag": "h2",
-      "kind": "heading"
-     }
-    ],
-    "headingSummary": {
-     "count": 6,
-     "maxLines": 2,
-     "over2Lines": 0,
-     "statements": 0,
-     "centered": 0,
-     "medianWords": 4,
-     "mixedFontHeadings": 0
-    },
-    "type": {
-     "families": [
-      {
-       "family": "Plus Jakarta Sans Variable",
-       "share": 1,
-       "mono": false
-      }
-     ],
-     "familyCount": 1,
-     "sizes": [
-      14,
-      15,
-      16,
-      18,
-      24,
-      34,
-      68
-     ],
-     "sizeCount": 7,
-     "notLoaded": [],
-     "body": {
-      "font": "Plus Jakarta Sans Variable",
-      "size": 16,
-      "leading": 1.63,
-      "weight": 400,
-      "tracking": 0,
-      "contrast": 7.2
-     },
-     "measureChars": 88,
-     "max": {
-      "size": 67.8,
-      "vw": 4.7,
-      "font": "Plus Jakarta Sans Variable",
-      "text": "Les Privat Berbasis Karakter Belajar"
-     },
-     "monoShare": 0,
-     "monoProseShare": 0,
-     "monoFamilies": [],
-     "monoSamples": [],
-     "microLabels": 0,
-     "microLabelShare": 0,
-     "microSamples": [],
-     "upperShare": 0,
-     "centerShare": 0,
-     "smallText": 0
-    },
-    "eyebrows": [],
-    "numbered": [],
-    "color": {
-     "bodyBg": "#f4f6fa",
-     "bodyBgHsl": {
-      "h": 220,
-      "s": 0.37,
-      "l": 0.97
-     },
-     "dark": false,
-     "sectionBgs": [
-      {
-       "color": "#f8fafd",
-       "top": 0,
-       "hsl": {
-        "h": 216,
-        "s": 0.56,
-        "l": 0.98
-       }
-      },
-      {
-       "color": "#ffffff",
-       "top": 901,
-       "hsl": {
-        "h": 0,
-        "s": 0,
-        "l": 1
-       }
-      }
-     ],
-     "textColors": [
-      {
-       "color": "#475569",
-       "share": 0.47
-      },
-      {
-       "color": "#0f1d33",
-       "share": 0.2
-      },
-      {
-       "color": "#334155",
-       "share": 0.12
-      },
-      {
-       "color": "#1e293b",
-       "share": 0.06
-      },
-      {
-       "color": "#94a3b8",
-       "share": 0.05
-      }
-     ],
-     "button": {
-      "bg": "#0f1d33",
-      "hsl": {
-       "h": 217,
-       "s": 0.55,
-       "l": 0.13
-      },
-      "fg": "#ffffff"
-     },
-     "lowContrast": []
-    },
-    "buttons": {
-     "count": 6,
-     "inHero": 4,
-     "radius": 20,
-     "height": 47,
-     "withShadow": 0,
-     "withGradient": 0,
-     "mono": 0,
-     "upper": 0,
-     "heroLabels": [
-      "Daftar Siswa",
-      "Mulai Asesmen & Daftar Siswa",
-      "Pelajari Cara Kerja",
-      "Visual [V] Peta Konsep & Spasial"
-     ]
-    },
-    "surfaces": {
-     "shadowStatic": 0,
-     "shadowOverlay": 0,
-     "shadowSamples": [],
-     "gradients": 0,
-     "scrims": 0,
-     "gradientSamples": [],
-     "gradientText": 0,
-     "hairlines": 0,
-     "hairlineSamples": [],
-     "outlinedBoxes": 0,
-     "dashed": 0,
-     "blurred": 1,
-     "roundedBoxes": 16,
-     "boxRadius": 25,
-     "squareMedia": 0,
-     "roundedMedia": 7,
-     "mediaRadius": 20,
-     "textShadow": 0,
-     "cardRows": [
-      {
-       "count": 3,
-       "iconTopped": false,
-       "rounded": true,
-       "top": 2549
-      }
-     ]
-    },
-    "heroMedia": [
-     {
-      "type": "img",
-      "ratio": 0.09
-     }
-    ],
-    "nav": {
-     "links": 7,
-     "fixed": true,
-     "height": 64,
-     "floatingPill": false,
-     "blur": true
-    },
-    "fontsLoaded": [
-     "plus jakarta sans variable"
-    ]
-   },
-   "layout": {
-    "viewport": {
-     "w": 1440,
-     "h": 900
-    },
-    "pageH": 4141,
-    "margins": {
-     "left": 176,
-     "right": 196
-    },
-    "sections": [
-     {
-      "sel": "section.pt-8.sm:pt-14",
-      "tag": "section",
-      "top": 64,
-      "height": 488,
-      "words": 58,
-      "media": 1,
-      "middle": 53,
-      "heading": {
-       "text": "Les Privat Berbasis Karakter Belajar",
-       "size": 68,
-       "tag": "h1"
-      },
-      "left": 176,
-      "right": 176,
-      "textLeft": 176,
-      "textRight": 204,
-      "fullBleed": false,
-      "footer": false,
-      "hero": true,
-      "continues": true,
-      "pinned": false
-     },
-     {
-      "sel": "section#modalitas.scroll-mt-24.max-w-6xl",
-      "tag": "section",
-      "top": 664,
-      "height": 840,
-      "words": 152,
-      "media": 1,
-      "middle": 0,
-      "heading": {
-       "text": "Tiga Modalitas Sensori Belajar",
-       "size": 34,
-       "tag": "h2"
-      },
-      "left": 176,
-      "right": 230,
-      "textLeft": 176,
-      "textRight": 230,
-      "fullBleed": false,
-      "footer": false,
-      "hero": false,
-      "continues": true,
-      "pinned": false
-     },
-     {
-      "sel": "section#kurikulum.scroll-mt-24.max-w-6xl",
-      "tag": "section",
-      "top": 1616,
-      "height": 685,
-      "words": 132,
-      "media": 2,
-      "middle": 0,
-      "heading": {
-       "text": "Dua Rumpun Kurikulum Terpadu",
-       "size": 34,
-       "tag": "h2"
-      },
-      "left": 176,
-      "right": 204,
-      "textLeft": 176,
-      "textRight": 207,
-      "fullBleed": false,
-      "footer": false,
-      "hero": false,
-      "continues": true,
-      "pinned": false
-     },
-     {
-      "sel": "section#alur.scroll-mt-24.max-w-6xl",
-      "tag": "section",
-      "top": 2413,
-      "height": 455,
-      "words": 94,
-      "media": 3,
-      "middle": 64,
-      "heading": {
-       "text": "Tiga Langkah Memulai Bimbingan",
-       "size": 34,
-       "tag": "h2"
-      },
-      "left": 176,
-      "right": 196,
-      "textLeft": 176,
-      "textRight": 213,
-      "fullBleed": false,
-      "footer": false,
-      "hero": false,
-      "continues": true,
-      "pinned": false
-     },
-     {
-      "sel": "section#faq.scroll-mt-24.max-w-4xl",
-      "tag": "section",
-      "top": 2981,
-      "height": 605,
-      "words": 97,
-      "media": 0,
-      "middle": 0,
-      "heading": {
-       "text": "Pertanyaan yang Sering Diajukan",
-       "size": 34,
-       "tag": "h2"
-      },
-      "left": 304,
-      "right": 304,
-      "textLeft": 304,
-      "textRight": 441,
-      "fullBleed": false,
-      "footer": false,
-      "hero": false,
-      "continues": true,
-      "pinned": false
-     },
-     {
-      "sel": "section.max-w-6xl.mx-auto",
-      "tag": "section",
-      "top": 3698,
-      "height": 203,
-      "words": 33,
-      "media": 0,
-      "middle": 113,
-      "heading": {
-       "text": "Mulai Bimbingan Sekarang",
-       "size": 34,
-       "tag": "h2"
-      },
-      "left": 224,
-      "right": 291,
-      "textLeft": 224,
-      "textRight": 291,
-      "fullBleed": false,
-      "footer": false,
-      "hero": false,
-      "continues": true,
-      "pinned": false
-     },
-     {
-      "sel": "footer.bg-[#0F1D33].text-[#CBD5E1]",
-      "tag": "footer",
-      "top": 3981,
-      "height": 160,
-      "words": 21,
-      "media": 0,
-      "middle": 160,
-      "heading": null,
-      "left": 228,
-      "right": 176,
-      "textLeft": 228,
-      "textRight": 176,
-      "fullBleed": false,
-      "footer": true,
-      "hero": false,
-      "continues": false,
-      "pinned": false
-     }
-    ],
-    "gaps": [],
-    "h1s": [
-     {
-      "text": "Les Privat Berbasis Karakter Belajar",
-      "size": 68,
-      "top": 140,
-      "firstScreen": true
-     }
-    ],
-    "edgeText": [],
-    "edges": [
-     {
-      "x": 176,
-      "n": 8
-     },
-     {
-      "x": 196,
-      "n": 4
-     },
-     {
-      "x": 224,
-      "n": 2
-     },
-     {
-      "x": 304,
-      "n": 2
-     },
-     {
-      "x": 567,
-      "n": 2
-     },
-     {
-      "x": 764,
-      "n": 2
-     },
-     {
-      "x": 937,
-      "n": 2
-     },
-     {
-      "x": 208,
-      "n": 1
-     },
-     {
-      "x": 651,
-      "n": 1
-     },
-     {
-      "x": 675,
-      "n": 1
-     }
-    ],
-    "leftBlocks": 25,
-    "bodySize": 16,
-    "stage": false,
-    "explains": true,
-    "slivers": [],
-    "voidShare": 0.15,
-    "voidBox": {
-     "x": 900,
-     "y": 540,
-     "w": 540,
-     "h": 360
-    }
-   },
-   "app": null,
-   "consoleErrors": []
-  },
-  {
-   "width": 1024,
-   "height": 768,
-   "load": "load",
-   "screens": 6,
-   "filled": [
-    0.93,
-    1,
-    1,
-    1,
-    1,
-    1
-   ],
-   "motion": {
-    "elements": 25,
-    "css": 25,
-    "transitions": 0,
-    "scripted": 0,
-    "videos": 0,
-    "playingVideos": 0
-   },
-   "metrics": {
-    "viewport": {
-     "w": 1024,
-     "h": 768
-    },
-    "page": {
-     "height": 4252,
-     "screens": 5.5,
-     "words": 544,
-     "img": 9,
-     "video": 0,
-     "canvas": 0,
-     "svg": 17,
-     "sections": 7,
-     "horizontalOverflow": 0,
-     "overflowCulprits": [],
-     "uiFragments": 0,
-     "uiAbuse": false,
-     "realPictures": 7,
-     "videoCount": 0,
-     "uiPictures": 0,
-     "pictureSamples": [
-      "hero-student.jpg",
-      "style-visual.jpg",
-      "subject-general.jpg",
-      "subject-quran.jpg",
-      "step-register.jpg",
-      "step-assessment.jpg",
-      "step-tutoring.jpg"
-     ],
-     "blendText": 0,
-     "sideScrollers": 0,
-     "brokenImages": [],
-     "emoji": [],
-     "videosNoPoster": 0
-    },
-    "hero": {
-     "text": "Les Privat Berbasis Karakter Belajar",
-     "words": 5,
-     "chars": 36,
-     "lines": 2,
-     "size": 52.9,
-     "vw": 5.2,
-     "font": "Plus Jakarta Sans Variable",
-     "weight": 800,
-     "tracking": -0.025,
-     "leading": 1.04,
-     "upper": false,
-     "italic": false,
-     "mono": false,
-     "align": "left",
-     "position": "left",
-     "widthRatio": 0.61,
-     "top": 157,
-     "tag": "h1",
-     "kind": "heading"
-    },
-    "h1": {
-     "text": "Les Privat Berbasis Karakter Belajar",
-     "words": 5,
-     "lines": 2,
-     "size": 52.9,
-     "font": "Plus Jakarta Sans Variable"
-    },
-    "headings": [
-     {
-      "text": "Les Privat Berbasis Karakter Belajar",
-      "words": 5,
-      "chars": 36,
-      "lines": 2,
-      "size": 52.9,
-      "vw": 5.2,
-      "font": "Plus Jakarta Sans Variable",
-      "weight": 800,
-      "tracking": -0.025,
-      "leading": 1.04,
-      "upper": false,
-      "italic": false,
-      "mono": false,
-      "align": "left",
-      "position": "left",
-      "widthRatio": 0.61,
-      "top": 157,
-      "tag": "h1",
-      "kind": "heading"
-     },
-     {
-      "text": "Tiga Modalitas Sensori Belajar",
-      "words": 4,
-      "chars": 30,
-      "lines": 1,
-      "size": 28.8,
-      "vw": 2.8,
-      "font": "Plus Jakarta Sans Variable",
-      "weight": 800,
-      "tracking": -0.025,
-      "leading": 1.15,
-      "upper": false,
-      "italic": false,
-      "mono": false,
-      "align": "left",
-      "position": "left",
-      "widthRatio": 0.69,
-      "top": 664,
-      "tag": "h2",
-      "kind": "heading"
-     },
-     {
-      "text": "Dua Rumpun Kurikulum Terpadu",
-      "words": 4,
-      "chars": 28,
-      "lines": 1,
-      "size": 28.8,
-      "vw": 2.8,
-      "font": "Plus Jakarta Sans Variable",
-      "weight": 800,
-      "tracking": -0.025,
-      "leading": 1.15,
-      "upper": false,
-      "italic": false,
-      "mono": false,
-      "align": "left",
-      "position": "left",
-      "widthRatio": 0.69,
-      "top": 1636,
-      "tag": "h2",
-      "kind": "heading"
-     },
-     {
-      "text": "Tiga Langkah Memulai Bimbingan",
-      "words": 4,
-      "chars": 30,
-      "lines": 1,
-      "size": 28.8,
-      "vw": 2.8,
-      "font": "Plus Jakarta Sans Variable",
-      "weight": 800,
-      "tracking": -0.025,
-      "leading": 1.15,
-      "upper": false,
-      "italic": false,
-      "mono": false,
-      "align": "left",
-      "position": "left",
-      "widthRatio": 0.69,
-      "top": 2493,
-      "tag": "h2",
-      "kind": "heading"
-     },
-     {
-      "text": "Pertanyaan yang Sering Diajukan",
-      "words": 4,
-      "chars": 31,
-      "lines": 1,
-      "size": 28.8,
-      "vw": 2.8,
-      "font": "Plus Jakarta Sans Variable",
-      "weight": 800,
-      "tracking": -0.025,
-      "leading": 1.15,
-      "upper": false,
-      "italic": false,
-      "mono": false,
-      "align": "left",
-      "position": "center",
-      "widthRatio": 0.69,
-      "top": 3078,
-      "tag": "h2",
-      "kind": "heading"
-     },
-     {
-      "text": "Mulai Bimbingan Sekarang",
-      "words": 3,
-      "chars": 24,
-      "lines": 1,
-      "size": 28.8,
-      "vw": 2.8,
-      "font": "Plus Jakarta Sans Variable",
-      "weight": 800,
-      "tracking": -0.025,
-      "leading": 1.15,
-      "upper": false,
-      "italic": false,
-      "mono": false,
-      "align": "left",
-      "position": "left",
-      "widthRatio": 0.55,
-      "top": 3837,
-      "tag": "h2",
-      "kind": "heading"
-     }
-    ],
-    "headingSummary": {
-     "count": 6,
-     "maxLines": 2,
-     "over2Lines": 0,
-     "statements": 0,
-     "centered": 0,
-     "medianWords": 4,
-     "mixedFontHeadings": 0
-    },
-    "type": {
-     "families": [
-      {
-       "family": "Plus Jakarta Sans Variable",
-       "share": 1,
-       "mono": false
-      }
-     ],
-     "familyCount": 1,
-     "sizes": [
-      14,
-      15,
-      16,
-      18,
-      24,
-      29,
-      53
-     ],
-     "sizeCount": 7,
-     "notLoaded": [],
-     "body": {
-      "font": "Plus Jakarta Sans Variable",
-      "size": 16,
-      "leading": 1.63,
-      "weight": 400,
-      "tracking": 0,
-      "contrast": 7.2
-     },
-     "measureChars": 88,
-     "max": {
-      "size": 52.9,
-      "vw": 5.2,
-      "font": "Plus Jakarta Sans Variable",
-      "text": "Les Privat Berbasis Karakter Belajar"
-     },
-     "monoShare": 0,
-     "monoProseShare": 0,
-     "monoFamilies": [],
-     "monoSamples": [],
-     "microLabels": 0,
-     "microLabelShare": 0,
-     "microSamples": [],
-     "upperShare": 0,
-     "centerShare": 0,
-     "smallText": 0
-    },
-    "eyebrows": [],
-    "numbered": [],
-    "color": {
-     "bodyBg": "#f4f6fa",
-     "bodyBgHsl": {
-      "h": 220,
-      "s": 0.37,
-      "l": 0.97
-     },
-     "dark": false,
-     "sectionBgs": [
-      {
-       "color": "#f8fafd",
-       "top": 0,
-       "hsl": {
-        "h": 216,
-        "s": 0.56,
-        "l": 0.98
-       }
-      },
-      {
-       "color": "#ffffff",
-       "top": 895,
-       "hsl": {
-        "h": 0,
-        "s": 0,
-        "l": 1
-       }
-      }
-     ],
-     "textColors": [
-      {
-       "color": "#475569",
-       "share": 0.47
-      },
-      {
-       "color": "#0f1d33",
-       "share": 0.2
-      },
-      {
-       "color": "#334155",
-       "share": 0.12
-      },
-      {
-       "color": "#1e293b",
-       "share": 0.06
-      },
-      {
-       "color": "#94a3b8",
-       "share": 0.05
-      }
-     ],
-     "button": {
-      "bg": "#0f1d33",
-      "hsl": {
-       "h": 217,
-       "s": 0.55,
-       "l": 0.13
-      },
-      "fg": "#ffffff"
-     },
-     "lowContrast": []
-    },
-    "buttons": {
-     "count": 6,
-     "inHero": 3,
-     "radius": 20,
-     "height": 47,
-     "withShadow": 0,
-     "withGradient": 0,
-     "mono": 0,
-     "upper": 0,
-     "heroLabels": [
-      "Daftar Siswa",
-      "Mulai Asesmen & Daftar Siswa",
-      "Pelajari Cara Kerja"
-     ]
-    },
-    "surfaces": {
-     "shadowStatic": 0,
-     "shadowOverlay": 0,
-     "shadowSamples": [],
-     "gradients": 0,
-     "scrims": 0,
-     "gradientSamples": [],
-     "gradientText": 0,
-     "hairlines": 0,
-     "hairlineSamples": [],
-     "outlinedBoxes": 0,
-     "dashed": 0,
-     "blurred": 1,
-     "roundedBoxes": 16,
-     "boxRadius": 25,
-     "squareMedia": 0,
-     "roundedMedia": 7,
-     "mediaRadius": 20,
-     "textShadow": 0,
-     "cardRows": [
-      {
-       "count": 3,
-       "iconTopped": false,
-       "rounded": true,
-       "top": 2623
-      }
-     ]
-    },
-    "heroMedia": [
-     {
-      "type": "img",
-      "ratio": 0.13
-     }
-    ],
-    "nav": {
-     "links": 7,
-     "fixed": true,
-     "height": 64,
-     "floatingPill": false,
-     "blur": true
-    },
-    "fontsLoaded": [
-     "plus jakarta sans variable"
-    ]
-   },
-   "layout": {
-    "viewport": {
-     "w": 1024,
-     "h": 768
-    },
-    "pageH": 4252,
-    "margins": {
-     "left": 32,
-     "right": 52
-    },
-    "sections": [
-     {
-      "sel": "section.pt-8.sm:pt-14",
-      "tag": "section",
-      "top": 64,
-      "height": 488,
-      "words": 58,
-      "media": 1,
-      "middle": 47,
-      "heading": {
-       "text": "Les Privat Berbasis Karakter Belajar",
-       "size": 53,
-       "tag": "h1"
-      },
-      "left": 32,
-      "right": 32,
-      "textLeft": 32,
-      "textRight": 60,
-      "fullBleed": false,
-      "footer": false,
-      "hero": true,
-      "continues": true,
-      "pinned": false
-     },
-     {
-      "sel": "section#modalitas.scroll-mt-24.max-w-6xl",
-      "tag": "section",
-      "top": 664,
-      "height": 860,
-      "words": 152,
-      "media": 1,
-      "middle": 0,
-      "heading": {
-       "text": "Tiga Modalitas Sensori Belajar",
-       "size": 29,
-       "tag": "h2"
-      },
-      "left": 32,
-      "right": 81,
-      "textLeft": 32,
-      "textRight": 81,
-      "fullBleed": false,
-      "footer": false,
-      "hero": false,
-      "continues": true,
-      "pinned": false
-     },
-     {
-      "sel": "section#kurikulum.scroll-mt-24.max-w-6xl",
-      "tag": "section",
-      "top": 1636,
-      "height": 745,
-      "words": 132,
-      "media": 2,
-      "middle": 0,
-      "heading": {
-       "text": "Dua Rumpun Kurikulum Terpadu",
-       "size": 29,
-       "tag": "h2"
-      },
-      "left": 32,
-      "right": 60,
-      "textLeft": 32,
-      "textRight": 72,
-      "fullBleed": false,
-      "footer": false,
-      "hero": false,
-      "continues": true,
-      "pinned": false
-     },
-     {
-      "sel": "section#alur.scroll-mt-24.max-w-6xl",
-      "tag": "section",
-      "top": 2493,
-      "height": 472,
-      "words": 94,
-      "media": 3,
-      "middle": 10,
-      "heading": {
-       "text": "Tiga Langkah Memulai Bimbingan",
-       "size": 29,
-       "tag": "h2"
-      },
-      "left": 32,
-      "right": 52,
-      "textLeft": 32,
-      "textRight": 54,
-      "fullBleed": false,
-      "footer": false,
-      "hero": false,
-      "continues": true,
-      "pinned": false
-     },
-     {
-      "sel": "section#faq.scroll-mt-24.max-w-4xl",
-      "tag": "section",
-      "top": 3078,
-      "height": 599,
-      "words": 97,
-      "media": 0,
-      "middle": 0,
-      "heading": {
-       "text": "Pertanyaan yang Sering Diajukan",
-       "size": 29,
-       "tag": "h2"
-      },
-      "left": 96,
-      "right": 96,
-      "textLeft": 96,
-      "textRight": 233,
-      "fullBleed": false,
-      "footer": false,
-      "hero": false,
-      "continues": true,
-      "pinned": false
-     },
-     {
-      "sel": "section.max-w-6xl.mx-auto",
-      "tag": "section",
-      "top": 3789,
-      "height": 223,
-      "words": 33,
-      "media": 0,
-      "middle": 89,
-      "heading": {
-       "text": "Mulai Bimbingan Sekarang",
-       "size": 29,
-       "tag": "h2"
-      },
-      "left": 80,
-      "right": 126,
-      "textLeft": 80,
-      "textRight": 126,
-      "fullBleed": false,
-      "footer": false,
-      "hero": false,
-      "continues": true,
-      "pinned": false
-     },
-     {
-      "sel": "footer.bg-[#0F1D33].text-[#CBD5E1]",
-      "tag": "footer",
-      "top": 4092,
-      "height": 160,
-      "words": 21,
-      "media": 0,
-      "middle": 93,
-      "heading": null,
-      "left": 84,
-      "right": 32,
-      "textLeft": 84,
-      "textRight": 32,
-      "fullBleed": false,
-      "footer": true,
-      "hero": false,
-      "continues": false,
-      "pinned": false
-     }
-    ],
-    "gaps": [],
-    "h1s": [
-     {
-      "text": "Les Privat Berbasis Karakter Belajar",
-      "size": 53,
-      "top": 157,
-      "firstScreen": true
-     }
-    ],
-    "edgeText": [],
-    "edges": [
-     {
-      "x": 32,
-      "n": 8
-     },
-     {
-      "x": 52,
-      "n": 4
-     },
-     {
-      "x": 80,
-      "n": 2
-     },
-     {
-      "x": 96,
-      "n": 2
-     },
-     {
-      "x": 380,
-      "n": 2
-     },
-     {
-      "x": 556,
-      "n": 2
-     },
-     {
-      "x": 708,
-      "n": 2
-     },
-     {
-      "x": 64,
-      "n": 1
-     },
-     {
-      "x": 454,
-      "n": 1
-     },
-     {
-      "x": 478,
-      "n": 1
-     }
-    ],
-    "leftBlocks": 25,
-    "bodySize": 16,
-    "stage": false,
-    "explains": false,
-    "slivers": [],
-    "voidShare": 0.09,
-    "voidBox": {
-     "x": 683,
-     "y": 563,
-     "w": 341,
-     "h": 205
-    }
-   },
-   "app": null,
-   "consoleErrors": []
-  },
-  {
-   "width": 768,
-   "height": 1024,
-   "load": "load",
-   "screens": 5,
-   "filled": [
-    0.91,
-    1,
-    1,
-    1,
-    1
-   ],
-   "motion": {
-    "elements": 25,
-    "css": 25,
-    "transitions": 0,
-    "scripted": 0,
-    "videos": 0,
-    "playingVideos": 0
-   },
-   "metrics": {
-    "viewport": {
-     "w": 768,
-     "h": 1024
-    },
-    "page": {
-     "height": 4966,
-     "screens": 4.8,
-     "words": 544,
-     "img": 9,
-     "video": 0,
-     "canvas": 0,
-     "svg": 17,
-     "sections": 7,
-     "horizontalOverflow": 0,
-     "overflowCulprits": [],
-     "uiFragments": 0,
-     "uiAbuse": false,
-     "realPictures": 7,
-     "videoCount": 0,
-     "uiPictures": 0,
-     "pictureSamples": [
-      "hero-student.jpg",
-      "style-visual.jpg",
-      "subject-general.jpg",
-      "subject-quran.jpg",
-      "step-register.jpg",
-      "step-assessment.jpg",
-      "step-tutoring.jpg"
-     ],
-     "blendText": 0,
-     "sideScrollers": 0,
-     "brokenImages": [],
-     "emoji": [],
-     "videosNoPoster": 0
-    },
-    "hero": {
-     "text": "Les Privat Berbasis Karakter Belajar",
-     "words": 5,
-     "chars": 36,
+     "text": "Masuk ke Akun Anda",
+     "words": 4,
+     "chars": 18,
      "lines": 1,
-     "size": 43.6,
-     "vw": 5.7,
+     "size": 20,
+     "vw": 1.4,
      "font": "Plus Jakarta Sans Variable",
      "weight": 800,
-     "tracking": -0.025,
-     "leading": 1.04,
-     "upper": false,
-     "italic": false,
-     "mono": false,
-     "align": "left",
-     "position": "center",
-     "widthRatio": 0.94,
-     "top": 120,
+     "tracking": -0.02,
+     "leading": 1.4,
+     "top": 306,
      "tag": "h1",
-     "kind": "heading"
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
     },
     "h1": {
-     "text": "Les Privat Berbasis Karakter Belajar",
-     "words": 5,
+     "text": "Masuk ke Akun Anda",
+     "words": 4,
      "lines": 1,
-     "size": 43.6,
+     "size": 20,
      "font": "Plus Jakarta Sans Variable"
     },
-    "headings": [
-     {
-      "text": "Les Privat Berbasis Karakter Belajar",
-      "words": 5,
-      "chars": 36,
-      "lines": 1,
-      "size": 43.6,
-      "vw": 5.7,
-      "font": "Plus Jakarta Sans Variable",
-      "weight": 800,
-      "tracking": -0.025,
-      "leading": 1.04,
-      "upper": false,
-      "italic": false,
-      "mono": false,
-      "align": "left",
-      "position": "center",
-      "widthRatio": 0.94,
-      "top": 120,
-      "tag": "h1",
-      "kind": "heading"
-     },
-     {
-      "text": "Tiga Modalitas Sensori Belajar",
-      "words": 4,
-      "chars": 30,
-      "lines": 1,
-      "size": 26,
-      "vw": 3.4,
-      "font": "Plus Jakarta Sans Variable",
-      "weight": 800,
-      "tracking": -0.025,
-      "leading": 1.15,
-      "upper": false,
-      "italic": false,
-      "mono": false,
-      "align": "left",
-      "position": "center",
-      "widthRatio": 0.91,
-      "top": 935,
-      "tag": "h2",
-      "kind": "heading"
-     },
-     {
-      "text": "Dua Rumpun Kurikulum Terpadu",
-      "words": 4,
-      "chars": 28,
-      "lines": 1,
-      "size": 26,
-      "vw": 3.4,
-      "font": "Plus Jakarta Sans Variable",
-      "weight": 800,
-      "tracking": -0.025,
-      "leading": 1.15,
-      "upper": false,
-      "italic": false,
-      "mono": false,
-      "align": "left",
-      "position": "center",
-      "widthRatio": 0.91,
-      "top": 2194,
-      "tag": "h2",
-      "kind": "heading"
-     },
-     {
-      "text": "Tiga Langkah Memulai Bimbingan",
-      "words": 4,
-      "chars": 30,
-      "lines": 1,
-      "size": 26,
-      "vw": 3.4,
-      "font": "Plus Jakarta Sans Variable",
-      "weight": 800,
-      "tracking": -0.025,
-      "leading": 1.15,
-      "upper": false,
-      "italic": false,
-      "mono": false,
-      "align": "left",
-      "position": "center",
-      "widthRatio": 0.91,
-      "top": 3140,
-      "tag": "h2",
-      "kind": "heading"
-     },
-     {
-      "text": "Pertanyaan yang Sering Diajukan",
-      "words": 4,
-      "chars": 31,
-      "lines": 1,
-      "size": 26,
-      "vw": 3.4,
-      "font": "Plus Jakarta Sans Variable",
-      "weight": 800,
-      "tracking": -0.025,
-      "leading": 1.15,
-      "upper": false,
-      "italic": false,
-      "mono": false,
-      "align": "left",
-      "position": "center",
-      "widthRatio": 0.91,
-      "top": 3772,
-      "tag": "h2",
-      "kind": "heading"
-     },
-     {
-      "text": "Mulai Bimbingan Sekarang",
-      "words": 3,
-      "chars": 24,
-      "lines": 1,
-      "size": 26,
-      "vw": 3.4,
-      "font": "Plus Jakarta Sans Variable",
-      "weight": 800,
-      "tracking": -0.025,
-      "leading": 1.15,
-      "upper": false,
-      "italic": false,
-      "mono": false,
-      "align": "left",
-      "position": "left",
-      "widthRatio": 0.53,
-      "top": 4528,
-      "tag": "h2",
-      "kind": "heading"
-     }
-    ],
+    "headings": [],
     "headingSummary": {
-     "count": 6,
-     "maxLines": 1,
+     "count": 0,
+     "maxLines": 0,
      "over2Lines": 0,
      "statements": 0,
      "centered": 0,
-     "medianWords": 4,
+     "medianWords": null,
      "mixedFontHeadings": 0
     },
     "type": {
@@ -1490,42 +91,35 @@
      ],
      "familyCount": 1,
      "sizes": [
+      10,
+      11,
+      12,
       14,
-      15,
-      16,
-      17,
-      18,
       20,
-      26,
-      44
+      24
      ],
-     "sizeCount": 8,
+     "sizeCount": 6,
      "notLoaded": [],
-     "body": {
-      "font": "Plus Jakarta Sans Variable",
-      "size": 16,
-      "leading": 1.63,
-      "weight": 400,
-      "tracking": 0,
-      "contrast": 7.2
-     },
-     "measureChars": 88,
+     "body": null,
+     "measureChars": null,
      "max": {
-      "size": 43.6,
-      "vw": 5.7,
+      "size": 24,
+      "vw": 1.7,
       "font": "Plus Jakarta Sans Variable",
-      "text": "Les Privat Berbasis Karakter Belajar"
+      "text": "ZEINBOX"
      },
      "monoShare": 0,
      "monoProseShare": 0,
      "monoFamilies": [],
      "monoSamples": [],
-     "microLabels": 0,
-     "microLabelShare": 0,
-     "microSamples": [],
-     "upperShare": 0,
-     "centerShare": 0,
-     "smallText": 0
+     "microLabels": 1,
+     "microLabelShare": 0.02,
+     "microSamples": [
+      "atau"
+     ],
+     "upperShare": 0.16,
+     "centerShare": 0.82,
+     "smallText": 5
     },
     "eyebrows": [],
     "numbered": [],
@@ -1539,1031 +133,242 @@
      "dark": false,
      "sectionBgs": [
       {
-       "color": "#f8fafd",
+       "color": "#f4f6fa",
        "top": 0,
        "hsl": {
-        "h": 216,
-        "s": 0.56,
-        "l": 0.98
-       }
-      },
-      {
-       "color": "#e2e8f0",
-       "top": 443,
-       "hsl": {
-        "h": 214,
-        "s": 0.32,
-        "l": 0.91
-       }
-      },
-      {
-       "color": "#ffffff",
-       "top": 1163,
-       "hsl": {
-        "h": 0,
-        "s": 0,
-        "l": 1
+        "h": 220,
+        "s": 0.37,
+        "l": 0.97
        }
       }
      ],
      "textColors": [
       {
-       "color": "#475569",
-       "share": 0.47
+       "color": "#676a78",
+       "share": 0.48
       },
       {
-       "color": "#0f1d33",
+       "color": "#1d1d24",
        "share": 0.2
       },
       {
-       "color": "#334155",
+       "color": "#183058",
+       "share": 0.13
+      },
+      {
+       "color": "#0f1d33",
        "share": 0.12
       },
       {
-       "color": "#1e293b",
-       "share": 0.06
-      },
-      {
-       "color": "#94a3b8",
-       "share": 0.05
-      }
-     ],
-     "button": {
-      "bg": "#0f1d33",
-      "hsl": {
-       "h": 217,
-       "s": 0.55,
-       "l": 0.13
-      },
-      "fg": "#ffffff"
-     },
-     "lowContrast": []
-    },
-    "buttons": {
-     "count": 6,
-     "inHero": 3,
-     "radius": 20,
-     "height": 47,
-     "withShadow": 0,
-     "withGradient": 0,
-     "mono": 0,
-     "upper": 0,
-     "heroLabels": [
-      "Daftar Siswa",
-      "Mulai Asesmen & Daftar Siswa",
-      "Pelajari Cara Kerja"
-     ]
-    },
-    "surfaces": {
-     "shadowStatic": 0,
-     "shadowOverlay": 0,
-     "shadowSamples": [],
-     "gradients": 0,
-     "scrims": 0,
-     "gradientSamples": [],
-     "gradientText": 0,
-     "hairlines": 0,
-     "hairlineSamples": [],
-     "outlinedBoxes": 0,
-     "dashed": 0,
-     "blurred": 1,
-     "roundedBoxes": 16,
-     "boxRadius": 25,
-     "squareMedia": 0,
-     "roundedMedia": 4,
-     "mediaRadius": 25,
-     "textShadow": 0,
-     "cardRows": [
-      {
-       "count": 3,
-       "iconTopped": false,
-       "rounded": true,
-       "top": 3266
-      }
-     ]
-    },
-    "heroMedia": [
-     {
-      "type": "img",
-      "ratio": 0.29
-     }
-    ],
-    "nav": {
-     "links": 7,
-     "fixed": true,
-     "height": 64,
-     "floatingPill": false,
-     "blur": true
-    },
-    "fontsLoaded": [
-     "plus jakarta sans variable"
-    ]
-   },
-   "layout": {
-    "viewport": {
-     "w": 768,
-     "h": 1024
-    },
-    "pageH": 4966,
-    "margins": {
-     "left": 24,
-     "right": 24
-    },
-    "sections": [
-     {
-      "sel": "section.pt-8.sm:pt-14",
-      "tag": "section",
-      "top": 64,
-      "height": 759,
-      "words": 58,
-      "media": 1,
-      "middle": 0,
-      "heading": {
-       "text": "Les Privat Berbasis Karakter Belajar",
-       "size": 44,
-       "tag": "h1"
-      },
-      "left": 24,
-      "right": 24,
-      "textLeft": 24,
-      "textRight": 38,
-      "fullBleed": false,
-      "footer": false,
-      "hero": true,
-      "continues": true,
-      "pinned": false
-     },
-     {
-      "sel": "section#modalitas.scroll-mt-24.max-w-6xl",
-      "tag": "section",
-      "top": 935,
-      "height": 1148,
-      "words": 152,
-      "media": 1,
-      "middle": 0,
-      "heading": {
-       "text": "Tiga Modalitas Sensori Belajar",
-       "size": 26,
-       "tag": "h2"
-      },
-      "left": 24,
-      "right": 56,
-      "textLeft": 24,
-      "textRight": 71,
-      "fullBleed": false,
-      "footer": false,
-      "hero": false,
-      "continues": true,
-      "pinned": false
-     },
-     {
-      "sel": "section#kurikulum.scroll-mt-24.max-w-6xl",
-      "tag": "section",
-      "top": 2194,
-      "height": 834,
-      "words": 132,
-      "media": 2,
-      "middle": 0,
-      "heading": {
-       "text": "Dua Rumpun Kurikulum Terpadu",
-       "size": 26,
-       "tag": "h2"
-      },
-      "left": 24,
-      "right": 52,
-      "textLeft": 24,
-      "textRight": 55,
-      "fullBleed": false,
-      "footer": false,
-      "hero": false,
-      "continues": true,
-      "pinned": false
-     },
-     {
-      "sel": "section#alur.scroll-mt-24.max-w-6xl",
-      "tag": "section",
-      "top": 3140,
-      "height": 520,
-      "words": 94,
-      "media": 3,
-      "middle": 0,
-      "heading": {
-       "text": "Tiga Langkah Memulai Bimbingan",
-       "size": 26,
-       "tag": "h2"
-      },
-      "left": 24,
-      "right": 44,
-      "textLeft": 24,
-      "textRight": 49,
-      "fullBleed": false,
-      "footer": false,
-      "hero": false,
-      "continues": true,
-      "pinned": false
-     },
-     {
-      "sel": "section#faq.scroll-mt-24.max-w-4xl",
-      "tag": "section",
-      "top": 3772,
-      "height": 596,
-      "words": 97,
-      "media": 0,
-      "middle": 0,
-      "heading": {
-       "text": "Pertanyaan yang Sering Diajukan",
-       "size": 26,
-       "tag": "h2"
-      },
-      "left": 24,
-      "right": 24,
-      "textLeft": 24,
-      "textRight": 49,
-      "fullBleed": false,
-      "footer": false,
-      "hero": false,
-      "continues": true,
-      "pinned": false
-     },
-     {
-      "sel": "section.max-w-6xl.mx-auto",
-      "tag": "section",
-      "top": 4480,
-      "height": 246,
-      "words": 33,
-      "media": 0,
-      "middle": 62,
-      "heading": {
-       "text": "Mulai Bimbingan Sekarang",
-       "size": 26,
-       "tag": "h2"
-      },
-      "left": 72,
-      "right": 133,
-      "textLeft": 72,
-      "textRight": 133,
-      "fullBleed": false,
-      "footer": false,
-      "hero": false,
-      "continues": true,
-      "pinned": false
-     },
-     {
-      "sel": "footer.bg-[#0F1D33].text-[#CBD5E1]",
-      "tag": "footer",
-      "top": 4806,
-      "height": 160,
-      "words": 21,
-      "media": 0,
-      "middle": 60,
-      "heading": null,
-      "left": 76,
-      "right": 24,
-      "textLeft": 76,
-      "textRight": 24,
-      "fullBleed": false,
-      "footer": true,
-      "hero": false,
-      "continues": false,
-      "pinned": false
-     }
-    ],
-    "gaps": [],
-    "h1s": [
-     {
-      "text": "Les Privat Berbasis Karakter Belajar",
-      "size": 44,
-      "top": 120,
-      "firstScreen": true
-     }
-    ],
-    "edgeText": [],
-    "edges": [
-     {
-      "x": 24,
-      "n": 10
-     },
-     {
-      "x": 44,
-      "n": 4
-     },
-     {
-      "x": 72,
-      "n": 3
-     },
-     {
-      "x": 56,
-      "n": 2
-     },
-     {
-      "x": 292,
-      "n": 2
-     },
-     {
-      "x": 428,
-      "n": 2
-     },
-     {
-      "x": 540,
-      "n": 2
-     }
-    ],
-    "leftBlocks": 25,
-    "bodySize": 16,
-    "stage": false,
-    "explains": false,
-    "slivers": [],
-    "voidShare": 0,
-    "voidBox": null
-   },
-   "app": null,
-   "consoleErrors": []
-  },
-  {
-   "width": 390,
-   "height": 844,
-   "load": "load",
-   "screens": 9,
-   "filled": [
-    0.94,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1
-   ],
-   "motion": {
-    "elements": 25,
-    "css": 25,
-    "transitions": 0,
-    "scripted": 0,
-    "videos": 0,
-    "playingVideos": 0
-   },
-   "metrics": {
-    "viewport": {
-     "w": 390,
-     "h": 844
-    },
-    "page": {
-     "height": 7250,
-     "screens": 8.6,
-     "words": 538,
-     "img": 9,
-     "video": 0,
-     "canvas": 0,
-     "svg": 17,
-     "sections": 7,
-     "horizontalOverflow": 0,
-     "overflowCulprits": [],
-     "uiFragments": 0,
-     "uiAbuse": false,
-     "realPictures": 7,
-     "videoCount": 0,
-     "uiPictures": 0,
-     "pictureSamples": [
-      "hero-student.jpg",
-      "style-visual.jpg",
-      "subject-general.jpg",
-      "subject-quran.jpg",
-      "step-register.jpg",
-      "step-assessment.jpg",
-      "step-tutoring.jpg"
-     ],
-     "blendText": 0,
-     "sideScrollers": 0,
-     "brokenImages": [],
-     "emoji": [],
-     "videosNoPoster": 0
-    },
-    "hero": {
-     "text": "Les Privat Berbasis Karakter Belajar",
-     "words": 5,
-     "chars": 36,
-     "lines": 2,
-     "size": 36,
-     "vw": 9.2,
-     "font": "Plus Jakarta Sans Variable",
-     "weight": 800,
-     "tracking": -0.025,
-     "leading": 1.04,
-     "upper": false,
-     "italic": false,
-     "mono": false,
-     "align": "left",
-     "position": "center",
-     "widthRatio": 0.92,
-     "top": 96,
-     "tag": "h1",
-     "kind": "heading"
-    },
-    "h1": {
-     "text": "Les Privat Berbasis Karakter Belajar",
-     "words": 5,
-     "lines": 2,
-     "size": 36,
-     "font": "Plus Jakarta Sans Variable"
-    },
-    "headings": [
-     {
-      "text": "Les Privat Berbasis Karakter Belajar",
-      "words": 5,
-      "chars": 36,
-      "lines": 2,
-      "size": 36,
-      "vw": 9.2,
-      "font": "Plus Jakarta Sans Variable",
-      "weight": 800,
-      "tracking": -0.025,
-      "leading": 1.04,
-      "upper": false,
-      "italic": false,
-      "mono": false,
-      "align": "left",
-      "position": "center",
-      "widthRatio": 0.92,
-      "top": 96,
-      "tag": "h1",
-      "kind": "heading"
-     },
-     {
-      "text": "Tiga Modalitas Sensori Belajar",
-      "words": 4,
-      "chars": 30,
-      "lines": 1,
-      "size": 26,
-      "vw": 6.7,
-      "font": "Plus Jakarta Sans Variable",
-      "weight": 800,
-      "tracking": -0.025,
-      "leading": 1.15,
-      "upper": false,
-      "italic": false,
-      "mono": false,
-      "align": "left",
-      "position": "center",
-      "widthRatio": 0.92,
-      "top": 1043,
-      "tag": "h2",
-      "kind": "heading"
-     },
-     {
-      "text": "Dua Rumpun Kurikulum Terpadu",
-      "words": 4,
-      "chars": 28,
-      "lines": 2,
-      "size": 26,
-      "vw": 6.7,
-      "font": "Plus Jakarta Sans Variable",
-      "weight": 800,
-      "tracking": -0.025,
-      "leading": 1.15,
-      "upper": false,
-      "italic": false,
-      "mono": false,
-      "align": "left",
-      "position": "center",
-      "widthRatio": 0.92,
-      "top": 2704,
-      "tag": "h2",
-      "kind": "heading"
-     },
-     {
-      "text": "Tiga Langkah Memulai Bimbingan",
-      "words": 4,
-      "chars": 30,
-      "lines": 2,
-      "size": 26,
-      "vw": 6.7,
-      "font": "Plus Jakarta Sans Variable",
-      "weight": 800,
-      "tracking": -0.025,
-      "leading": 1.15,
-      "upper": false,
-      "italic": false,
-      "mono": false,
-      "align": "left",
-      "position": "center",
-      "widthRatio": 0.92,
-      "top": 4315,
-      "tag": "h2",
-      "kind": "heading"
-     },
-     {
-      "text": "Pertanyaan yang Sering Diajukan",
-      "words": 4,
-      "chars": 31,
-      "lines": 2,
-      "size": 26,
-      "vw": 6.7,
-      "font": "Plus Jakarta Sans Variable",
-      "weight": 800,
-      "tracking": -0.025,
-      "leading": 1.15,
-      "upper": false,
-      "italic": false,
-      "mono": false,
-      "align": "left",
-      "position": "center",
-      "widthRatio": 0.92,
-      "top": 5586,
-      "tag": "h2",
-      "kind": "heading"
-     },
-     {
-      "text": "Mulai Bimbingan Sekarang",
-      "words": 3,
-      "chars": 24,
-      "lines": 2,
-      "size": 26,
-      "vw": 6.7,
-      "font": "Plus Jakarta Sans Variable",
-      "weight": 800,
-      "tracking": -0.025,
-      "leading": 1.15,
-      "upper": false,
-      "italic": false,
-      "mono": false,
-      "align": "left",
-      "position": "center",
-      "widthRatio": 0.77,
-      "top": 6530,
-      "tag": "h2",
-      "kind": "heading"
-     }
-    ],
-    "headingSummary": {
-     "count": 6,
-     "maxLines": 2,
-     "over2Lines": 0,
-     "statements": 0,
-     "centered": 0,
-     "medianWords": 4,
-     "mixedFontHeadings": 0
-    },
-    "type": {
-     "families": [
-      {
-       "family": "Plus Jakarta Sans Variable",
-       "share": 1,
-       "mono": false
-      }
-     ],
-     "familyCount": 1,
-     "sizes": [
-      14,
-      15,
-      16,
-      18,
-      20,
-      26,
-      36
-     ],
-     "sizeCount": 7,
-     "notLoaded": [],
-     "body": {
-      "font": "Plus Jakarta Sans Variable",
-      "size": 16,
-      "leading": 1.65,
-      "weight": 400,
-      "tracking": 0,
-      "contrast": 9.9
-     },
-     "measureChars": 45,
-     "max": {
-      "size": 36,
-      "vw": 9.2,
-      "font": "Plus Jakarta Sans Variable",
-      "text": "Les Privat Berbasis Karakter Belajar"
-     },
-     "monoShare": 0,
-     "monoProseShare": 0,
-     "monoFamilies": [],
-     "monoSamples": [],
-     "microLabels": 0,
-     "microLabelShare": 0,
-     "microSamples": [],
-     "upperShare": 0,
-     "centerShare": 0.01,
-     "smallText": 0
-    },
-    "eyebrows": [],
-    "numbered": [],
-    "color": {
-     "bodyBg": "#f4f6fa",
-     "bodyBgHsl": {
-      "h": 220,
-      "s": 0.37,
-      "l": 0.97
-     },
-     "dark": false,
-     "sectionBgs": [
-      {
-       "color": "#f8fafd",
-       "top": 0,
-       "hsl": {
-        "h": 216,
-        "s": 0.56,
-        "l": 0.98
-       }
-      },
-      {
-       "color": "#e2e8f0",
-       "top": 603,
-       "hsl": {
-        "h": 214,
-        "s": 0.32,
-        "l": 0.91
-       }
-      },
-      {
        "color": "#ffffff",
-       "top": 1452,
-       "hsl": {
-        "h": 0,
-        "s": 0,
-        "l": 1
-       }
-      },
-      {
-       "color": "#0f1d33",
-       "top": 6502,
-       "hsl": {
-        "h": 217,
-        "s": 0.55,
-        "l": 0.13
-       }
-      }
-     ],
-     "textColors": [
-      {
-       "color": "#475569",
-       "share": 0.47
-      },
-      {
-       "color": "#0f1d33",
-       "share": 0.21
-      },
-      {
-       "color": "#334155",
-       "share": 0.11
-      },
-      {
-       "color": "#1e293b",
-       "share": 0.06
-      },
-      {
-       "color": "#94a3b8",
        "share": 0.06
       }
      ],
      "button": {
-      "bg": "#0f1d33",
+      "bg": "#183058",
       "hsl": {
-       "h": 217,
-       "s": 0.55,
-       "l": 0.13
+       "h": 218,
+       "s": 0.57,
+       "l": 0.22
       },
       "fg": "#ffffff"
      },
      "lowContrast": []
     },
     "buttons": {
-     "count": 6,
-     "inHero": 3,
+     "count": 2,
+     "inHero": 2,
      "radius": 20,
-     "height": 47,
+     "height": 44,
      "withShadow": 0,
      "withGradient": 0,
      "mono": 0,
      "upper": 0,
      "heroLabels": [
-      "Daftar Siswa",
-      "Mulai Asesmen & Daftar Siswa",
-      "Pelajari Cara Kerja"
+      "Masuk ke Akun",
+      "Masuk dengan Google"
      ]
     },
     "surfaces": {
-     "shadowStatic": 0,
+     "shadowStatic": 3,
      "shadowOverlay": 0,
-     "shadowSamples": [],
+     "shadowSamples": [
+      "div.surface-card.p-6 → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+      "button.w-full.py-3 → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+      "button.w-full.py-2.5 → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0"
+     ],
      "gradients": 0,
      "scrims": 0,
      "gradientSamples": [],
      "gradientText": 0,
-     "hairlines": 0,
-     "hairlineSamples": [],
-     "outlinedBoxes": 0,
+     "hairlines": 2,
+     "hairlineSamples": [
+      "div.mt-6.pt-5 382px",
+      "div.w-full.border-t 382px rule"
+     ],
+     "outlinedBoxes": 1,
      "dashed": 0,
-     "blurred": 1,
-     "roundedBoxes": 21,
-     "boxRadius": 25,
+     "blurred": 0,
+     "roundedBoxes": 1,
+     "boxRadius": 31,
      "squareMedia": 0,
-     "roundedMedia": 7,
-     "mediaRadius": 20,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
      "textShadow": 0,
      "cardRows": []
     },
-    "heroMedia": [
-     {
-      "type": "img",
-      "ratio": 0.26
-     }
-    ],
-    "nav": {
-     "links": 3,
-     "fixed": true,
-     "height": 64,
-     "floatingPill": false,
-     "blur": true
-    },
+    "heroMedia": [],
+    "nav": null,
     "fontsLoaded": [
      "plus jakarta sans variable"
     ]
    },
    "layout": {
     "viewport": {
-     "w": 390,
-     "h": 844
+     "w": 1440,
+     "h": 900
     },
-    "pageH": 7250,
+    "pageH": 900,
     "margins": {
-     "left": 16,
-     "right": 16
+     "left": 529,
+     "right": 529
     },
-    "sections": [
-     {
-      "sel": "section.pt-8.sm:pt-14",
-      "tag": "section",
-      "top": 64,
-      "height": 899,
-      "words": 58,
-      "media": 1,
-      "middle": 0,
-      "heading": {
-       "text": "Les Privat Berbasis Karakter Belajar",
-       "size": 36,
-       "tag": "h1"
-      },
-      "left": 16,
-      "right": 16,
-      "textLeft": 16,
-      "textRight": 21,
-      "fullBleed": false,
-      "footer": false,
-      "hero": true,
-      "continues": true,
-      "pinned": false
-     },
-     {
-      "sel": "div.taste-reveal.space-y-3",
-      "tag": "div",
-      "top": 1043,
-      "height": 146,
-      "words": 29,
-      "media": 0,
-      "middle": 0,
-      "heading": {
-       "text": "Tiga Modalitas Sensori Belajar",
-       "size": 26,
-       "tag": "h2"
-      },
-      "left": 16,
-      "right": 17,
-      "textLeft": 16,
-      "textRight": 17,
-      "fullBleed": false,
-      "footer": false,
-      "hero": false,
-      "continues": true,
-      "pinned": false
-     },
-     {
-      "sel": "div.taste-reveal.inline-flex",
-      "tag": "div",
-      "top": 1221,
-      "height": 199,
-      "words": 15,
-      "media": 0,
-      "middle": 0,
-      "heading": null,
-      "left": 22,
-      "right": 139,
-      "textLeft": 76,
-      "textRight": 155,
-      "fullBleed": false,
-      "footer": false,
-      "hero": false,
-      "continues": true,
-      "pinned": false
-     },
-     {
-      "sel": "div.animate-modal-enter.grid",
-      "tag": "div",
-      "top": 1452,
-      "height": 1172,
-      "words": 108,
-      "media": 1,
-      "middle": 0,
-      "heading": {
-       "text": "Pemetaan Spasial & Rangkuman",
-       "size": 20,
-       "tag": "h3"
-      },
-      "left": 36,
-      "right": 36,
-      "textLeft": 36,
-      "textRight": 37,
-      "fullBleed": false,
-      "footer": false,
-      "hero": false,
-      "continues": true,
-      "pinned": false
-     },
-     {
-      "sel": "div.taste-reveal.space-y-3",
-      "tag": "div",
-      "top": 2704,
-      "height": 176,
-      "words": 26,
-      "media": 0,
-      "middle": 0,
-      "heading": {
-       "text": "Dua Rumpun Kurikulum Terpadu",
-       "size": 26,
-       "tag": "h2"
-      },
-      "left": 16,
-      "right": 16,
-      "textLeft": 16,
-      "textRight": 16,
-      "fullBleed": false,
-      "footer": false,
-      "hero": false,
-      "continues": true,
-      "pinned": false
-     },
-     {
-      "sel": "div.grid.grid-cols-1",
-      "tag": "div",
-      "top": 2911,
-      "height": 1324,
-      "words": 106,
-      "media": 2,
-      "middle": 0,
-      "heading": {
-       "text": "Mata Pelajaran Akademik Umum",
-       "size": 18,
-       "tag": "h3"
-      },
-      "left": 36,
-      "right": 36,
-      "textLeft": 36,
-      "textRight": 42,
-      "fullBleed": false,
-      "footer": false,
-      "hero": false,
-      "continues": true,
-      "pinned": false
-     },
-     {
-      "sel": "section#alur.scroll-mt-24.max-w-6xl",
-      "tag": "section",
-      "top": 4315,
-      "height": 1191,
-      "words": 94,
-      "media": 3,
-      "middle": 0,
-      "heading": {
-       "text": "Tiga Langkah Memulai Bimbingan",
-       "size": 26,
-       "tag": "h2"
-      },
-      "left": 16,
-      "right": 32,
-      "textLeft": 16,
-      "textRight": 32,
-      "fullBleed": false,
-      "footer": false,
-      "hero": false,
-      "continues": true,
-      "pinned": false
-     },
-     {
-      "sel": "section#faq.scroll-mt-24.max-w-4xl",
-      "tag": "section",
-      "top": 5586,
-      "height": 836,
-      "words": 97,
-      "media": 0,
-      "middle": 0,
-      "heading": {
-       "text": "Pertanyaan yang Sering Diajukan",
-       "size": 26,
-       "tag": "h2"
-      },
-      "left": 16,
-      "right": 16,
-      "textLeft": 16,
-      "textRight": 22,
-      "fullBleed": false,
-      "footer": false,
-      "hero": false,
-      "continues": true,
-      "pinned": false
-     },
-     {
-      "sel": "section.max-w-6xl.mx-auto",
-      "tag": "section",
-      "top": 6502,
-      "height": 399,
-      "words": 33,
-      "media": 0,
-      "middle": 0,
-      "heading": {
-       "text": "Mulai Bimbingan Sekarang",
-       "size": 26,
-       "tag": "h2"
-      },
-      "left": 44,
-      "right": 60,
-      "textLeft": 44,
-      "textRight": 60,
-      "fullBleed": false,
-      "footer": false,
-      "hero": false,
-      "continues": true,
-      "pinned": false
-     },
-     {
-      "sel": "footer.bg-[#0F1D33].text-[#CBD5E1]",
-      "tag": "footer",
-      "top": 6980,
-      "height": 270,
-      "words": 21,
-      "media": 0,
-      "middle": 0,
-      "heading": null,
-      "left": 30,
-      "right": 30,
-      "textLeft": 30,
-      "textRight": 30,
-      "fullBleed": false,
-      "footer": true,
-      "hero": false,
-      "continues": false,
-      "pinned": false
-     }
-    ],
+    "sections": [],
     "gaps": [],
     "h1s": [
      {
-      "text": "Les Privat Berbasis Karakter Belajar",
-      "size": 36,
-      "top": 96,
+      "text": "Masuk ke Akun Anda",
+      "size": 20,
+      "top": 306,
       "firstScreen": true
      }
     ],
     "edgeText": [],
-    "edges": [
-     {
-      "x": 36,
-      "n": 14
-     },
-     {
-      "x": 16,
-      "n": 10
-     },
-     {
-      "x": 60,
-      "n": 1
-     }
-    ],
-    "leftBlocks": 25,
-    "bodySize": 16,
+    "edges": [],
+    "leftBlocks": 0,
+    "bodySize": 12,
     "stage": false,
     "explains": false,
     "slivers": [],
-    "voidShare": 0,
-    "voidBox": null
+    "voidShare": 0.29,
+    "voidBox": {
+     "x": 0,
+     "y": 120,
+     "w": 480,
+     "h": 780
+    }
    },
-   "app": null,
+   "app": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "dark": false,
+    "ground": "#f4f6fa",
+    "sidebar": null,
+    "topbar": null,
+    "canvas": {
+     "left": 529,
+     "right": 529
+    },
+    "hero": {
+     "text": "Masuk ke Akun Anda",
+     "words": 4,
+     "chars": 18,
+     "lines": 1,
+     "size": 20,
+     "vw": 1.4,
+     "font": "Plus Jakarta Sans Variable",
+     "weight": 800,
+     "tracking": -0.02,
+     "leading": 1.4,
+     "top": 306,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 1,
+     "firstScreen": 1,
+     "ragged": [],
+     "voids": [
+      {
+       "gap": 45,
+       "at": 675,
+       "panel": "Masuk ke Akun Anda"
+      }
+     ]
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 1,
+     "radii": [
+      [
+       31,
+       1
+      ]
+     ],
+     "heavyBorders": 1,
+     "borderSamples": [
+      "#0d1a33 on #ffffff (17.32:1)"
+     ],
+     "heavyShadows": 0,
+     "softShadows": 2,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.72,
+     "tiny": 1,
+     "tinySamples": [
+      "Where Every Mind Grows 10px"
+     ],
+     "sizes": [
+      10,
+      11,
+      12,
+      14,
+      20,
+      24
+     ]
+    },
+    "title": {
+     "text": "Masuk ke Akun Anda",
+     "size": 20,
+     "top": 306
+    },
+    "colourShare": 0.011
+   },
    "consoleErrors": []
   }
  ],
  "findings": [
   {
    "level": "WARN",
-   "id": "no-footage",
+   "id": "micro-label",
    "width": 1440,
-   "message": "No video anywhere on the page.",
-   "fix": "Look for one honest clip with scripts/assets.mjs --video (the place, the material, the process) and use it as a muted loop with a poster frame. Defend its absence only if no clip fits the subject."
+   "message": "1 tiny uppercase letter-spaced label(s): \"atau\"",
+   "fix": "Prefer sentence case at body size."
   },
   {
-   "level": "WARN",
+   "level": "FAIL",
    "id": "font-not-dealt",
    "width": 1440,
    "message": "The sheet dealt Stack Sans Headline and Stack Sans Text, but the page renders Plus Jakarta Sans Variable.",
@@ -2571,23 +376,24 @@
   },
   {
    "level": "WARN",
-   "id": "off-centre",
+   "id": "hero-void",
    "width": 1440,
-   "message": "The margins differ: 176px on the left, 196px on the right, at 1440px.",
-   "fix": "Put the navigation and the content on one pair of margins; check for padding on one side only, a scrollbar gutter, or a header on another inset than the page.",
-   "alsoAt": [
-    1024
-   ]
+   "message": "29% of the first screen is one empty block (480×780px at 0,120).",
+   "fix": "Place the void on purpose or fill it: move the picture, the film or one fact into it, grow the headline to meet it, or shrink the screen to its content. A void reads as placed only when something closes it on the far side and it is the screen's one rest."
   },
   {
    "level": "WARN",
-   "id": "ragged-edges",
+   "id": "tiny-text",
    "width": 1440,
-   "message": "Left-aligned text starts at 10 different lines (176px, 196px, 224px, 304px, 567px, 764px, 937px); the three most used hold only 56% of it.",
-   "fix": "Pick two or three anchor lines from the grid and start every heading and paragraph on one of them.",
-   "alsoAt": [
-    1024
-   ]
+   "message": "72% of the text is under 13px.",
+   "fix": "Data and labels read at 13–14px; keep 11–12px for sublines and axis ticks."
+  },
+  {
+   "level": "WARN",
+   "id": "panel-void",
+   "width": 1440,
+   "message": "1 card(s) hold a blank band inside: 45px in \"Masuk ke Akun Anda\".",
+   "fix": "A card stretches to its neighbour only when it has content to fill. Keep a legend or a note directly under its chart (only an action or a total may sit at a stretched card's foot), let a short card keep its own height (align-items: start), and let a filtered block shrink to its rows."
   }
  ],
  "images": [
@@ -2596,36 +402,7 @@
    "width": 1440,
    "fold": "C:\\Users\\Lenovo\\OneDrive\\Desktop\\Project Aplikasi\\Laits Edu Tech\\.taste-skill\\inspect\\desktop-fold.jpg",
    "pages": [
-    "C:\\Users\\Lenovo\\OneDrive\\Desktop\\Project Aplikasi\\Laits Edu Tech\\.taste-skill\\inspect\\desktop-page-01.jpg",
-    "C:\\Users\\Lenovo\\OneDrive\\Desktop\\Project Aplikasi\\Laits Edu Tech\\.taste-skill\\inspect\\desktop-page-02.jpg"
-   ],
-   "film": []
-  },
-  {
-   "viewport": "tablet",
-   "width": 1024,
-   "fold": "C:\\Users\\Lenovo\\OneDrive\\Desktop\\Project Aplikasi\\Laits Edu Tech\\.taste-skill\\inspect\\tablet-fold.jpg",
-   "pages": [
-    "C:\\Users\\Lenovo\\OneDrive\\Desktop\\Project Aplikasi\\Laits Edu Tech\\.taste-skill\\inspect\\tablet-page-01.jpg"
-   ],
-   "film": []
-  },
-  {
-   "viewport": "tablet",
-   "width": 768,
-   "fold": "C:\\Users\\Lenovo\\OneDrive\\Desktop\\Project Aplikasi\\Laits Edu Tech\\.taste-skill\\inspect\\tablet-fold.jpg",
-   "pages": [
-    "C:\\Users\\Lenovo\\OneDrive\\Desktop\\Project Aplikasi\\Laits Edu Tech\\.taste-skill\\inspect\\tablet-page-01.jpg"
-   ],
-   "film": []
-  },
-  {
-   "viewport": "mobile",
-   "width": 390,
-   "fold": "C:\\Users\\Lenovo\\OneDrive\\Desktop\\Project Aplikasi\\Laits Edu Tech\\.taste-skill\\inspect\\mobile-fold.jpg",
-   "pages": [
-    "C:\\Users\\Lenovo\\OneDrive\\Desktop\\Project Aplikasi\\Laits Edu Tech\\.taste-skill\\inspect\\mobile-page-01.jpg",
-    "C:\\Users\\Lenovo\\OneDrive\\Desktop\\Project Aplikasi\\Laits Edu Tech\\.taste-skill\\inspect\\mobile-page-02.jpg"
+    "C:\\Users\\Lenovo\\OneDrive\\Desktop\\Project Aplikasi\\Laits Edu Tech\\.taste-skill\\inspect\\desktop-page-01.jpg"
    ],
    "film": []
   }

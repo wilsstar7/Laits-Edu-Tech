@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router'
 import {
   X,
   Info,
@@ -6,10 +7,12 @@ import {
   Loader2,
   ArrowRight,
 } from 'lucide-react'
+import { toast } from 'sonner'
 import type { TutorSummary, AvailableTimeSlot } from '@/types/tutor'
 import type { Booking, BookingDurationMinutes } from '@/types/booking'
 import { TutorAvailabilityCalendar } from '@/components/tutor/TutorAvailabilityCalendar'
 import { bookingService } from '@/services/bookingService'
+import { paymentService } from '@/services/paymentService'
 import { formatCurrency, formatDateTime } from '@/utils/format'
 import { Button } from '@/components/ui/button'
 import { NativeSelect } from '@/components/ui/native-select'
@@ -31,6 +34,7 @@ export function BookingDialog({
   onClose,
   onSuccess,
 }: BookingDialogProps) {
+  const navigate = useNavigate()
   const [selectedSubjectId, setSelectedSubjectId] = useState<string>(
     initialSubjectId || (tutor.subjects[0]?.id ?? '')
   )
@@ -71,8 +75,28 @@ export function BookingDialog({
         timezone: selectedSlot.timezone || 'Asia/Jakarta',
       })
 
+      let paymentId: string | null = null
+      try {
+        paymentId = await paymentService.createPayment({
+          bookingId: newBooking.id,
+          paymentMethod: 'manual_transfer',
+        })
+      } catch (payErr) {
+        console.warn('Payment auto-creation failed, redirecting to payment list:', payErr)
+      }
+
+      toast.success('Pemesanan Sesi Belajar Berhasil!', {
+        description: `Mengarahkan ke halaman pembayaran bimbingan bersama ${tutor.fullName}...`,
+      })
+
       onSuccess(newBooking)
       onClose()
+
+      if (paymentId) {
+        navigate(`/student/payments/${paymentId}`)
+      } else {
+        navigate('/student/payments')
+      }
     } catch (err: unknown) {
       console.error('Booking submission error:', err)
       const message =

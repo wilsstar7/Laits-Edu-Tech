@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams, Link, useNavigate } from 'react-router'
+import { useParams, Link } from 'react-router'
 import {
   ArrowLeft,
   Star,
@@ -19,7 +19,6 @@ import { ReviewSummaryCard } from '@/components/review/ReviewSummaryCard'
 import { ReviewCard } from '@/components/review/ReviewCard'
 import { tutorService } from '@/services/tutorService'
 import { reviewService } from '@/services/reviewService'
-import { paymentService } from '@/services/paymentService'
 import { formatCurrency } from '@/utils/format'
 import type { TutorSummary, AvailableTimeSlot } from '@/types/tutor'
 import type { Booking, BookingDurationMinutes } from '@/types/booking'
@@ -29,10 +28,8 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
-import { toast } from 'sonner'
 
 export function TutorProfilePage() {
-  const navigate = useNavigate()
   const { tutorId } = useParams<{ tutorId: string }>()
   const [loading, setLoading] = useState(true)
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
@@ -116,19 +113,8 @@ export function TutorProfilePage() {
     }
   }, [tutorId])
 
-  const handleBookingSuccess = async (newBooking: Booking) => {
-    toast.success('Pemesanan Sesi Belajar Berhasil!', {
-      description: `Mengarahkan ke halaman pembayaran sesi bimbingan bersama ${newBooking.tutorName}...`,
-    })
-    try {
-      const paymentId = await paymentService.createPayment({
-        bookingId: newBooking.id,
-        paymentMethod: 'manual_transfer',
-      })
-      navigate(`/student/payments/${paymentId}`)
-    } catch {
-      navigate('/student/schedule')
-    }
+  const handleBookingSuccess = (_newBooking: Booking) => {
+    setIsBookingOpen(false)
   }
 
   return (

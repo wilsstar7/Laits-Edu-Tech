@@ -30,7 +30,6 @@ import type { LearningProfileOverview } from '@/types/learning'
 import type { Booking } from '@/types/booking'
 import { Button } from '@/components/ui/button'
 import { NativeSelect } from '@/components/ui/native-select'
-import { toast } from 'sonner'
 
 import { useDebounce } from '@/hooks/useDebounce'
 
@@ -204,10 +203,8 @@ export function TutorDiscoveryPage() {
     setSearchParams({})
   }
 
-  const handleBookingSuccess = (newBooking: Booking) => {
-    toast.success('Pemesanan Sesi Berhasil Diajukan!', {
-      description: `Sesi dengan ${newBooking.tutorName} untuk mapel ${newBooking.subjectName} berhasil dijadwalkan.`,
-    })
+  const handleBookingSuccess = (_newBooking: Booking) => {
+    setBookingModalTutor(null)
   }
 
   return (

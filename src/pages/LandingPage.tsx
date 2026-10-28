@@ -146,9 +146,9 @@ export function LandingPage() {
           NAVIGATION BAR
           ========================================================================= */}
       <header className="sticky top-0 z-50 bg-[#F8FAFD]/95 backdrop-blur-sm">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#0F1D33] p-2 flex items-center justify-center shrink-0">
+            <div className="w-9 h-9 rounded-lg bg-[#0F1D33] p-1.5 flex items-center justify-center shrink-0">
               <img
                 src="/logo-mark.png"
                 alt="Logo ZEINBOX"
@@ -156,7 +156,7 @@ export function LandingPage() {
               />
             </div>
             <div className="flex flex-col">
-              <span className="font-extrabold text-[#0F1D33] text-xl tracking-tight leading-none">
+              <span className="font-extrabold text-[#0F1D33] text-lg tracking-tight leading-none">
                 ZEINBOX
               </span>
               <span className="text-sm text-[#4B5563] font-medium mt-1">
@@ -165,7 +165,7 @@ export function LandingPage() {
             </div>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-8 text-base font-semibold text-[#334155]">
+          <nav className="hidden md:flex items-center gap-7 text-[15px] font-semibold text-[#334155]">
             <a href="#modalitas" className="hover:text-[#0F1D33] transition-colors">
               Modalitas
             </a>
@@ -184,7 +184,7 @@ export function LandingPage() {
             {session ? (
               <Link
                 to={dashboardUrl}
-                className="px-6 py-3 rounded-xl bg-[#0F1D33] hover:bg-[#1E293B] text-white text-base font-bold transition-colors min-h-[46px] flex items-center gap-2"
+                className="px-5 py-2.5 rounded-xl bg-[#0F1D33] hover:bg-[#1E293B] text-white text-[15px] font-bold transition-colors min-h-[44px] flex items-center gap-2"
               >
                 <span>Buka Dashboard</span>
                 <ArrowRight className="w-4 h-4" />
@@ -193,13 +193,13 @@ export function LandingPage() {
               <>
                 <Link
                   to="/login"
-                  className="px-4 py-2.5 rounded-xl text-base font-semibold text-[#0F1D33] hover:bg-[#E2E8F0]/50 transition-colors min-h-[44px] flex items-center"
+                  className="px-4 py-2.5 rounded-xl text-[15px] font-semibold text-[#0F1D33] hover:bg-[#E2E8F0]/50 transition-colors min-h-[44px] flex items-center"
                 >
                   Masuk
                 </Link>
                 <Link
                   to="/register"
-                  className="px-6 py-3 rounded-xl bg-[#0F1D33] hover:bg-[#1E293B] text-white text-base font-bold transition-colors min-h-[46px] flex items-center gap-2"
+                  className="px-5 py-2.5 rounded-xl bg-[#0F1D33] hover:bg-[#1E293B] text-white text-[15px] font-bold transition-colors min-h-[44px] flex items-center gap-2"
                 >
                   <span>Daftar Siswa</span>
                   <ArrowRight className="w-4 h-4" />
@@ -217,30 +217,30 @@ export function LandingPage() {
         {/* =======================================================================
             SECTION 1: HERO SECTION
             ======================================================================= */}
-        <section className="pt-6 sm:pt-12">
+        <section className="pt-8 sm:pt-14">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
               {/* Left Column: Two-line Title at display size + Lead sentence */}
               <div className="lg:col-span-8 space-y-6">
-                <h1 className="taste-reveal text-4xl sm:text-5xl lg:text-[68px] font-extrabold text-[#0F1D33] tracking-tight leading-[1.04]">
+                <h1 className="taste-reveal type-hero font-extrabold text-[#0F1D33] tracking-tight">
                   Les Privat Berbasis Karakter Belajar
                 </h1>
 
-                <p className="taste-reveal text-lg sm:text-xl text-[#334155] leading-relaxed max-w-[54ch] font-normal">
+                <p className="taste-reveal type-lead text-[#334155] max-w-[54ch] font-normal">
                   ZEINBOX memetakan modalitas sensori belajar anak sejak awal, lalu menyelaraskan metode mengajar guru privat pilihan untuk kurikulum akademik dan studi keagamaan.
                 </p>
 
                 <div className="taste-reveal flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
                   <Link
                     to="/register"
-                    className="px-8 py-4 rounded-xl bg-[#0F1D33] hover:bg-[#1E293B] text-white text-base font-bold transition-colors flex items-center justify-center gap-2.5 min-h-[52px]"
+                    className="px-6 py-3 rounded-xl bg-[#0F1D33] hover:bg-[#1E293B] text-white text-[15px] font-bold transition-colors flex items-center justify-center gap-2 min-h-[46px]"
                   >
                     <span>Mulai Asesmen &amp; Daftar Siswa</span>
                     <ArrowRight className="w-4 h-4" />
                   </Link>
                   <a
                     href="#modalitas"
-                    className="px-6 py-4 rounded-xl bg-white text-[#0F1D33] text-base font-semibold hover:bg-[#E2E8F0]/40 transition-colors flex items-center justify-center min-h-[52px]"
+                    className="px-5 py-3 rounded-xl bg-white text-[#0F1D33] text-[15px] font-semibold hover:bg-[#E2E8F0]/40 transition-colors flex items-center justify-center min-h-[46px]"
                   >
                     <span>Pelajari Cara Kerja</span>
                   </a>
@@ -270,7 +270,7 @@ export function LandingPage() {
                     alt="Siswa belajar dengan pendampingan guru privat"
                     fetchPriority="high"
                     decoding="async"
-                    className="w-full h-80 sm:h-96 lg:h-[420px] object-cover"
+                    className="w-full h-72 sm:h-80 lg:h-[360px] object-cover"
                   />
                   <div className="p-4 bg-[#EEF2F6] flex items-center justify-between gap-3 text-sm font-semibold text-[#0F1D33]">
                     <span>Satu siswa satu guru privat pilihan</span>
@@ -289,10 +289,10 @@ export function LandingPage() {
             ======================================================================= */}
         <section id="modalitas" className="scroll-mt-24 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <div className="taste-reveal space-y-3 max-w-[60ch]">
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0F1D33] tracking-tight leading-tight">
+            <h2 className="type-h2 font-extrabold text-[#0F1D33] tracking-tight">
               Tiga Modalitas Sensori Belajar
             </h2>
-            <p className="text-base sm:text-lg text-[#334155] leading-relaxed max-w-[60ch]">
+            <p className="text-base text-[#475569] leading-relaxed max-w-[60ch]">
               Setiap siswa memiliki jalur dominan dalam memproses konsep baru. Guru privat menyelaraskan format catatan dan ritme bimbingan berdasarkan hasil diagnostik.
             </p>
           </div>
@@ -306,14 +306,14 @@ export function LandingPage() {
                   key={item.id}
                   type="button"
                   onClick={() => setActiveModalityIndex(idx)}
-                  className={`group relative px-5 py-3 rounded-xl transition-all duration-300 flex items-center gap-3 text-left ${
+                  className={`group relative px-4 py-2.5 rounded-xl transition-all duration-300 flex items-center gap-2.5 text-left ${
                     isSelected
                       ? 'bg-[#0F1D33] text-white'
                       : 'text-[#475569] hover:text-[#0F1D33] hover:bg-white/60'
                   }`}
                 >
                   <span
-                    className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-colors ${
+                    className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 transition-colors ${
                       isSelected
                         ? 'bg-white/10 text-emerald-400'
                         : 'bg-white text-[#475569] group-hover:text-[#0F1D33]'
@@ -322,7 +322,7 @@ export function LandingPage() {
                     <item.icon className="w-4 h-4" />
                   </span>
                   <div className="flex flex-col">
-                    <div className="flex items-center gap-1.5 font-bold text-base leading-tight">
+                    <div className="flex items-center gap-1.5 font-bold text-[15px] leading-tight">
                       <span>{item.name} [{item.code}]</span>
                       {isSelected && (
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
@@ -344,7 +344,7 @@ export function LandingPage() {
           {/* Animated Modality Dossier Presentation */}
           <div
             key={activeModality.id}
-            className="animate-modal-enter grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start bg-white p-6 sm:p-10 lg:p-12 rounded-3xl"
+            className="animate-modal-enter grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start bg-white p-5 sm:p-8 rounded-3xl"
           >
             {/* Left Column: Photographic Frame with subtle hover scale */}
             <div className="lg:col-span-5 space-y-4">
@@ -352,7 +352,7 @@ export function LandingPage() {
                 <img
                   src={activeModality.image}
                   alt={activeModality.alt}
-                  className="w-full h-72 sm:h-80 object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  className="w-full h-60 sm:h-72 object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                 />
                 <div className="absolute top-3 left-3 px-3 py-1.5 rounded-lg bg-[#0F1D33] text-white text-sm font-semibold flex items-center gap-2">
                   <activeModality.icon className="w-4 h-4 text-emerald-400" />
@@ -367,7 +367,7 @@ export function LandingPage() {
             {/* Right Column: Clinical Protocol & Steps */}
             <div className="lg:col-span-7 space-y-6">
               <div className="space-y-2">
-                <h3 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-[#0F1D33] tracking-tight leading-snug">
+                <h3 className="text-xl lg:text-2xl font-extrabold text-[#0F1D33] tracking-tight leading-snug">
                   {activeModality.primaryFocus}
                 </h3>
               </div>
@@ -392,9 +392,9 @@ export function LandingPage() {
                   {activeModality.teachingSteps.map((step, sIdx) => (
                     <div
                       key={sIdx}
-                      className="group/step flex items-start gap-3.5 p-3 rounded-xl transition-all duration-200 hover:bg-[#F8FAFD] hover:translate-x-1 cursor-default"
+                      className="group/step flex items-start gap-3 px-3 py-2 rounded-xl transition-all duration-200 hover:bg-[#F8FAFD] hover:translate-x-1 cursor-default"
                     >
-                      <span className="w-8 h-8 rounded-lg bg-[#EEF2F6] group-hover/step:bg-[#0F1D33] group-hover/step:text-white transition-colors text-sm font-bold flex items-center justify-center shrink-0 mt-0.5 text-[#0F1D33]">
+                      <span className="w-7 h-7 rounded-lg bg-[#EEF2F6] group-hover/step:bg-[#0F1D33] group-hover/step:text-white transition-colors text-sm font-bold flex items-center justify-center shrink-0 mt-0.5 text-[#0F1D33]">
                         {sIdx + 1}
                       </span>
                       <span className="text-base text-[#334155] leading-relaxed max-w-[55ch]">
@@ -424,28 +424,28 @@ export function LandingPage() {
             ======================================================================= */}
         <section id="kurikulum" className="scroll-mt-24 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <div className="taste-reveal space-y-3 max-w-[60ch]">
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0F1D33] tracking-tight leading-tight">
+            <h2 className="type-h2 font-extrabold text-[#0F1D33] tracking-tight">
               Dua Rumpun Kurikulum Terpadu
             </h2>
-            <p className="text-base sm:text-lg text-[#334155] leading-relaxed max-w-[60ch]">
+            <p className="text-base text-[#475569] leading-relaxed max-w-[60ch]">
               Materi disiapkan oleh pendidik spesialis dengan kurikulum terstruktur untuk memperkuat prestasi akademis sekolah dan pembinaan adab keagamaan.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Akademik Umum */}
-            <div className="taste-reveal bg-white p-6 sm:p-8 rounded-2xl space-y-5 flex flex-col justify-between">
+            <div className="taste-reveal bg-white p-5 sm:p-7 rounded-2xl space-y-5 flex flex-col justify-between">
               <div className="space-y-4">
                 <div className="rounded-xl overflow-hidden bg-slate-100">
                   <img
                     src={subjectGeneralImg}
                     alt="Siswa mempelajari matematika dan sains"
-                    className="w-full h-52 sm:h-56 object-cover"
+                    className="w-full h-48 object-cover"
                     loading="lazy"
                     decoding="async"
                   />
                 </div>
-                <h3 className="text-xl font-extrabold text-[#0F1D33]">
+                <h3 className="text-lg font-extrabold text-[#0F1D33]">
                   Mata Pelajaran Akademik Umum
                 </h3>
                 <p className="text-base text-[#475569] leading-relaxed max-w-[55ch]">
@@ -468,18 +468,18 @@ export function LandingPage() {
             </div>
 
             {/* Keagamaan & Al-Qur'an */}
-            <div className="taste-reveal bg-white p-6 sm:p-8 rounded-2xl space-y-5 flex flex-col justify-between">
+            <div className="taste-reveal bg-white p-5 sm:p-7 rounded-2xl space-y-5 flex flex-col justify-between">
               <div className="space-y-4">
                 <div className="rounded-xl overflow-hidden bg-slate-100">
                   <img
                     src={subjectQuranImg}
                     alt="Siswa mempelajari Al-Qur'an dan studi keagamaan"
-                    className="w-full h-52 sm:h-56 object-cover"
+                    className="w-full h-48 object-cover"
                     loading="lazy"
                     decoding="async"
                   />
                 </div>
-                <h3 className="text-xl font-extrabold text-[#0F1D33]">
+                <h3 className="text-lg font-extrabold text-[#0F1D33]">
                   Studi Keagamaan &amp; Al-Qur'an
                 </h3>
                 <p className="text-base text-[#475569] leading-relaxed max-w-[55ch]">
@@ -508,21 +508,21 @@ export function LandingPage() {
             ======================================================================= */}
         <section id="alur" className="scroll-mt-24 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <div className="taste-reveal space-y-3 max-w-[60ch]">
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0F1D33] tracking-tight leading-tight">
+            <h2 className="type-h2 font-extrabold text-[#0F1D33] tracking-tight">
               Tiga Langkah Memulai Bimbingan
             </h2>
-            <p className="text-base sm:text-lg text-[#334155] leading-relaxed max-w-[60ch]">
+            <p className="text-base text-[#475569] leading-relaxed max-w-[60ch]">
               Alur pendaftaran teratur untuk memastikan kegiatan belajar mengajar berjalan transparan bagi siswa dan orang tua.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="taste-reveal bg-white p-6 rounded-2xl space-y-4">
+            <div className="taste-reveal bg-white p-5 rounded-2xl space-y-4">
               <div className="rounded-xl overflow-hidden bg-slate-100">
                 <img
                   src={stepRegisterImg}
                   alt="Langkah pendaftaran akun siswa"
-                  className="w-full h-44 object-cover"
+                  className="w-full h-40 object-cover"
                   loading="lazy"
                   decoding="async"
                 />
@@ -537,12 +537,12 @@ export function LandingPage() {
               </div>
             </div>
 
-            <div className="taste-reveal bg-white p-6 rounded-2xl space-y-4">
+            <div className="taste-reveal bg-white p-5 rounded-2xl space-y-4">
               <div className="rounded-xl overflow-hidden bg-slate-100">
                 <img
                   src={stepAssessmentImg}
                   alt="Langkah pengerjaan asesmen diagnostik gaya belajar"
-                  className="w-full h-44 object-cover"
+                  className="w-full h-40 object-cover"
                   loading="lazy"
                   decoding="async"
                 />
@@ -557,12 +557,12 @@ export function LandingPage() {
               </div>
             </div>
 
-            <div className="taste-reveal bg-white p-6 rounded-2xl space-y-4">
+            <div className="taste-reveal bg-white p-5 rounded-2xl space-y-4">
               <div className="rounded-xl overflow-hidden bg-slate-100">
                 <img
                   src={stepTutoringImg}
                   alt="Langkah bimbingan privat bersama guru"
-                  className="w-full h-44 object-cover"
+                  className="w-full h-40 object-cover"
                   loading="lazy"
                   decoding="async"
                 />
@@ -584,10 +584,10 @@ export function LandingPage() {
             ======================================================================= */}
         <section id="faq" className="scroll-mt-24 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
           <div className="taste-reveal space-y-3 max-w-[60ch]">
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0F1D33] tracking-tight leading-tight">
+            <h2 className="type-h2 font-extrabold text-[#0F1D33] tracking-tight">
               Pertanyaan yang Sering Diajukan
             </h2>
-            <p className="text-base sm:text-lg text-[#334155] leading-relaxed max-w-[60ch]">
+            <p className="text-base text-[#475569] leading-relaxed max-w-[60ch]">
               Informasi lengkap untuk membantu orang tua dan siswa memahami sistem bimbingan belajar ZEINBOX.
             </p>
           </div>
@@ -600,7 +600,7 @@ export function LandingPage() {
                   <button
                     type="button"
                     onClick={() => handleToggleFaq(idx)}
-                    className="w-full p-5 text-left flex items-center justify-between gap-4 font-bold text-base text-[#0F1D33] hover:bg-[#F8FAFD] transition-colors"
+                    className="w-full px-5 py-4 text-left flex items-center justify-between gap-4 font-bold text-base text-[#0F1D33] hover:bg-[#F8FAFD] transition-colors"
                   >
                     <span>{faq.q}</span>
                     <span className="w-8 h-8 rounded-lg bg-[#F1F5F9] flex items-center justify-center shrink-0 text-[#0F1D33]">
@@ -627,12 +627,12 @@ export function LandingPage() {
             SECTION 6: CTA BAND
             ======================================================================= */}
         <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="taste-reveal bg-[#0F1D33] text-white p-8 sm:p-14 rounded-2xl grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+          <div className="taste-reveal bg-[#0F1D33] text-white p-7 sm:p-12 rounded-2xl grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
             <div className="md:col-span-8 space-y-4">
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
+              <h2 className="type-h2 font-extrabold text-white tracking-tight">
                 Mulai Bimbingan Sekarang
               </h2>
-              <p className="text-base sm:text-lg text-[#94A3B8] leading-relaxed max-w-[55ch] font-normal">
+              <p className="text-base text-[#94A3B8] leading-relaxed max-w-[55ch] font-normal">
                 Daftarkan putra-putri Anda untuk mengikuti pemetaan gaya belajar VAK dan temukan guru privat yang tepat untuk kurikulum umum maupun tahfidz Al-Qur'an.
               </p>
             </div>
@@ -640,14 +640,14 @@ export function LandingPage() {
             <div className="md:col-span-4 flex flex-col sm:flex-row md:flex-col items-stretch gap-3">
               <Link
                 to="/register"
-                className="px-8 py-4 rounded-xl bg-white hover:bg-slate-100 text-[#0F1D33] text-base font-bold transition-colors flex items-center justify-center gap-2 min-h-[50px]"
+                className="px-6 py-3 rounded-xl bg-white hover:bg-slate-100 text-[#0F1D33] text-[15px] font-bold transition-colors flex items-center justify-center gap-2 min-h-[46px]"
               >
                 <span>Daftar Akun Siswa</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 to="/login"
-                className="px-6 py-4 rounded-xl bg-[#1E293B] hover:bg-[#334155] text-white text-base font-semibold transition-colors flex items-center justify-center min-h-[50px]"
+                className="px-5 py-3 rounded-xl bg-[#1E293B] hover:bg-[#334155] text-white text-[15px] font-semibold transition-colors flex items-center justify-center min-h-[46px]"
               >
                 <span>Masuk ke Akun Terdaftar</span>
               </Link>
@@ -659,7 +659,7 @@ export function LandingPage() {
       {/* =========================================================================
           FOOTER
           ========================================================================= */}
-      <footer className="bg-[#0F1D33] text-[#CBD5E1] py-14">
+      <footer className="bg-[#0F1D33] text-[#CBD5E1] py-12">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-white p-2 flex items-center justify-center shrink-0">

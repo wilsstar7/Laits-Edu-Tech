@@ -27,6 +27,7 @@ export function AssessmentQuestionPage() {
   const [isSaving, setIsSaving] = useState(false)
   const [lastSavedAt, setLastSavedAt] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [sessionPackageName, setSessionPackageName] = useState('Paket 1: Persona Modality')
 
   // 1. Initial Load & Session Validation
   useEffect(() => {
@@ -70,6 +71,14 @@ export function AssessmentQuestionPage() {
           )
           setLoading(false)
           return
+        }
+
+        if (session.package_code === 'PAKET_2_PERSONA_POTENTIAL') {
+          setSessionPackageName('Paket 2: Persona Potential')
+        } else if (session.package_code === 'PAKET_3_PERSONA_MASTERY') {
+          setSessionPackageName('Paket 3: Persona Mastery')
+        } else {
+          setSessionPackageName('Paket 1: Persona Modality')
         }
 
         // Load questions from database filtered by student level and package
@@ -136,13 +145,13 @@ export function AssessmentQuestionPage() {
   )
 
   // 3. Navigation Controls
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     const currentQ = questions[currentIndex]
     if (!currentQ) return
 
     // Validation: Required check
     if (currentQ.required && !answers[currentQ.id]) {
-      setValidationError('Silakan pilih salah satu jawaban terlebih dahulu.')
+      setValidationError('Silakan pilih salah satu jawaban sebelum melanjutkan.')
       return
     }
 
@@ -156,9 +165,9 @@ export function AssessmentQuestionPage() {
     }
 
     window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
+  }, [currentIndex, questions, answers, sessionId])
 
-  const handlePrevious = () => {
+  const handlePrevious = useCallback(() => {
     setValidationError(null)
     const prevIndex = Math.max(currentIndex - 1, 0)
     setCurrentIndex(prevIndex)
@@ -168,10 +177,10 @@ export function AssessmentQuestionPage() {
     }
 
     window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
+  }, [currentIndex, sessionId])
 
   // 4. Submit and Score Assessment
-  const handleSubmit = async () => {
+  const handleSubmit = useCallback(async () => {
     if (!sessionId || isSubmitting) return
 
     const currentQ = questions[currentIndex]
@@ -184,9 +193,8 @@ export function AssessmentQuestionPage() {
     const unanswered = questions.filter((q) => q.required && !answers[q.id])
     if (unanswered.length > 0) {
       setValidationError(
-        `Terdapat ${unanswered.length} pertanyaan yang belum Anda jawab. Silakan lengkapi seluruh pertanyaan.`
+        `Terdapat ${unanswered.length} butir soal yang belum dijawab. Lengkapi seluruh soal untuk melihat profil lengkap.`
       )
-      // Navigate to first unanswered question
       const firstUnansweredIndex = questions.findIndex(
         (q) => q.required && !answers[q.id]
       )
@@ -200,10 +208,7 @@ export function AssessmentQuestionPage() {
     setValidationError(null)
 
     try {
-      // Call trusted PostgreSQL RPC scoring engine
       const resultId = await assessmentScoringService.submitAndScore(sessionId)
-
-      // Redirect to personality result page
       navigate(`/student/personality/${resultId}`, { replace: true })
     } catch (err: unknown) {
       console.error('Error submitting assessment:', err)
@@ -212,32 +217,70 @@ export function AssessmentQuestionPage() {
       setValidationError(message)
       setIsSubmitting(false)
     }
-  }
+  }, [sessionId, isSubmitting, questions, currentIndex, answers, navigate])
+
+  // 5. Keyboard Navigation (Power UX: A, B, C, Enter, Arrows)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Ignore if user is inside an input/textarea
+      const tag = (e.target as HTMLElement)?.tagName?.toLowerCase()
+      if (tag === 'input' || tag === 'textarea' || tag === 'select') return
+
+      const currentQ = questions[currentIndex]
+      if (!currentQ || isSubmitting) return
+
+      const options = currentQ.assessment_options ?? []
+
+      if (e.key === 'a' || e.key === 'A' || e.key === '1') {
+        if (options[0]) handleSelectOption(options[0].id)
+      } else if (e.key === 'b' || e.key === 'B' || e.key === '2') {
+        if (options[1]) handleSelectOption(options[1].id)
+      } else if (e.key === 'c' || e.key === 'C' || e.key === '3') {
+        if (options[2]) handleSelectOption(options[2].id)
+      } else if (e.key === 'd' || e.key === 'D' || e.key === '4') {
+        if (options[3]) handleSelectOption(options[3].id)
+      } else if (e.key === 'Enter') {
+        e.preventDefault()
+        if (currentIndex === questions.length - 1) {
+          handleSubmit()
+        } else {
+          handleNext()
+        }
+      } else if (e.key === 'ArrowRight') {
+        if (currentIndex < questions.length - 1) handleNext()
+      } else if (e.key === 'ArrowLeft') {
+        if (currentIndex > 0) handlePrevious()
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [currentIndex, questions, isSubmitting, handleSelectOption, handleNext, handlePrevious, handleSubmit])
 
   if (loading) {
     return (
       <div className="min-h-[70vh] flex flex-col items-center justify-center gap-3">
         <Loader2 className="w-8 h-8 animate-spin text-[#183058]" />
-        <p className="text-xs text-[#676A78]">Menyiapkan butir pertanyaan...</p>
+        <p className="text-xs text-muted-foreground font-medium">Menyiapkan butir pertanyaan...</p>
       </div>
     )
   }
 
   if (errorMsg || questions.length === 0) {
     return (
-      <div className="max-w-xl mx-auto py-16 px-4 text-center space-y-4">
+      <div className="max-w-md mx-auto py-16 px-4 text-center space-y-4">
         <div className="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center mx-auto">
           <AlertCircle className="w-6 h-6" />
         </div>
-        <h1 className="text-xl font-bold text-[#17181C]">
+        <h1 className="text-base font-bold text-slate-900">
           {errorMsg || 'Pertanyaan tidak tersedia'}
         </h1>
         <button
           type="button"
           onClick={() => navigate('/student/assessment')}
-          className="px-5 py-2.5 rounded-xl bg-[#183058] text-white text-xs font-bold"
+          className="px-5 py-2.5 rounded-xl bg-[#183058] text-white text-xs font-semibold"
         >
-          Kembali ke Halaman Asesmen
+          Kembali ke Katalog Asesmen
         </button>
       </div>
     )
@@ -247,17 +290,23 @@ export function AssessmentQuestionPage() {
   const isLast = currentIndex === questions.length - 1
 
   return (
-    <div className="min-h-dvh pb-[calc(9rem+env(safe-area-inset-bottom))] sm:pb-[calc(8rem+env(safe-area-inset-bottom))]">
-      {/* Sticky Progress Header */}
+    <div className="min-h-dvh bg-[#F8FAFC] pb-[calc(8rem+env(safe-area-inset-bottom))] flex flex-col justify-between">
+      {/* Sticky Progress Header with Direct Question Jumping */}
       <AssessmentProgress
         currentIndex={currentIndex}
         totalQuestions={questions.length}
         isSaving={isSaving}
         lastSavedAt={lastSavedAt}
+        answersCount={Object.keys(answers).length}
+        onJumpToIndex={(idx) => {
+          setCurrentIndex(idx)
+          window.scrollTo({ top: 0, behavior: 'smooth' })
+        }}
+        moduleLabel={sessionPackageName}
       />
 
-      {/* Main Question Area */}
-      <main className="max-w-3xl mx-auto px-3 sm:px-6 pt-4 sm:pt-8">
+      {/* Main Question Area with Smooth Focused Framing */}
+      <main className="max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-10 w-full flex-1 flex flex-col justify-center">
         {currentQuestion && (
           <QuestionCard
             question={currentQuestion}

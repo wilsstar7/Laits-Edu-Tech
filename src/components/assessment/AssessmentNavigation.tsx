@@ -1,4 +1,5 @@
-import { Loader2 } from 'lucide-react'
+import { Loader2, ArrowRight, ArrowLeft, CheckCircle2 } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 
 interface AssessmentNavigationProps {
   currentIndex: number
@@ -24,59 +25,68 @@ export function AssessmentNavigation({
   onSubmit,
 }: AssessmentNavigationProps) {
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-20 border-t border-border/80 bg-white/95 backdrop-blur-sm px-4 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] sm:px-8 sm:pt-4 sm:pb-[calc(1rem+env(safe-area-inset-bottom))]">
-      <div className="max-w-3xl mx-auto space-y-2">
+    <footer className="fixed bottom-0 left-0 right-0 z-30 border-t border-border/80 bg-white/95 backdrop-blur-md px-4 py-3 sm:py-4">
+      <div className="max-w-2xl mx-auto space-y-2">
         {validationError && (
-          <p
+          <div
             role="alert"
-            className="text-xs text-rose-600 font-medium text-center animate-fade-in"
+            className="p-2.5 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-700 text-center font-medium animate-fade-in flex items-center justify-center gap-1.5"
           >
-            {validationError}
-          </p>
+            <span>{validationError}</span>
+          </div>
         )}
 
-        <div className="flex items-center justify-between gap-3 sm:gap-4">
-          <button
+        <div className="flex items-center justify-between gap-3">
+          <Button
             type="button"
+            variant="outline"
+            size="sm"
             onClick={onPrevious}
             disabled={!canGoPrevious || isSubmitting}
-            className="shrink-0 px-4 sm:px-5 py-3 rounded-xl border border-border text-sm font-bold text-[#333542] hover:bg-[#F4F6FA] active:bg-[#EAEBF0] disabled:opacity-40 disabled:cursor-not-allowed transition-colors min-h-[46px]"
+            className="text-xs font-semibold text-slate-700 border-border/80 hover:bg-slate-100"
           >
-            Kembali
-          </button>
+            <ArrowLeft className="w-3.5 h-3.5 mr-1" />
+            <span>Kembali</span>
+          </Button>
 
-          <span className="text-xs text-[#676A78] hidden sm:inline-block">
-            {currentIndex + 1} dari {totalQuestions} soal
+          <span className="text-xs font-mono text-muted-foreground hidden sm:inline-block">
+            Butir {currentIndex + 1} dari {totalQuestions}
           </span>
 
           {isLastQuestion ? (
-            <button
+            <Button
               type="button"
+              size="sm"
               onClick={onSubmit}
               disabled={isSubmitting}
-              className="flex-1 sm:flex-none px-6 py-3 rounded-xl bg-[#183058] hover:bg-[#102342] active:bg-[#4636C4] text-white text-sm font-bold shadow-md shadow-[#183058]/25 disabled:opacity-60 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2 min-h-[46px]"
+              className="bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold px-5 shadow-xs"
             >
               {isSubmitting ? (
                 <>
-                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <Loader2 className="w-3.5 h-3.5 animate-spin mr-1.5" />
                   <span>Menganalisis Jawaban...</span>
                 </>
               ) : (
-                <span>Selesaikan Asesmen</span>
+                <>
+                  <CheckCircle2 className="w-3.5 h-3.5 mr-1.5" />
+                  <span>Selesaikan &amp; Lihat Hasil</span>
+                </>
               )}
-            </button>
+            </Button>
           ) : (
-            <button
+            <Button
               type="button"
+              size="sm"
               onClick={onNext}
               disabled={isSubmitting}
-              className="flex-1 sm:flex-none px-6 py-3 rounded-xl bg-[#183058] hover:bg-[#102342] active:bg-[#4636C4] text-white text-sm font-bold shadow-md shadow-[#183058]/25 disabled:opacity-60 disabled:cursor-not-allowed transition-colors min-h-[46px]"
+              className="bg-[#183058] hover:bg-[#102342] text-white text-xs font-semibold px-5 shadow-xs"
             >
-              Lanjut
-            </button>
+              <span>Lanjut</span>
+              <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
+            </Button>
           )}
         </div>
       </div>
-    </div>
+    </footer>
   )
 }

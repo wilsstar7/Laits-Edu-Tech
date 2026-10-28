@@ -119,13 +119,7 @@ export function AppRoutes() {
         />
         <Route
           path="/student/goals"
-          element={
-            <ProtectedRoute>
-              <RoleGuard allowedRoles={['student']}>
-                <StudentGoalsPage />
-              </RoleGuard>
-            </ProtectedRoute>
-          }
+          element={<Navigate to="/student/courses" replace />}
         />
         <Route
           path="/student/achievements"

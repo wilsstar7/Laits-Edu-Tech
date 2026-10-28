@@ -32,7 +32,6 @@ export interface NavItem {
 export const STUDENT_NAV_ITEMS: NavItem[] = [
   { label: 'Dashboard', href: '/student/dashboard', icon: LayoutDashboard },
   { label: 'Kursus Belajar', href: '/student/courses', icon: Library },
-  { label: 'Target Belajar', href: '/student/goals', icon: Target },
   { label: 'Pencapaian', href: '/student/achievements', icon: Award },
   { label: 'Asesmen Kepribadian', href: '/student/assessment', icon: Brain },
   { label: 'Tipe Kepribadian', href: '/student/personality', icon: Compass },

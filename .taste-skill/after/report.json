@@ -1,0 +1,1905 @@
+{
+ "url": "http://localhost:5174/",
+ "at": "2026-10-29T02:34:11.303Z",
+ "allow": [],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 6,
+   "filled": [
+    0.55,
+    0.8,
+    0.99,
+    0.7,
+    0.72,
+    0.79
+   ],
+   "motion": {
+    "elements": 29,
+    "css": 9,
+    "transitions": 20,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 4583,
+     "screens": 5.1,
+     "words": 421,
+     "img": 8,
+     "video": 0,
+     "canvas": 0,
+     "svg": 4,
+     "sections": 6,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 6,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "hero-student.jpg",
+      "style-visual.jpg",
+      "subject-general.jpg",
+      "subject-quran.jpg",
+      "step-tutoring.jpg",
+      "step-assessment.jpg"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Kenali Cara Belajar Anak Anda",
+     "words": 5,
+     "chars": 29,
+     "lines": 2,
+     "size": 68,
+     "vw": 4.7,
+     "font": "Plus Jakarta Sans Variable",
+     "weight": 800,
+     "tracking": -0.03,
+     "leading": 1.02,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "left",
+     "widthRatio": 0.43,
+     "top": 144,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Kenali Cara Belajar Anak Anda",
+     "words": 5,
+     "lines": 2,
+     "size": 68,
+     "font": "Plus Jakarta Sans Variable"
+    },
+    "headings": [
+     {
+      "text": "Kenali Cara Belajar Anak Anda",
+      "words": 5,
+      "chars": 29,
+      "lines": 2,
+      "size": 68,
+      "vw": 4.7,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 800,
+      "tracking": -0.03,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.43,
+      "top": 144,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Tiga Jalur Sensori",
+      "words": 3,
+      "chars": 18,
+      "lines": 1,
+      "size": 48,
+      "vw": 3.3,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 800,
+      "tracking": -0.025,
+      "leading": 1.08,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.33,
+      "top": 1017,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Peta Konsep Spasial",
+      "words": 3,
+      "chars": 19,
+      "lines": 1,
+      "size": 30,
+      "vw": 2.1,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 800,
+      "tracking": -0.015,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.38,
+      "top": 1220,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Dua Rumpun Kurikulum",
+      "words": 3,
+      "chars": 20,
+      "lines": 2,
+      "size": 48,
+      "vw": 3.3,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 800,
+      "tracking": -0.025,
+      "leading": 1.08,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.23,
+      "top": 1936,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Akademik Sekolah & Sains",
+      "words": 4,
+      "chars": 24,
+      "lines": 1,
+      "size": 30,
+      "vw": 2.1,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 800,
+      "tracking": -0.015,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.48,
+      "top": 1976,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Al-Qur’an & Studi Keagamaan",
+      "words": 4,
+      "chars": 27,
+      "lines": 1,
+      "size": 30,
+      "vw": 2.1,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 800,
+      "tracking": -0.015,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.48,
+      "top": 2616,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Tanya Jawab",
+      "words": 2,
+      "chars": 11,
+      "lines": 1,
+      "size": 48,
+      "vw": 3.3,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 800,
+      "tracking": -0.025,
+      "leading": 1.08,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.45,
+      "top": 3345,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Mulai dari Pemetaan Belajar",
+      "words": 4,
+      "chars": 27,
+      "lines": 2,
+      "size": 48,
+      "vw": 3.3,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 800,
+      "tracking": -0.025,
+      "leading": 1.08,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.33,
+      "top": 4117,
+      "tag": "h2",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 8,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 3,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Plus Jakarta Sans Variable",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      14,
+      17,
+      18,
+      21,
+      22,
+      30,
+      48,
+      68
+     ],
+     "sizeCount": 8,
+     "notLoaded": [],
+     "body": {
+      "font": "Plus Jakarta Sans Variable",
+      "size": 17,
+      "leading": 1.55,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 14.2
+     },
+     "measureChars": 76,
+     "max": {
+      "size": 68,
+      "vw": 4.7,
+      "font": "Plus Jakarta Sans Variable",
+      "text": "Kenali Cara Belajar"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.01,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#f4f6fa",
+     "bodyBgHsl": {
+      "h": 220,
+      "s": 0.37,
+      "l": 0.97
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#f4f6fa",
+       "top": 0,
+       "hsl": {
+        "h": 220,
+        "s": 0.37,
+        "l": 0.97
+       }
+      },
+      {
+       "color": "#e8ecf6",
+       "top": 120,
+       "hsl": {
+        "h": 223,
+        "s": 0.44,
+        "l": 0.94
+       }
+      },
+      {
+       "color": "#0f1d33",
+       "top": 1824,
+       "hsl": {
+        "h": 217,
+        "s": 0.55,
+        "l": 0.13
+       }
+      },
+      {
+       "color": "#183058",
+       "top": 1936,
+       "hsl": {
+        "h": 218,
+        "s": 0.57,
+        "l": 0.22
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#1d1d24",
+       "share": 0.35
+      },
+      {
+       "color": "#0f1d33",
+       "share": 0.25
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.18
+      },
+      {
+       "color": "#e8ecf6",
+       "share": 0.13
+      },
+      {
+       "color": "#3e4756",
+       "share": 0.05
+      }
+     ],
+     "button": {
+      "bg": "#183058",
+      "hsl": {
+       "h": 218,
+       "s": 0.57,
+       "l": 0.22
+      },
+      "fg": "#ffffff"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 7,
+     "inHero": 2,
+     "radius": 0,
+     "height": 48,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Daftar Siswa",
+      "Mulai Diagnostik Siswa"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 6,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "img",
+      "ratio": 0.29
+     }
+    ],
+    "nav": {
+     "links": 6,
+     "fixed": false,
+     "height": 80,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "plus jakarta sans variable"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 4583,
+    "margins": {
+     "left": 48,
+     "right": 48
+    },
+    "sections": [
+     {
+      "sel": "section.max-w-[1440px].mx-auto",
+      "tag": "section",
+      "top": 80,
+      "height": 825,
+      "words": 80,
+      "media": 1,
+      "middle": 49,
+      "heading": {
+       "text": "Kenali Cara Belajar",
+       "size": 68,
+       "tag": "h1"
+      },
+      "left": 48,
+      "right": 48,
+      "textLeft": 48,
+      "textRight": 285,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#modalitas.scroll-mt-16.w-full",
+      "tag": "section",
+      "top": 905,
+      "height": 919,
+      "words": 113,
+      "media": 1,
+      "middle": 96,
+      "heading": {
+       "text": "Tiga Jalur Sensori",
+       "size": 48,
+       "tag": "h2"
+      },
+      "left": 48,
+      "right": 98,
+      "textLeft": 48,
+      "textRight": 98,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#kurikulum.scroll-mt-16.w-full",
+      "tag": "section",
+      "top": 1824,
+      "height": 1409,
+      "words": 104,
+      "media": 2,
+      "middle": 95,
+      "heading": {
+       "text": "Dua Rumpun Kurikulum",
+       "size": 48,
+       "tag": "h2"
+      },
+      "left": 48,
+      "right": 109,
+      "textLeft": 48,
+      "textRight": 109,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#faq.scroll-mt-16.max-w-[1440px]",
+      "tag": "section",
+      "top": 3233,
+      "height": 772,
+      "words": 102,
+      "media": 2,
+      "middle": 48,
+      "heading": {
+       "text": "Tanya Jawab",
+       "size": 48,
+       "tag": "h2"
+      },
+      "left": 48,
+      "right": 48,
+      "textLeft": 48,
+      "textRight": 109,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.w-full.bg-[#E8ECF6]",
+      "tag": "section",
+      "top": 4005,
+      "height": 438,
+      "words": 33,
+      "media": 0,
+      "middle": 264,
+      "heading": {
+       "text": "Mulai dari Pemetaan Belajar",
+       "size": 48,
+       "tag": "h2"
+      },
+      "left": 48,
+      "right": 64,
+      "textLeft": 48,
+      "textRight": 64,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "footer.w-full.bg-[#0F1D33]",
+      "tag": "footer",
+      "top": 4443,
+      "height": 140,
+      "words": 17,
+      "media": 0,
+      "middle": 240,
+      "heading": null,
+      "left": 96,
+      "right": 48,
+      "textLeft": 96,
+      "textRight": 48,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Kenali Cara Belajar Anak Anda",
+      "size": 68,
+      "top": 144,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 48,
+      "n": 11
+     },
+     {
+      "x": 668,
+      "n": 4
+     },
+     {
+      "x": 792,
+      "n": 2
+     },
+     {
+      "x": 68,
+      "n": 1
+     },
+     {
+      "x": 400,
+      "n": 1
+     },
+     {
+      "x": 816,
+      "n": 1
+     },
+     {
+      "x": 1100,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 21,
+    "bodySize": 17,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0.13,
+    "voidBox": {
+     "x": 0,
+     "y": 780,
+     "w": 1440,
+     "h": 120
+    }
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 7,
+   "filled": [
+    0.65,
+    0.91,
+    0.87,
+    1,
+    0.45,
+    0.84,
+    0.84
+   ],
+   "motion": {
+    "elements": 29,
+    "css": 9,
+    "transitions": 20,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 6150,
+     "screens": 6,
+     "words": 421,
+     "img": 8,
+     "video": 0,
+     "canvas": 0,
+     "svg": 4,
+     "sections": 6,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 6,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "hero-student.jpg",
+      "style-visual.jpg",
+      "subject-general.jpg",
+      "subject-quran.jpg",
+      "step-tutoring.jpg",
+      "step-assessment.jpg"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Kenali Cara Belajar Anak Anda",
+     "words": 5,
+     "chars": 29,
+     "lines": 2,
+     "size": 47.7,
+     "vw": 6.2,
+     "font": "Plus Jakarta Sans Variable",
+     "weight": 800,
+     "tracking": -0.03,
+     "leading": 1.02,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "left",
+     "widthRatio": 0.57,
+     "top": 112,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Kenali Cara Belajar Anak Anda",
+     "words": 5,
+     "lines": 2,
+     "size": 47.7,
+     "font": "Plus Jakarta Sans Variable"
+    },
+    "headings": [
+     {
+      "text": "Kenali Cara Belajar Anak Anda",
+      "words": 5,
+      "chars": 29,
+      "lines": 2,
+      "size": 47.7,
+      "vw": 6.2,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 800,
+      "tracking": -0.03,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.57,
+      "top": 112,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Tiga Jalur Sensori",
+      "words": 3,
+      "chars": 18,
+      "lines": 1,
+      "size": 36.9,
+      "vw": 4.8,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 800,
+      "tracking": -0.025,
+      "leading": 1.08,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.47,
+      "top": 1303,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Dua Rumpun Kurikulum",
+      "words": 3,
+      "chars": 20,
+      "lines": 2,
+      "size": 36.9,
+      "vw": 4.8,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 800,
+      "tracking": -0.025,
+      "leading": 1.08,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.34,
+      "top": 2703,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Tanya Jawab",
+      "words": 2,
+      "chars": 11,
+      "lines": 1,
+      "size": 36.9,
+      "vw": 4.8,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 800,
+      "tracking": -0.025,
+      "leading": 1.08,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 4292,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Mulai dari Pemetaan Belajar",
+      "words": 4,
+      "chars": 27,
+      "lines": 2,
+      "size": 36.9,
+      "vw": 4.8,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 800,
+      "tracking": -0.025,
+      "leading": 1.08,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.47,
+      "top": 5589,
+      "tag": "h2",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 5,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 3,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Plus Jakarta Sans Variable",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      14,
+      17,
+      18,
+      20,
+      22,
+      25,
+      37,
+      48
+     ],
+     "sizeCount": 8,
+     "notLoaded": [],
+     "body": {
+      "font": "Plus Jakarta Sans Variable",
+      "size": 17,
+      "leading": 1.55,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 14.2
+     },
+     "measureChars": 79,
+     "max": {
+      "size": 47.7,
+      "vw": 6.2,
+      "font": "Plus Jakarta Sans Variable",
+      "text": "Kenali Cara Belajar"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.01,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#f4f6fa",
+     "bodyBgHsl": {
+      "h": 220,
+      "s": 0.37,
+      "l": 0.97
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#f4f6fa",
+       "top": 0,
+       "hsl": {
+        "h": 220,
+        "s": 0.37,
+        "l": 0.97
+       }
+      },
+      {
+       "color": "#e8ecf6",
+       "top": 622,
+       "hsl": {
+        "h": 223,
+        "s": 0.44,
+        "l": 0.94
+       }
+      },
+      {
+       "color": "#0f1d33",
+       "top": 2623,
+       "hsl": {
+        "h": 217,
+        "s": 0.55,
+        "l": 0.13
+       }
+      },
+      {
+       "color": "#183058",
+       "top": 2992,
+       "hsl": {
+        "h": 218,
+        "s": 0.57,
+        "l": 0.22
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#1d1d24",
+       "share": 0.35
+      },
+      {
+       "color": "#0f1d33",
+       "share": 0.25
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.18
+      },
+      {
+       "color": "#e8ecf6",
+       "share": 0.13
+      },
+      {
+       "color": "#3e4756",
+       "share": 0.05
+      }
+     ],
+     "button": {
+      "bg": "#183058",
+      "hsl": {
+       "h": 218,
+       "s": 0.57,
+       "l": 0.22
+      },
+      "fg": "#ffffff"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 7,
+     "inHero": 2,
+     "radius": 0,
+     "height": 48,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Daftar Siswa",
+      "Mulai Diagnostik Siswa"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 6,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "img",
+      "ratio": 0.36
+     }
+    ],
+    "nav": {
+     "links": 6,
+     "fixed": false,
+     "height": 80,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "plus jakarta sans variable"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 6150,
+    "margins": {
+     "left": 32,
+     "right": 32
+    },
+    "sections": [
+     {
+      "sel": "section.max-w-[1440px].mx-auto",
+      "tag": "section",
+      "top": 80,
+      "height": 1143,
+      "words": 80,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "Kenali Cara Belajar",
+       "size": 48,
+       "tag": "h1"
+      },
+      "left": 32,
+      "right": 32,
+      "textLeft": 32,
+      "textRight": 52,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#modalitas.scroll-mt-16.w-full",
+      "tag": "section",
+      "top": 1223,
+      "height": 1401,
+      "words": 113,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "Tiga Jalur Sensori",
+       "size": 37,
+       "tag": "h2"
+      },
+      "left": 32,
+      "right": 32,
+      "textLeft": 32,
+      "textRight": 87,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#kurikulum.scroll-mt-16.w-full",
+      "tag": "section",
+      "top": 2623,
+      "height": 1589,
+      "words": 104,
+      "media": 2,
+      "middle": 0,
+      "heading": {
+       "text": "Dua Rumpun Kurikulum",
+       "size": 37,
+       "tag": "h2"
+      },
+      "left": 32,
+      "right": 73,
+      "textLeft": 32,
+      "textRight": 84,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#faq.scroll-mt-16.max-w-[1440px]",
+      "tag": "section",
+      "top": 4212,
+      "height": 1297,
+      "words": 102,
+      "media": 2,
+      "middle": 0,
+      "heading": {
+       "text": "Tanya Jawab",
+       "size": 37,
+       "tag": "h2"
+      },
+      "left": 32,
+      "right": 32,
+      "textLeft": 32,
+      "textRight": 68,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.w-full.bg-[#E8ECF6]",
+      "tag": "section",
+      "top": 5509,
+      "height": 434,
+      "words": 33,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Mulai dari Pemetaan Belajar",
+       "size": 37,
+       "tag": "h2"
+      },
+      "left": 32,
+      "right": 153,
+      "textLeft": 32,
+      "textRight": 153,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "footer.w-full.bg-[#0F1D33]",
+      "tag": "footer",
+      "top": 5942,
+      "height": 208,
+      "words": 17,
+      "media": 0,
+      "middle": 52,
+      "heading": null,
+      "left": 80,
+      "right": 71,
+      "textLeft": 80,
+      "textRight": 71,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Kenali Cara Belajar Anak Anda",
+      "size": 48,
+      "top": 112,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 32,
+      "n": 11
+     },
+     {
+      "x": 72,
+      "n": 6
+     },
+     {
+      "x": 412,
+      "n": 2
+     },
+     {
+      "x": 52,
+      "n": 1
+     },
+     {
+      "x": 96,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 21,
+    "bodySize": 17,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 10,
+   "filled": [
+    0.52,
+    0.82,
+    0.65,
+    0.89,
+    1,
+    0.93,
+    0.47,
+    0.92,
+    0.93,
+    1
+   ],
+   "motion": {
+    "elements": 29,
+    "css": 9,
+    "transitions": 20,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 7724,
+     "screens": 9.2,
+     "words": 417,
+     "img": 8,
+     "video": 0,
+     "canvas": 0,
+     "svg": 4,
+     "sections": 6,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 6,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "hero-student.jpg",
+      "style-visual.jpg",
+      "subject-general.jpg",
+      "subject-quran.jpg",
+      "step-tutoring.jpg",
+      "step-assessment.jpg"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Kenali Cara Belajar Anak Anda",
+     "words": 5,
+     "chars": 29,
+     "lines": 2,
+     "size": 37.6,
+     "vw": 9.6,
+     "font": "Plus Jakarta Sans Variable",
+     "weight": 800,
+     "tracking": -0.03,
+     "leading": 1.02,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.88,
+     "top": 112,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Kenali Cara Belajar Anak Anda",
+     "words": 5,
+     "lines": 2,
+     "size": 37.6,
+     "font": "Plus Jakarta Sans Variable"
+    },
+    "headings": [
+     {
+      "text": "Kenali Cara Belajar Anak Anda",
+      "words": 5,
+      "chars": 29,
+      "lines": 2,
+      "size": 37.6,
+      "vw": 9.6,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 800,
+      "tracking": -0.03,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.88,
+      "top": 112,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Tiga Jalur Sensori",
+      "words": 3,
+      "chars": 18,
+      "lines": 1,
+      "size": 29.6,
+      "vw": 7.6,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 800,
+      "tracking": -0.025,
+      "leading": 1.08,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.74,
+      "top": 1478,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Dua Rumpun Kurikulum",
+      "words": 3,
+      "chars": 20,
+      "lines": 2,
+      "size": 29.6,
+      "vw": 7.6,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 800,
+      "tracking": -0.025,
+      "leading": 1.08,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.53,
+      "top": 3051,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Tanya Jawab",
+      "words": 2,
+      "chars": 11,
+      "lines": 1,
+      "size": 29.6,
+      "vw": 7.6,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 800,
+      "tracking": -0.025,
+      "leading": 1.08,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 5093,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Apa fungsi diagnostik modalitas belajar di ZEINBOX? −",
+      "words": 8,
+      "chars": 53,
+      "lines": 2,
+      "size": 22,
+      "vw": 5.6,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 5256,
+      "tag": "button",
+      "kind": "heading"
+     },
+     {
+      "text": "Berapa lama siswa mengerjakan tes diagnostik? +",
+      "words": 7,
+      "chars": 47,
+      "lines": 2,
+      "size": 22,
+      "vw": 5.6,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 5549,
+      "tag": "button",
+      "kind": "heading"
+     },
+     {
+      "text": "Bagaimana jika anak memiliki kombinasi dua gaya belajar? +",
+      "words": 9,
+      "chars": 58,
+      "lines": 2,
+      "size": 22,
+      "vw": 5.6,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 5647,
+      "tag": "button",
+      "kind": "heading"
+     },
+     {
+      "text": "Bagaimana cara orang tua memantau hasil les setiap pekan? +",
+      "words": 10,
+      "chars": 59,
+      "lines": 2,
+      "size": 22,
+      "vw": 5.6,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 5746,
+      "tag": "button",
+      "kind": "heading"
+     },
+     {
+      "text": "Mulai dari Pemetaan Belajar",
+      "words": 4,
+      "chars": 27,
+      "lines": 2,
+      "size": 29.6,
+      "vw": 7.6,
+      "font": "Plus Jakarta Sans Variable",
+      "weight": 800,
+      "tracking": -0.025,
+      "leading": 1.08,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.74,
+      "top": 6961,
+      "tag": "h2",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 9,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 7,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Plus Jakarta Sans Variable",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      14,
+      17,
+      18,
+      22,
+      30,
+      38
+     ],
+     "sizeCount": 6,
+     "notLoaded": [],
+     "body": {
+      "font": "Plus Jakarta Sans Variable",
+      "size": 17,
+      "leading": 1.55,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 14.2
+     },
+     "measureChars": 41,
+     "max": {
+      "size": 37.6,
+      "vw": 9.6,
+      "font": "Plus Jakarta Sans Variable",
+      "text": "Kenali Cara Belajar"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.01,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#f4f6fa",
+     "bodyBgHsl": {
+      "h": 220,
+      "s": 0.37,
+      "l": 0.97
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#f4f6fa",
+       "top": 0,
+       "hsl": {
+        "h": 220,
+        "s": 0.37,
+        "l": 0.97
+       }
+      },
+      {
+       "color": "#e8ecf6",
+       "top": 845,
+       "hsl": {
+        "h": 223,
+        "s": 0.44,
+        "l": 0.94
+       }
+      },
+      {
+       "color": "#0f1d33",
+       "top": 2971,
+       "hsl": {
+        "h": 217,
+        "s": 0.55,
+        "l": 0.13
+       }
+      },
+      {
+       "color": "#183058",
+       "top": 3347,
+       "hsl": {
+        "h": 218,
+        "s": 0.57,
+        "l": 0.22
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#1d1d24",
+       "share": 0.35
+      },
+      {
+       "color": "#0f1d33",
+       "share": 0.24
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.18
+      },
+      {
+       "color": "#e8ecf6",
+       "share": 0.13
+      },
+      {
+       "color": "#3e4756",
+       "share": 0.05
+      }
+     ],
+     "button": {
+      "bg": "#183058",
+      "hsl": {
+       "h": 218,
+       "s": 0.57,
+       "l": 0.22
+      },
+      "fg": "#ffffff"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 7,
+     "inHero": 2,
+     "radius": 0,
+     "height": 48,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Daftar Siswa",
+      "Mulai Diagnostik Siswa"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 6,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 3,
+     "fixed": false,
+     "height": 80,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "plus jakarta sans variable"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 7724,
+    "margins": {
+     "left": 20,
+     "right": 20
+    },
+    "sections": [
+     {
+      "sel": "section.max-w-[1440px].mx-auto",
+      "tag": "section",
+      "top": 80,
+      "height": 1318,
+      "words": 80,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "Kenali Cara Belajar",
+       "size": 38,
+       "tag": "h1"
+      },
+      "left": 20,
+      "right": 20,
+      "textLeft": 20,
+      "textRight": 23,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#modalitas.scroll-mt-16.w-full",
+      "tag": "section",
+      "top": 1398,
+      "height": 1573,
+      "words": 113,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "Tiga Jalur Sensori",
+       "size": 30,
+       "tag": "h2"
+      },
+      "left": 20,
+      "right": 20,
+      "textLeft": 20,
+      "textRight": 33,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#kurikulum.scroll-mt-16.w-full",
+      "tag": "section",
+      "top": 2971,
+      "height": 2042,
+      "words": 104,
+      "media": 2,
+      "middle": 0,
+      "heading": {
+       "text": "Dua Rumpun Kurikulum",
+       "size": 30,
+       "tag": "h2"
+      },
+      "left": 20,
+      "right": 45,
+      "textLeft": 20,
+      "textRight": 45,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#faq.scroll-mt-16.max-w-[1440px]",
+      "tag": "section",
+      "top": 5013,
+      "height": 1868,
+      "words": 102,
+      "media": 2,
+      "middle": 0,
+      "heading": {
+       "text": "Tanya Jawab",
+       "size": 30,
+       "tag": "h2"
+      },
+      "left": 20,
+      "right": 20,
+      "textLeft": 20,
+      "textRight": 33,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.w-full.bg-[#E8ECF6]",
+      "tag": "section",
+      "top": 6881,
+      "height": 510,
+      "words": 33,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Mulai dari Pemetaan Belajar",
+       "size": 30,
+       "tag": "h2"
+      },
+      "left": 20,
+      "right": 35,
+      "textLeft": 20,
+      "textRight": 35,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "footer.w-full.bg-[#0F1D33]",
+      "tag": "footer",
+      "top": 7390,
+      "height": 334,
+      "words": 17,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": 20,
+      "right": 78,
+      "textLeft": 20,
+      "textRight": 78,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Kenali Cara Belajar Anak Anda",
+      "size": 38,
+      "top": 112,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 20,
+      "n": 11
+     },
+     {
+      "x": 40,
+      "n": 8
+     },
+     {
+      "x": 68,
+      "n": 2
+     }
+    ],
+    "leftBlocks": 21,
+    "bodySize": 17,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "WARN",
+   "id": "no-footage",
+   "width": 1440,
+   "message": "No video anywhere on the page.",
+   "fix": "Look for one honest clip with scripts/assets.mjs --video (the place, the material, the process) and use it as a muted loop with a poster frame. Defend its absence only if no clip fits the subject."
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "C:\\Users\\Lenovo\\OneDrive\\Desktop\\Project Aplikasi\\Laits Edu Tech\\.taste-skill\\after\\desktop-fold.jpg",
+   "pages": [
+    "C:\\Users\\Lenovo\\OneDrive\\Desktop\\Project Aplikasi\\Laits Edu Tech\\.taste-skill\\after\\desktop-page-01.jpg",
+    "C:\\Users\\Lenovo\\OneDrive\\Desktop\\Project Aplikasi\\Laits Edu Tech\\.taste-skill\\after\\desktop-page-02.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "C:\\Users\\Lenovo\\OneDrive\\Desktop\\Project Aplikasi\\Laits Edu Tech\\.taste-skill\\after\\tablet-fold.jpg",
+   "pages": [
+    "C:\\Users\\Lenovo\\OneDrive\\Desktop\\Project Aplikasi\\Laits Edu Tech\\.taste-skill\\after\\tablet-page-01.jpg",
+    "C:\\Users\\Lenovo\\OneDrive\\Desktop\\Project Aplikasi\\Laits Edu Tech\\.taste-skill\\after\\tablet-page-02.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "C:\\Users\\Lenovo\\OneDrive\\Desktop\\Project Aplikasi\\Laits Edu Tech\\.taste-skill\\after\\mobile-fold.jpg",
+   "pages": [
+    "C:\\Users\\Lenovo\\OneDrive\\Desktop\\Project Aplikasi\\Laits Edu Tech\\.taste-skill\\after\\mobile-page-01.jpg",
+    "C:\\Users\\Lenovo\\OneDrive\\Desktop\\Project Aplikasi\\Laits Edu Tech\\.taste-skill\\after\\mobile-page-02.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

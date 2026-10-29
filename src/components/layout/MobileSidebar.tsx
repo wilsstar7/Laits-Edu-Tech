@@ -8,7 +8,6 @@ interface MobileSidebarProps {
 }
 
 export function MobileSidebar({ open, onClose }: MobileSidebarProps) {
-  // Prevent body scrolling when mobile drawer is open
   useEffect(() => {
     if (open) {
       document.body.style.overflow = 'hidden'
@@ -24,28 +23,25 @@ export function MobileSidebar({ open, onClose }: MobileSidebarProps) {
 
   return (
     <div className="fixed inset-0 z-50 lg:hidden" aria-modal="true" role="dialog">
-      {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity duration-300 animate-in fade-in"
+        className="fixed inset-0 bg-black/60 transition-opacity duration-200 animate-in fade-in"
         onClick={onClose}
         aria-hidden="true"
       />
 
-      {/* Drawer */}
-      <div className="fixed inset-y-0 left-0 w-[290px] max-w-[85vw] bg-[#17181C] shadow-2xl flex flex-col z-10 transition-transform duration-300 animate-in slide-in-from-left">
-        {/* Close Button Header */}
-        <div className="absolute top-4 right-4 z-20">
+      <div className="fixed inset-y-0 left-0 w-[300px] max-w-[88vw] bg-[#0F1D33] shadow-2xl flex flex-col z-10 transition-transform duration-200 animate-in slide-in-from-left">
+        <div className="absolute top-3.5 right-3.5 z-20">
           <button
             type="button"
             onClick={onClose}
             aria-label="Tutup menu"
-            className="w-9 h-9 rounded-lg bg-white/10 text-white hover:bg-white/20 flex items-center justify-center transition-colors focus-visible:outline-2 focus-visible:outline-[#183058]"
+            className="min-w-[44px] min-h-[44px] px-2.5 rounded-xl bg-white/10 text-white hover:bg-white/20 flex items-center justify-center gap-1.5 text-xs font-bold transition-colors focus-visible:outline-2 focus-visible:outline-white cursor-pointer"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
+            <span>Tutup</span>
           </button>
         </div>
 
-        {/* Reusable Sidebar Content */}
         <Sidebar onNavigate={onClose} className="border-r-0" />
       </div>
     </div>

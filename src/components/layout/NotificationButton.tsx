@@ -128,7 +128,7 @@ export function NotificationButton() {
         onClick={() => setIsOpen(!isOpen)}
         aria-label="Notifikasi"
         aria-expanded={isOpen}
-        className="relative w-10 h-10 rounded-xl bg-white border border-border/80 flex items-center justify-center text-foreground hover:bg-[#ECF0F7] transition-colors focus-visible:outline-2 focus-visible:outline-[#183058]"
+        className="relative min-w-[44px] min-h-[44px] rounded-xl bg-white border border-border/80 flex items-center justify-center text-foreground hover:bg-[#ECF0F7] transition-colors focus-visible:outline-2 focus-visible:outline-[#183058] cursor-pointer"
       >
         <Bell className="w-5 h-5 text-[#676A78]" />
         {unreadCount > 0 && (
@@ -139,14 +139,14 @@ export function NotificationButton() {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-80 sm:w-96 rounded-2xl bg-white border border-border shadow-xl p-4 z-50 animate-in fade-in-50 zoom-in-95 duration-150">
+        <div className="fixed sm:absolute inset-x-4 sm:inset-x-auto sm:right-0 top-16 sm:top-auto sm:mt-2 sm:w-96 rounded-2xl bg-white border border-border shadow-xl p-4 z-50 animate-in fade-in-50 zoom-in-95 duration-150">
           <div className="flex items-center justify-between pb-3 border-b border-border">
             <h4 className="font-semibold text-sm text-foreground">Notifikasi</h4>
             {unreadCount > 0 && (
               <button
                 type="button"
                 onClick={handleMarkAllRead}
-                className="text-[11px] font-medium text-[#183058] hover:underline flex items-center gap-1 cursor-pointer"
+                className="min-h-[36px] px-2 text-xs font-medium text-[#183058] hover:underline flex items-center gap-1 cursor-pointer"
               >
                 <CheckCheck className="w-3.5 h-3.5" /> Tandai semua dibaca
               </button>
@@ -182,7 +182,7 @@ export function NotificationButton() {
                     <p className={`text-xs ${notif.isRead ? 'font-medium text-foreground' : 'font-bold text-[#17181C]'}`}>
                       {notif.title}
                     </p>
-                    <span className="text-[10px] text-muted-foreground shrink-0">
+                    <span className="text-[11px] text-muted-foreground shrink-0">
                       {formatShortDate(notif.createdAt)}
                     </span>
                   </div>
@@ -198,7 +198,7 @@ export function NotificationButton() {
             <Link
               to="/student/notifications"
               onClick={() => setIsOpen(false)}
-              className="w-full py-2 px-3 rounded-xl bg-[#F4F6FA] hover:bg-[#ECF0F7] text-xs font-bold text-[#183058] flex items-center justify-center gap-1.5 transition-colors"
+              className="w-full min-h-[44px] py-2.5 px-3 rounded-xl bg-[#F4F6FA] hover:bg-[#ECF0F7] text-xs font-bold text-[#183058] flex items-center justify-center gap-1.5 transition-colors"
             >
               <span>Lihat Semua Notifikasi</span>
               <ArrowRight className="w-3.5 h-3.5" />

@@ -15,6 +15,7 @@ import {
   Megaphone,
   UserPlus,
   ClipboardList,
+  ArrowRight,
 } from 'lucide-react'
 import { AppShell } from '@/components/layout/AppShell'
 import { PageHeader } from '@/components/layout/PageHeader'
@@ -97,67 +98,29 @@ export function AdminDashboardPage() {
         subtitle="Ringkasan operasional sistem, database pengguna terdaftar, dan status otorisasi platform."
         badge="Administrator"
         action={
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
             <button
               type="button"
               onClick={() => setIsCreateTutorOpen(true)}
-              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#45B97C] text-white text-xs font-bold hover:bg-[#389E68] transition-colors min-h-[44px] shadow-sm cursor-pointer"
+              className="inline-flex items-center justify-center flex-1 sm:flex-initial gap-2 px-4 py-2.5 rounded-xl bg-[#183058] text-white text-xs font-bold hover:bg-[#102342] active:scale-[0.98] transition-colors min-h-[44px] cursor-pointer"
             >
-              <UserPlus className="w-3.5 h-3.5" />
-              <span>+ Tambah Akun Tutor</span>
+              <UserPlus className="w-4 h-4 shrink-0" />
+              <span>Tambah Akun Tutor</span>
             </button>
-            <Link
-              to="/admin/assessments"
-              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#183058] text-white text-xs font-bold hover:bg-[#102342] transition-colors min-h-[44px]"
-            >
-              <ClipboardList className="w-3.5 h-3.5" />
-              <span>Kelola Soal &amp; Jenjang</span>
-            </Link>
-            <Link
-              to="/admin/courses"
-              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-border text-foreground text-xs font-bold hover:bg-[#ECF0F7] transition-colors min-h-[44px]"
-            >
-              <Library className="w-3.5 h-3.5 text-[#183058]" />
-              <span>Kelola Kursus</span>
-            </Link>
-            <Link
-              to="/admin/announcements"
-              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-border text-foreground text-xs font-bold hover:bg-[#ECF0F7] transition-colors min-h-[44px]"
-            >
-              <Megaphone className="w-3.5 h-3.5 text-[#183058]" />
-              <span>Pengumuman</span>
-            </Link>
-            {role === 'super_admin' && (
-              <Link
-                to="/admin/payments"
-                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-border text-foreground text-xs font-bold hover:bg-[#ECF0F7] transition-colors min-h-[44px]"
-              >
-                <CreditCard className="w-3.5 h-3.5 text-[#183058]" />
-                <span>Verifikasi Pembayaran</span>
-              </Link>
-            )}
-            <Link
-              to="/admin/reviews"
-              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-border text-foreground text-xs font-bold hover:bg-[#ECF0F7] transition-colors min-h-[44px]"
-            >
-              <Compass className="w-3.5 h-3.5 text-[#183058]" />
-              <span>Moderasi Ulasan</span>
-            </Link>
             <button
               type="button"
               onClick={handleRefresh}
               disabled={loading}
-              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-border text-foreground text-xs font-bold hover:bg-[#ECF0F7] transition-colors min-h-[44px]"
+              className="inline-flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl bg-white border border-border text-foreground text-xs font-bold hover:bg-[#ECF0F7] transition-colors min-h-[44px] cursor-pointer"
             >
-              <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
-              <span>Segarkan Data</span>
+              <RefreshCw className={`w-4 h-4 shrink-0 ${loading ? 'animate-spin' : ''}`} />
+              <span>Segarkan</span>
             </button>
           </div>
         }
       />
 
-      {/* 4 Stat Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4 sm:gap-5">
         <StatCard
           label="Total Siswa Terdaftar"
           value={loading ? '-' : String(data?.totalStudents ?? 0)}
@@ -195,18 +158,82 @@ export function AdminDashboardPage() {
         />
       </div>
 
-      {/* Table: Recent Users */}
-      <div className="surface-card p-6 space-y-4">
-        <div className="flex items-center justify-between pb-3 border-b border-border/60">
-          <div className="flex items-center gap-2.5">
-            <UserCheck className="w-5 h-5 text-[#183058]" />
-            <h3 className="font-bold text-base text-[#17181C]">Pengguna Terbaru Terdaftar</h3>
+      <section aria-label="Akses cepat manajemen" className="space-y-3">
+        <h2 className="text-sm font-bold text-[#17181C]">Akses Cepat Manajemen</h2>
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(190px,1fr))] gap-3">
+          <Link
+            to="/admin/assessments"
+            className="surface-card p-3.5 rounded-2xl bg-white border border-border hover:bg-[#ECF0F7] transition-colors min-h-[48px] flex items-center justify-between gap-3 text-xs font-bold text-[#17181C]"
+          >
+            <span className="flex items-center gap-2.5 min-w-0">
+              <ClipboardList className="w-4 h-4 text-[#183058] shrink-0" />
+              <span className="truncate">Kelola Soal &amp; Jenjang</span>
+            </span>
+            <ArrowRight className="w-3.5 h-3.5 text-[#676A78] shrink-0" />
+          </Link>
+
+          <Link
+            to="/admin/courses"
+            className="surface-card p-3.5 rounded-2xl bg-white border border-border hover:bg-[#ECF0F7] transition-colors min-h-[48px] flex items-center justify-between gap-3 text-xs font-bold text-[#17181C]"
+          >
+            <span className="flex items-center gap-2.5 min-w-0">
+              <Library className="w-4 h-4 text-[#183058] shrink-0" />
+              <span className="truncate">Kelola Kursus</span>
+            </span>
+            <ArrowRight className="w-3.5 h-3.5 text-[#676A78] shrink-0" />
+          </Link>
+
+          <Link
+            to="/admin/announcements"
+            className="surface-card p-3.5 rounded-2xl bg-white border border-border hover:bg-[#ECF0F7] transition-colors min-h-[48px] flex items-center justify-between gap-3 text-xs font-bold text-[#17181C]"
+          >
+            <span className="flex items-center gap-2.5 min-w-0">
+              <Megaphone className="w-4 h-4 text-[#183058] shrink-0" />
+              <span className="truncate">Pengumuman</span>
+            </span>
+            <ArrowRight className="w-3.5 h-3.5 text-[#676A78] shrink-0" />
+          </Link>
+
+          {role === 'super_admin' && (
+            <Link
+              to="/admin/payments"
+              className="surface-card p-3.5 rounded-2xl bg-white border border-border hover:bg-[#ECF0F7] transition-colors min-h-[48px] flex items-center justify-between gap-3 text-xs font-bold text-[#17181C]"
+            >
+              <span className="flex items-center gap-2.5 min-w-0">
+                <CreditCard className="w-4 h-4 text-[#183058] shrink-0" />
+                <span className="truncate">Verifikasi Pembayaran</span>
+              </span>
+              <ArrowRight className="w-3.5 h-3.5 text-[#676A78] shrink-0" />
+            </Link>
+          )}
+
+          <Link
+            to="/admin/reviews"
+            className="surface-card p-3.5 rounded-2xl bg-white border border-border hover:bg-[#ECF0F7] transition-colors min-h-[48px] flex items-center justify-between gap-3 text-xs font-bold text-[#17181C]"
+          >
+            <span className="flex items-center gap-2.5 min-w-0">
+              <Compass className="w-4 h-4 text-[#183058] shrink-0" />
+              <span className="truncate">Moderasi Ulasan</span>
+            </span>
+            <ArrowRight className="w-3.5 h-3.5 text-[#676A78] shrink-0" />
+          </Link>
+        </div>
+      </section>
+
+      <div className="surface-card p-4 sm:p-6 space-y-4 min-w-0">
+        <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-border/60">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <UserCheck className="w-5 h-5 text-[#183058] shrink-0" />
+            <h3 className="font-bold text-sm sm:text-base text-[#17181C]">
+              Pengguna Terbaru Terdaftar
+            </h3>
           </div>
           <Link
             to="/admin/users"
-            className="text-xs font-semibold text-[#183058] hover:underline"
+            className="min-h-[44px] inline-flex items-center gap-1 text-xs font-semibold text-[#183058] hover:underline"
           >
-            Kelola Semua Pengguna &rarr;
+            <span>Kelola Semua Pengguna</span>
+            <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
 
@@ -217,58 +244,84 @@ export function AdminDashboardPage() {
           </div>
         ) : (data?.recentUsers.length ?? 0) === 0 ? (
           <div className="py-10 text-center text-muted-foreground text-xs">
-            Belum ada data pengguna di database. Terapkan database seed di <code className="font-mono bg-black/5 px-1 py-0.5 rounded">supabase/seed.sql</code>.
+            Belum ada data pengguna di database. Terapkan database seed di{' '}
+            <code className="font-mono bg-black/5 px-1 py-0.5 rounded">supabase/seed.sql</code>.
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs">
-              <thead>
-                <tr className="border-b border-border/60 text-muted-foreground font-semibold uppercase tracking-wider">
-                  <th className="py-2.5 px-3">Nama Lengkap</th>
-                  <th className="py-2.5 px-3">Email</th>
-                  <th className="py-2.5 px-3">Peran</th>
-                  <th className="py-2.5 px-3">Tanggal Dibuat</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border/40">
-                {data?.recentUsers.map((u) => (
-                  <tr key={u.id} className="hover:bg-[#F4F6FA]/80 transition-colors">
-                    <td className="py-3 px-3 font-semibold text-foreground">
-                      {u.full_name || 'Tanpa Nama'}
-                    </td>
-                    <td className="py-3 px-3 text-muted-foreground">{u.email}</td>
-                    <td className="py-3 px-3">
-                      <span className="capitalize px-2 py-0.5 rounded text-[10px] font-bold bg-[#E8ECF6] text-[#183058]">
-                        {u.role}
-                      </span>
-                    </td>
-                    <td className="py-3 px-3 text-muted-foreground">
-                      {formatShortDate(u.created_at)}
-                    </td>
+          <>
+            <div className="md:hidden space-y-3">
+              {data?.recentUsers.map((u) => (
+                <div
+                  key={u.id}
+                  className="p-3.5 rounded-xl bg-[#F4F6FA] border border-border/60 space-y-2"
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="min-w-0">
+                      <p className="text-xs font-bold text-foreground break-words">
+                        {u.full_name || 'Tanpa Nama'}
+                      </p>
+                      <p className="text-xs text-muted-foreground break-all">{u.email}</p>
+                    </div>
+                    <span className="capitalize px-2 py-0.5 rounded text-xs font-bold bg-[#E8ECF6] text-[#183058] shrink-0">
+                      {u.role}
+                    </span>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Terdaftar: {formatShortDate(u.created_at)}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full text-left text-xs">
+                <thead>
+                  <tr className="border-b border-border/60 text-muted-foreground font-semibold">
+                    <th className="py-2.5 px-3">Nama Lengkap</th>
+                    <th className="py-2.5 px-3">Email</th>
+                    <th className="py-2.5 px-3">Peran</th>
+                    <th className="py-2.5 px-3">Tanggal Dibuat</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody className="divide-y divide-border/40">
+                  {data?.recentUsers.map((u) => (
+                    <tr key={u.id} className="hover:bg-[#F4F6FA]/80 transition-colors">
+                      <td className="py-3 px-3 font-semibold text-foreground">
+                        {u.full_name || 'Tanpa Nama'}
+                      </td>
+                      <td className="py-3 px-3 text-muted-foreground">{u.email}</td>
+                      <td className="py-3 px-3">
+                        <span className="capitalize px-2 py-0.5 rounded text-xs font-bold bg-[#E8ECF6] text-[#183058]">
+                          {u.role}
+                        </span>
+                      </td>
+                      <td className="py-3 px-3 text-muted-foreground">
+                        {formatShortDate(u.created_at)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
         )}
       </div>
 
-      {/* Table: Student Assessment Data (Mega Admin Data View - Zero PDF Storage) */}
-      <div className="surface-card p-6 space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-border/60">
-          <div className="flex items-center gap-2.5">
-            <Compass className="w-5 h-5 text-[#183058]" />
-            <div>
-              <h3 className="font-bold text-base text-[#17181C]">
-                Data Hasil Asesmen Siswa (Mega Admin)
+      <div className="surface-card p-4 sm:p-6 space-y-4 min-w-0">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-3 border-b border-border/60">
+          <div className="flex items-start sm:items-center gap-2.5 min-w-0">
+            <Compass className="w-5 h-5 text-[#183058] shrink-0 mt-0.5 sm:mt-0" />
+            <div className="min-w-0">
+              <h3 className="font-bold text-sm sm:text-base text-[#17181C]">
+                Data Hasil Asesmen Siswa
               </h3>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-muted-foreground leading-relaxed">
                 Akses langsung data profil dan dimensi belajar tanpa membebani penyimpanan berkas PDF.
               </p>
             </div>
           </div>
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#E8ECF6] text-[#183058] text-[11px] font-bold self-start sm:self-center">
-            <Database className="w-3 h-3" />
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#E8ECF6] text-[#183058] text-xs font-bold self-start sm:self-center shrink-0">
+            <Database className="w-3.5 h-3.5" />
             <span>Mode Data Murni</span>
           </span>
         </div>
@@ -284,64 +337,108 @@ export function AdminDashboardPage() {
             <p>Data akan otomatis muncul di sini begitu siswa menyelesaikan tes kepribadian.</p>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs">
-              <thead>
-                <tr className="border-b border-border/60 text-muted-foreground font-semibold uppercase tracking-wider">
-                  <th className="py-2.5 px-3">Nama Siswa</th>
-                  <th className="py-2.5 px-3">Email</th>
-                  <th className="py-2.5 px-3">Tipe Kepribadian</th>
-                  <th className="py-2.5 px-3">Skor Rata-rata</th>
-                  <th className="py-2.5 px-3">Tanggal Selesai</th>
-                  <th className="py-2.5 px-3 text-right">Aksi</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border/40">
-                {studentAssessments.map((item) => (
-                  <tr key={item.id} className="hover:bg-[#F4F6FA]/80 transition-colors">
-                    <td className="py-3 px-3 font-semibold text-foreground">
-                      {item.studentName}
-                    </td>
-                    <td className="py-3 px-3 text-muted-foreground">{item.studentEmail}</td>
-                    <td className="py-3 px-3">
-                      <div className="flex items-center gap-1.5">
-                        <span className="font-bold text-[#17181C]">{item.personalityTypeName}</span>
-                        <span className="px-1.5 py-0.5 rounded text-[10px] font-extrabold bg-[#E8ECF6] text-[#183058]">
-                          {item.personalityTypeCode}
-                        </span>
-                      </div>
-                    </td>
-                    <td className="py-3 px-3 font-bold text-[#183058]">
+          <>
+            <div className="md:hidden space-y-3">
+              {studentAssessments.map((item) => (
+                <div
+                  key={item.id}
+                  className="p-4 rounded-xl bg-[#F4F6FA] border border-border/60 space-y-3"
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="min-w-0">
+                      <p className="text-xs font-bold text-foreground break-words">
+                        {item.studentName}
+                      </p>
+                      <p className="text-xs text-muted-foreground break-all">
+                        {item.studentEmail}
+                      </p>
+                    </div>
+                    <span className="px-2 py-0.5 rounded text-xs font-extrabold bg-[#E8ECF6] text-[#183058] shrink-0">
                       {item.overallScore}%
-                    </td>
-                    <td className="py-3 px-3 text-muted-foreground">
+                    </span>
+                  </div>
+
+                  <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
+                    <div className="flex items-center gap-1.5">
+                      <span className="font-bold text-[#17181C]">{item.personalityTypeName}</span>
+                      <span className="px-1.5 py-0.5 rounded text-xs font-bold bg-white text-[#183058]">
+                        {item.personalityTypeCode}
+                      </span>
+                    </div>
+                    <span className="text-muted-foreground">
                       {formatReportDate(item.completedAt)}
-                    </td>
-                    <td className="py-3 px-3 text-right">
-                      <button
-                        type="button"
-                        onClick={() => setSelectedResultId(item.id)}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#F4F6FA] hover:bg-[#E8ECF6] text-[#183058] hover:text-[#102342] font-bold text-xs transition-colors min-h-[44px]"
-                      >
-                        <Eye className="w-3.5 h-3.5" />
-                        <span>Lihat Data Profil</span>
-                      </button>
-                    </td>
+                    </span>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => setSelectedResultId(item.id)}
+                    className="w-full min-h-[44px] inline-flex items-center justify-center gap-2 px-3 py-2 rounded-xl bg-white border border-border hover:bg-[#E8ECF6] text-[#183058] font-bold text-xs transition-colors cursor-pointer"
+                  >
+                    <Eye className="w-4 h-4 shrink-0" />
+                    <span>Lihat Data Profil</span>
+                  </button>
+                </div>
+              ))}
+            </div>
+
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full text-left text-xs">
+                <thead>
+                  <tr className="border-b border-border/60 text-muted-foreground font-semibold">
+                    <th className="py-2.5 px-3">Nama Siswa</th>
+                    <th className="py-2.5 px-3">Email</th>
+                    <th className="py-2.5 px-3">Tipe Kepribadian</th>
+                    <th className="py-2.5 px-3">Skor Rata-rata</th>
+                    <th className="py-2.5 px-3">Tanggal Selesai</th>
+                    <th className="py-2.5 px-3 text-right">Aksi</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody className="divide-y divide-border/40">
+                  {studentAssessments.map((item) => (
+                    <tr key={item.id} className="hover:bg-[#F4F6FA]/80 transition-colors">
+                      <td className="py-3 px-3 font-semibold text-foreground">
+                        {item.studentName}
+                      </td>
+                      <td className="py-3 px-3 text-muted-foreground">{item.studentEmail}</td>
+                      <td className="py-3 px-3">
+                        <div className="flex items-center gap-1.5">
+                          <span className="font-bold text-[#17181C]">{item.personalityTypeName}</span>
+                          <span className="px-1.5 py-0.5 rounded text-xs font-extrabold bg-[#E8ECF6] text-[#183058]">
+                            {item.personalityTypeCode}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="py-3 px-3 font-bold text-[#183058]">
+                        {item.overallScore}%
+                      </td>
+                      <td className="py-3 px-3 text-muted-foreground">
+                        {formatReportDate(item.completedAt)}
+                      </td>
+                      <td className="py-3 px-3 text-right">
+                        <button
+                          type="button"
+                          onClick={() => setSelectedResultId(item.id)}
+                          className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-[#F4F6FA] hover:bg-[#E8ECF6] text-[#183058] hover:text-[#102342] font-bold text-xs transition-colors min-h-[44px] cursor-pointer"
+                        >
+                          <Eye className="w-3.5 h-3.5" />
+                          <span>Lihat Data Profil</span>
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
         )}
       </div>
 
-      {/* Mega Admin Student Assessment Modal */}
       <AdminStudentAssessmentModal
         resultId={selectedResultId}
         onClose={() => setSelectedResultId(null)}
       />
 
-      {/* Mega Admin Create Tutor Modal */}
       <AdminCreateTutorModal
         isOpen={isCreateTutorOpen}
         onClose={() => setIsCreateTutorOpen(false)}

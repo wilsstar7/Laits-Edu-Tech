@@ -54,34 +54,34 @@ export function AnnouncementBanner({ audience }: AnnouncementBannerProps = {}) {
   if (dismissed || !latest || dismissedIds.has(latest.id)) return null
 
   return (
-    <div className="bg-gradient-to-r from-[#183058] to-[#244375] rounded-2xl p-4 text-white shadow-md relative overflow-hidden flex items-center justify-between gap-4 animate-in fade-in-50">
-      <div className="flex items-center gap-3 min-w-0">
-        <div className="w-9 h-9 rounded-xl bg-white/20 backdrop-blur-xs flex items-center justify-center shrink-0">
+    <div className="bg-[#183058] rounded-2xl p-4 text-white relative overflow-hidden flex items-start sm:items-center justify-between gap-3 animate-in fade-in-50">
+      <div className="flex items-start sm:items-center gap-3 min-w-0">
+        <div className="w-9 h-9 rounded-xl bg-white/15 flex items-center justify-center shrink-0">
           <Megaphone className="w-4 h-4 text-white" />
         </div>
         <div className="min-w-0">
-          <div className="flex items-center gap-2">
-            <span className="text-[10px] font-extrabold uppercase tracking-wider bg-white/20 px-2 py-0.5 rounded-full">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-xs font-bold bg-white/15 px-2 py-0.5 rounded-full">
               Pengumuman
             </span>
-            <h4 className="text-xs sm:text-sm font-bold text-white truncate">
+            <h4 className="text-xs sm:text-sm font-bold text-white break-words">
               {latest.title}
             </h4>
           </div>
-          <p className="text-[11px] text-white/90 truncate mt-0.5 max-w-xl">
+          <p className="text-xs text-[#E8ECF6] line-clamp-2 sm:truncate mt-1 max-w-xl">
             {latest.content}
           </p>
         </div>
       </div>
 
-      <div className="flex items-center gap-2 shrink-0">
+      <div className="flex items-center shrink-0">
         <button
           type="button"
           onClick={() => {
             dismissedIds.add(latest.id)
             setDismissed(true)
           }}
-          className="text-white/70 hover:text-white p-1 rounded-lg transition-colors cursor-pointer"
+          className="min-w-[44px] min-h-[44px] text-white/80 hover:text-white flex items-center justify-center rounded-xl hover:bg-white/10 transition-colors cursor-pointer"
           aria-label="Tutup pengumuman"
         >
           <X className="w-4 h-4" />

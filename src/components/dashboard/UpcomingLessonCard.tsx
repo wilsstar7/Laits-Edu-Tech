@@ -4,15 +4,15 @@ import { EmptyState } from './EmptyState'
 
 export function UpcomingLessonCard() {
   return (
-    <div className="surface-card p-6 flex flex-col justify-between bg-white border border-border">
-      <div className="flex items-center justify-between pb-3 border-b border-border/60">
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-[#E8ECF6] text-[#183058] flex items-center justify-center">
+    <div className="surface-card p-4 sm:p-6 flex flex-col justify-between bg-white border border-border min-w-0">
+      <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-border/60">
+        <div className="flex items-center gap-2.5 min-w-0">
+          <div className="w-8 h-8 rounded-lg bg-[#E8ECF6] text-[#183058] flex items-center justify-center shrink-0">
             <Calendar className="w-4 h-4" />
           </div>
-          <h3 className="font-bold text-base text-[#17181C]">Jadwal Belajar Mendatang</h3>
+          <h3 className="font-bold text-sm sm:text-base text-[#17181C]">Jadwal Belajar Mendatang</h3>
         </div>
-        <span className="text-xs font-semibold px-2 py-0.5 rounded-md bg-[#ECF0F7] text-[#676A78]">
+        <span className="text-xs font-semibold px-2.5 py-1 rounded-md bg-[#ECF0F7] text-[#676A78] shrink-0">
           0 Sesi
         </span>
       </div>
@@ -25,18 +25,21 @@ export function UpcomingLessonCard() {
           action={
             <Link
               to="/student/tutors"
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#183058] text-white text-xs font-bold shadow-sm hover:bg-[#102342] transition-colors min-h-[40px]"
+              className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#183058] text-white text-xs font-bold hover:bg-[#102342] active:scale-[0.98] transition-colors min-h-[44px] w-full sm:w-auto"
             >
-              <UserCheck className="w-4 h-4" />
+              <UserCheck className="w-4 h-4 shrink-0" />
               <span>Temukan Tutor</span>
             </Link>
           }
         />
       </div>
 
-      <div className="pt-3 border-t border-border/60 flex items-center justify-between text-xs text-[#676A78]">
+      <div className="pt-3 border-t border-border/60 flex flex-wrap items-center justify-between gap-2 text-xs text-[#676A78]">
         <span>Sistem penjadwalan bimbingan</span>
-        <Link to="/student/schedule" className="font-semibold text-[#183058] hover:underline">
+        <Link
+          to="/student/schedule"
+          className="min-h-[44px] inline-flex items-center font-semibold text-[#183058] hover:underline"
+        >
           Lihat Kalender Lengkap
         </Link>
       </div>

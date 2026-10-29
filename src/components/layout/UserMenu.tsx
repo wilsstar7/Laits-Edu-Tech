@@ -46,58 +46,55 @@ export function UserMenu() {
         onClick={() => setIsOpen(!isOpen)}
         aria-label="Menu Pengguna"
         aria-expanded={isOpen}
-        className="flex items-center gap-2.5 p-1.5 pr-2.5 rounded-2xl bg-white border border-border/80 hover:bg-[#ECF0F7] transition-colors focus-visible:outline-2 focus-visible:outline-[#183058]"
+        className="flex items-center gap-2 min-h-[44px] px-2 pr-2.5 rounded-2xl bg-white border border-border/80 hover:bg-[#ECF0F7] transition-colors focus-visible:outline-2 focus-visible:outline-[#183058] cursor-pointer"
       >
-        <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-[#183058] to-[#244375] text-white flex items-center justify-center font-bold text-xs shadow-sm">
+        <div className="w-8 h-8 rounded-xl bg-[#183058] text-white flex items-center justify-center font-bold text-xs shrink-0">
           {initials}
         </div>
         <div className="hidden sm:flex flex-col text-left leading-tight">
           <span className="text-xs font-bold text-foreground truncate max-w-[120px]">{fullName}</span>
-          <span className="text-[10px] text-muted-foreground capitalize">{roleLabel}</span>
+          <span className="text-[11px] text-muted-foreground capitalize">{roleLabel}</span>
         </div>
-        <ChevronDown className="w-4 h-4 text-muted-foreground" />
+        <ChevronDown className="w-4 h-4 text-muted-foreground shrink-0" />
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-64 rounded-2xl bg-white border border-border shadow-xl p-2 z-50 animate-in fade-up">
-          {/* User Info Header */}
+        <div className="absolute right-0 mt-2 w-64 max-w-[calc(100vw-2rem)] rounded-2xl bg-white border border-border shadow-xl p-2 z-50 animate-in fade-up">
           <div className="px-3 py-2.5 border-b border-border/60">
             <p className="text-sm font-bold text-foreground truncate">{fullName}</p>
             <p className="text-xs text-muted-foreground truncate">{email}</p>
-            <div className="mt-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-semibold bg-[#E8ECF6] text-[#183058]">
+            <div className="mt-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-semibold bg-[#E8ECF6] text-[#183058]">
               <ShieldCheck className="w-3 h-3" />
               <span>{roleLabel}</span>
             </div>
           </div>
 
-          {/* Links */}
-          <div className="py-1">
+          <div className="py-1 space-y-1">
             <Link
               to="/student/settings"
               onClick={() => setIsOpen(false)}
-              className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-foreground hover:bg-[#ECF0F7] transition-colors"
+              className="flex items-center gap-2.5 px-3 py-2.5 min-h-[44px] rounded-xl text-xs font-medium text-foreground hover:bg-[#ECF0F7] transition-colors"
             >
-              <Settings className="w-4 h-4 text-muted-foreground" />
+              <Settings className="w-4 h-4 text-muted-foreground shrink-0" />
               <span>Pengaturan Akun</span>
             </Link>
             <Link
               to="/student/help"
               onClick={() => setIsOpen(false)}
-              className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-foreground hover:bg-[#ECF0F7] transition-colors"
+              className="flex items-center gap-2.5 px-3 py-2.5 min-h-[44px] rounded-xl text-xs font-medium text-foreground hover:bg-[#ECF0F7] transition-colors"
             >
-              <HelpCircle className="w-4 h-4 text-muted-foreground" />
+              <HelpCircle className="w-4 h-4 text-muted-foreground shrink-0" />
               <span>Pusat Bantuan</span>
             </Link>
           </div>
 
-          {/* Logout */}
           <div className="pt-1 border-t border-border/60">
             <button
               type="button"
               onClick={handleSignOut}
-              className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-destructive hover:bg-destructive/10 transition-colors text-left"
+              className="w-full flex items-center gap-2.5 px-3 py-2.5 min-h-[44px] rounded-xl text-xs font-medium text-destructive hover:bg-destructive/10 transition-colors text-left cursor-pointer"
             >
-              <LogOut className="w-4 h-4" />
+              <LogOut className="w-4 h-4 shrink-0" />
               <span>Keluar</span>
             </button>
           </div>

@@ -168,30 +168,23 @@ export function TutorDashboardPage() {
         subtitle={`Hari ini adalah ${todayStr}. Pantau permintaan masuk, jadwal mengajar, dan murid bimbingan Anda.`}
         badge="Tutor Portal"
         action={
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+            <Link
+              to="/tutor/availability"
+              className="inline-flex items-center justify-center flex-1 sm:flex-initial px-4 py-2.5 rounded-xl bg-brand-primary text-white text-xs font-bold hover:bg-brand-primary/90 active:scale-[0.98] transition-colors gap-2 min-h-[44px]"
+            >
+              <Sliders className="w-4 h-4 shrink-0" />
+              <span>Atur Jam Ketersediaan</span>
+            </Link>
             <button
               type="button"
               onClick={reloadData}
               disabled={refreshing}
-              className="inline-flex items-center px-3.5 py-2 rounded-xl bg-white border border-border text-ink-primary text-xs font-bold shadow-2xs hover:bg-surface transition-colors gap-2 min-h-[44px] cursor-pointer disabled:opacity-60"
+              className="inline-flex items-center justify-center px-3.5 py-2.5 rounded-xl bg-white border border-border text-ink-primary text-xs font-bold hover:bg-surface transition-colors gap-2 min-h-[44px] cursor-pointer disabled:opacity-60"
             >
-              <RefreshCw className={`w-4 h-4 text-brand-primary ${refreshing ? 'animate-spin' : ''}`} />
+              <RefreshCw className={`w-4 h-4 text-brand-primary shrink-0 ${refreshing ? 'animate-spin' : ''}`} />
               <span>Segarkan</span>
             </button>
-            <Link
-              to="/tutor/sessions"
-              className="hidden sm:inline-flex items-center px-3.5 py-2 rounded-xl bg-surface border border-border text-ink-primary text-xs font-bold shadow-2xs hover:bg-neutral-50 transition-colors gap-2 min-h-[44px]"
-            >
-              <Clock className="w-4 h-4 text-brand-primary" />
-              <span>Riwayat Sesi Belajar</span>
-            </Link>
-            <Link
-              to="/tutor/availability"
-              className="hidden sm:inline-flex items-center px-4 py-2.5 rounded-xl bg-brand-primary text-white text-xs font-bold shadow-2xs hover:bg-brand-primary/90 transition-colors gap-2 min-h-[44px]"
-            >
-              <Sliders className="w-4 h-4" />
-              <span>Atur Jam Ketersediaan</span>
-            </Link>
           </div>
         }
       />
@@ -203,9 +196,8 @@ export function TutorDashboardPage() {
           onRetry={reloadData}
         />
       ) : (
-        <div className="space-y-8">
-          {/* 4 Counting Metric Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div className="space-y-6 sm:space-y-8">
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4 sm:gap-5">
             <StatCard
               label="Murid Aktif"
               value={activeStudentsDisplay}
@@ -220,7 +212,7 @@ export function TutorDashboardPage() {
               action={
                 <Link
                   to="/tutor/messages"
-                  className="inline-flex items-center gap-1 text-brand-primary font-bold hover:underline"
+                  className="min-h-[44px] inline-flex items-center gap-1 text-brand-primary font-bold hover:underline"
                 >
                   <MessageSquare className="w-3.5 h-3.5" />
                   <span>Pesan</span>
@@ -242,7 +234,7 @@ export function TutorDashboardPage() {
               action={
                 <Link
                   to="/tutor/sessions"
-                  className="text-brand-primary font-bold hover:underline"
+                  className="min-h-[44px] inline-flex items-center text-brand-primary font-bold hover:underline"
                 >
                   Lihat Sesi
                 </Link>
@@ -263,7 +255,7 @@ export function TutorDashboardPage() {
               action={
                 <Link
                   to="/tutor/availability"
-                  className="text-ink-primary font-bold hover:underline"
+                  className="min-h-[44px] inline-flex items-center text-ink-primary font-bold hover:underline"
                 >
                   Jadwal
                 </Link>
@@ -280,7 +272,7 @@ export function TutorDashboardPage() {
               action={
                 <Link
                   to="/tutor/sessions"
-                  className="text-success font-bold hover:underline"
+                  className="min-h-[44px] inline-flex items-center text-success font-bold hover:underline"
                 >
                   Riwayat
                 </Link>
@@ -288,92 +280,87 @@ export function TutorDashboardPage() {
             />
           </div>
 
-          {/* Section: Pending Booking Requests */}
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 items-start">
+            <div className="space-y-4">
               <div>
-                <h3 className="text-base font-bold text-ink-primary flex items-center gap-2">
-                  <Clock className="w-4 h-4 text-warning" />
+                <h3 className="text-sm sm:text-base font-bold text-ink-primary flex items-center gap-2">
+                  <Clock className="w-4 h-4 text-warning shrink-0" />
                   <span>Permintaan Sesi Belajar Masuk ({pendingRequestsDisplay})</span>
                 </h3>
-                <p className="text-xs text-ink-muted">
+                <p className="text-xs text-ink-muted mt-1 leading-relaxed">
                   Daftar sesi belajar dari murid. Sesi akan otomatis terkonfirmasi setelah pembayaran diverifikasi oleh Super Admin.
                 </p>
               </div>
+
+              {pendingRequests.length === 0 ? (
+                <div className="p-5 sm:p-6 bg-white rounded-2xl border border-dashed border-border text-center">
+                  <p className="text-xs text-ink-muted">
+                    Tidak ada permintaan sesi yang menunggu konfirmasi saat ini.
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {pendingRequests.map((b) => (
+                    <BookingCard
+                      key={b.id}
+                      booking={b}
+                      perspective="tutor"
+                      onReject={(booking) =>
+                        setActionBooking({ booking, mode: 'reject' })
+                      }
+                    />
+                  ))}
+                </div>
+              )}
             </div>
 
-            {pendingRequests.length === 0 ? (
-              <div className="p-6 bg-white rounded-2xl border border-dashed border-border text-center">
-                <p className="text-xs text-ink-muted">
-                  Tidak ada permintaan sesi yang menunggu konfirmasi saat ini.
-                </p>
-              </div>
-            ) : (
-              <div className="space-y-4">
-                {pendingRequests.map((b) => (
-                  <BookingCard
-                    key={b.id}
-                    booking={b}
-                    perspective="tutor"
-                    onReject={(booking) =>
-                      setActionBooking({ booking, mode: 'reject' })
-                    }
-                  />
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Section: Upcoming Confirmed Sessions */}
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
+            <div className="space-y-4">
               <div>
-                <h3 className="text-base font-bold text-ink-primary flex items-center gap-2">
-                  <CalendarClock className="w-4 h-4 text-brand-primary" />
+                <h3 className="text-sm sm:text-base font-bold text-ink-primary flex items-center gap-2">
+                  <CalendarClock className="w-4 h-4 text-brand-primary shrink-0" />
                   <span>Jadwal Mengajar Terkonfirmasi ({upcomingSessionsDisplay})</span>
                 </h3>
-                <p className="text-xs text-ink-muted">
+                <p className="text-xs text-ink-muted mt-1 leading-relaxed">
                   Sesi privat yang siap dilaksanakan sesuai jadwal waktu yang disepakati.
                 </p>
               </div>
-            </div>
 
-            {upcomingSessions.length === 0 ? (
-              <div className="p-8 bg-white rounded-2xl border border-dashed border-border text-center space-y-2">
-                <p className="text-xs font-semibold text-ink-primary">
-                  Belum ada jadwal mengajar terkonfirmasi mendatang
-                </p>
-                <p className="text-xs text-ink-muted max-w-sm mx-auto">
-                  Pastikan jam ketersediaan mingguan Anda telah aktif agar murid dapat menemukan dan memesan sesi belajar.
-                </p>
-                <Link
-                  to="/tutor/availability"
-                  className="min-h-[44px] px-4 py-2 rounded-xl bg-surface border border-border text-brand-primary hover:bg-brand-primary/5 text-xs font-bold inline-flex items-center gap-1.5 mt-2"
-                >
-                  <span>Atur Jam Ketersediaan</span>
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
-            ) : (
-              <div className="space-y-4">
-                {upcomingSessions.map((b) => (
-                  <BookingCard
-                    key={b.id}
-                    booking={b}
-                    perspective="tutor"
-                    onComplete={handleComplete}
-                    onCancel={(booking) =>
-                      setActionBooking({ booking, mode: 'cancel' })
-                    }
-                  />
-                ))}
-              </div>
-            )}
+              {upcomingSessions.length === 0 ? (
+                <div className="p-6 sm:p-8 bg-white rounded-2xl border border-dashed border-border text-center space-y-2.5">
+                  <p className="text-xs font-semibold text-ink-primary">
+                    Belum ada jadwal mengajar terkonfirmasi mendatang
+                  </p>
+                  <p className="text-xs text-ink-muted max-w-sm mx-auto leading-relaxed">
+                    Pastikan jam ketersediaan mingguan Anda telah aktif agar murid dapat menemukan dan memesan sesi belajar.
+                  </p>
+                  <Link
+                    to="/tutor/availability"
+                    className="min-h-[44px] px-4 py-2.5 rounded-xl bg-surface border border-border text-brand-primary hover:bg-brand-primary/5 text-xs font-bold inline-flex items-center justify-center gap-1.5 mt-1 w-full sm:w-auto"
+                  >
+                    <span>Atur Jam Ketersediaan</span>
+                    <ArrowRight className="w-4 h-4 shrink-0" />
+                  </Link>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {upcomingSessions.map((b) => (
+                    <BookingCard
+                      key={b.id}
+                      booking={b}
+                      perspective="tutor"
+                      onComplete={handleComplete}
+                      onCancel={(booking) =>
+                        setActionBooking({ booking, mode: 'cancel' })
+                      }
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}
 
-      {/* Rejection / Cancellation Modal */}
       {actionBooking && (
         <BookingCancelDialog
           booking={actionBooking.booking}

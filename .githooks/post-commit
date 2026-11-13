@@ -1,0 +1,28 @@
+#!/bin/sh
+
+if ! (
+  set -eu
+
+  commit=$(git rev-parse --verify 'HEAD^{commit}')
+  summary=$(git show -s --format='## Commit%n%n- Hash: %H%n- Date: %cI%n- Subject: %s' "$commit")
+  files=$(git diff-tree --root -m --no-commit-id --name-only -r "$commit" | sort -u)
+
+  if command -v ai-memory >/dev/null 2>&1; then
+    memory_cli=ai-memory
+  elif [ -n "${LOCALAPPDATA:-}" ] && [ -x "$LOCALAPPDATA/Programs/ai-memory/ai-memory.exe" ]; then
+    memory_cli="$LOCALAPPDATA/Programs/ai-memory/ai-memory.exe"
+  else
+    printf '%s\n' 'ai-memory executable not found.' >&2
+    exit 1
+  fi
+
+  {
+    printf '# Git commit %.12s\n\n%s\n' "$commit" "$summary"
+    if [ -n "$files" ]; then
+      printf '\n## Changed files\n\n```text\n%s\n```\n' "$files"
+    fi
+  } | "$memory_cli" write-page --workspace default --project wilsstar7-laits-edu-tech \
+    --path "commits/$commit.md" --body - --tier episodic --kind fact --tag git-commit
+); then
+  printf '%s\n' 'ai-memory could not record this commit. Retry while it is HEAD with: git hook run post-commit' >&2
+fi

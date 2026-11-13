@@ -30,11 +30,11 @@ export interface NavItem {
 
 export const STUDENT_NAV_ITEMS: NavItem[] = [
   { label: 'Dashboard', href: '/student/dashboard', icon: LayoutDashboard },
+  { label: 'Kepribadian Saya', href: '/student/personality', icon: Compass },
+  { label: 'Belajar Saya', href: '/student/learning', icon: BookOpen },
   { label: 'Kursus Belajar', href: '/student/courses', icon: Library },
   { label: 'Pencapaian', href: '/student/achievements', icon: Award },
   { label: 'Asesmen Kepribadian', href: '/student/assessment', icon: Brain },
-  { label: 'Tipe Kepribadian', href: '/student/personality', icon: Compass },
-  { label: 'Belajar Saya', href: '/student/learning', icon: BookOpen },
   { label: 'Tutor Privat', href: '/student/tutors', icon: GraduationCap },
   { label: 'Jadwal Belajar', href: '/student/schedule', icon: Calendar },
   { label: 'Perkembangan', href: '/student/progress', icon: TrendingUp },

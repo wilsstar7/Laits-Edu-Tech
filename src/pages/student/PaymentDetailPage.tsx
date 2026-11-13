@@ -78,7 +78,7 @@ export function PaymentDetailPage() {
 
         <PageHeader
           title="Selesaikan Pembayaran"
-          subtitle="Lakukan transfer sesuai rincian tagihan di bawah ini untuk mengonfirmasi sesi bimbingan Anda."
+          subtitle="Lakukan transfer sesuai rincian tagihan di bawah ini dan unggah bukti transfer."
         />
 
         {error && (
@@ -107,14 +107,14 @@ export function PaymentDetailPage() {
                 <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-emerald-800 text-sm">
                   <div className="flex items-center gap-2.5">
                     <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
-                    <span>Pembayaran berhasil diverifikasi. Sesi Anda siap dihadiri.</span>
+                    <span>Pembayaran berhasil diverifikasi.{!payment.monthlySessionCount && ' Sesi Anda siap dihadiri.'}</span>
                   </div>
-                  <Link to="/student/schedule">
+                  {!payment.monthlySessionCount && <Link to="/student/schedule">
                     <Button size="sm" className="min-h-[44px] gap-2 font-semibold bg-emerald-600 hover:bg-emerald-700 text-white">
                       <Calendar className="w-4 h-4" />
                       <span>Lihat Jadwal Saya</span>
                     </Button>
-                  </Link>
+                  </Link>}
                 </div>
                 <InvoiceCard invoice={payment.invoice} payment={payment} />
               </div>
@@ -141,7 +141,7 @@ export function PaymentDetailPage() {
             {/* If awaiting payment or failed -> Show bank instructions & uploader */}
             {(payment.status === 'awaiting_payment' || payment.status === 'failed') && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <PaymentInstructionCard />
+                <PaymentInstructionCard account={payment.transferAccount} />
                 <PaymentProofUploader onUpload={handleUploadProof} />
               </div>
             )}

@@ -1,15 +1,15 @@
 import { useState } from 'react'
-import { MANUAL_TRANSFER_INSTRUCTIONS } from '@/types/payment'
+import { MANUAL_TRANSFER_INSTRUCTIONS, type BankAccount } from '@/types/payment'
 import { Button } from '@/components/ui/button'
 import { Building2, Copy, Check, Info } from 'lucide-react'
 
-export function PaymentInstructionCard() {
+export function PaymentInstructionCard({ account = MANUAL_TRANSFER_INSTRUCTIONS }: { account?: BankAccount }) {
   const [copied, setCopied] = useState(false)
 
   const handleCopyAccount = async () => {
     try {
       await navigator.clipboard.writeText(
-        MANUAL_TRANSFER_INSTRUCTIONS.accountNumber.replace(/-/g, '')
+        account.accountNumber.replace(/-/g, '')
       )
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
@@ -32,17 +32,17 @@ export function PaymentInstructionCard() {
           Bank Tujuan
         </div>
         <div className="text-sm font-bold text-foreground">
-          {MANUAL_TRANSFER_INSTRUCTIONS.bankName}
+          {account.bankName}
         </div>
 
-        <div className="flex items-center justify-between gap-2 pt-2 border-t border-border/40">
+        <div className="flex items-center justify-between flex-wrap gap-2 pt-2 border-t border-border/40">
           <div>
             <div className="text-xs text-muted-foreground">Nomor Rekening</div>
-            <div className="font-mono text-lg font-bold text-foreground tracking-wide">
-              {MANUAL_TRANSFER_INSTRUCTIONS.accountNumber}
+            <div className="font-mono text-lg font-bold text-foreground tracking-wide break-all">
+              {account.accountNumber}
             </div>
             <div className="text-xs text-muted-foreground">
-              a.n. {MANUAL_TRANSFER_INSTRUCTIONS.accountHolder}
+              a.n. {account.accountHolder}
             </div>
           </div>
           <Button

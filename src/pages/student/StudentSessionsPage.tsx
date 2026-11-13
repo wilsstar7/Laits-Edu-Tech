@@ -91,9 +91,9 @@ export function StudentSessionsPage() {
                 Setelah pembayaran terkonfirmasi, sesi bimbingan Anda akan otomatis tercatat di halaman ini.
               </p>
             </div>
-            <Link to="/student/tutors">
+            <Link to="/student/payments">
               <Button className="min-h-[44px] gap-2 font-semibold text-xs">
-                <span>Pesan Sesi Bimbingan</span>
+                <span>Pilih Jumlah Sesi</span>
                 <ArrowRight className="w-4 h-4" />
               </Button>
             </Link>

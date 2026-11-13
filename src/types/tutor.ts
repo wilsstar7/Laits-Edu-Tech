@@ -17,6 +17,7 @@ export interface TutorSummary {
   totalReviews: number
   isVerified: boolean
   subjects: SubjectSummary[]
+  availableDays?: number[]
   availabilityCount?: number
   matchScore?: number
   matchReasons?: string[]

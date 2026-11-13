@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router'
 import { AppShell } from '@/components/layout/AppShell'
 import { PageHeader } from '@/components/layout/PageHeader'
+import { MonthlyTutoringForm } from '@/components/payment/MonthlyTutoringForm'
 import { PaymentStatusBadge } from '@/components/payment/PaymentStatusBadge'
 import { paymentService } from '@/services/paymentService'
 import type { Payment, PaymentStatus } from '@/types/payment'
@@ -49,11 +50,13 @@ export function StudentPaymentsPage() {
     <AppShell>
       <div className="space-y-6">
         <PageHeader
-          title="Riwayat Pembayaran"
+          title="Pembayaran"
           subtitle="Daftar transaksi, faktur pembayaran, dan status verifikasi sesi bimbingan Anda."
         />
 
-        {/* Status Filter Buttons */}
+        <MonthlyTutoringForm />
+
+        <h2 className="text-lg font-bold">Riwayat Pembayaran</h2>
         <div className="flex flex-wrap items-center gap-2">
           {[
             { id: 'all', label: 'Semua Transaksi' },
@@ -115,12 +118,6 @@ export function StudentPaymentsPage() {
                   : 'Tidak ada transaksi dengan status pembayaran yang dipilih.'}
               </p>
             </div>
-            <Link to="/student/tutors">
-              <Button className="min-h-[44px] gap-2 font-semibold text-xs">
-                <span>Cari Tutor Belajar</span>
-                <ArrowRight className="w-4 h-4" />
-              </Button>
-            </Link>
           </div>
         ) : (
           <div className="space-y-3">

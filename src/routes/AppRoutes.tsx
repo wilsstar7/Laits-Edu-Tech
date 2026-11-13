@@ -51,6 +51,7 @@ const TutorMessagesPage = lazy(() => import('@/pages/tutor/TutorMessagesPage').t
 const AdminDashboardPage = lazy(() => import('@/pages/admin/AdminDashboardPage').then((m) => ({ default: m.AdminDashboardPage })))
 const AdminCoursesPage = lazy(() => import('@/pages/admin/AdminCoursesPage').then((m) => ({ default: m.AdminCoursesPage })))
 const AdminAnnouncementsPage = lazy(() => import('@/pages/admin/AdminAnnouncementsPage').then((m) => ({ default: m.AdminAnnouncementsPage })))
+const AdminPrivateTutoringPage = lazy(() => import('@/pages/admin/AdminPrivateTutoringPage').then((m) => ({ default: m.AdminPrivateTutoringPage })))
 const AdminPaymentsPage = lazy(() => import('@/pages/admin/AdminPaymentsPage').then((m) => ({ default: m.AdminPaymentsPage })))
 const AdminReviewsPage = lazy(() => import('@/pages/admin/AdminReviewsPage').then((m) => ({ default: m.AdminReviewsPage })))
 const AdminUsersPage = lazy(() => import('@/pages/admin/AdminUsersPage').then((m) => ({ default: m.AdminUsersPage })))
@@ -407,6 +408,16 @@ export function AppRoutes() {
             <ProtectedRoute>
               <RoleGuard allowedRoles={['admin', 'super_admin']}>
                 <AdminAnnouncementsPage />
+              </RoleGuard>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/private-tutoring"
+          element={
+            <ProtectedRoute>
+              <RoleGuard allowedRoles={['admin', 'super_admin']}>
+                <AdminPrivateTutoringPage />
               </RoleGuard>
             </ProtectedRoute>
           }

@@ -1,4 +1,4 @@
-import { Sparkles, Check } from 'lucide-react'
+import { Check } from 'lucide-react'
 
 interface TutorMatchBadgeProps {
   score?: number
@@ -13,9 +13,8 @@ export function TutorMatchBadge({ score, reasons }: TutorMatchBadgeProps) {
   return (
     <div
       title={titleText}
-      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#E8ECF6] text-[#183058] border border-[#183058]/20 text-xs font-bold"
+      className="text-xs font-semibold tabular-nums text-brand-primary"
     >
-      <Sparkles className="w-3.5 h-3.5" />
       <span>Kesesuaian {score}%</span>
     </div>
   )

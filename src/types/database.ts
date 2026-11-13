@@ -828,12 +828,27 @@ export type Database = {
         }
         Relationships: []
       }
+      private_tutoring_settings: {
+        Row: { id: boolean; rate_per_session: number; bank_name: string; account_number: string; account_holder: string }
+        Insert: { id?: boolean; rate_per_session: number; bank_name: string; account_number: string; account_holder: string }
+        Update: { rate_per_session?: number; bank_name?: string; account_number?: string; account_holder?: string }
+        Relationships: []
+      }
       payments: {
         Row: {
+          monthly_subject_name: string | null
+          monthly_session_count: number | null
+          monthly_session_rate: number | null
+          requested_tutor_name: string | null
+          assigned_tutor_id: string | null
+          transfer_bank_name: string | null
+          transfer_account_number: string | null
+          transfer_account_holder: string | null
+          monthly_request_id: string | null
           id: string
-          booking_id: string
+          booking_id: string | null
           student_id: string
-          tutor_id: string
+          tutor_id: string | null
           amount: number
           currency: string
           payment_method: 'manual_transfer' | 'payment_gateway'
@@ -848,10 +863,19 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          monthly_subject_name?: string | null
+          monthly_session_count?: number | null
+          monthly_session_rate?: number | null
+          requested_tutor_name?: string | null
+          assigned_tutor_id?: string | null
+          transfer_bank_name?: string | null
+          transfer_account_number?: string | null
+          transfer_account_holder?: string | null
+          monthly_request_id?: string | null
           id?: string
-          booking_id: string
+          booking_id: string | null
           student_id: string
-          tutor_id: string
+          tutor_id: string | null
           amount: number
           currency?: string
           payment_method?: 'manual_transfer' | 'payment_gateway'
@@ -866,10 +890,19 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          monthly_subject_name?: string | null
+          monthly_session_count?: number | null
+          monthly_session_rate?: number | null
+          requested_tutor_name?: string | null
+          assigned_tutor_id?: string | null
+          transfer_bank_name?: string | null
+          transfer_account_number?: string | null
+          transfer_account_holder?: string | null
+          monthly_request_id?: string | null
           id?: string
-          booking_id?: string
+          booking_id?: string | null
           student_id?: string
-          tutor_id?: string
+          tutor_id?: string | null
           amount?: number
           currency?: string
           payment_method?: 'manual_transfer' | 'payment_gateway'
@@ -936,7 +969,7 @@ export type Database = {
           payment_id: string
           invoice_number: string
           student_id: string
-          booking_id: string
+          booking_id: string | null
           subtotal: number
           discount: number
           total: number
@@ -952,7 +985,7 @@ export type Database = {
           payment_id: string
           invoice_number: string
           student_id: string
-          booking_id: string
+          booking_id: string | null
           subtotal: number
           discount?: number
           total: number
@@ -968,7 +1001,7 @@ export type Database = {
           payment_id?: string
           invoice_number?: string
           student_id?: string
-          booking_id?: string
+          booking_id?: string | null
           subtotal?: number
           discount?: number
           total?: number
@@ -2012,6 +2045,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      create_monthly_tutoring_payment: {
+        Args: { p_session_count: number; p_requested_tutor_name: string; p_request_id: string; p_expected_rate: number; p_subject_id: string }
+        Returns: string
+      }
+      assign_monthly_tutor: {
+        Args: { p_payment_id: string; p_tutor_id: string }
+        Returns: undefined
+      }
       current_user_role: {
         Args: never
         Returns: Database['public']['Enums']['user_role']

@@ -2,18 +2,15 @@ import { useState, useEffect, useMemo } from 'react'
 import { useSearchParams, Link } from 'react-router'
 import {
   Users,
-  Info,
-  Calendar,
+  ArrowUpRight,
   ChevronLeft,
   ChevronRight,
 } from 'lucide-react'
 import { AppShell } from '@/components/layout/AppShell'
-import { PageHeader } from '@/components/layout/PageHeader'
 import { ErrorState } from '@/components/ui/ErrorState'
 import { TutorFilters } from '@/components/tutor/TutorFilters'
 import { TutorCard } from '@/components/tutor/TutorCard'
 import { TutorListSkeleton } from '@/components/tutor/TutorSkeletons'
-import { BookingDialog } from '@/components/booking/BookingDialog'
 import { tutorService } from '@/services/tutorService'
 import { subjectService, type SubjectSummary } from '@/services/subjectService'
 import { personalizedLearningService } from '@/services/personalizedLearningService'
@@ -27,9 +24,7 @@ import type {
   TutorSortOption,
 } from '@/types/tutor'
 import type { LearningProfileOverview } from '@/types/learning'
-import type { Booking } from '@/types/booking'
 import { Button } from '@/components/ui/button'
-import { NativeSelect } from '@/components/ui/native-select'
 
 import { useDebounce } from '@/hooks/useDebounce'
 
@@ -63,9 +58,6 @@ export function TutorDiscoveryPage() {
   const debouncedSearch = useDebounce(filters.search, 300)
   const [sortOption, setSortOption] = useState<TutorSortOption>('recommended')
   const [currentPage, setCurrentPage] = useState(1)
-
-  // Booking modal state
-  const [bookingModalTutor, setBookingModalTutor] = useState<TutorSummary | null>(null)
 
   useEffect(() => {
     let isMounted = true
@@ -128,12 +120,13 @@ export function TutorDiscoveryPage() {
   const filteredTutors = useMemo(() => {
     return scoredTutors.filter((tutor) => {
       if (debouncedSearch.trim()) {
-        const q = debouncedSearch.toLowerCase()
+        const q = debouncedSearch.trim().toLowerCase()
         const matchName = tutor.fullName.toLowerCase().includes(q)
         const matchHeadline = (tutor.headline || '').toLowerCase().includes(q)
+        const matchStyle = (tutor.teachingStyle || '').toLowerCase().includes(q)
         const matchBio = (tutor.bio || '').toLowerCase().includes(q)
         const matchSubject = tutor.subjects.some((s) => s.name.toLowerCase().includes(q))
-        if (!matchName && !matchHeadline && !matchBio && !matchSubject) {
+        if (!matchName && !matchHeadline && !matchStyle && !matchBio && !matchSubject) {
           return false
         }
       }
@@ -143,11 +136,11 @@ export function TutorDiscoveryPage() {
         if (!hasSub) return false
       }
 
-      if (filters.minRating !== null && tutor.rating < filters.minRating) {
+      if (filters.availableDay !== null && !tutor.availableDays?.includes(filters.availableDay)) {
         return false
       }
 
-      if (filters.maxHourlyRate !== null && tutor.hourlyRate > filters.maxHourlyRate) {
+      if (filters.minRating !== null && tutor.rating < filters.minRating) {
         return false
       }
 
@@ -169,10 +162,6 @@ export function TutorDiscoveryPage() {
         return list.sort((a, b) => b.matchScore - a.matchScore)
       case 'rating_desc':
         return list.sort((a, b) => b.rating - a.rating)
-      case 'price_asc':
-        return list.sort((a, b) => a.hourlyRate - b.hourlyRate)
-      case 'price_desc':
-        return list.sort((a, b) => b.hourlyRate - a.hourlyRate)
       case 'experience_desc':
         return list.sort((a, b) => b.experienceYears - a.experienceYears)
       default:
@@ -203,26 +192,21 @@ export function TutorDiscoveryPage() {
     setSearchParams({})
   }
 
-  const handleBookingSuccess = (_newBooking: Booking) => {
-    setBookingModalTutor(null)
-  }
-
   return (
     <AppShell>
-      <PageHeader
-        title="Temukan Tutor Terpercaya"
-        subtitle="Eksplorasi tutor privat berlisensi yang disesuaikan dengan arketipe kepribadian dan gaya belajar Anda."
-        badge="Tutor Marketplace"
-        action={
-          <Link
-            to="/student/schedule"
-            className="hidden sm:inline-flex items-center px-4 py-2.5 rounded-xl border border-border bg-white text-ink-primary hover:bg-surface text-xs font-bold transition-colors gap-2 min-h-[44px]"
-          >
-            <Calendar className="w-4 h-4 text-brand-primary" />
-            <span>Lihat Jadwal Saya</span>
+      <header className="mb-6 flex flex-col gap-4 border-b border-border pb-6 sm:flex-row sm:items-end sm:justify-between">
+        <div className="space-y-2">
+          <h1 className="text-3xl font-bold tracking-tight text-ink-primary sm:text-4xl">Tutor Privat</h1>
+          <p className="max-w-xl text-sm leading-relaxed text-ink-muted sm:text-base">
+            Kenali tutor dan mata pelajaran yang mereka ajarkan. Tim ZEINBOX akan menetapkan tutor untuk program les Anda.
+          </p>
+        </div>
+        <Button asChild className="min-h-11 w-fit shrink-0 rounded-lg px-4">
+          <Link to="/student/payments">
+            Pilih Jumlah Sesi <ArrowUpRight aria-hidden="true" className="size-4" />
           </Link>
-        }
-      />
+        </Button>
+      </header>
 
       {loading ? (
         <div className="space-y-6">
@@ -236,64 +220,25 @@ export function TutorDiscoveryPage() {
         />
       ) : (
         <div className="space-y-6">
-          {/* Transparency Info Banner */}
-          <div className="p-4 bg-brand-primary/5 rounded-2xl border border-brand-primary/15 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
-            <div className="flex items-start gap-2.5 text-ink-secondary">
-              <Info className="w-4 h-4 text-brand-primary shrink-0 mt-0.5" />
-              <div>
-                <span className="font-semibold text-ink-primary">
-                  Sistem Pencocokan Transparan:
-                </span>{' '}
-                Skor rekomendasi dihitung secara objektif berdasarkan kesesuaian mata pelajaran
-                (40%), keselarasan gaya mengajar (30%), ketersediaan jadwal (15%), rating (10%),
-                dan pengalaman tutor (5%).
-              </div>
-            </div>
-            {studentProfile?.hasResult && (
-              <span className="shrink-0 px-2.5 py-1 rounded-full bg-brand-primary/10 text-brand-primary font-bold text-[11px]">
-                Arketipe: {studentProfile.personalityName}
-              </span>
-            )}
+          <TutorFilters filters={filters} onChange={handleFilterChange} onReset={handleResetFilters}
+            subjects={subjects} sort={sortOption} onSortChange={(sort) => {
+              setSortOption(sort)
+              setCurrentPage(1)
+            }} />
+
+          <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border-b border-border pb-3">
+            <h2 className="font-bold text-ink-primary" aria-live="polite">{sortedTutors.length} tutor</h2>
+            <details className="max-w-lg text-sm text-ink-muted">
+              <summary className="flex min-h-11 cursor-pointer items-center gap-2 text-brand-primary marker:content-none [&::-webkit-details-marker]:hidden">
+                <span className="underline decoration-brand-primary/30 underline-offset-4">Cara menghitung kesesuaian</span>
+              </summary>
+              <p className="pb-2 leading-relaxed">
+                Skor menggabungkan mata pelajaran (40%), gaya mengajar (30%), ketersediaan (15%), penilaian (10%), dan pengalaman (5%).
+              </p>
+              {studentProfile?.hasResult && <p className="pb-2">Profil belajar Anda · {studentProfile.personalityName}</p>}
+            </details>
           </div>
 
-          {/* Search & Filters Controls */}
-          <TutorFilters
-            filters={filters}
-            onChange={handleFilterChange}
-            onReset={handleResetFilters}
-            subjects={subjects}
-            totalResults={sortedTutors.length}
-          />
-
-          {/* Sort bar + count */}
-          <div className="flex items-center justify-between pt-2">
-            <span className="text-xs text-ink-muted">
-              Menampilkan {sortedTutors.length} tutor terdaftar
-            </span>
-
-            <div className="flex items-center gap-2">
-              <label
-                htmlFor="tutor-sort-select"
-                className="text-xs text-ink-muted hidden sm:inline"
-              >
-                Urutkan:
-              </label>
-              <NativeSelect
-                id="tutor-sort-select"
-                value={sortOption}
-                onChange={(e) => setSortOption(e.target.value as TutorSortOption)}
-                className="text-xs min-h-[40px] bg-white w-48"
-              >
-                <option value="recommended">Rekomendasi Terbaik</option>
-                <option value="rating_desc">Rating Tertinggi</option>
-                <option value="price_asc">Tarif Terendah</option>
-                <option value="price_desc">Tarif Tertinggi</option>
-                <option value="experience_desc">Pengalaman Terbanyak</option>
-              </NativeSelect>
-            </div>
-          </div>
-
-          {/* Tutor Cards List */}
           {paginatedTutors.length === 0 ? (
             <div className="p-12 text-center bg-white rounded-2xl border border-dashed border-border space-y-3">
               <div className="w-12 h-12 rounded-full bg-surface flex items-center justify-center mx-auto text-ink-muted">
@@ -303,7 +248,7 @@ export function TutorDiscoveryPage() {
                 Tidak ada tutor yang sesuai dengan kriteria
               </h3>
               <p className="text-xs text-ink-muted max-w-md mx-auto">
-                Coba sesuaikan batas tarif, kurangi filter hari, atau gunakan pencarian nama umum untuk melihat lebih banyak pilihan.
+                Coba nama lain atau kurangi filter untuk melihat lebih banyak tutor.
               </p>
               <Button
                 type="button"
@@ -315,12 +260,11 @@ export function TutorDiscoveryPage() {
               </Button>
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
               {paginatedTutors.map((tutor) => (
                 <TutorCard
                   key={tutor.id}
                   tutor={tutor}
-                  onBook={(t) => setBookingModalTutor(t)}
                 />
               ))}
             </div>
@@ -328,7 +272,7 @@ export function TutorDiscoveryPage() {
 
           {/* Pagination Controls */}
           {totalPages > 1 && (
-            <div className="flex items-center justify-between pt-4 border-t border-border">
+            <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-border">
               <span className="text-xs text-ink-muted">
                 Halaman {currentPage} dari {totalPages}
               </span>
@@ -361,16 +305,6 @@ export function TutorDiscoveryPage() {
         </div>
       )}
 
-      {/* Booking Dialog Modal */}
-      {bookingModalTutor && (
-        <BookingDialog
-          tutor={bookingModalTutor}
-          initialSubjectId={filters.subjectId}
-          isOpen={true}
-          onClose={() => setBookingModalTutor(null)}
-          onSuccess={handleBookingSuccess}
-        />
-      )}
     </AppShell>
   )
 }

@@ -132,11 +132,11 @@ export function StudentSchedulePage() {
         badge="Jadwal & Sesi"
         action={
           <Link
-            to="/student/tutors"
+            to="/student/payments"
             className="hidden sm:inline-flex items-center px-4 py-2.5 rounded-xl bg-brand-primary text-white text-xs font-bold shadow-sm hover:bg-brand-primary/90 transition-colors gap-2 min-h-[44px]"
           >
             <Plus className="w-4 h-4" />
-            <span>Pesan Sesi Baru</span>
+            <span>Pilih Jumlah Sesi</span>
           </Link>
         }
       />
@@ -199,16 +199,16 @@ export function StudentSchedulePage() {
                 </h3>
                 <p className="text-xs text-ink-muted max-w-sm mx-auto">
                   {tab === 'upcoming'
-                    ? 'Pilih tutor favorit Anda untuk menjadwalkan bimbingan belajar personal pertama Anda.'
+                    ? 'Pilih jumlah sesi di menu Pembayaran. Tim ZEINBOX akan menetapkan tutor Anda.'
                     : 'Semua sesi yang telah selesai atau dibatalkan akan tercatat di halaman riwayat ini.'}
                 </p>
               </div>
               {tab === 'upcoming' && (
                 <Link
-                  to="/student/tutors"
+                  to="/student/payments"
                   className="min-h-[44px] px-5 py-2.5 rounded-xl bg-brand-primary text-white text-xs font-bold hover:bg-brand-primary/90 shadow-xs inline-flex items-center gap-2 transition-colors"
                 >
-                  <span>Cari Tutor Sekarang</span>
+                  <span>Pilih Jumlah Sesi Sekarang</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
               )}

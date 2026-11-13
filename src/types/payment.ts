@@ -36,7 +36,7 @@ export interface Invoice {
   paymentId: string
   invoiceNumber: string
   studentId: string
-  bookingId: string
+  bookingId: string | null
   subtotal: number
   discount: number
   total: number
@@ -50,11 +50,15 @@ export interface Invoice {
 
 export interface Payment {
   id: string
-  bookingId: string
+  bookingId: string | null
   studentId: string
   studentName?: string
   studentEmail?: string
-  tutorId: string
+  tutorId: string | null
+  monthlySessionCount?: number
+  monthlySessionRate?: number
+  requestedTutorName?: string | null
+  transferAccount?: BankAccount
   tutorName?: string
   tutorAvatarUrl?: string | null
   subjectName?: string
@@ -90,10 +94,17 @@ export interface CreatePaymentInput {
   paymentMethod?: PaymentMethod
 }
 
-export interface ManualBankTransferInstruction {
+export interface BankAccount {
   bankName: string
   accountNumber: string
   accountHolder: string
+}
+
+export interface PrivateTutoringSettings extends BankAccount {
+  ratePerSession: number
+}
+
+export interface ManualBankTransferInstruction extends BankAccount {
   instructions: string[]
 }
 

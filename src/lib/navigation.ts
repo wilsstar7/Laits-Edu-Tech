@@ -57,6 +57,7 @@ export const ADMIN_NAV_ITEMS: NavItem[] = [
   { label: 'Kelola Asesmen & Soal', href: '/admin/assessments', icon: ClipboardList },
   { label: 'Kelola Kursus', href: '/admin/courses', icon: Library },
   { label: 'Pengumuman', href: '/admin/announcements', icon: Megaphone },
+  { label: 'Program Les Privat', href: '/admin/private-tutoring', icon: GraduationCap },
   { label: 'Verifikasi Pembayaran', href: '/admin/payments', icon: CreditCard },
   { label: 'Moderasi Ulasan', href: '/admin/reviews', icon: Star },
   { label: 'Kelola Pengguna', href: '/admin/users', icon: GraduationCap },

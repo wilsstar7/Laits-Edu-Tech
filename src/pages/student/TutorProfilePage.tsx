@@ -4,34 +4,31 @@ import {
   ArrowLeft,
   Star,
   Clock,
-  GraduationCap,
-  BookOpen,
-  Calendar,
+  ArrowUpRight,
   MessageCircle,
   ShieldCheck,
 } from 'lucide-react'
 import { AppShell } from '@/components/layout/AppShell'
 import { ErrorState } from '@/components/ui/ErrorState'
 import { TutorProfileSkeleton } from '@/components/tutor/TutorSkeletons'
-import { BookingDialog } from '@/components/booking/BookingDialog'
-import { TutorAvailabilityCalendar } from '@/components/tutor/TutorAvailabilityCalendar'
 import { ReviewSummaryCard } from '@/components/review/ReviewSummaryCard'
 import { ReviewCard } from '@/components/review/ReviewCard'
 import { tutorService } from '@/services/tutorService'
 import { reviewService } from '@/services/reviewService'
-import { formatCurrency } from '@/utils/format'
-import type { TutorSummary, AvailableTimeSlot } from '@/types/tutor'
-import type { Booking, BookingDurationMinutes } from '@/types/booking'
+import type { TutorSummary } from '@/types/tutor'
 import type { Review, TutorRatingSummary } from '@/types/review'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
+import { getInitials } from '@/utils/format'
 
 export function TutorProfilePage() {
   const { tutorId } = useParams<{ tutorId: string }>()
-  const [loading, setLoading] = useState(true)
+  return <TutorProfile key={tutorId} tutorId={tutorId} />
+}
+
+function TutorProfile({ tutorId }: { tutorId?: string }) {
+  const [loading, setLoading] = useState(Boolean(tutorId))
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
   const [tutor, setTutor] = useState<TutorSummary | null>(null)
 
@@ -39,11 +36,7 @@ export function TutorProfilePage() {
   const [reviews, setReviews] = useState<Review[]>([])
   const [ratingSummary, setRatingSummary] = useState<TutorRatingSummary | null>(null)
   const [loadingReviews, setLoadingReviews] = useState(true)
-
-  // Booking states
-  const [isBookingOpen, setIsBookingOpen] = useState(false)
-  const [selectedSlot, setSelectedSlot] = useState<AvailableTimeSlot | null>(null)
-  const [selectedDuration, setSelectedDuration] = useState<BookingDurationMinutes>(60)
+  const [reviewError, setReviewError] = useState(false)
 
   const reloadTutor = () => {
     if (!tutorId) return
@@ -90,318 +83,150 @@ export function TutorProfilePage() {
         if (isMounted) setLoading(false)
       })
 
-    // Load reviews & rating summary
-    reviewService
-      .getTutorReviews(tutorId, 1, 10)
-      .then((res) => {
-        if (isMounted) setReviews(res.reviews)
-      })
-      .catch(console.warn)
-
-    reviewService
-      .getTutorRatingSummary(tutorId)
-      .then((res) => {
-        if (isMounted) setRatingSummary(res)
-      })
-      .catch(console.warn)
-      .finally(() => {
-        if (isMounted) setLoadingReviews(false)
-      })
+    Promise.allSettled([
+      reviewService.getTutorReviews(tutorId, 1, 10),
+      reviewService.getTutorRatingSummary(tutorId),
+    ]).then(([reviewList, summary]) => {
+      if (!isMounted) return
+      if (reviewList.status === 'fulfilled') setReviews(reviewList.value.reviews)
+      else setReviewError(true)
+      if (summary.status === 'fulfilled') setRatingSummary(summary.value)
+      setLoadingReviews(false)
+    })
 
     return () => {
       isMounted = false
     }
   }, [tutorId])
 
-  const handleBookingSuccess = (_newBooking: Booking) => {
-    setIsBookingOpen(false)
-  }
-
   return (
     <AppShell>
-      {/* Back button */}
-      <div className="mb-4">
-        <Link
-          to="/student/tutors"
-          className="inline-flex items-center gap-2 text-xs font-semibold text-ink-muted hover:text-brand-primary min-h-[44px] transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          <span>Kembali ke Katalog Tutor</span>
+      <div className="mx-auto max-w-6xl">
+        <Link to="/student/tutors"
+          className="mb-3 inline-flex min-h-11 items-center gap-2 rounded-sm text-sm font-semibold text-ink-muted hover:text-brand-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary">
+          <ArrowLeft aria-hidden="true" className="size-4" />
+          Kembali ke Katalog Tutor
         </Link>
-      </div>
 
-      {loading ? (
-        <TutorProfileSkeleton />
-      ) : errorMsg || !tutor ? (
-        <ErrorState
-          title="Tutor Tidak Ditemukan"
-          message={errorMsg || 'Data tutor tidak dapat diakses saat ini.'}
-          onRetry={reloadTutor}
-        />
-      ) : (
-        <div className="space-y-6">
-          {/* Header Profile Card */}
-          <Card className="border border-border/80 bg-white shadow-xs overflow-hidden">
-            <CardContent className="p-6 sm:p-8">
-              <div className="flex flex-col sm:flex-row items-start gap-6">
-                <Avatar className="w-24 h-24 sm:w-28 sm:h-28 border-2 border-border/80 shadow-xs shrink-0">
-                  {tutor.avatarUrl && <AvatarImage src={tutor.avatarUrl} alt={tutor.fullName} />}
-                  <AvatarFallback className="bg-brand-primary/10 text-brand-primary text-2xl font-bold">
-                    {tutor.fullName.charAt(0)}
-                  </AvatarFallback>
-                </Avatar>
-
-                <div className="space-y-3 flex-1">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <h1 className="text-xl sm:text-2xl font-bold text-ink-primary">
-                          {tutor.fullName}
-                        </h1>
-                        {tutor.isVerified && (
-                          <Badge variant="outline" className="bg-brand-primary/10 text-brand-primary border-brand-primary/20 text-xs font-semibold gap-1">
-                            <ShieldCheck className="w-3.5 h-3.5" />
-                            Terverifikasi
-                          </Badge>
-                        )}
-                      </div>
-                      <p className="text-xs sm:text-sm text-ink-secondary mt-1">
-                        {tutor.headline || 'Pendidik Berpengalaman & Mitra Pembelajaran Personal'}
-                      </p>
-                    </div>
-
-                    <div className="text-left sm:text-right shrink-0">
-                      <span className="text-xs text-ink-muted block">Tarif Sesi Standar</span>
-                      <span className="text-xl sm:text-2xl font-bold text-brand-primary">
-                        {formatCurrency(tutor.hourlyRate)}
-                      </span>
-                      <span className="text-[11px] text-ink-muted"> / jam</span>
-                    </div>
-                  </div>
-
-                  {/* Quick stats pills */}
-                  <div className="flex flex-wrap items-center gap-4 pt-2 text-xs text-ink-muted border-t border-border">
-                    <div className="flex items-center gap-1.5 font-medium text-ink-primary">
-                      <Star className="w-4 h-4 text-warning fill-warning" />
-                      <span>{tutor.rating.toFixed(1)}</span>
-                      <span className="text-ink-muted">({tutor.totalReviews} ulasan)</span>
-                    </div>
-
-                    <div className="flex items-center gap-1.5 font-medium text-ink-primary">
-                      <Clock className="w-4 h-4 text-brand-primary" />
-                      <span>{tutor.experienceYears} Tahun Pengalaman</span>
-                    </div>
-
-                    <div className="flex items-center gap-1.5 font-medium text-ink-primary">
-                      <BookOpen className="w-4 h-4 text-brand-primary" />
-                      <span>{tutor.subjects.length} Mata Pelajaran</span>
-                    </div>
-                  </div>
-                </div>
+        {loading ? (
+          <TutorProfileSkeleton />
+        ) : errorMsg || !tutor ? (
+          <ErrorState title="Profil Tutor Tidak Tersedia"
+            message={errorMsg || 'Data tutor tidak dapat diakses saat ini.'} onRetry={reloadTutor} />
+        ) : (
+          <div className="overflow-hidden rounded-2xl border border-border bg-white">
+            <header className="flex flex-wrap items-start gap-4 border-b border-border bg-[#F4F6FA] px-5 py-6 sm:gap-6 sm:px-8 sm:py-8">
+              <Avatar className="size-16 shrink-0 rounded-xl border border-brand-primary/10 sm:size-24">
+                {tutor.avatarUrl && <AvatarImage src={tutor.avatarUrl} alt="" />}
+                <AvatarFallback className="rounded-xl bg-[#E8ECF6] text-xl font-bold text-brand-primary sm:text-3xl">
+                  {getInitials(tutor.fullName)}
+                </AvatarFallback>
+              </Avatar>
+              <div className="min-w-0 flex-1 basis-48">
+                <h1 className="wrap-break-word text-3xl font-bold tracking-tight text-ink-primary sm:text-4xl">
+                  {tutor.fullName}
+                </h1>
+                <p className="mt-1.5 wrap-break-word text-sm text-ink-secondary sm:text-base">
+                  {tutor.headline || tutor.educationBackground || 'Tutor Privat'}
+                </p>
+                <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm text-ink-muted">
+                  {tutor.isVerified && (
+                    <li className="inline-flex items-center gap-1.5 text-emerald-700">
+                      <ShieldCheck aria-hidden="true" className="size-4" /> Terverifikasi
+                    </li>
+                  )}
+                  <li className="inline-flex items-center gap-1.5">
+                    <Star aria-hidden="true" className="size-4 text-amber-700" />
+                    {tutor.totalReviews > 0 ? `${tutor.rating.toFixed(1)} (${tutor.totalReviews} ulasan)` : 'Belum ada ulasan'}
+                  </li>
+                  {tutor.experienceYears > 0 && (
+                    <li className="inline-flex items-center gap-1.5">
+                      <Clock aria-hidden="true" className="size-4" /> {tutor.experienceYears} tahun pengalaman
+                    </li>
+                  )}
+                </ul>
               </div>
-            </CardContent>
-          </Card>
+            </header>
 
-          {/* Grid: Left detail & Right interactive booking calendar */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Left Column (2 Cols) */}
-            <div className="lg:col-span-2 space-y-6">
-              {/* Bio & Pengenalan */}
-              <Card className="border border-border/80 bg-white shadow-xs">
-                <CardContent className="p-6 space-y-3">
-                  <h2 className="text-base font-bold text-ink-primary flex items-center gap-2">
-                    <MessageCircle className="w-4 h-4 text-brand-primary" />
-                    Tentang Tutor & Pendekatan Bimbingan
-                  </h2>
-                  <p className="text-xs sm:text-sm text-ink-secondary leading-relaxed whitespace-pre-line">
-                    {tutor.bio ||
-                      `${tutor.fullName} memiliki komitmen mendalam untuk membantu setiap siswa memahami konsep secara mendasar dengan metode yang disesuaikan pada kecepatan belajar masing-masing.`}
-                  </p>
-                </CardContent>
-              </Card>
+            <div className="grid lg:grid-cols-[minmax(0,1fr)_minmax(16rem,19rem)]">
+              <div className="min-w-0 divide-y divide-border">
+                <section className="px-5 py-6 sm:px-8" aria-labelledby="tutor-subjects">
+                  <h2 id="tutor-subjects" className="text-lg font-bold text-ink-primary">Mata Pelajaran</h2>
+                  {tutor.subjects.length > 0 ? (
+                    <ul className="mt-2 divide-y divide-border">
+                      {tutor.subjects.map((subject) => (
+                        <li key={subject.id} className="py-3 first:pt-2 last:pb-0">
+                          <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                            <h3 className="min-w-0 wrap-break-word text-sm font-semibold text-ink-primary">{subject.name}</h3>
+                            <span className="text-xs text-ink-muted">{subject.category === 'religious' ? 'Pendidikan Islam' : 'Umum'}</span>
+                          </div>
+                          {subject.description && <p className="mt-1 wrap-break-word text-sm leading-relaxed text-ink-muted">{subject.description}</p>}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : <p className="mt-2 text-sm text-ink-muted">Mata pelajaran belum dicantumkan.</p>}
+                </section>
 
-              {/* Gaya Mengajar */}
-              {tutor.teachingStyle && (
-                <Card className="border border-border/80 bg-white shadow-xs">
-                  <CardContent className="p-6 space-y-3">
-                    <h2 className="text-base font-bold text-ink-primary flex items-center gap-2">
-                      <BookOpen className="w-4 h-4 text-brand-primary" />
-                      Gaya & Metodologi Pengajaran
-                    </h2>
-                    <div className="p-4 bg-surface rounded-xl border border-border">
-                      <p className="text-xs sm:text-sm text-ink-primary font-medium leading-relaxed">
-                        {tutor.teachingStyle}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
-
-              {/* Latar Belakang Pendidikan & Pengalaman */}
-              <Card className="border border-border/80 bg-white shadow-xs">
-                <CardContent className="p-6 space-y-4">
-                  <h2 className="text-base font-bold text-ink-primary flex items-center gap-2">
-                    <GraduationCap className="w-4 h-4 text-brand-primary" />
-                    Kualifikasi Pendidikan & Pengalaman
-                  </h2>
-
-                  <div className="space-y-3">
-                    {tutor.educationBackground && (
-                      <div className="p-3.5 bg-surface rounded-xl border border-border">
-                        <span className="text-[11px] font-semibold text-ink-muted uppercase tracking-wider block">
-                          Pendidikan Formal
-                        </span>
-                        <p className="text-xs sm:text-sm font-semibold text-ink-primary mt-0.5">
-                          {tutor.educationBackground}
-                        </p>
-                      </div>
-                    )}
-
-                    {tutor.experience && (
-                      <div className="p-3.5 bg-surface rounded-xl border border-border">
-                        <span className="text-[11px] font-semibold text-ink-muted uppercase tracking-wider block">
-                          Pengalaman Profesional
-                        </span>
-                        <p className="text-xs sm:text-sm text-ink-secondary mt-0.5 whitespace-pre-line leading-relaxed">
-                          {tutor.experience}
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Mata Pelajaran yang Diampu */}
-              <Card className="border border-border/80 bg-white shadow-xs">
-                <CardContent className="p-6 space-y-4">
-                  <h2 className="text-base font-bold text-ink-primary flex items-center gap-2">
-                    <BookOpen className="w-4 h-4 text-brand-primary" />
-                    Mata Pelajaran yang Diampu ({tutor.subjects.length})
-                  </h2>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {tutor.subjects.map((sub) => (
-                      <div
-                        key={sub.id}
-                        className="p-3.5 bg-surface rounded-xl border border-border space-y-1"
-                      >
-                        <div className="flex items-center justify-between">
-                          <h4 className="font-bold text-ink-primary text-xs sm:text-sm">
-                            {sub.name}
-                          </h4>
-                          <Badge variant="outline" className="text-[10px] bg-white text-ink-muted">
-                            {sub.category === 'religious' ? 'Pendidikan Islam' : 'Umum'}
-                          </Badge>
+                {(tutor.bio || tutor.teachingStyle || tutor.educationBackground || tutor.experience) && (
+                  <section className="space-y-4 px-5 py-6 sm:px-8" aria-labelledby="tutor-about">
+                    <h2 id="tutor-about" className="text-lg font-bold text-ink-primary">Tentang Tutor</h2>
+                    {tutor.bio && <p className="wrap-break-word whitespace-pre-line text-sm leading-relaxed text-ink-secondary">{tutor.bio}</p>}
+                    <dl className="space-y-3">
+                      {([
+                        ['Gaya mengajar', tutor.teachingStyle],
+                        ['Pendidikan', tutor.educationBackground],
+                        ['Pengalaman', tutor.experience],
+                      ] as const).map(([label, value]) => value && (
+                        <div key={label} className="grid gap-1 sm:grid-cols-[8rem_minmax(0,1fr)] sm:gap-4">
+                          <dt className="text-sm font-semibold text-ink-primary">{label}</dt>
+                          <dd className="wrap-break-word whitespace-pre-line text-sm leading-relaxed text-ink-secondary">{value}</dd>
                         </div>
-                        {sub.description && (
-                          <p className="text-[11px] text-ink-secondary line-clamp-2">
-                            {sub.description}
-                          </p>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Ulasan & Rating Siswa */}
-              <div className="space-y-4">
-                <h2 className="text-base font-bold text-ink-primary flex items-center gap-2">
-                  <Star className="w-4 h-4 text-amber-500 fill-amber-400" />
-                  <span>Ulasan & Penilaian Siswa ({ratingSummary?.totalReviews || 0})</span>
-                </h2>
-
-                {ratingSummary && <ReviewSummaryCard summary={ratingSummary} />}
-
-                {loadingReviews ? (
-                  <div className="space-y-3">
-                    <Skeleton className="h-24 w-full rounded-2xl" />
-                    <Skeleton className="h-24 w-full rounded-2xl" />
-                  </div>
-                ) : reviews.length === 0 ? (
-                  <div className="p-8 bg-white border border-border/80 rounded-2xl text-center text-xs text-muted-foreground">
-                    Belum ada ulasan untuk tutor ini. Jadilah yang pertama memberikan ulasan setelah menyelesaikan sesi bimbingan!
-                  </div>
-                ) : (
-                  <div className="space-y-3">
-                    {reviews.map((rev) => (
-                      <ReviewCard key={rev.id} review={rev} />
-                    ))}
-                  </div>
+                      ))}
+                    </dl>
+                  </section>
                 )}
               </div>
-            </div>
 
-            {/* Right Column: Sticky Booking Widget (1 Col) */}
-            <div className="space-y-6">
-              <Card className="border border-border/80 bg-white shadow-md sticky top-6">
-                <CardContent className="p-6 space-y-5">
-                  <div className="pb-3 border-b border-border">
-                    <h3 className="text-base font-bold text-ink-primary">
-                      Pilih Waktu Belajar
-                    </h3>
-                    <p className="text-xs text-ink-muted">
-                      Pilih tanggal dan durasi untuk melihat slot jam ketersediaan tutor.
-                    </p>
-                  </div>
-
-                  {/* Embedded interactive availability calendar */}
-                  <TutorAvailabilityCalendar
-                    tutorId={tutor.id}
-                    selectedSlot={selectedSlot}
-                    onSelectSlot={(slot) => {
-                      setSelectedSlot(slot)
-                      setIsBookingOpen(true)
-                    }}
-                    selectedDuration={selectedDuration}
-                    onDurationChange={(d) => {
-                      setSelectedDuration(d)
-                      setSelectedSlot(null)
-                    }}
-                  />
-
-                  <div className="space-y-2.5">
-                    <Button
-                      type="button"
-                      onClick={() => setIsBookingOpen(true)}
-                      className="w-full min-h-[44px] bg-brand-primary text-white hover:bg-brand-primary/90 font-bold text-xs gap-2 shadow-sm"
-                    >
-                      <Calendar className="w-4 h-4" />
-                      <span>Lanjutkan Pemesanan Sesi</span>
+              <aside className="self-start border-y border-border bg-[#F4F6FA] p-5 sm:p-6 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:h-full lg:border-y-0 lg:border-l" aria-labelledby="tutor-program">
+                <div className="space-y-4">
+                  <h2 id="tutor-program" className="text-lg font-bold text-ink-primary">Program Les Privat</h2>
+                  <p className="text-sm leading-relaxed text-ink-muted">
+                    Tim ZEINBOX menetapkan tutor. Anda bisa mengusulkan nama tutor saat membuat tagihan.
+                  </p>
+                  <div className="grid gap-2">
+                    <Button asChild className="min-h-11 w-full rounded-lg">
+                      <Link to="/student/payments">Pilih Jumlah Sesi <ArrowUpRight aria-hidden="true" className="size-4" /></Link>
                     </Button>
-
-                    <Button
-                      asChild
-                      variant="outline"
-                      className="w-full min-h-[44px] border-brand-primary/30 text-brand-primary hover:bg-brand-primary/8 font-bold text-xs gap-2"
-                    >
-                      <Link
-                        to={`/student/messages?tutorId=${encodeURIComponent(
-                          tutor.userId || tutor.id
-                        )}`}
-                      >
-                        <MessageCircle className="w-4 h-4" />
-                        <span>Chat dengan Mentor</span>
+                    <Button asChild variant="outline" className="min-h-11 w-full rounded-lg">
+                      <Link to={`/student/messages?tutorId=${encodeURIComponent(tutor.userId || tutor.id)}`}>
+                        <MessageCircle aria-hidden="true" className="size-4" /> Kirim Pesan ke Tutor
                       </Link>
                     </Button>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </aside>
+
+              <section className="min-w-0 space-y-4 px-5 py-6 sm:px-8 lg:col-start-1 lg:border-t lg:border-border" aria-labelledby="tutor-reviews">
+                <h2 id="tutor-reviews" className="text-lg font-bold text-ink-primary">Ulasan Siswa</h2>
+                {loadingReviews ? (
+                  <Skeleton className="h-20 w-full rounded-xl" />
+                ) : reviewError ? (
+                  <p role="status" className="text-sm text-ink-muted">Ulasan belum bisa dimuat.</p>
+                ) : (
+                  <>
+                    {ratingSummary && ratingSummary.totalReviews > 0 && <ReviewSummaryCard summary={ratingSummary} />}
+                    {reviews.length > 0 ? (
+                      <div className="space-y-3">
+                        {reviews.map((review) => <ReviewCard key={review.id} review={review} />)}
+                      </div>
+                    ) : <p className="text-sm text-ink-muted">Belum ada ulasan untuk tutor ini.</p>}
+                  </>
+                )}
+              </section>
             </div>
           </div>
-        </div>
-      )}
-
-      {/* Booking Dialog Modal */}
-      {tutor && isBookingOpen && (
-        <BookingDialog
-          tutor={tutor}
-          initialSubjectId={tutor.subjects[0]?.id}
-          isOpen={isBookingOpen}
-          onClose={() => setIsBookingOpen(false)}
-          onSuccess={handleBookingSuccess}
-        />
-      )}
+        )}
+      </div>
     </AppShell>
   )
 }

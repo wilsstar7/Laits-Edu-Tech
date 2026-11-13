@@ -87,7 +87,7 @@ export function InvoiceCard({ invoice, payment }: InvoiceCardProps) {
                   Tutor: {payment.tutorName}
                 </div>
               </td>
-              <td className="p-3.5 text-right text-muted-foreground">1 Sesi</td>
+              <td className="p-3.5 text-right text-muted-foreground">{payment.monthlySessionCount ?? 1} Sesi</td>
               <td className="p-3.5 text-right font-semibold text-foreground">
                 {formatCurrency(invoice.subtotal)}
               </td>

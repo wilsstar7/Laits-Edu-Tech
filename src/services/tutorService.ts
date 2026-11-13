@@ -101,7 +101,7 @@ export const tutorService = {
 
       const from = (page - 1) * limit
       const to = from + limit - 1
-      query = query.range(from, to)
+      query = query.order('id').range(from, to)
 
       const { data, count, error } = await query
       if (error) throw error
@@ -152,7 +152,7 @@ export const tutorService = {
             description: ts.subject!.description,
           }))
 
-        const activeAvailCount = (r.tutor_availability || []).filter((a) => a.is_active).length
+        const activeAvailability = (r.tutor_availability || []).filter((slot) => slot.is_active)
 
         return {
           id: r.id,
@@ -171,7 +171,8 @@ export const tutorService = {
           totalReviews: r.total_reviews || 0,
           isVerified: Boolean(r.is_verified),
           subjects,
-          availabilityCount: activeAvailCount,
+          availabilityCount: activeAvailability.length,
+          availableDays: activeAvailability.map((slot) => slot.day_of_week),
         }
       })
 
@@ -307,7 +308,7 @@ export const tutorService = {
           description: ts.subject!.description,
         }))
 
-      const activeAvailCount = (r.tutor_availability || []).filter((a) => a.is_active).length
+      const activeAvailability = (r.tutor_availability || []).filter((slot) => slot.is_active)
 
       return {
         id: r.id,
@@ -326,7 +327,8 @@ export const tutorService = {
         totalReviews: r.total_reviews || 0,
         isVerified: Boolean(r.is_verified),
         subjects,
-        availabilityCount: activeAvailCount,
+        availabilityCount: activeAvailability.length,
+          availableDays: activeAvailability.map((slot) => slot.day_of_week),
       }
     } catch (err) {
       console.error('Failed to get tutor by id:', err)

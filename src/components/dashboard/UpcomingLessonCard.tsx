@@ -21,14 +21,14 @@ export function UpcomingLessonCard() {
         <EmptyState
           icon={Calendar}
           title="Belum ada jadwal belajar."
-          description="Anda belum memiliki sesi bimbingan les privat aktif minggu ini. Cari dan pilih tutor sesuai mata pelajaran pilihan Anda."
+          description="Anda belum memiliki sesi bimbingan les privat aktif minggu ini. Pilih jumlah sesi di menu Pembayaran untuk mengikuti program les privat."
           action={
             <Link
-              to="/student/tutors"
+              to="/student/payments"
               className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#183058] text-white text-xs font-bold hover:bg-[#102342] active:scale-[0.98] transition-colors min-h-[44px] w-full sm:w-auto"
             >
               <UserCheck className="w-4 h-4 shrink-0" />
-              <span>Temukan Tutor</span>
+              <span>Pilih Jumlah Sesi</span>
             </Link>
           }
         />

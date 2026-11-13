@@ -36,8 +36,12 @@ export function PaymentSummaryCard({ payment }: PaymentSummaryCardProps) {
         <div className="flex items-start gap-3 p-3.5 rounded-xl bg-muted/30 border border-border/40">
           <BookOpen className="w-4 h-4 text-primary mt-0.5 shrink-0" />
           <div>
-            <div className="text-xs text-muted-foreground">Mata Pelajaran</div>
-            <div className="font-semibold text-foreground">{payment.subjectName || 'Bimbingan Belajar'}</div>
+            <div className="text-xs text-muted-foreground">{payment.monthlySessionCount ? 'Paket Bulanan' : 'Mata Pelajaran'}</div>
+            <div className="font-semibold text-foreground">
+              {payment.subjectName || 'Bimbingan Belajar'}
+              {payment.monthlySessionCount && ` · ${payment.monthlySessionCount} sesi`}
+            </div>
+            {payment.requestedTutorName && <p className="break-words text-xs text-muted-foreground">Usulan tutor: {payment.requestedTutorName}</p>}
           </div>
         </div>
 
@@ -56,7 +60,7 @@ export function PaymentSummaryCard({ payment }: PaymentSummaryCardProps) {
 
       <div className="border-t border-border/60 pt-4 space-y-2">
         <div className="flex justify-between items-center text-sm text-muted-foreground">
-          <span>Biaya Sesi Bimbingan</span>
+          <span>{payment.monthlySessionRate ? `${payment.monthlySessionCount} sesi × ${formatCurrency(payment.monthlySessionRate)}` : 'Biaya Sesi Bimbingan'}</span>
           <span className="font-medium text-foreground">{formatCurrency(payment.amount)}</span>
         </div>
         <div className="flex justify-between items-center text-sm text-muted-foreground">
@@ -86,7 +90,7 @@ export function PaymentSummaryCard({ payment }: PaymentSummaryCardProps) {
       {payment.status === 'paid' && (
         <div className="rounded-xl p-3.5 bg-emerald-50/80 border border-emerald-200/60 flex items-center gap-2.5 text-xs text-emerald-800">
           <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-          <span>Pembayaran telah terverifikasi lunas. Sesi bimbingan Anda telah dijadwalkan secara resmi.</span>
+          <span>Pembayaran telah terverifikasi lunas.{!payment.monthlySessionCount && ' Sesi bimbingan Anda telah dijadwalkan.'}</span>
         </div>
       )}
 

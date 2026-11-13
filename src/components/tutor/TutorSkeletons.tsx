@@ -4,16 +4,16 @@ import { Skeleton } from '@/components/ui/skeleton'
 export function TutorCardSkeleton() {
   return (
     <Card className="border border-border/80 bg-white shadow-sm overflow-hidden animate-pulse">
-      <CardContent className="p-5 flex flex-col sm:flex-row gap-5">
-        <div className="flex sm:flex-col items-center gap-3">
-          <Skeleton className="w-16 h-16 rounded-full" />
+      <CardContent className="p-4 space-y-4">
+        <div className="flex items-center gap-3">
+          <Skeleton className="w-10 h-10 rounded-full" />
           <Skeleton className="w-20 h-4 rounded" />
         </div>
         <div className="flex-1 space-y-3">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div className="space-y-2">
             <div className="space-y-1.5">
               <Skeleton className="w-40 h-5 rounded" />
-              <Skeleton className="w-56 h-4 rounded" />
+              <Skeleton className="w-full max-w-56 h-4 rounded" />
             </div>
             <Skeleton className="w-28 h-6 rounded-full" />
           </div>
@@ -35,7 +35,7 @@ export function TutorCardSkeleton() {
 
 export function TutorListSkeleton({ count = 3 }: { count?: number }) {
   return (
-    <div className="space-y-4">
+    <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
       {Array.from({ length: count }).map((_, i) => (
         <TutorCardSkeleton key={i} />
       ))}

@@ -15,9 +15,18 @@ import { fileToBase64 } from '@/utils/imageCompression'
 
 interface RawPaymentRow {
   id: string
-  booking_id: string
+  booking_id: string | null
   student_id: string
-  tutor_id: string
+  tutor_id: string | null
+  monthly_session_count: number | null
+  monthly_subject_name: string | null
+  monthly_session_rate: number | null
+  requested_tutor_name: string | null
+  transfer_bank_name: string | null
+  transfer_account_number: string | null
+  transfer_account_holder: string | null
+  student?: { full_name: string; email: string } | null
+  assignedTutor?: { profile?: { full_name: string } | null } | null
   amount: number
   currency: string
   payment_method: PaymentMethod
@@ -70,7 +79,10 @@ interface RawPaymentRow {
 }
 
 function formatPaymentRow(row: RawPaymentRow): Payment {
-  const latestProof = row.proofs && row.proofs.length > 0 ? row.proofs[row.proofs.length - 1] : null
+  const latestProof = row.proofs?.reduce<NonNullable<RawPaymentRow['proofs']>[number] | null>(
+    (latest, proof) => !latest || Date.parse(proof.uploaded_at) > Date.parse(latest.uploaded_at) ? proof : latest,
+    null,
+  )
   const invoice = row.invoices && row.invoices.length > 0 ? row.invoices[0] : null
 
   let proofObj: PaymentProof | null = null
@@ -117,12 +129,18 @@ function formatPaymentRow(row: RawPaymentRow): Payment {
     id: row.id,
     bookingId: row.booking_id,
     studentId: row.student_id,
-    studentName: row.booking?.student?.full_name || 'Siswa',
-    studentEmail: row.booking?.student?.email,
+    studentName: row.student?.full_name || row.booking?.student?.full_name || 'Siswa',
+    studentEmail: row.student?.email || row.booking?.student?.email,
     tutorId: row.tutor_id,
-    tutorName: row.booking?.tutor?.profile?.full_name || 'Tutor',
+    tutorName: row.monthly_session_count ? row.assignedTutor?.profile?.full_name || 'Menunggu penetapan' : row.booking?.tutor?.profile?.full_name || 'Tutor',
     tutorAvatarUrl: row.booking?.tutor?.profile?.avatar_url || null,
-    subjectName: row.booking?.subject?.name || 'Mata Pelajaran',
+    subjectName: row.monthly_session_count ? row.monthly_subject_name || 'Les Privat Bulanan' : row.booking?.subject?.name || 'Mata Pelajaran',
+    monthlySessionCount: row.monthly_session_count ?? undefined,
+    monthlySessionRate: row.monthly_session_rate ?? undefined,
+    requestedTutorName: row.requested_tutor_name,
+    transferAccount: row.transfer_bank_name && row.transfer_account_number && row.transfer_account_holder
+      ? { bankName: row.transfer_bank_name, accountNumber: row.transfer_account_number, accountHolder: row.transfer_account_holder }
+      : undefined,
     amount: row.amount,
     currency: row.currency,
     paymentMethod: row.payment_method,
@@ -180,6 +198,15 @@ export const paymentService = {
           booking_id,
           student_id,
           tutor_id,
+          monthly_session_count,
+          monthly_subject_name,
+          monthly_session_rate,
+          requested_tutor_name,
+          transfer_bank_name,
+          transfer_account_number,
+          transfer_account_holder,
+          student:profiles!payments_student_id_fkey ( full_name, email ),
+          assignedTutor:tutor_profiles!payments_assigned_tutor_id_fkey ( profile:profiles ( full_name ) ),
           amount,
           currency,
           payment_method,
@@ -306,6 +333,15 @@ export const paymentService = {
           booking_id,
           student_id,
           tutor_id,
+          monthly_session_count,
+          monthly_subject_name,
+          monthly_session_rate,
+          requested_tutor_name,
+          transfer_bank_name,
+          transfer_account_number,
+          transfer_account_holder,
+          student:profiles!payments_student_id_fkey ( full_name, email ),
+          assignedTutor:tutor_profiles!payments_assigned_tutor_id_fkey ( profile:profiles ( full_name ) ),
           amount,
           currency,
           payment_method,
@@ -423,6 +459,15 @@ export const paymentService = {
           booking_id,
           student_id,
           tutor_id,
+          monthly_session_count,
+          monthly_subject_name,
+          monthly_session_rate,
+          requested_tutor_name,
+          transfer_bank_name,
+          transfer_account_number,
+          transfer_account_holder,
+          student:profiles!payments_student_id_fkey ( full_name, email ),
+          assignedTutor:tutor_profiles!payments_assigned_tutor_id_fkey ( profile:profiles ( full_name ) ),
           amount,
           currency,
           payment_method,

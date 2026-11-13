@@ -1,19 +1,27 @@
 import { useState, useEffect } from 'react'
 import { Link, useSearchParams } from 'react-router'
 import {
-  Sparkles,
   BookOpen,
-  Compass,
   ArrowRight,
   FileText,
+  Clock,
+  Calendar,
+  TrendingUp,
+  Library,
+  Award,
 } from 'lucide-react'
 import { AppShell } from '@/components/layout/AppShell'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { ErrorState } from '@/components/ui/ErrorState'
+import { StudentCourses } from '@/components/learning/StudentCourses'
+import { StudentAchievements } from '@/components/learning/StudentAchievements'
 import { LearningProfileCard } from '@/components/learning/LearningProfileCard'
 import { StudyMethodsSection } from '@/components/learning/StudyMethodCard'
 import { RecommendedSubjectCard } from '@/components/learning/RecommendedSubjectCard'
 import { LearningPathCard } from '@/components/learning/LearningPathCard'
+import { StudentProgress } from '@/components/progress/StudentProgress'
+import { StudentSchedule } from '@/components/booking/StudentSchedule'
+import { StudentSessionHistory } from '@/components/session/StudentSessionHistory'
 import { ReportHistory } from '@/components/report/ReportHistory'
 import {
   LearningProfileSkeleton,
@@ -28,12 +36,12 @@ import type {
   LearningPath,
 } from '@/types/learning'
 import type { StudentLearningPath } from '@/types/progress'
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 
 export function PersonalizedLearningPage() {
-  const [searchParams, setSearchParams] = useSearchParams()
-  const currentTab = searchParams.get('tab') === 'reports' ? 'reports' : 'learning'
+  const [searchParams] = useSearchParams()
+  const tab = searchParams.get('tab')
+  const currentTab = tab === 'reports' || tab === 'sessions' || tab === 'schedule' || tab === 'progress' || tab === 'courses' || tab === 'achievements' ? tab : 'learning'
 
   const [loading, setLoading] = useState(true)
   const [profile, setProfile] = useState<LearningProfileOverview | null>(null)
@@ -43,81 +51,46 @@ export function PersonalizedLearningPage() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
   const [subjectFilter, setSubjectFilter] = useState<'all' | 'general' | 'religious'>('all')
 
+  const [loadAttempt, setLoadAttempt] = useState(0)
+
   useEffect(() => {
+    if (currentTab !== 'learning') return
     let isMounted = true
 
-    async function init() {
+    async function loadPlan() {
       try {
         const profileData = await personalizedLearningService.getLearningProfile()
-        const pid =
-          profileData?.hasResult &&
-          profileData?.personalityTypeId &&
-          profileData.personalityTypeId !== 'undefined'
-            ? profileData.personalityTypeId
-            : undefined
-
-        const [subjectsData, pathsData, enrolledData] = await Promise.all([
-          personalizedLearningService.getRecommendedSubjects(pid),
-          learningPathService.listLearningPaths(pid),
+        const personalityId = profileData?.hasResult && profileData.personalityTypeId !== 'undefined'
+          ? profileData.personalityTypeId || undefined
+          : undefined
+        const [subjects, paths, enrolled] = await Promise.all([
+          personalizedLearningService.getRecommendedSubjects(personalityId),
+          learningPathService.listLearningPaths(personalityId),
           learningProgressService.getEnrolledLearningPaths(),
         ])
 
+        if (!isMounted) return
+        setProfile(profileData)
+        setRecommendedSubjects(subjects)
+        setLearningPaths(paths)
+        setEnrolledPaths(enrolled)
+        setErrorMsg(null)
+      } catch (error) {
         if (isMounted) {
-          setProfile(profileData)
-          setRecommendedSubjects(subjectsData)
-          setLearningPaths(pathsData)
-          setEnrolledPaths(enrolledData)
-        }
-      } catch (err: unknown) {
-        console.error('Failed to load personalized learning data:', err)
-        if (isMounted) {
-          setErrorMsg(
-            err instanceof Error
-              ? err.message
-              : 'Gagal memuat rencana belajar personal. Silakan coba kembali.'
-          )
+          setErrorMsg(error instanceof Error ? error.message : 'Gagal memuat rencana belajar personal.')
         }
       } finally {
         if (isMounted) setLoading(false)
       }
     }
 
-    init()
-    return () => {
-      isMounted = false
-    }
-  }, [])
+    void loadPlan()
+    return () => { isMounted = false }
+  }, [currentTab, loadAttempt])
 
-  const handleRetry = () => {
-    setLoading(true)
-    setErrorMsg(null)
-    personalizedLearningService
-      .getLearningProfile()
-      .then(async (profileData) => {
-        const pid =
-          profileData?.hasResult &&
-          profileData?.personalityTypeId &&
-          profileData.personalityTypeId !== 'undefined'
-            ? profileData.personalityTypeId
-            : undefined
-
-        const [subjectsData, pathsData] = await Promise.all([
-          personalizedLearningService.getRecommendedSubjects(pid),
-          learningPathService.listLearningPaths(pid),
-        ])
-        setProfile(profileData)
-        setRecommendedSubjects(subjectsData)
-        setLearningPaths(pathsData)
-      })
-      .catch((err: unknown) => {
-        setErrorMsg(
-          err instanceof Error
-            ? err.message
-            : 'Gagal memuat rencana belajar personal. Silakan coba kembali.'
-        )
-      })
-      .finally(() => setLoading(false))
-  }
+  const activePath = enrolledPaths.find((path) => path.status === 'in_progress') ??
+    enrolledPaths.find((path) => path.status === 'not_started' || path.status === 'paused')
+  const progress = Math.min(100, Math.max(0, activePath?.progressPercentage ?? 0))
 
   // Filter recommended subjects
   const filteredSubjects = recommendedSubjects.filter((sub) => {
@@ -128,62 +101,43 @@ export function PersonalizedLearningPage() {
   return (
     <AppShell>
       <PageHeader
-        title="Belajar Saya & Dokumen Laporan"
-        subtitle="Rencana belajar adaptif, alur materi terstruktur, dan arsip dokumen laporan evaluasi belajar Anda."
-        badge="Pembelajaran & Laporan"
-        action={
-          currentTab === 'learning' ? (
-            profile?.hasResult ? (
-              <Link
-                to="/student/tutors"
-                className="hidden sm:inline-flex items-center px-4 py-2.5 rounded-xl bg-[#183058] hover:bg-[#5B4CD7] text-white text-xs font-bold shadow-xs transition-colors gap-2 min-h-[44px]"
-              >
-                <span>Cari Tutor Sesuai Profil</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            ) : (
-              <Link
-                to="/student/assessment"
-                className="hidden sm:inline-flex items-center px-4 py-2.5 rounded-xl bg-[#183058] hover:bg-[#5B4CD7] text-white text-xs font-bold shadow-xs transition-colors gap-2 min-h-[44px]"
-              >
-                <Sparkles className="w-4 h-4" />
-                <span>Ambil Asesmen Kepribadian</span>
-              </Link>
-            )
-          ) : null
-        }
+        title="Belajar Saya"
+        subtitle="Rencana belajar personal, dokumen laporan, jadwal, dan riwayat sesi bimbingan."
       />
 
-      {/* Tabs Menu Navigasi Belajar Saya: Rencana Belajar vs Dokumen Laporan */}
-      <div className="flex items-center gap-2 border-b border-border/80 pb-3 mb-6">
-        <button
-          type="button"
-          onClick={() => setSearchParams({ tab: 'learning' })}
-          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-2 ${
-            currentTab === 'learning'
-              ? 'bg-[#183058] text-white shadow-xs'
-              : 'text-[#676A78] hover:text-[#17181C] hover:bg-[#ECF0F7] bg-white border border-border/70'
-          }`}
-        >
-          <BookOpen className="w-4 h-4" />
-          <span>Rencana Belajar Personal</span>
-        </button>
-        <button
-          type="button"
-          onClick={() => setSearchParams({ tab: 'reports' })}
-          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-2 ${
-            currentTab === 'reports'
-              ? 'bg-[#183058] text-white shadow-xs'
-              : 'text-[#676A78] hover:text-[#17181C] hover:bg-[#ECF0F7] bg-white border border-border/70'
-          }`}
-        >
-          <FileText className="w-4 h-4" />
-          <span>Dokumen Laporan Belajar</span>
-        </button>
-      </div>
+      <nav aria-label="Bagian Belajar Saya" className="mb-6 flex flex-wrap gap-2 border-b border-border pb-3">
+        {([
+          ['learning', 'Rencana Belajar Personal', BookOpen],
+          ['courses', 'Kursus Belajar', Library],
+          ['progress', 'Perkembangan', TrendingUp],
+          ['achievements', 'Pencapaian', Award],
+          ['reports', 'Laporan Belajar', FileText],
+          ['schedule', 'Jadwal Belajar', Calendar],
+          ['sessions', 'Riwayat Sesi', Clock],
+        ] as const).map(([id, label, Icon]) => (
+          <Link key={id} to={{ search: `?tab=${id}` }} aria-current={currentTab === id ? 'page' : undefined}
+            className={`inline-flex min-h-11 items-center gap-2 rounded-xl border px-4 text-xs font-bold transition-colors ${
+              currentTab === id
+                ? 'border-brand-primary bg-brand-primary text-white'
+                : 'border-border/70 bg-white text-ink-muted hover:bg-surface hover:text-ink-primary'
+            }`}>
+            <Icon aria-hidden="true" className="size-4" />
+            {label}
+          </Link>
+        ))}
+      </nav>
 
-      {/* Tab Konten 2: Dokumen Laporan Belajar */}
-      {currentTab === 'reports' ? (
+      {currentTab === 'courses' ? (
+        <StudentCourses />
+      ) : currentTab === 'achievements' ? (
+        <StudentAchievements />
+      ) : currentTab === 'progress' ? (
+        <StudentProgress />
+      ) : currentTab === 'schedule' ? (
+        <StudentSchedule />
+      ) : currentTab === 'sessions' ? (
+        <StudentSessionHistory />
+      ) : currentTab === 'reports' ? (
         <div className="animate-in fade-in-50 duration-200">
           <ReportHistory />
         </div>
@@ -199,170 +153,92 @@ export function PersonalizedLearningPage() {
             <ErrorState
               title="Kendala Memuat Rencana Belajar"
               message={errorMsg}
-              onRetry={handleRetry}
+              onRetry={() => {
+                setLoading(true)
+                setErrorMsg(null)
+                setLoadAttempt((attempt) => attempt + 1)
+              }}
             />
           ) : (
             <div className="space-y-8">
-              {/* No Assessment Banner if student hasn't taken test */}
-              {!profile?.hasResult && (
-                <div className="surface-card p-6 bg-gradient-to-r from-[#183058]/10 via-[#183058]/5 to-surface border border-[#183058]/20 rounded-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-                  <div className="space-y-2 max-w-2xl">
-                    <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#183058]/10 text-[#183058] text-xs font-semibold">
-                      <Sparkles className="w-3.5 h-3.5" />
-                      <span>Optimalkan Potensi Belajar</span>
-                    </div>
-                    <h3 className="text-base sm:text-lg font-bold text-[#17181C]">
-                      Kustomisasi Rekomendasi dengan Asesmen Kepribadian
-                    </h3>
-                    <p className="text-xs sm:text-sm text-[#676A78] leading-relaxed">
-                      Anda belum menyelesaikan tes asesmen karakter. Ikuti asesmen selama 5 menit
-                      untuk mendapatkan pemetaan metode belajar, rekomendasi mata pelajaran, dan
-                      pencocokan tutor yang akurat berdasarkan arketipe Anda.
-                    </p>
+              {activePath && (
+                <section aria-labelledby="active-learning-path"
+                  className="grid min-w-0 gap-5 rounded-2xl bg-ink-primary p-5 text-white sm:p-7 lg:grid-cols-[minmax(0,1fr)_minmax(12rem,16rem)] lg:items-center">
+                  <div className="min-w-0">
+                    <p className="text-sm font-semibold text-white/75">Jalur belajar aktif</p>
+                    <h2 id="active-learning-path" className="mt-1 wrap-break-word text-xl font-bold tracking-tight sm:text-2xl">
+                      {activePath.learningPathTitle}
+                    </h2>
+                    {activePath.learningPathDescription && (
+                      <p className="mt-2 max-w-2xl text-sm leading-relaxed text-white/80">{activePath.learningPathDescription}</p>
+                    )}
                   </div>
-                  <Link
-                    to="/student/assessment"
-                    className="min-h-[44px] px-5 py-2.5 rounded-xl bg-[#183058] hover:bg-[#5B4CD7] text-white text-xs font-bold shadow-xs inline-flex items-center gap-2 shrink-0 transition-colors"
-                  >
-                    Mulai Tes Sekarang
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
-                </div>
-              )}
-
-              {/* Lanjutkan Belajar Widget */}
-              {enrolledPaths[0] && (
-                <div className="surface-card p-6 bg-gradient-to-r from-[#183058]/10 via-[#183058]/5 to-surface border border-[#183058]/20 rounded-2xl shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                  <div className="space-y-1.5">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs font-bold text-[#183058] uppercase tracking-wider">
-                        Lanjutkan Belajar
-                      </span>
-                      <Badge variant="outline" className="text-[10px] bg-white text-[#676A78]">
-                        Progres {enrolledPaths[0].progressPercentage}%
-                      </Badge>
+                  <div className="space-y-3">
+                    <div className="flex justify-between gap-2 text-sm">
+                      <span>Progres jalur</span>
+                      <span className="font-semibold tabular-nums">{progress}%</span>
                     </div>
-                    <h3 className="text-lg font-bold text-[#17181C]">
-                      {enrolledPaths[0].learningPathTitle}
-                    </h3>
-                    <p className="text-xs text-[#676A78] line-clamp-1">
-                      {enrolledPaths[0].learningPathDescription}
-                    </p>
-                  </div>
-                  <Link to="/student/progress">
-                    <Button className="min-h-[44px] gap-2 font-semibold text-xs shrink-0 bg-[#183058] hover:bg-[#5B4CD7] text-white">
-                      <span>Ke Dasbor Progres</span>
-                      <ArrowRight className="w-4 h-4" />
+                    <div role="progressbar" aria-label="Progres jalur belajar" aria-valuenow={progress}
+                      className="h-2 overflow-hidden rounded-full bg-white/20">
+                      <div className="h-full rounded-full bg-[#B0B4E0]" style={{ width: `${progress}%` }} />
+                    </div>
+                    <Button asChild className="min-h-11 w-full rounded-lg bg-white text-ink-primary hover:bg-[#E8ECF6]">
+                      <Link to={activePath.learningPathSlug
+                        ? `/student/learning-paths/${activePath.learningPathSlug}`
+                        : '/student/learning?tab=progress'}>
+                        {activePath.learningPathSlug
+                          ? activePath.status === 'not_started' ? 'Buka Jalur Belajar' : 'Lanjutkan Belajar'
+                          : 'Lihat Perkembangan'}
+                        <ArrowRight aria-hidden="true" className="size-4" />
+                      </Link>
                     </Button>
-                  </Link>
-                </div>
+                  </div>
+                </section>
               )}
 
-              {/* Section 1: Learning Profile Overview Card */}
-              {profile && <LearningProfileCard profile={profile} />}
+              <div className="grid items-start gap-4 xl:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
+                <LearningProfileCard profile={profile} />
+                {profile?.hasResult && (
+                  <StudyMethodsSection methods={profile.recommendedStudyMethods} strengths={profile.strengths} />
+                )}
+              </div>
 
-              {/* Section 2: Recommended Study Methods */}
-              {profile?.hasResult && profile.recommendedStudyMethods.length > 0 && (
-                <StudyMethodsSection
-                  methods={profile.recommendedStudyMethods}
-                  strengths={profile.strengths}
-                />
-              )}
-
-              {/* Section 3: Recommended Subjects */}
-              <div className="space-y-4">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                  <div>
-                    <h3 className="text-base font-bold text-[#17181C] flex items-center gap-2">
-                      <BookOpen className="w-4 h-4 text-[#183058]" />
-                      Mata Pelajaran yang Direkomendasikan
-                    </h3>
-                    <p className="text-xs text-[#676A78]">
-                      Kurikulum dan materi yang cocok dengan kekuatan kognitif serta minat kepribadian Anda.
-                    </p>
-                  </div>
-
-                  {/* Filter pills */}
-                  <div className="flex items-center gap-1.5 bg-white p-1 rounded-xl border border-border/70 self-start sm:self-center shadow-xs">
-                    <button
-                      type="button"
-                      onClick={() => setSubjectFilter('all')}
-                      className={`min-h-[34px] px-3 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
-                        subjectFilter === 'all'
-                          ? 'bg-[#183058] text-white shadow-xs'
-                          : 'text-[#676A78] hover:text-[#17181C]'
-                      }`}
-                    >
-                      Semua ({recommendedSubjects.length})
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setSubjectFilter('general')}
-                      className={`min-h-[34px] px-3 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
-                        subjectFilter === 'general'
-                          ? 'bg-[#183058] text-white shadow-xs'
-                          : 'text-[#676A78] hover:text-[#17181C]'
-                      }`}
-                    >
-                      Umum
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setSubjectFilter('religious')}
-                      className={`min-h-[34px] px-3 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
-                        subjectFilter === 'religious'
-                          ? 'bg-[#183058] text-white shadow-xs'
-                          : 'text-[#676A78] hover:text-[#17181C]'
-                      }`}
-                    >
-                      Pendidikan Islam
-                    </button>
+              <section aria-labelledby="recommended-subjects" className="space-y-4 border-t border-border pt-5">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <h2 id="recommended-subjects" className="text-xl font-bold tracking-tight text-ink-primary">Rekomendasi Mata Pelajaran</h2>
+                  <div role="group" aria-label="Kategori mata pelajaran" className="flex flex-wrap gap-1.5">
+                    {([
+                      ['all', 'Semua'],
+                      ['general', 'Umum'],
+                      ['religious', 'Pendidikan Islam'],
+                    ] as const).map(([id, label]) => (
+                      <Button key={id} type="button" variant={subjectFilter === id ? 'default' : 'outline'}
+                        aria-pressed={subjectFilter === id} onClick={() => setSubjectFilter(id)}
+                        className="min-h-11 rounded-lg px-3 text-xs">{label}</Button>
+                    ))}
                   </div>
                 </div>
-
                 {filteredSubjects.length === 0 ? (
-                  <div className="p-8 text-center bg-white rounded-2xl border border-dashed border-border/80">
-                    <p className="text-xs text-[#676A78]">
-                      Tidak ada mata pelajaran pada kategori yang dipilih.
-                    </p>
-                  </div>
+                  <p className="rounded-xl border border-border bg-white p-5 text-sm text-ink-muted">
+                    {subjectFilter === 'all' ? 'Belum ada rekomendasi mata pelajaran.' : 'Belum ada mata pelajaran pada kategori ini.'}
+                  </p>
                 ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {filteredSubjects.map((sub) => (
-                      <RecommendedSubjectCard key={sub.subjectId} subject={sub} />
-                    ))}
+                  <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                    {filteredSubjects.map((subject) => <RecommendedSubjectCard key={subject.subjectId} subject={subject} />)}
                   </div>
                 )}
-              </div>
+              </section>
 
-              {/* Section 4: Curated Learning Paths */}
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-base font-bold text-[#17181C] flex items-center gap-2">
-                      <Compass className="w-4 h-4 text-[#183058]" />
-                      Alur Pembelajaran Terstruktur (Learning Paths)
-                    </h3>
-                    <p className="text-xs text-[#676A78]">
-                      Jalur belajar komprehensif dari dasar hingga mahir dengan kurikulum terpadu.
-                    </p>
-                  </div>
-                </div>
-
+              <section aria-labelledby="learning-paths" className="space-y-4 border-t border-border pt-5">
+                <h2 id="learning-paths" className="text-xl font-bold tracking-tight text-ink-primary">Jalur Belajar</h2>
                 {learningPaths.length === 0 ? (
-                  <div className="p-8 text-center bg-white rounded-2xl border border-dashed border-border/80">
-                    <p className="text-xs text-[#676A78]">
-                      Belum ada alur pembelajaran aktif saat ini.
-                    </p>
-                  </div>
+                  <p className="rounded-xl border border-border bg-white p-5 text-sm text-ink-muted">Belum ada jalur belajar aktif.</p>
                 ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                    {learningPaths.map((path) => (
-                      <LearningPathCard key={path.id} path={path} />
-                    ))}
+                  <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                    {learningPaths.map((path) => <LearningPathCard key={path.id} path={path} />)}
                   </div>
                 )}
-              </div>
+              </section>
             </div>
           )}
         </div>

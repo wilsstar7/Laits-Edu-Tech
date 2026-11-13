@@ -1,6 +1,4 @@
 import { useState, useEffect } from 'react'
-import { AppShell } from '@/components/layout/AppShell'
-import { PageHeader } from '@/components/layout/PageHeader'
 import { CourseCard } from '@/components/learning/CourseCard'
 import { LearningGoalCard } from '@/components/learning/LearningGoalCard'
 import { StreakCard } from '@/components/learning/StreakCard'
@@ -22,7 +20,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
 
-export function StudentCoursesPage() {
+export function StudentCourses() {
   // Course State
   const [courses, setCourses] = useState<Course[]>([])
   const [loadingCourses, setLoadingCourses] = useState(true)
@@ -161,12 +159,8 @@ export function StudentCoursesPage() {
   })
 
   return (
-    <AppShell>
-      <PageHeader
-        title="Kursus & Target Belajar"
-        subtitle="Eksplorasi modul materi terstruktur, kelola sasaran akademik mandiri, dan pantau konsistensi belajar Anda setiap hari."
-        badge="Akademik & Target"
-      />
+    <section aria-labelledby="StudentCourses-title" className="space-y-6">
+      <h2 id="StudentCourses-title" className="text-lg font-bold">Kursus & Target Belajar</h2>
 
       <div className="space-y-10">
         {/* ========================================================= */}
@@ -550,6 +544,6 @@ export function StudentCoursesPage() {
           </div>
         </div>
       )}
-    </AppShell>
+    </section>
   )
 }

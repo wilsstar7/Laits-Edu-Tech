@@ -109,7 +109,7 @@ export function PaymentDetailPage() {
                     <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
                     <span>Pembayaran berhasil diverifikasi.{!payment.monthlySessionCount && ' Sesi Anda siap dihadiri.'}</span>
                   </div>
-                  {!payment.monthlySessionCount && <Link to="/student/schedule">
+                  {!payment.monthlySessionCount && <Link to="/student/learning?tab=schedule">
                     <Button size="sm" className="min-h-[44px] gap-2 font-semibold bg-emerald-600 hover:bg-emerald-700 text-white">
                       <Calendar className="w-4 h-4" />
                       <span>Lihat Jadwal Saya</span>

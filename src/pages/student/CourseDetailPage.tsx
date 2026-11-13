@@ -83,7 +83,7 @@ export function CourseDetailPage() {
           <p className="text-xs text-[#676A78]">
             Materi kursus yang Anda cari mungkin telah diarsipkan atau belum dipublikasikan.
           </p>
-          <Link to="/student/courses">
+          <Link to="/student/learning?tab=courses">
             <Button variant="default" size="sm" className="rounded-xl text-xs bg-[#183058] text-white">
               Kembali ke Katalog
             </Button>
@@ -102,7 +102,7 @@ export function CourseDetailPage() {
       {/* Back button */}
       <div>
         <Link
-          to="/student/courses"
+          to="/student/learning?tab=courses"
           className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#8A8D9A] hover:text-[#17181C] transition-colors"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
@@ -173,7 +173,7 @@ export function CourseDetailPage() {
             ) : null}
 
             {isCompleted && (
-              <Link to="/student/achievements">
+              <Link to="/student/learning?tab=achievements">
                 <Button variant="outline" size="lg" className="rounded-xl text-xs sm:text-sm text-white border-white/20 hover:bg-white/10 gap-2">
                   <Award className="w-4 h-4 text-amber-400" />
                   <span>Lihat Sertifikat Kelulusan</span>

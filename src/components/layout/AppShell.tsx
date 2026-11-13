@@ -5,7 +5,7 @@ import { MobileSidebar } from './MobileSidebar'
 import { Header } from './Header'
 import { env } from '@/lib/env'
 import { useAuth } from '@/hooks/useAuth'
-import { getNavItemsForRole } from '@/lib/navigation'
+import { getNavItemsForRole, isNavItemActive } from '@/lib/navigation'
 import { AlertCircle, Menu } from 'lucide-react'
 
 interface AppShellProps {
@@ -56,7 +56,7 @@ export function AppShell({ children }: AppShellProps) {
           <div className="grid grid-cols-5 gap-1 max-w-md mx-auto">
             {primaryMobileNav.map((item) => {
               const Icon = item.icon
-              const isActive = location.pathname === item.href
+              const isActive = isNavItemActive(item, location.pathname)
               const shortLabel = item.label.split(' ')[0] || item.label
               return (
                 <Link

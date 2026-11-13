@@ -1,27 +1,4 @@
-import { CheckCircle2 } from 'lucide-react'
-
-interface StudyMethodCardProps {
-  method: string
-  index: number
-}
-
-export function StudyMethodCard({ method, index }: StudyMethodCardProps) {
-  return (
-    <div className="surface-card p-5 bg-white border border-border flex items-start gap-3.5 rounded-2xl hover:border-[#183058]/30 transition-colors">
-      <div className="w-8 h-8 rounded-xl bg-[#E8ECF6] text-[#183058] flex items-center justify-center shrink-0 font-bold text-xs">
-        0{index + 1}
-      </div>
-      <div className="space-y-1">
-        <h4 className="text-sm font-bold text-[#17181C] leading-snug">
-          {method}
-        </h4>
-        <p className="text-xs text-[#676A78] leading-relaxed">
-          Disarankan berdasarkan kecenderungan cara Anda memproses materi baru secara lebih optimal.
-        </p>
-      </div>
-    </div>
-  )
-}
+import { Check } from 'lucide-react'
 
 interface StudyMethodsSectionProps {
   methods: string[]
@@ -32,31 +9,26 @@ export function StudyMethodsSection({ methods, strengths }: StudyMethodsSectionP
   if (methods.length === 0 && strengths.length === 0) return null
 
   return (
-    <div className="space-y-4">
-      <div>
-        <h3 className="text-lg font-extrabold text-[#17181C]">
-          Pendekatan Belajar yang Disarankan
-        </h3>
-        <p className="text-xs text-[#676A78] mt-0.5">
-          Strategi belajar berikut dirancang untuk memaksimalkan daya serap materi Anda.
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {methods.map((method, idx) => (
-          <StudyMethodCard key={idx} method={method} index={idx} />
-        ))}
-      </div>
-
+    <section className="min-w-0 rounded-xl border border-border bg-[#F4F6FA] p-5 sm:p-6">
+      <h2 className="text-lg font-bold text-ink-primary">Cara Belajar yang Disarankan</h2>
+      {methods.length > 0 && (
+        <ul className="mt-2 divide-y divide-border">
+          {methods.map((method, index) => (
+            <li key={index} className="flex items-start gap-2.5 py-2.5 text-sm leading-relaxed text-ink-secondary">
+              <Check aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-brand-primary" />
+              <span className="min-w-0 wrap-break-word">{method}</span>
+            </li>
+          ))}
+        </ul>
+      )}
       {strengths.length > 0 && (
-        <div className="p-4 rounded-2xl bg-[#E6F6EE]/60 border border-[#45B97C]/20 flex items-start gap-3 mt-3">
-          <CheckCircle2 className="w-4 h-4 text-[#45B97C] shrink-0 mt-0.5" />
-          <div className="text-xs text-[#1D1D24] leading-relaxed">
-            <span className="font-bold text-[#207248]">Kekuatan Belajar: </span>
-            {strengths.join(' • ')}
-          </div>
+        <div className="mt-3 border-t border-border pt-3">
+          <h3 className="text-sm font-semibold text-ink-primary">Kekuatan Belajar</h3>
+          <ul className="mt-2 list-disc space-y-1 pl-4 text-sm leading-relaxed text-ink-muted">
+            {strengths.map((strength, index) => <li key={index}>{strength}</li>)}
+          </ul>
         </div>
       )}
-    </div>
+    </section>
   )
 }

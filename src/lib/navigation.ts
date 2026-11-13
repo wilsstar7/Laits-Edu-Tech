@@ -1,19 +1,15 @@
 import {
   LayoutDashboard,
-  Brain,
   Compass,
   BookOpen,
   GraduationCap,
   Calendar,
-  TrendingUp,
   CreditCard,
   Clock,
   Star,
   MessageSquare,
-  Bell,
   Settings,
   Shield,
-  Award,
   Library,
   Megaphone,
   ClipboardList,
@@ -26,22 +22,21 @@ export interface NavItem {
   href: string
   icon: LucideIcon
   badge?: string
+  sectionPaths?: string[]
 }
 
 export const STUDENT_NAV_ITEMS: NavItem[] = [
   { label: 'Dashboard', href: '/student/dashboard', icon: LayoutDashboard },
-  { label: 'Kepribadian Saya', href: '/student/personality', icon: Compass },
+  {
+    label: 'Kepribadian',
+    href: '/student/personality',
+    icon: Compass,
+    sectionPaths: ['/student/personality', '/student/assessment'],
+  },
   { label: 'Belajar Saya', href: '/student/learning', icon: BookOpen },
-  { label: 'Kursus Belajar', href: '/student/courses', icon: Library },
-  { label: 'Pencapaian', href: '/student/achievements', icon: Award },
-  { label: 'Asesmen Kepribadian', href: '/student/assessment', icon: Brain },
   { label: 'Tutor Privat', href: '/student/tutors', icon: GraduationCap },
-  { label: 'Jadwal Belajar', href: '/student/schedule', icon: Calendar },
-  { label: 'Perkembangan', href: '/student/progress', icon: TrendingUp },
   { label: 'Pembayaran', href: '/student/payments', icon: CreditCard },
-  { label: 'Riwayat Sesi', href: '/student/sessions', icon: Clock },
   { label: 'Pesan', href: '/student/messages', icon: MessageSquare },
-  { label: 'Notifikasi', href: '/student/notifications', icon: Bell },
   { label: 'Pengaturan', href: '/student/settings', icon: Settings },
 ]
 
@@ -64,6 +59,12 @@ export const ADMIN_NAV_ITEMS: NavItem[] = [
   { label: 'Katalog Mata Pelajaran', href: '/admin/subjects', icon: BookOpen },
   { label: 'Pengaturan Sistem', href: '/student/settings', icon: Settings },
 ]
+
+export function isNavItemActive(item: NavItem, pathname: string): boolean {
+  return pathname === item.href || (item.sectionPaths?.some(
+    (path) => pathname === path || pathname.startsWith(`${path}/`),
+  ) ?? false)
+}
 
 export function getNavItemsForRole(role: UserRole | null): NavItem[] {
   if (role === 'super_admin') return ADMIN_NAV_ITEMS

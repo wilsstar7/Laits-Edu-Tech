@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react'
 import { Routes, Route, Navigate } from 'react-router'
 import { ProtectedRoute } from '@/components/auth/ProtectedRoute'
 import { RoleGuard } from '@/components/auth/RoleGuard'
+import { StudentPersonalityLayout } from '@/components/layout/StudentPersonalityLayout'
 import { PageLoader } from '@/components/ui/PageLoader'
 
 // Public & Auth Pages (Code-split)
@@ -18,10 +19,8 @@ const HealthCheckPage = lazy(() => import('@/pages/HealthCheckPage').then((m) =>
 // Student Pages (Code-split)
 const CompleteProfilePage = lazy(() => import('@/pages/student/CompleteProfilePage').then((m) => ({ default: m.CompleteProfilePage })))
 const StudentDashboardPage = lazy(() => import('@/pages/student/StudentDashboardPage').then((m) => ({ default: m.StudentDashboardPage })))
-const StudentCoursesPage = lazy(() => import('@/pages/student/StudentCoursesPage').then((m) => ({ default: m.StudentCoursesPage })))
 const CourseDetailPage = lazy(() => import('@/pages/student/CourseDetailPage').then((m) => ({ default: m.CourseDetailPage })))
 const LessonPlayerPage = lazy(() => import('@/pages/student/LessonPlayerPage').then((m) => ({ default: m.LessonPlayerPage })))
-const StudentAchievementsPage = lazy(() => import('@/pages/student/StudentAchievementsPage').then((m) => ({ default: m.StudentAchievementsPage })))
 const StudentSettingsPage = lazy(() => import('@/pages/student/StudentSettingsPage').then((m) => ({ default: m.StudentSettingsPage })))
 const AssessmentIntroPage = lazy(() => import('@/pages/student/AssessmentIntroPage').then((m) => ({ default: m.AssessmentIntroPage })))
 const AssessmentQuestionPage = lazy(() => import('@/pages/student/AssessmentQuestionPage').then((m) => ({ default: m.AssessmentQuestionPage })))
@@ -31,11 +30,8 @@ const PersonalizedLearningPage = lazy(() => import('@/pages/student/Personalized
 const LearningPathDetailPage = lazy(() => import('@/pages/student/LearningPathDetailPage').then((m) => ({ default: m.LearningPathDetailPage })))
 const TutorDiscoveryPage = lazy(() => import('@/pages/student/TutorDiscoveryPage').then((m) => ({ default: m.TutorDiscoveryPage })))
 const TutorProfilePage = lazy(() => import('@/pages/student/TutorProfilePage').then((m) => ({ default: m.TutorProfilePage })))
-const StudentSchedulePage = lazy(() => import('@/pages/student/StudentSchedulePage').then((m) => ({ default: m.StudentSchedulePage })))
-const StudentProgressPage = lazy(() => import('@/pages/student/StudentProgressPage').then((m) => ({ default: m.StudentProgressPage })))
 const StudentPaymentsPage = lazy(() => import('@/pages/student/StudentPaymentsPage').then((m) => ({ default: m.StudentPaymentsPage })))
 const PaymentDetailPage = lazy(() => import('@/pages/student/PaymentDetailPage').then((m) => ({ default: m.PaymentDetailPage })))
-const StudentSessionsPage = lazy(() => import('@/pages/student/StudentSessionsPage').then((m) => ({ default: m.StudentSessionsPage })))
 const NotificationsPage = lazy(() => import('@/pages/student/NotificationsPage').then((m) => ({ default: m.NotificationsPage })))
 const StudentMessagesPage = lazy(() => import('@/pages/student/StudentMessagesPage').then((m) => ({ default: m.StudentMessagesPage })))
 const PlaceholderPage = lazy(() => import('@/pages/student/PlaceholderPage').then((m) => ({ default: m.PlaceholderPage })))
@@ -103,7 +99,7 @@ export function AppRoutes() {
           element={
             <ProtectedRoute>
               <RoleGuard allowedRoles={['student']}>
-                <StudentCoursesPage />
+                <Navigate to="/student/learning?tab=courses" replace />
               </RoleGuard>
             </ProtectedRoute>
           }
@@ -130,14 +126,14 @@ export function AppRoutes() {
         />
         <Route
           path="/student/goals"
-          element={<Navigate to="/student/courses" replace />}
+          element={<Navigate to="/student/learning?tab=courses" replace />}
         />
         <Route
           path="/student/achievements"
           element={
             <ProtectedRoute>
               <RoleGuard allowedRoles={['student']}>
-                <StudentAchievementsPage />
+                <Navigate to="/student/learning?tab=achievements" replace />
               </RoleGuard>
             </ProtectedRoute>
           }
@@ -152,42 +148,23 @@ export function AppRoutes() {
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/student/assessment"
-          element={
-            <ProtectedRoute>
-              <RoleGuard allowedRoles={['student']}>
-                <AssessmentIntroPage />
-              </RoleGuard>
-            </ProtectedRoute>
-          }
-        />
+        <Route element={
+          <ProtectedRoute>
+            <RoleGuard allowedRoles={['student']}>
+              <StudentPersonalityLayout />
+            </RoleGuard>
+          </ProtectedRoute>
+        }>
+          <Route path="/student/personality" element={<PersonalityResultPage />} />
+          <Route path="/student/personality/:resultId" element={<PersonalityResultPage />} />
+          <Route path="/student/assessment" element={<AssessmentIntroPage />} />
+        </Route>
         <Route
           path="/student/assessment/:id"
           element={
             <ProtectedRoute>
               <RoleGuard allowedRoles={['student']}>
                 <AssessmentQuestionPage />
-              </RoleGuard>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/student/personality"
-          element={
-            <ProtectedRoute>
-              <RoleGuard allowedRoles={['student']}>
-                <PersonalityResultPage />
-              </RoleGuard>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/student/personality/:resultId"
-          element={
-            <ProtectedRoute>
-              <RoleGuard allowedRoles={['student']}>
-                <PersonalityResultPage />
               </RoleGuard>
             </ProtectedRoute>
           }
@@ -237,7 +214,7 @@ export function AppRoutes() {
           element={
             <ProtectedRoute>
               <RoleGuard allowedRoles={['student']}>
-                <StudentSchedulePage />
+                <Navigate to="/student/learning?tab=schedule" replace />
               </RoleGuard>
             </ProtectedRoute>
           }
@@ -247,7 +224,7 @@ export function AppRoutes() {
           element={
             <ProtectedRoute>
               <RoleGuard allowedRoles={['student']}>
-                <StudentProgressPage />
+                <Navigate to="/student/learning?tab=progress" replace />
               </RoleGuard>
             </ProtectedRoute>
           }
@@ -277,7 +254,7 @@ export function AppRoutes() {
           element={
             <ProtectedRoute>
               <RoleGuard allowedRoles={['student']}>
-                <StudentSessionsPage />
+                <Navigate to="/student/learning?tab=sessions" replace />
               </RoleGuard>
             </ProtectedRoute>
           }

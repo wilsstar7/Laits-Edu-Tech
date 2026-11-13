@@ -616,7 +616,7 @@ export function StudentMessagesPage() {
                     </Link>
                   )}
                   <Link
-                    to="/student/schedule"
+                    to="/student/learning?tab=schedule"
                     className="inline-flex items-center text-xs font-semibold text-brand-primary hover:text-brand-primary/80 gap-1.5 px-3 py-2 rounded-xl border border-border hover:bg-surface transition-colors min-h-[44px]"
                   >
                     <Calendar className="w-4 h-4" />

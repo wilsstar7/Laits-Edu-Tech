@@ -1,10 +1,9 @@
 import { Link, useLocation } from 'react-router'
 import {
-  HelpCircle,
   LogOut,
 } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
-import { getNavItemsForRole } from '@/lib/navigation'
+import { getNavItemsForRole, isNavItemActive } from '@/lib/navigation'
 
 interface SidebarProps {
   onNavigate?: () => void
@@ -64,7 +63,7 @@ export function Sidebar({ onNavigate, className = '' }: SidebarProps) {
           Menu Navigasi
         </div>
         {navItems.map((item) => {
-          const isActive = location.pathname === item.href
+          const isActive = isNavItemActive(item, location.pathname)
           const Icon = item.icon
           return (
             <Link
@@ -102,14 +101,6 @@ export function Sidebar({ onNavigate, className = '' }: SidebarProps) {
       </div>
 
       <div className="p-4 border-t border-white/8 space-y-1.5 bg-black/10">
-        <Link
-          to="/student/help"
-          onClick={onNavigate}
-          className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-[#C9D2E3] hover:bg-white/[0.06] hover:text-white transition-colors min-h-[44px]"
-        >
-          <HelpCircle className="w-4 h-4 shrink-0" />
-          <span>Pusat Bantuan</span>
-        </Link>
         <button
           type="button"
           onClick={handleSignOut}

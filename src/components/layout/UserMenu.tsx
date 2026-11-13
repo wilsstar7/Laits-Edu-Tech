@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router'
-import { Settings, HelpCircle, LogOut, ChevronDown, ShieldCheck } from 'lucide-react'
+import { Settings, LogOut, ChevronDown, ShieldCheck } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 import { getInitials } from '@/utils/format'
 
@@ -77,14 +77,6 @@ export function UserMenu() {
             >
               <Settings className="w-4 h-4 text-muted-foreground shrink-0" />
               <span>Pengaturan Akun</span>
-            </Link>
-            <Link
-              to="/student/help"
-              onClick={() => setIsOpen(false)}
-              className="flex items-center gap-2.5 px-3 py-2.5 min-h-[44px] rounded-xl text-xs font-medium text-foreground hover:bg-[#ECF0F7] transition-colors"
-            >
-              <HelpCircle className="w-4 h-4 text-muted-foreground shrink-0" />
-              <span>Pusat Bantuan</span>
             </Link>
           </div>
 

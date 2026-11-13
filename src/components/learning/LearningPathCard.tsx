@@ -17,9 +17,9 @@ export function LearningPathCard({ path }: LearningPathCardProps) {
       : 'Tingkat Lanjut'
 
   return (
-    <div className="surface-card p-6 bg-white border border-border rounded-2xl flex flex-col justify-between gap-5 hover:border-[#183058]/30 transition-all">
+    <div className="min-w-0 p-4 sm:p-5 bg-white border border-border rounded-xl flex flex-col justify-between gap-5 hover:border-[#183058]/30 transition-colors">
       <div className="space-y-3">
-        <div className="flex items-center justify-between gap-2">
+        <div className="flex flex-wrap items-center justify-between gap-2">
           <Badge variant="outline" className="text-[11px] font-semibold text-[#183058] bg-[#E8ECF6]/60 border-[#183058]/20">
             {difficultyLabel}
           </Badge>
@@ -30,9 +30,9 @@ export function LearningPathCard({ path }: LearningPathCardProps) {
         </div>
 
         <div>
-          <h4 className="text-base sm:text-lg font-extrabold text-[#17181C]">
+          <h3 className="text-base sm:text-lg font-extrabold text-[#17181C]">
             {path.title}
-          </h4>
+          </h3>
           <p className="text-xs text-[#676A78] mt-1.5 leading-relaxed line-clamp-3">
             {path.description}
           </p>
@@ -52,9 +52,9 @@ export function LearningPathCard({ path }: LearningPathCardProps) {
       </div>
 
       <div className="pt-2 border-t border-border/50">
-        <Button asChild variant="default" size="sm" className="w-full justify-between font-bold text-xs min-h-[42px]">
+        <Button asChild variant="outline" size="sm" className="w-full justify-between font-bold text-xs min-h-11">
           <Link to={`/student/learning-paths/${path.slug}`}>
-            <span>Buka Kurikulum Jalur Belajar</span>
+            <span>Lihat Kurikulum</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </Button>

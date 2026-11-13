@@ -1,103 +1,52 @@
 import { Link } from 'react-router'
-import { Compass, Sparkles, BookOpen, MessageSquare, ArrowRight, Brain } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import type { LearningProfileOverview } from '@/types/learning'
 import { Button } from '@/components/ui/button'
 
-interface LearningProfileCardProps {
-  profile: LearningProfileOverview
-}
-
-export function LearningProfileCard({ profile }: LearningProfileCardProps) {
-  if (!profile.hasResult) {
+export function LearningProfileCard({ profile }: { profile: LearningProfileOverview | null }) {
+  if (!profile?.hasResult) {
     return (
-      <div className="surface-card p-6 sm:p-8 bg-gradient-to-br from-white via-white to-[#E8ECF6]/40 border border-border">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-          <div className="space-y-2 max-w-xl">
-            <div className="flex items-center gap-2 text-[#183058]">
-              <Brain className="w-5 h-5 shrink-0" />
-              <span className="text-xs font-bold uppercase tracking-wider">
-                Profil Karakter Belajar
-              </span>
-            </div>
-            <h2 className="text-xl sm:text-2xl font-extrabold text-[#17181C]">
-              Temukan Gaya Belajar Personal Anda
-            </h2>
-            <p className="text-xs sm:text-sm text-[#676A78] leading-relaxed">
-              Anda belum menyelesaikan asesmen karakter belajar. Selesaikan kuesioner singkat untuk membuka rekomendasi metode belajar, mata pelajaran, dan karakteristik tutor yang paling sesuai.
-            </p>
-          </div>
-          <Button asChild size="default" className="shrink-0 min-h-[44px]">
-            <Link to="/student/assessment" className="flex items-center gap-2 font-bold">
-              <span>Ambil Asesmen Sekarang</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </Button>
-        </div>
-      </div>
+      <section className="space-y-3 rounded-xl border border-border bg-white p-5 sm:p-6">
+        <h2 className="text-lg font-bold text-ink-primary">Kenali Cara Belajar Anda</h2>
+        <p className="max-w-xl text-sm leading-relaxed text-ink-muted">
+          Ikuti asesmen kepribadian untuk mendapat rekomendasi metode dan mata pelajaran.
+        </p>
+        <Button asChild className="min-h-11 rounded-lg">
+          <Link to="/student/assessment">Mulai Asesmen <ArrowRight aria-hidden="true" className="size-4" /></Link>
+        </Button>
+      </section>
     )
   }
 
-  return (
-    <div className="surface-card p-6 sm:p-8 bg-white border border-border space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border/60 pb-5">
-        <div>
-          <div className="flex items-center gap-2">
-            <Compass className="w-4 h-4 text-[#183058]" />
-            <span className="text-xs font-bold text-[#183058] uppercase tracking-wider">
-              Profil Belajar Anda
-            </span>
-          </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#17181C] tracking-tight mt-1">
-            {profile.personalityName}
-          </h2>
-          <p className="text-xs text-[#676A78] mt-1 max-w-2xl leading-relaxed">
-            {profile.description}
-          </p>
-        </div>
+  const details = [
+    ['Gaya belajar', profile.learningStyle === profile.personalityName ? null : profile.learningStyle],
+    ['Motivasi', profile.motivation],
+    ['Komunikasi', profile.communicationStyle],
+  ].filter(([, value]) => Boolean(value))
 
-        <Button asChild variant="outline" size="sm" className="self-start sm:self-center shrink-0 min-h-[42px]">
-          <Link to="/student/personality" className="flex items-center gap-1.5 font-bold text-xs">
-            <span>Lihat Hasil Asesmen Lengkap</span>
-            <ArrowRight className="w-3.5 h-3.5 text-[#183058]" />
-          </Link>
+  return (
+    <section className="min-w-0 rounded-xl border border-border bg-white p-5 sm:p-6">
+      <h2 className="text-sm font-semibold text-brand-primary">Profil Belajar</h2>
+      <p className="mt-2 wrap-break-word text-xl font-bold tracking-tight text-ink-primary">{profile.personalityName}</p>
+      {profile.description && <p className="mt-2 text-sm leading-relaxed text-ink-muted">{profile.description}</p>}
+      {details.length > 0 && (
+        <dl className="mt-4 divide-y divide-border border-t border-border">
+          {details.map(([label, value]) => (
+            <div key={label} className="grid gap-1 py-2.5 text-sm sm:grid-cols-[7rem_minmax(0,1fr)] sm:gap-3">
+              <dt className="font-semibold text-ink-primary">{label}</dt>
+              <dd className="wrap-break-word text-ink-muted">{value}</dd>
+            </div>
+          ))}
+        </dl>
+      )}
+      <div className="mt-3 flex flex-wrap gap-2">
+        <Button asChild variant="outline" className="min-h-11 rounded-lg">
+          <Link to="/student/personality">Lihat Hasil Asesmen <ArrowRight aria-hidden="true" className="size-4" /></Link>
+        </Button>
+        <Button asChild variant="ghost" className="min-h-11 rounded-lg">
+          <Link to="/student/tutors">Lihat Tutor</Link>
         </Button>
       </div>
-
-      {/* 3 Pillars Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {/* Gaya Belajar */}
-        <div className="p-4 rounded-2xl bg-[#F9FAFD] border border-border/80 space-y-1.5">
-          <div className="flex items-center gap-2 text-[#183058]">
-            <BookOpen className="w-4 h-4" />
-            <h3 className="text-xs font-bold text-[#17181C]">Gaya Belajar Utama</h3>
-          </div>
-          <p className="text-xs text-[#676A78] leading-relaxed">
-            {profile.learningStyle || 'Eksploratif dan Berbasis Masalah'}
-          </p>
-        </div>
-
-        {/* Motivasi */}
-        <div className="p-4 rounded-2xl bg-[#F9FAFD] border border-border/80 space-y-1.5">
-          <div className="flex items-center gap-2 text-[#183058]">
-            <Sparkles className="w-4 h-4" />
-            <h3 className="text-xs font-bold text-[#17181C]">Faktor Motivasi</h3>
-          </div>
-          <p className="text-xs text-[#676A78] leading-relaxed">
-            {profile.motivation || 'Memahami relevansi materi dalam konteks nyata'}
-          </p>
-        </div>
-
-        {/* Komunikasi */}
-        <div className="p-4 rounded-2xl bg-[#F9FAFD] border border-border/80 space-y-1.5">
-          <div className="flex items-center gap-2 text-[#183058]">
-            <MessageSquare className="w-4 h-4" />
-            <h3 className="text-xs font-bold text-[#17181C]">Gaya Komunikasi</h3>
-          </div>
-          <p className="text-xs text-[#676A78] leading-relaxed">
-            {profile.communicationStyle || 'Dialogis, terbuka, dan suka bertanya'}
-          </p>
-        </div>
-      </div>
-    </div>
+    </section>
   )
 }

@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router'
-import { AppShell } from '@/components/layout/AppShell'
-import { PageHeader } from '@/components/layout/PageHeader'
 import { StreakCard } from '@/components/learning/StreakCard'
 import { engagementService } from '@/services/engagementService'
 import type { Achievement, Certificate, StudentStreak } from '@/types/engagement'
@@ -16,7 +14,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
 
-export function StudentAchievementsPage() {
+export function StudentAchievements() {
   const [achievements, setAchievements] = useState<Achievement[]>([])
   const [certificates, setCertificates] = useState<Certificate[]>([])
   const [streak, setStreak] = useState<StudentStreak>({ studentId: '', currentStreak: 0, longestStreak: 0, lastActivityDate: null })
@@ -52,12 +50,8 @@ export function StudentAchievementsPage() {
   }
 
   return (
-    <AppShell>
-      <PageHeader
-        title="Pencapaian & Sertifikasi"
-        subtitle="Apresiasi hasil belajar, rekor konsistensi, lencana reputasi, dan sertifikat resmi."
-        badge="Penghargaan"
-      />
+    <section aria-labelledby="StudentAchievements-title" className="space-y-6">
+      <h2 id="StudentAchievements-title" className="text-lg font-bold">Pencapaian & Sertifikasi</h2>
 
       {/* Top Streak summary */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
@@ -180,7 +174,7 @@ export function StudentAchievementsPage() {
             <p className="text-xs text-[#676A78] max-w-sm mx-auto">
               Selesaikan 100% materi pelajaran dan lulus seluruh kuis kursus untuk mendapatkan sertifikat resmi.
             </p>
-            <Link to="/student/courses">
+            <Link to="/student/learning?tab=courses">
               <Button variant="default" size="sm" className="rounded-xl text-xs bg-[#183058] text-white">
                 Mulai Belajar Kursus
               </Button>
@@ -244,6 +238,6 @@ export function StudentAchievementsPage() {
           </div>
         )
       )}
-    </AppShell>
+    </section>
   )
 }

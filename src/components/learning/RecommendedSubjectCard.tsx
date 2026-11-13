@@ -12,9 +12,9 @@ export function RecommendedSubjectCard({ subject }: RecommendedSubjectCardProps)
   const isReligious = subject.category === 'religious'
 
   return (
-    <div className="surface-card p-5 bg-white border border-border rounded-2xl flex flex-col justify-between gap-4 hover:border-[#183058]/30 transition-all">
+    <div className="min-w-0 p-4 sm:p-5 bg-white border border-border rounded-xl flex flex-col justify-between gap-4 hover:border-[#183058]/30 transition-colors">
       <div className="space-y-2.5">
-        <div className="flex items-center justify-between gap-2">
+        <div className="flex flex-wrap items-center justify-between gap-2">
           <Badge
             variant={isReligious ? 'secondary' : 'outline'}
             className="text-[11px] font-semibold"
@@ -27,9 +27,9 @@ export function RecommendedSubjectCard({ subject }: RecommendedSubjectCardProps)
         </div>
 
         <div>
-          <h4 className="text-base font-extrabold text-[#17181C]">
+          <h3 className="text-base font-extrabold text-[#17181C]">
             {subject.name}
-          </h4>
+          </h3>
           <p className="text-xs text-[#676A78] mt-1 leading-relaxed line-clamp-2">
             {subject.reason}
           </p>
@@ -37,9 +37,9 @@ export function RecommendedSubjectCard({ subject }: RecommendedSubjectCardProps)
       </div>
 
       <div className="pt-2 border-t border-border/50">
-        <Button asChild variant="outline" size="sm" className="w-full justify-between font-semibold text-xs min-h-[40px]">
-          <Link to={`/student/tutors?subjectId=${subject.subjectId}`}>
-            <span>Cari Tutor {subject.name}</span>
+        <Button asChild variant="outline" size="sm" className="w-full justify-between font-semibold text-xs min-h-11">
+          <Link to={`/student/tutors?subjectId=${subject.subjectId}`} aria-label={`Lihat tutor ${subject.name}`}>
+            <span>Lihat Tutor</span>
             <ArrowRight className="w-3.5 h-3.5 text-[#183058]" />
           </Link>
         </Button>

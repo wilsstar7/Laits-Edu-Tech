@@ -37,7 +37,7 @@ export function UpcomingLessonCard() {
       <div className="pt-3 border-t border-border/60 flex flex-wrap items-center justify-between gap-2 text-xs text-[#676A78]">
         <span>Sistem penjadwalan bimbingan</span>
         <Link
-          to="/student/schedule"
+          to="/student/learning?tab=schedule"
           className="min-h-[44px] inline-flex items-center font-semibold text-[#183058] hover:underline"
         >
           Lihat Kalender Lengkap

@@ -210,7 +210,7 @@ export function LearningPathDetailPage() {
                         <CheckCircle2 className="w-3.5 h-3.5" />
                         Tuntas (100%)
                       </Badge>
-                      <Link to="/student/progress" className="block">
+                      <Link to="/student/learning?tab=progress" className="block">
                         <Button variant="outline" size="sm" className="w-full min-h-[40px] text-xs font-semibold">
                           Tinjau Alur Belajar
                         </Button>
@@ -228,7 +228,7 @@ export function LearningPathDetailPage() {
                           style={{ width: `${enrollment.progressPercentage}%` }}
                         />
                       </div>
-                      <Link to="/student/progress" className="block pt-1">
+                      <Link to="/student/learning?tab=progress" className="block pt-1">
                         <Button
                           variant="outline"
                           size="sm"

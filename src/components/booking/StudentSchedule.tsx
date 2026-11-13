@@ -7,8 +7,6 @@ import {
   CalendarCheck,
   History,
 } from 'lucide-react'
-import { AppShell } from '@/components/layout/AppShell'
-import { PageHeader } from '@/components/layout/PageHeader'
 import { ErrorState } from '@/components/ui/ErrorState'
 import { BookingCard } from '@/components/booking/BookingCard'
 import { BookingCancelDialog } from '@/components/booking/BookingCancelDialog'
@@ -19,7 +17,7 @@ import type { Booking } from '@/types/booking'
 import { Skeleton } from '@/components/ui/skeleton'
 import { toast } from 'sonner'
 
-export function StudentSchedulePage() {
+export function StudentSchedule() {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(true)
   const [bookings, setBookings] = useState<Booking[]>([])
@@ -125,25 +123,19 @@ export function StudentSchedulePage() {
   }
 
   return (
-    <AppShell>
-      <PageHeader
-        title="Jadwal Belajar Saya"
-        subtitle="Kelola seluruh sesi bimbingan belajar privat, ruang temu daring, dan status konfirmasi tutor."
-        badge="Jadwal & Sesi"
-        action={
-          <Link
-            to="/student/payments"
-            className="hidden sm:inline-flex items-center px-4 py-2.5 rounded-xl bg-brand-primary text-white text-xs font-bold shadow-sm hover:bg-brand-primary/90 transition-colors gap-2 min-h-[44px]"
-          >
-            <Plus className="w-4 h-4" />
-            <span>Pilih Jumlah Sesi</span>
-          </Link>
-        }
-      />
+    <section aria-labelledby="student-schedule-title" className="space-y-6">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <h2 id="student-schedule-title" className="text-lg font-bold">Jadwal Belajar</h2>
+        <Link to="/student/payments"
+          className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-brand-primary px-4 text-sm font-semibold text-white hover:bg-brand-primary/90">
+          <Plus aria-hidden="true" className="size-4" />
+          Pilih Jumlah Sesi
+        </Link>
+      </div>
 
       {loading ? (
         <div className="space-y-4 animate-pulse">
-          <Skeleton className="w-64 h-11 rounded-xl" />
+          <Skeleton className="w-full max-w-64 h-11 rounded-xl" />
           <div className="space-y-3">
             <Skeleton className="w-full h-36 rounded-2xl" />
             <Skeleton className="w-full h-36 rounded-2xl" />
@@ -253,6 +245,6 @@ export function StudentSchedulePage() {
           onSuccess={reloadBookings}
         />
       )}
-    </AppShell>
+    </section>
   )
 }
